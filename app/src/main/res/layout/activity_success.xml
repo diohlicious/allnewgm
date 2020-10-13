@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryBackgroundApps"
+    tools:context="com.office.template.base.success.SuccessActivity">
+    <ImageView
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/app_name"
+        app:srcCompat="@drawable/ic_base_check_success_circle"/>
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:layout_marginBottom="@dimen/_24sdp"
+        android:fontFamily="@font/source_sans_pro_regular"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/text_26"
+        android:textStyle="bold"/>
+    <Button
+        android:id="@+id/btn_done"
+        android:background="@drawable/btn_design"
+        android:layout_width="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/roboto_medium"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryWhite"
+        android:text="@string/btn_done"
+        android:textAllCaps="false" />
+</LinearLayout>

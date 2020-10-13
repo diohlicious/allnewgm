@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:textColor="@color/colorPrimaryBackgroundApps"
+    tools:ignore="MissingPrefix">
+    <ImageView
+        android:id="@+id/ibClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:padding="@dimen/_10sdp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/ic_base_close"/>
+    <LinearLayout
+        android:paddingRight="@dimen/_16sdp"
+        android:paddingLeft="@dimen/_16sdp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_140sdp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/app_name"
+            app:srcCompat="@drawable/ic_base_information"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/source_sans_pro_regular"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:gravity="center_horizontal"
+            android:text="@string/base_tv_we_lost_connection"
+            android:textSize="@dimen/text_26"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/source_sans_pro_regular"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:gravity="center"
+            android:text="Medium Text"
+            android:textSize="@dimen/text_20"/>
+        <Button
+            android:id="@+id/btn_check_network"
+            android:background="@drawable/btn_design"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="@string/base_btn_check_connection_setting"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAntiqueWhite" />
+        <Button
+            android:id="@+id/btn_retry"
+            android:background="@drawable/btn_design"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center"
+            android:text="@string/btn_retry"
+            android:fontFamily="@font/roboto_medium"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimaryWhite" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryBackgroundApps"
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/vehicle_specs_width"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_launcher"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_20sdp"
+        android:fontFamily="@font/source_sans_pro_regular"
+        android:gravity="center_horizontal"
+        android:text="@string/base_tv_permission_application"
+        android:textColor="@color/colorPrimaryFont"
+        android:textSize="@dimen/text_18"/>
+
+
+    <Button
+        android:id="@+id/btn_enable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_design"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:gravity="center"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/base_btn_enable_permission"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryWhite"
+        android:textSize="@dimen/text_15" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:background="@drawable/btn_design"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:fontFamily="@font/roboto_medium"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:gravity="center"
+        android:textSize="@dimen/text_15"
+        android:text="@string/btn_cancel"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryWhite" />
+
+</LinearLayout>

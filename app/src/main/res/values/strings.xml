@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Template</string>
+
+    <!--  BASE  -->
+    <string name="base_tv_please_wait">Please Wait…</string>
+    <string name="base_tv_permission_application">Please grant Camera, Memory, and Location Permissions for the App</string>
+    <string name="base_tv_we_lost_connection">We Lost Connection</string>
+    <string name="base_btn_check_connection_setting">Check Connection Setting</string>
+    <string name="base_btn_enable_permission">Give Permission</string>
+    <string name="base_null_error_title">Ops, Something Wrong!</string>
+    <string name="base_null_page_not_found">Ops, Page Not Found!</string>
+    <string name="base_null_server">No Internet Available !\n\nInternal Server Error.</string>
+
+
+    <!--  TITLE  -->
+
+
+    <!--  API TITLE  -->
+
+
+    <!--  BUTTON  -->
+    <string name="btn_submit">Submit</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_retry">Retry</string>
+    <string name="btn_done">Done</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_close">Close</string>
+    <string name="btn_login">Login</string>
+
+
+    <!--  EDIT TEXT HINT  -->
+
+
+    <!--  TEXT VIEW  -->
+    <string name="tv_password">Password</string>
+    <string name="tv_email">Email</string>
+
+
+    <!--  DIALOG MESSAGE  -->
+
+
+    <!--  TOAST  -->
+    <string name="toast_please_click_back_again_to_exit">Please click BACK again to exit</string>
+    <string name="tv_empty_email_password">Email and Password Empty</string>
+
+
+</resources>

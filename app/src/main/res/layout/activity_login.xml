@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorPrimaryBackgroundApps"
+    android:layout_height="match_parent"
+    tools:context="com.office.template.activity.LoginActivity">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/_16sdp"
+            android:paddingRight="@dimen/_16sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:fontFamily="@font/source_sans_pro_regular"
+                android:textSize="@dimen/text_16"
+                android:textColor="@color/colorPrimaryLightGrey"
+                android:text="@string/tv_email"
+                android:layout_marginTop="@dimen/_47sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/et_email"
+                android:textColor="@color/colorPrimaryFont"
+                android:textSize="@dimen/text_18"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:gravity="center|left"
+                android:background="@drawable/et_design_line"
+                android:fontFamily="@font/source_sans_pro_regular"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry"
+                android:inputType="textEmailAddress" />
+            <TextView
+                android:fontFamily="@font/source_sans_pro_regular"
+                android:textSize="@dimen/text_16"
+                android:textColor="@color/colorPrimaryLightGrey"
+                android:text="@string/tv_password"
+                android:layout_marginTop="@dimen/_47sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <com.google.android.material.textfield.TextInputLayout
+                app:passwordToggleEnabled="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password"
+                    android:password="true"
+                    android:textColor="@color/colorPrimaryFont"
+                    android:textSize="@dimen/text_18"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:gravity="center|left"
+                    android:background="@drawable/et_design_line"
+                    android:fontFamily="@font/source_sans_pro_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:id="@+id/btn_login"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="@dimen/text_18"
+                android:layout_marginLeft="@dimen/_16sdp"
+                android:layout_marginRight="@dimen/_16sdp"
+                android:textColor="@color/colorPrimaryWhite"
+                android:textAllCaps="false"
+                android:text="@string/btn_login"
+                android:layout_marginTop="@dimen/_64sdp"
+                android:layout_marginBottom="@dimen/_44sdp"
+                android:background="@drawable/btn_design"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,89 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+//        maven { url 'https://plugins.gradle.org/m2/'}//One Signal
+    }
+
+    dependencies {
+        //noinspection GradleDependency
+        classpath 'com.android.tools.build:gradle:3.5.3'
+//        classpath 'com.google.gms:google-services:4.3.3'
+        classpath "io.realm:realm-gradle-plugin:6.0.2"
+
+    }
+
+    ext.versions = [
+            'compileSdk'            : 28,
+            'minSdk'                : 21,
+            'targetSdk'             : 28,
+            'versionCodeApp'        : 1,
+            'versionNameApp'        : "1.0.0",
+            'versionCodeMessage'    : 1,
+            'versionNameMessage'    : "1.0",
+            'rootDevice'            : "0.0.8",
+            'playCore'              : '1.6.5',
+            'appCompat'             : '1.1.0',
+            'constraint'            : '1.1.3',
+            'servicesMap'           : '17.0.0',
+            'butterKnife'           : '10.2.0',
+            'commonsCodec'          : '20041127.091804',
+            'zxing'                 : '1.9.13',
+            'pixWhatApps'           : '1.4.4',
+            'compressorImage'       : '2.1.0',
+            'circleImageView'       : '3.0.1',
+            'circleIndicator'       : '2.1.4',
+            'crashlyticsFabric'     : '2.10.1',
+            'shimmerFacebook'       : '0.5.0',
+            'dimemsLayout'          : '1.0.6',
+            'httpCore'              : '4.4.12',
+            'retrofit'              : '2.6.2',
+            'loggingInterceptor'    : '4.2.2',
+            'converterGson'         : '2.6.2',
+            'rxAndroid'             : '2.1.1',
+            'rxjava'                : '2.1.8',
+            'adapterRxJava'         : '2.6.2',
+            'extJunit'              : '4.12',
+            'testRunner'            : '1.0.2',
+            'espresso'              : '3.0.2',
+            'pdfViewer'             : '3.2.0-beta.1',
+            'fileLoader'            : '1.2',
+            'legacySupport'         : '1.0.0',
+            'socket'                : '0.3.0',
+            'internetChecker'       : '1.0.4',
+            'photoEditor'           : '0.3.3',
+            'photoView'             : '2.1.3',
+            'cropEditor'            : '2.4.+',
+            'colorSeekBar'          : '1.7.3',
+            'calendarView'          : 'v1.0.3',
+            'oneSignal'             : '3.12.7',
+            'firebaseDatabase'      : '19.3.1',
+            'firebaseAuth'          : '19.3.2',
+            'firebaseCore'          : '17.4.4',
+            'firebaseAnalytics'     : '17.4.4',
+            'firebaseCrashlytics'   : '17.1.1',
+            'googlePlayServiceAuth' : '18.1.0',
+            'stepIndicator'         : '1.5.1',
+    ]
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url "https://maven.google.com" // Google's Maven repository
+        }
+        maven { url "https://jitpack.io" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

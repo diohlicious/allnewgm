@@ -1,0 +1,189 @@
+apply plugin: 'com.android.application'
+
+android {
+
+    signingConfigs {
+        signingproject {
+            keyAlias 'password'
+            keyPassword 'password'
+            storeFile file('/Users/syahrulhajji/AndroidStudioProjects/Template Project/Template.jks')
+            storePassword 'password'
+        }
+    }
+
+    compileSdkVersion versions.compileSdk
+    defaultConfig {
+        applicationId "com.office.template_project"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.versionCodeApp
+        versionName versions.versionNameApp
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+            buildConfigField 'String', 'BASE_URL', '"http://development.paidbaq.com/"'
+            buildConfigField 'String', 'SOCKET_URL', '"http://"'
+            buildConfigField 'String', 'ENVIRONTMENT', '"STAGING"'
+            buildConfigField 'String', 'APP_TYPE', '""'
+            buildConfigField 'String', 'APP_NAME', '"TEMPLATE_PROJECT"'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.signingproject
+        }
+        release {
+            debuggable false
+            minifyEnabled false
+            shrinkResources false
+            buildConfigField 'String', 'BASE_URL', '"https://marketplace.paidbaq.com/"'
+            buildConfigField 'String', 'SOCKET_URL', '"https://"'
+            buildConfigField 'String', 'ENVIRONTMENT', '"PRODUCTION"'
+            buildConfigField 'String', 'APP_TYPE', '""'
+            buildConfigField 'String', 'APP_NAME', '"TEMPLATE_PROJECT"'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.signingproject
+        }
+    }
+
+    flavorDimensions "pack"
+    productFlavors {
+        ori {
+            applicationId "com.office.template_project"
+            dimension "pack"
+            minSdkVersion versions.minSdk
+            targetSdkVersion versions.targetSdk
+            versionCode versions.versionCodeApp
+            versionName versions.versionNameApp
+            multiDexEnabled true
+            vectorDrawables.useSupportLibrary = true
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    applicationVariants.all { variant ->
+        variant.resValue "string", "versionName", variant.versionName
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    sourceSets { main { java.srcDirs = ['src/main/java', 'src/base/java/', 'src/cloud/java/'] } }
+
+//    splits {
+//        abi {
+//            enable true
+//            reset()
+//            include 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'mips', 'x86', 'x86_64'
+//            universalApk true
+//        }
+//    }
+
+    android {
+        lintOptions {
+            checkReleaseBuilds false
+            abortOnError false
+        }
+    }
+}
+
+dependencies {
+    //Library Android Start
+    //noinspection GradleDependency
+    api "androidx.appcompat:appcompat:${versions.appCompat}"
+    //noinspection GradleDependency
+    api "androidx.constraintlayout:constraintlayout:${versions.constraint}"
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    //noinspection GradleDependency
+    api "com.google.android.play:core:${versions.playCore}"
+    //Library Android End
+
+    //Library Feature Start
+    api "com.google.android.gms:play-services-maps:${versions.servicesMap}"
+    api "androidx.legacy:legacy-support-v4:${versions.legacySupport}"
+    //noinspection GradleDependency
+    implementation "com.jakewharton:butterknife:${versions.butterKnife}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${versions.butterKnife}"
+    //noinspection GradleDependency
+    api "commons-codec:commons-codec:${versions.commonsCodec}"
+    //noinspection GradleDependency
+    api "com.fxn769:pix:${versions.pixWhatApps}"
+    api "com.github.shrikanth7698:Collapsible-Calendar-View-Android:${versions.calendarView}"
+    api "id.zelory:compressor:${versions.compressorImage}"
+    //noinspection GradleDependency
+    api "de.hdodenhof:circleimageview:${versions.circleImageView}"
+    api "me.dm7.barcodescanner:zxing:${versions.zxing}"
+//    api "com.scottyab:rootbeer-lib:${versions.rootDevice}"
+    api "com.intuit.sdp:sdp-android:${versions.dimemsLayout}"
+    //noinspection GradleDependency
+    api "me.relex:circleindicator:${versions.circleIndicator}"
+    //noinspection OutdatedLibrary
+    api "com.crashlytics.sdk.android:crashlytics:${versions.crashlyticsFabric}"
+//    api "com.facebook.shimmer:shimmer:${versions.shimmerFacebook}"
+    api "com.github.barteksc:android-pdf-viewer:${versions.pdfViewer}"
+    api "com.github.kk121:File-Loader:${versions.fileLoader}"
+//    api "com.github.nkzawa:socket.io-client:${versions.socket}"
+//    api "com.treebo:internetavailabilitychecker:${versions.internetChecker}"
+    api "ja.burhanrashid52:photoeditor:${versions.photoEditor}"
+    api "com.github.chrisbanes:PhotoView:${versions.photoView}"
+    //noinspection GradleDependency
+    api "com.theartofdev.edmodo:android-image-cropper:${versions.cropEditor}"
+    api "com.shuhart.stepview:stepview:${versions.stepIndicator}"
+//    api "com.github.rtugeek:colorseekbar:${versions.colorSeekBar}"
+    //noinspection GradleDependency
+    api "com.google.firebase:firebase-database:${versions.firebaseDatabase}"
+    //noinspection GradleDependency
+    api "com.google.firebase:firebase-auth:${versions.firebaseAuth}"
+    //noinspection GradleDependency
+    api "com.google.firebase:firebase-core:${versions.firebaseCore}"
+    //noinspection GradleDependency
+    api "com.google.firebase:firebase-analytics:${versions.firebaseAnalytics}"
+    //noinspection GradleDependency
+    api "com.google.firebase:firebase-crashlytics:${versions.firebaseCrashlytics}"
+    api "com.google.android.gms:play-services-auth:${versions.googlePlayServiceAuth}"
+    //Library Feature Finish
+
+    //Library Retrofit Start
+    //noinspection GradleDependency
+    api "org.apache.httpcomponents:httpcore:${versions.httpCore}"
+    //noinspection GradleDependency
+    api "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+    //noinspection GradleDependency
+    api "com.squareup.okhttp3:logging-interceptor:${versions.loggingInterceptor}"
+    //noinspection GradleDependency
+    api "com.squareup.retrofit2:converter-gson:${versions.converterGson}"
+    //noinspection GradleDependency
+    api "com.squareup.retrofit2:adapter-rxjava2:${versions.adapterRxJava}"
+    //Library Retrofit Finish
+
+    //Android RX Start
+    //noinspection GradleDependency
+    api "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}"
+    //noinspection GradleDependency
+    api "io.reactivex.rxjava2:rxjava:${versions.rxjava}"
+    //Android RX Finish
+
+    //Library Test Start
+    //noinspection GradleDependency
+    testImplementation "junit:junit:${versions.extJunit}"
+    androidTestImplementation "com.android.support.test:runner:${versions.testRunner}"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:${versions.espresso}"
+    //Library Test Finish
+}
