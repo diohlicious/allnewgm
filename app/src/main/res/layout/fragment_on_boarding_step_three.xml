@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".fragment.onboarding.OnBoardingStepThreeFragment">
+    <ImageView
+        android:src="@drawable/ic_on_boarding_step_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="ContentDescription" />
+    <ImageView
+        android:layout_marginTop="@dimen/_50sdp"
+        android:src="@drawable/ic_indicator_step_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="ContentDescription" />
+    <TextView
+        android:layout_marginTop="@dimen/_20sdp"
+        android:fontFamily="@font/nunito_bold"
+        android:textColor="@color/colorPrimaryFont"
+        android:textSize="@dimen/text_24"
+        android:text="@string/tv_bayar_dan_bawa_pulang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:alpha="0.6"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/nunito_semi_bold"
+        android:textColor="@color/colorPrimaryFont"
+        android:textSize="@dimen/text_14"
+        android:gravity="center"
+        android:text="Lakukan pembayaran melalui Virtual Account\ndan bawa pulang mobil anda!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

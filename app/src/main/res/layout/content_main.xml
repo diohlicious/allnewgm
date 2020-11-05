@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimaryBackgroundApps"
+    android:background="@color/colorPrimaryWhite"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.office.template.activity.MainActivity"
+    tools:context="com.sip.grosirmobil.activity.MainActivity"
     tools:showIn="@layout/app_bar_main">
     <FrameLayout
         android:id="@+id/page_fragment"
@@ -17,7 +17,7 @@
         tools:ignore="Suspicious0dp" />
     <LinearLayout
         android:orientation="horizontal"
-        android:background="@color/colorPrimaryTheme"
+        android:background="@color/colorPrimaryWhite"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_54sdp"
         tools:ignore="DisableBaselineAlignment">
@@ -39,14 +39,16 @@
             <TextView
                 android:id="@+id/tv_home"
                 android:textSize="@dimen/text_12"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/menu_home"
                 android:textColor="@color/colorPrimaryTextActive"
                 android:gravity="center"
-                android:fontFamily="@font/source_sans_pro_regular"
+                android:fontFamily="@font/nunito_semi_bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/linear_home_second"
+            android:id="@+id/linear_garasi"
             android:orientation="vertical"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -55,22 +57,24 @@
             android:layout_height="match_parent"
             tools:ignore="UseCompoundDrawables,UselessParent">
             <ImageView
-                android:id="@+id/iv_home_second"
-                android:src="@drawable/ic_home_disable"
+                android:id="@+id/iv_garasi"
+                android:src="@drawable/ic_garasi_disable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:ignore="ContentDescription" />
             <TextView
-                android:id="@+id/tv_home_second"
+                android:id="@+id/tv_garasi"
                 android:textSize="@dimen/text_12"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/menu_garasi"
                 android:textColor="@color/colorPrimaryTextInactive"
-                android:fontFamily="@font/source_sans_pro_regular"
+                android:fontFamily="@font/nunito_semi_bold"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/linear_home_three"
+            android:id="@+id/linear_notification"
             android:orientation="vertical"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -79,22 +83,24 @@
             android:layout_height="match_parent"
             tools:ignore="UseCompoundDrawables,UselessParent">
             <ImageView
-                android:id="@+id/iv_home_three"
-                android:src="@drawable/ic_home_disable"
+                android:id="@+id/iv_notification"
+                android:src="@drawable/ic_notification_disable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:ignore="ContentDescription" />
             <TextView
-                android:id="@+id/tv_home_three"
+                android:id="@+id/tv_notification"
                 android:textSize="@dimen/text_12"
-                android:fontFamily="@font/source_sans_pro_regular"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/menu_pemberitahuan"
+                android:fontFamily="@font/nunito_semi_bold"
                 android:textColor="@color/colorPrimaryTextInactive"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/linear_home_four"
+            android:id="@+id/linear_keranjang"
             android:orientation="vertical"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -103,15 +109,17 @@
             android:layout_height="match_parent"
             tools:ignore="UseCompoundDrawables,UselessParent">
             <ImageView
-                android:id="@+id/iv_home_four"
-                android:src="@drawable/ic_home_disable"
+                android:id="@+id/iv_keranjang"
+                android:src="@drawable/ic_cart_disable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:ignore="ContentDescription" />
             <TextView
-                android:id="@+id/tv_home_four"
+                android:id="@+id/tv_keranjang"
                 android:textSize="@dimen/text_12"
-                android:fontFamily="@font/source_sans_pro_regular"
+                android:text="@string/menu_keranjang"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/nunito_semi_bold"
                 android:textColor="@color/colorPrimaryTextInactive"
                 android:gravity="center"
                 android:layout_width="match_parent"

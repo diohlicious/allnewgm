@@ -30,4 +30,9 @@
         <item name="android:windowExitAnimation">@anim/slide_bottom</item>
     </style>
 
+    <style name="myTextInputLabelTheme" parent="TextAppearance.AppCompat">
+        <!-- Customize your theme here. -->
+        <item name="android:textColorHint">@color/colorPrimaryFont</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 </resources>

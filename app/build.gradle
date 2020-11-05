@@ -6,14 +6,14 @@ android {
         signingproject {
             keyAlias 'password'
             keyPassword 'password'
-            storeFile file('/Users/syahrulhajji/AndroidStudioProjects/Template Project/Template.jks')
+            storeFile file('/Users/syahrulhajji/AndroidStudioProjects/Grosir Mobil/Template.jks')
             storePassword 'password'
         }
     }
 
     compileSdkVersion versions.compileSdk
     defaultConfig {
-        applicationId "com.office.template_project"
+        applicationId "com.sip.grosirmobil"
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
         versionCode versions.versionCodeApp
@@ -63,7 +63,7 @@ android {
     flavorDimensions "pack"
     productFlavors {
         ori {
-            applicationId "com.office.template_project"
+            applicationId "com.sip.grosirmobil"
             dimension "pack"
             minSdkVersion versions.minSdk
             targetSdkVersion versions.targetSdk

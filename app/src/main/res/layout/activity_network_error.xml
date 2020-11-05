@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:textColor="@color/colorPrimaryBackgroundApps"
+    android:textColor="@color/colorPrimaryWhite"
     tools:ignore="MissingPrefix">
     <ImageView
         android:id="@+id/ibClose"
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/source_sans_pro_regular"
+            android:fontFamily="@font/nunito_regular"
             android:layout_marginTop="@dimen/_24sdp"
             android:gravity="center_horizontal"
             android:text="@string/base_tv_we_lost_connection"
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/source_sans_pro_regular"
+            android:fontFamily="@font/nunito_regular"
             android:layout_marginTop="@dimen/_12sdp"
             android:gravity="center"
             android:text="Medium Text"
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_32sdp"
-            android:fontFamily="@font/roboto_medium"
+            android:fontFamily="@font/nunito_semi_bold"
             android:gravity="center"
             android:text="@string/base_btn_check_connection_setting"
             android:textAllCaps="false"
@@ -69,7 +69,7 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:gravity="center"
             android:text="@string/btn_retry"
-            android:fontFamily="@font/roboto_medium"
+            android:fontFamily="@font/nunito_semi_bold"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimaryWhite" />
     </LinearLayout>

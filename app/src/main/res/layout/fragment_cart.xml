@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimaryWhite"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sip.grosirmobil.fragment.navigationmenu.CartFragment">
+    <LinearLayout
+        android:paddingTop="@dimen/_20sdp"
+        android:paddingLeft="@dimen/_25sdp"
+        android:paddingRight="@dimen/_25sdp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="@color/colorPrimaryFont"
+            android:fontFamily="@font/nunito_bold"
+            android:textSize="@dimen/text_34"
+            android:text="@string/tv_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="RelativeOverlap" />
+    </LinearLayout>
+    <Button
+        android:fontFamily="@font/nunito_bold"
+        android:textSize="@dimen/text_18"
+        android:text="@string/btn_bayar"
+        android:textColor="@color/colorPrimaryWhite"
+        android:textAllCaps="false"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_design"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

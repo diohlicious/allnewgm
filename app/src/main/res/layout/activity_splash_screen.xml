@@ -6,13 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryBackgroundApps"
-    tools:context="com.office.template.activity.SplashScreenActivity">
+    tools:context="com.sip.grosirmobil.activity.SplashScreenActivity">
     <ImageView
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:src="@mipmap/ic_launcher"
-        android:scaleType="centerCrop"
-        android:layout_width="@dimen/_96sdp"
-        android:layout_height="@dimen/_48sdp"
+        android:src="@drawable/ic_logo_splash_screen"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_60sdp"
         tools:ignore="ContentDescription" />
 
 </LinearLayout>

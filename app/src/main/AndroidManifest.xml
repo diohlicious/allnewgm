@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.office.template">
+    package="com.sip.grosirmobil">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,11 +11,12 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
-        android:name="com.office.template.base.TemplateApp"
+        android:name=".base.GrosirMobilApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -25,18 +26,30 @@
         android:windowSoftInputMode="stateVisible"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="m">
+        <activity android:name=".activity.ForgotPasswordActivity"></activity>
+        <activity android:name=".activity.ChangePasswordActivity" />
+        <activity android:name=".activity.RegisterDataActivity" />
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.CodeOtpActivity" />
+        <activity android:name=".activity.HistoryActivity" />
+        <activity android:name=".activity.ProfileActivity" />
+        <activity android:name=".activity.SearchAndFilterResultActivity" />
+        <activity android:name=".activity.VehicleDetailActivity" />
+        <activity android:name=".activity.FilterActivity" />
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.OnBoardingActivity" />
         <activity
-            android:name="com.office.template.activity.MainActivity"
+            android:name=".activity.MainActivity"
             android:configChanges="fontScale"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name="com.office.template.activity.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:configChanges="fontScale"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name="com.office.template.activity.SplashScreenActivity"
+            android:name=".activity.SplashScreenActivity"
             android:configChanges="fontScale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
@@ -48,26 +61,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.office.template.base.permission.MultiPermissionActivity"
+            android:name=".base.permission.MultiPermissionActivity"
             android:configChanges="fontScale"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name="com.office.template.base.error.ErrorActivity"
+            android:name=".base.error.ErrorActivity"
             android:configChanges="fontScale"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name="com.office.template.base.error.NetworkErrorActivity"
+            android:name=".base.error.NetworkErrorActivity"
             android:configChanges="fontScale"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name="com.office.template.base.success.SuccessActivity"
+            android:name=".base.success.SuccessActivity"
             android:configChanges="fontScale"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-
     </application>
 
 </manifest>

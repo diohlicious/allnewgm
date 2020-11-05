@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Template</string>
+    <string name="app_name">Grosir Mobil</string>
 
     <!--  BASE  -->
     <string name="base_tv_please_wait">Please Wait…</string>
@@ -23,9 +23,9 @@
     <string name="btn_cancel">Cancel</string>
     <string name="btn_retry">Retry</string>
     <string name="btn_done">Done</string>
-    <string name="btn_next">Next</string>
-    <string name="btn_close">Close</string>
-    <string name="btn_login">Login</string>
+    <string name="btn_next">Lanjutkan</string>
+    <string name="btn_close">Tutup</string>
+    <string name="btn_login">Masuk</string>
 
 
     <!--  EDIT TEXT HINT  -->
@@ -42,6 +42,53 @@
     <!--  TOAST  -->
     <string name="toast_please_click_back_again_to_exit">Please click BACK again to exit</string>
     <string name="tv_empty_email_password">Email and Password Empty</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_lewati"><![CDATA[Lewati>>]]></string>
+    <string name="tv_selamat_datang_sobat_gmob">Selamat datang sobat GMob!</string>
+    <string name="tv_dengan_grosirmobil_cari_dan_pilih_unit_yang_anda_butuhkan_kini_lebih_mudah">Dengan GrosirMobil, cari dan pilih unit\nyang anda butuhkan kini lebih mudah!</string>
+    <string name="btn_selanjutnya">Selanjutnya</string>
+    <string name="btn_selesai">Selesai</string>
+    <string name="tv_bayar_dan_bawa_pulang">Bayar dan Bawa Pulang</string>
+    <string name="tv_tawar_atau_buy_now">Tawar atau Buy Now</string>
+    <string name="tv_belum_mempunyai_akun">Belum mempunyai akun?</string>
+    <string name="tv_daftar">Daftar</string>
+    <string name="tv_masuk">Masuk</string>
+    <string name="tv_selamat_datang_silahkan_masukkan_akun_anda">Selamat datang, silahkan masukkan akun Anda</string>
+    <string name="tv_lupa_password">Lupa Password</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_garasi">Garasi</string>
+    <string name="menu_pemberitahuan">Pemberitahuan</string>
+    <string name="menu_keranjang">Keranjang</string>
+    <string name="tv_home">Home</string>
+    <string name="tv_cart">Keranjang</string>
+    <string name="tv_garasi">Garasi</string>
+    <string name="btn_bayar">Bayar</string>
+    <string name="tv_cek_email_anda">Cek email Anda!</string>
+    <string name="tv_kendaraan_yang_sedang_anda_cari">Kendaraan yang sedang Anda cari?</string>
+    <string name="tv_baru_masuk">Baru Masuk</string>
+    <string name="tv_live">Live</string>
+    <string name="tv_akan_tayang">Akan Tayang</string>
+    <string name="tv_record">Record</string>
+    <string name="tv_lihat_semua">Lihat Semua</string>
+    <string name="tv_registrasikan_diri_anda_sekarang">Registrasikan diri Anda sekarang</string>
+    <string name="tv_full_name">Nama Lengkap</string>
+    <string name="tv_phone_number">Nomor Telepon</string>
+    <string name="tv_dengan_membuat_akun_anda_menyetujui">Dengan membuat akun, Anda menyetujui</string>
+    <string name="tv_syarat_amp_ketentuan"><![CDATA[Syarat & Ketentuan]]></string>
+    <string name="btn_register">Daftar</string>
+    <string name="tv_sudah_punya_akun">Sudah punya akun?</string>
+    <string name="tv_login">Masuk</string>
+    <string name="tv_pencarian">Pencarian</string>
+    <string name="tv_hapus">Hapus</string>
+    <string name="btn_cari">Cari</string>
+    <string name="tv_merek">Merek</string>
+    <string name="tv_location">Lokasi</string>
+    <string name="tv_kisaran_harga">Kirasan Harga</string>
+    <string name="tv_type_car">Tipe Mobil</string>
+    <string name="tv_grade">Grade</string>
+    <string name="tv_filter">Filter</string>
+    <string name="btn_filter">Filter</string>
 
 
 </resources>

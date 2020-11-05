@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.navigationmenu.NotificationFragment">
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessLeaf">
+        <ImageView
+            android:id="@+id/iv_background"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_background_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="ContentDescription" />
+        <TextView
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textColor="@color/colorPrimaryWhite"
+            android:fontFamily="@font/nunito_bold"
+            android:textSize="@dimen/text_34"
+            android:text="Open House"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="RelativeOverlap" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tv_notification"
+            android:layout_below="@id/iv_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>
