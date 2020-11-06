@@ -41,5 +41,6 @@ public class ForgotPasswordActivity extends GrosirMobilActivity {
         Intent intent = new Intent(this, ChangePasswordActivity.class);
         intent.putExtra(EMAIL, email);
         startActivity(intent);
+        finish();
     }
 }
