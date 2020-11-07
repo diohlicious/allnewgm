@@ -40,6 +40,7 @@ public class CodeOtpActivity extends GrosirMobilActivity {
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_0)
     void btn0Click(){
         if(etNewOtp1.getText().toString().equals("")){
@@ -59,6 +60,7 @@ public class CodeOtpActivity extends GrosirMobilActivity {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_1)
     void btn1Click(){
         if(etNewOtp1.getText().toString().equals("")){
@@ -78,6 +80,7 @@ public class CodeOtpActivity extends GrosirMobilActivity {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_2)
     void btn2Click(){
         if(etNewOtp1.getText().toString().equals("")){
@@ -97,6 +100,7 @@ public class CodeOtpActivity extends GrosirMobilActivity {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_3)
     void btn3Click(){
         if(etNewOtp1.getText().toString().equals("")){
@@ -116,6 +120,7 @@ public class CodeOtpActivity extends GrosirMobilActivity {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_4)
     void btn4Click(){
         if(etNewOtp1.getText().toString().equals("")){
@@ -135,6 +140,7 @@ public class CodeOtpActivity extends GrosirMobilActivity {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_5)
     void btn5Click(){
         if(etNewOtp1.getText().toString().equals("")){
@@ -154,6 +160,7 @@ public class CodeOtpActivity extends GrosirMobilActivity {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_6)
     void btn6Click(){
         if(etNewOtp1.getText().toString().equals("")){
@@ -173,6 +180,7 @@ public class CodeOtpActivity extends GrosirMobilActivity {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_7)
     void btn7Click(){
         if(etNewOtp1.getText().toString().equals("")){
@@ -192,6 +200,7 @@ public class CodeOtpActivity extends GrosirMobilActivity {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_8)
     void btn8Click(){
         if(etNewOtp1.getText().toString().equals("")){
@@ -211,6 +220,7 @@ public class CodeOtpActivity extends GrosirMobilActivity {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_9)
     void btn9Click(){
         if(etNewOtp1.getText().toString().equals("")){
@@ -230,6 +240,7 @@ public class CodeOtpActivity extends GrosirMobilActivity {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_back_press)
     void btnBackPressClick(){
         if(!etNewOtp4.getText().toString().equals("")){
@@ -250,6 +261,7 @@ public class CodeOtpActivity extends GrosirMobilActivity {
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_dot)
     void btnDotClick(){
         if(etNewOtp1.getText().toString().equals("")){

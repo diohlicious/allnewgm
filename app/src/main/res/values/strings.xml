@@ -94,8 +94,16 @@
     <string name="tv_kode_otp_terkirim">Kode OTP terkirim!</string>
     <string name="tv_cek_email_atau_sms_dan_masuki_otp_anda_untuk_memverifikasi_akun">Cek email atau SMS dan masuki OTP Anda untuk memverifikasi akun</string>
     <string name="btn_verifikasi">Verifikasi</string>
-    <string name="tv_data_diri">Data Diri</string>
     <string name="tv_change_password">Ganti Password</string>
     <string name="tv_change_your_password">Rubah password yang Anda lupa</string>
+    <string name="et_nik_ktp_sim">NIK (KTP / SIM)</string>
+    <string name="tv_data_diri">Data Diri</string>
+    <string name="et_nama_lengkap">Nama Lengkap</string>
+    <string name="et_email">Email</string>
+    <string name="et_alamat">Alamat</string>
+    <string name="et_telpon">Telpon</string>
+    <string name="et_nomor_telepon">Nomor Telepon</string>
+    <string name="et_password">Password</string>
+    <string name="et_confirm_password">COnfirm Password</string>
 
 </resources>

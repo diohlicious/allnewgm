@@ -12,7 +12,7 @@ public class RegisterDataActivity extends GrosirMobilActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_data);
+        setContentView(R.layout.fragment_data_diri);
         ButterKnife.bind(this);
 
     }
