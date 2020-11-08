@@ -1,6 +1,6 @@
 package com.sip.grosirmobil.fragment.register;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.activity.RegisterDataActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,7 +34,14 @@ public class DataDiriFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_data_diri, container, false);
         ButterKnife.bind(this, view);
+
         return view;
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.btn_next_data_diri)
+    void btnNextDataDiriClick(){
+        ((RegisterDataActivity)getActivity()).replaceFragment(new ProfileUsahaFragment());
     }
 
 }
