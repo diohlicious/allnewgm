@@ -105,5 +105,20 @@
     <string name="et_nomor_telepon">Nomor Telepon</string>
     <string name="et_password">Password</string>
     <string name="et_confirm_password">COnfirm Password</string>
+    <string name="tv_profil_usaha">Profil Usaha</string>
+    <string name="et_tipe_usaha">Tipe Usaha</string>
+    <string name="et_nama_dealer">Nama Dealer</string>
+    <string name="et_nomor_telepon_dealer">Nomor Telepon Dealer</string>
+    <string name="et_usia_bisnis_dealer">Usia Bisnis Dealer</string>
+    <string name="et_perputaran_unit_per_bulan">Perputaran Unit per Bulan</string>
+    <string name="tv_alamat">Alamat</string>
+    <string name="et_alamat_dealer">Alamat Dealer</string>
+    <string name="et_provinsi">Provinsi</string>
+    <string name="et_kabupaten">Kabupaten</string>
+    <string name="et_kecamatan">Kecamatan</string>
+    <string name="et_kelurahan">Kelurahan</string>
+    <string name="et_kode_pos">Kode Pos</string>
+    <string name="tv_dokumen_ktp">Dokumen KTP</string>
+    <string name="tv_upload_foto_ktp">Upload Foto KTP</string>
 
 </resources>

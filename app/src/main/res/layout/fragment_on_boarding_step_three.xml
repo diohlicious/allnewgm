@@ -34,5 +34,6 @@
         android:gravity="center"
         android:text="Lakukan pembayaran melalui Virtual Account\ndan bawa pulang mobil anda!"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        tools:ignore="HardcodedText" />
 </LinearLayout>
