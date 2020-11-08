@@ -16,10 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RelativeLayout
+                android:id="@+id/relative_home"
                 android:paddingLeft="@dimen/_25sdp"
                 android:paddingRight="@dimen/_25sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:orientation="horizontal"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:ignore="UselessParent">
@@ -40,10 +42,96 @@
                     android:layout_height="@dimen/_40sdp"/>
             </RelativeLayout>
             <LinearLayout
+                android:id="@+id/linear_search_and_filter_show"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:paddingStart="@dimen/_15sdp"
+                    android:paddingEnd="@dimen/_25sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    tools:ignore="UselessParent">
+                    <ImageView
+                        android:id="@+id/iv_back"
+                        android:layout_centerVertical="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_back_chevron"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="match_parent"
+                        tools:ignore="ContentDescription" />
+                    <TextView
+                        android:id="@+id/iv_all_unit"
+                        android:layout_toEndOf="@+id/iv_back"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:fontFamily="@font/nunito_bold"
+                        android:text="@string/tv_semua_unit"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_28"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        tools:ignore="RelativeOverlap" />
+                    <TextView
+                        android:id="@+id/tv_search_result_all_unit"
+                        android:text="23 Unit"
+                        android:textSize="@dimen/text_14"
+                        android:gravity="center"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:fontFamily="@font/nunito_regular"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/relative_filter"
+                    android:paddingStart="@dimen/_15sdp"
+                    android:paddingEnd="@dimen/_25sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    tools:ignore="UselessParent">
+                    <TextView
+                        android:id="@+id/tv_filter_ket"
+                        android:text="@string/tv_filter"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:textSize="@dimen/text_16"
+                        android:drawableStart="@drawable/ic_filter"
+                        android:gravity="center"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:textColor="@color/colorPrimaryHintFont"
+                        android:fontFamily="@font/nunito_regular"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        tools:ignore="RelativeOverlap" />
+                    <TextView
+                        android:id="@+id/tv_filter"
+                        android:text="Lokasi"
+                        android:textSize="@dimen/text_14"
+                        android:gravity="center"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:fontFamily="@font/nunito_regular"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
                 android:id="@+id/linear_search_and_live"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:paddingLeft="@dimen/_25sdp"
                 android:paddingRight="@dimen/_25sdp"
+                android:visibility="visible"
                 android:layout_marginBottom="@dimen/_12sdp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -142,6 +230,7 @@
                         android:layout_height="match_parent"/>
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/tv_in_new"
                     android:paddingLeft="@dimen/_15sdp"
                     android:paddingRight="@dimen/_15sdp"
                     android:text="@string/tv_baru_masuk"
@@ -151,18 +240,50 @@
                     android:textSize="@dimen/text_22"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+                <RelativeLayout
+                    android:id="@+id/relative_result_search"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:paddingRight="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="@string/tv_hasil_pencarian"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:fontFamily="@font/nunito_regular"
+                        android:textSize="@dimen/text_16"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        tools:ignore="RelativeOverlap" />
+                    <TextView
+                        android:id="@+id/tv_result_search"
+                        android:layout_alignParentEnd="true"
+                        android:text="3 Unit"
+                        android:gravity="center"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:fontFamily="@font/nunito_regular"
+                        android:textSize="@dimen/text_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        tools:ignore="RelativeOverlap" />
+
+                </RelativeLayout>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_live"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_live_soon"
                     android:visibility="gone"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_record"
                     android:visibility="gone"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>

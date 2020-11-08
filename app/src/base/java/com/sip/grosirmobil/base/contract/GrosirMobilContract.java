@@ -31,7 +31,7 @@ public class GrosirMobilContract {
     public static final String MOBILE_PHONE = "mobilephone";
     public static final String STATUS = "status";
 
-    public static final String ID_CUSTOM = "id_custome";
+    public static final String ID_VEHICLE = "id_vehicle";
     public static final String ID_PRODUCT = "id_product";
     public static final String TITLE = "title";
     public static final String PRICE = "price";

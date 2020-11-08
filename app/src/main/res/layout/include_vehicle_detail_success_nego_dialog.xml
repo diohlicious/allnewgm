@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative_background_dialog_success_nego"
+    android:background="@color/colorPrimaryBackgroundDialog"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/linear_dialog_success_nego"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/_170sdp"
+        android:background="@drawable/design_dialog"
+        android:layout_marginLeft="@dimen/_60sdp"
+        android:layout_marginRight="@dimen/_60sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="@dimen/_95sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:textColor="@color/colorPrimaryFont"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:fontFamily="@font/nunito_regular"
+            android:textSize="@dimen/text_18"
+            android:text="@string/tv_berhasil_menawar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_message_success_nego"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:textColor="@color/colorPrimaryFont"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:fontFamily="@font/nunito_regular"
+            android:lineSpacingExtra="@dimen/_3sdp"
+            android:textSize="@dimen/text_14"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:text="2010 Tesla 3 AT\nseharga\nRp 112.250.000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_garasi"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:fontFamily="@font/nunito_bold"
+            android:textSize="@dimen/text_17"
+            android:textColor="@color/colorPrimaryWhite"
+            android:background="@drawable/btn_design"
+            android:textAllCaps="false"
+            android:text="@string/btn_garasi"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"/>
+    </LinearLayout>
+    <ImageView
+        android:layout_marginTop="@dimen/_140sdp"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"
+        android:src="@drawable/ic_success_nego_or_buy_now"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_70sdp"
+        tools:ignore="ContentDescription" />
+    <ImageView
+        android:layout_marginTop="@dimen/_125sdp"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"
+        android:src="@drawable/ic_dash_circle"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        tools:ignore="ContentDescription" />
+    <ImageView
+        android:layout_marginTop="@dimen/_105sdp"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"
+        android:src="@drawable/ic_dash_circle"
+        android:layout_width="@dimen/_140sdp"
+        android:layout_height="@dimen/_140sdp"
+        tools:ignore="ContentDescription" />
+
+</RelativeLayout>

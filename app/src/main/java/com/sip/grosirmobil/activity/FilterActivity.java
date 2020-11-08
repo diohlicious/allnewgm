@@ -13,6 +13,7 @@ import com.sip.grosirmobil.base.util.GrosirMobilActivity;
 import java.util.Objects;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class FilterActivity extends GrosirMobilActivity {
 
@@ -22,6 +23,12 @@ public class FilterActivity extends GrosirMobilActivity {
         setContentView(R.layout.activity_filter);
         ButterKnife.bind(this);
 
+    }
+
+    @OnClick(R.id.btn_filter)
+    void btnFilterClick() {
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override

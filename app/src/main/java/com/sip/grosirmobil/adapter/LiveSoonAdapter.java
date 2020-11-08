@@ -2,6 +2,7 @@ package com.sip.grosirmobil.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.activity.VehicleDetailActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehicle;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
 
 import java.util.List;
+
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
 
 public class LiveSoonAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
 
@@ -43,6 +47,12 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle>
         holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());
         holder.tvPrice.setText(hardCodeDataBaruMasukModel.getPrice());
         holder.tvDescription.setText(hardCodeDataBaruMasukModel.getExpiredDate());
+
+        holder.cardVehicle.setOnClickListener(view -> {
+            Intent intent = new Intent(contexts, VehicleDetailActivity.class);
+            intent.putExtra(ID_VEHICLE, "");
+            contexts.startActivity(intent);
+        });
     }
 
     @Override
