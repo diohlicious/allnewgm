@@ -1,5 +1,6 @@
 package com.sip.grosirmobil.fragment.register;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import com.sip.grosirmobil.R;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,4 +35,5 @@ public class DataDiriFragment extends Fragment {
         ButterKnife.bind(this, view);
         return view;
     }
+
 }

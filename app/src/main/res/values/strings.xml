@@ -200,6 +200,36 @@
     <string name="tv_berhasil_menawar">Berhasil Menawar</string>
     <string name="tv_berhasil_buy_now">Berhasil Buy Now</string>
     <string name="btn_pembayaran">Pembayaran</string>
-
+    <string name="tv_password_baru">Password Baru</string>
+    <string name="btn_change_password">Ubah</string>
+    <string name="tv_kode_otp_terkirim">Kode OTP terkirim!</string>
+    <string name="tv_cek_email_atau_sms_dan_masuki_otp_anda_untuk_memverifikasi_akun">Cek email atau SMS dan masuki OTP Anda untuk memverifikasi akun</string>
+    <string name="btn_verifikasi">Verifikasi</string>
+    <string name="tv_change_password">Ganti Password</string>
+    <string name="tv_change_your_password">Rubah password yang Anda lupa</string>
+    <string name="et_nik_ktp_sim">NIK (KTP / SIM)</string>
+    <string name="tv_data_diri">Data Diri</string>
+    <string name="et_nama_lengkap">Nama Lengkap</string>
+    <string name="et_email">Email</string>
+    <string name="et_alamat">Alamat</string>
+    <string name="et_telpon">Telpon</string>
+    <string name="et_nomor_telepon">Nomor Telepon</string>
+    <string name="et_password">Password</string>
+    <string name="et_confirm_password">COnfirm Password</string>
+    <string name="tv_profil_usaha">Profil Usaha</string>
+    <string name="et_tipe_usaha">Tipe Usaha</string>
+    <string name="et_nama_dealer">Nama Dealer</string>
+    <string name="et_nomor_telepon_dealer">Nomor Telepon Dealer</string>
+    <string name="et_usia_bisnis_dealer">Usia Bisnis Dealer</string>
+    <string name="et_perputaran_unit_per_bulan">Perputaran Unit per Bulan</string>
+    <string name="tv_alamat">Alamat</string>
+    <string name="et_alamat_dealer">Alamat Dealer</string>
+    <string name="et_provinsi">Provinsi</string>
+    <string name="et_kabupaten">Kabupaten</string>
+    <string name="et_kecamatan">Kecamatan</string>
+    <string name="et_kelurahan">Kelurahan</string>
+    <string name="et_kode_pos">Kode Pos</string>
+    <string name="tv_dokumen_ktp">Dokumen KTP</string>
+    <string name="tv_upload_foto_ktp">Upload Foto KTP</string>
 
 </resources>
