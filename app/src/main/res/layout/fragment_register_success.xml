@@ -1,14 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".fragment.register.RegisterSuccessFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_on_success_register"
+        tools:ignore="ContentDescription" />
 
-</FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="@string/tv_anda_berhasil_mendaftar"
+        android:textColor="@color/colorPrimaryFont"
+        android:textSize="@dimen/text_24" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:alpha="0.6"
+        android:fontFamily="@font/nunito_semi_bold"
+        android:gravity="center"
+        android:text="Segera klik link yang telah kami kirimkan  \nke SMS / Email Anda"
+        android:textColor="@color/colorPrimaryFont"
+        android:textSize="@dimen/text_14"
+        tools:ignore="HardcodedText" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:layout_marginLeft="@dimen/_22sdp"
+        android:layout_marginRight="@dimen/_22sdp"
+        tools:ignore="ObsoleteLayoutParam">
+
+        <Button
+            android:id="@+id/btn_konfirmasi"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_56sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:background="@drawable/btn_design"
+            android:fontFamily="@font/nunito_semi_bold"
+            android:text="@string/btn_konfirmasi"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimaryWhite"
+            android:textSize="@dimen/text_18" />
+    </RelativeLayout>
+
+
+</LinearLayout>

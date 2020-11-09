@@ -231,5 +231,12 @@
     <string name="et_kode_pos">Kode Pos</string>
     <string name="tv_dokumen_ktp">Dokumen KTP</string>
     <string name="tv_upload_foto_ktp">Upload Foto KTP</string>
+    <string name="tv_paduan_foto_ktp">Paduan Foto KTP</string>
+    <string name="tv_paduan_selfie_ktp">Paduan Selfie KTP</string>
+    <string name="tv_segera_klik_link_yang_telah_kami_kirimkan_ke_sms_email_anda">Segera klik link yang telah kami kirimkan ke SMS / Email Anda</string>
+    <string name="tv_anda_berhasil_mendaftar">Anda berhasil mendaftar!</string>
+    <string name="btn_konfirmasi">Konfirmasi</string>
+    <string name="tv_selamat_bergabung">Selamat bergabung!</string>
+    <string name="btn_telusuri">Telusuri</string>
 
 </resources>

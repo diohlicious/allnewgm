@@ -5,88 +5,276 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryWhite"
-    tools:context=".fragment.register.DataDiriFragment">
+    tools:context=".fragment.register.DocumentFragment">
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimaryWhite"
-        tools:context=".fragment.register.DocumentFragment"
-        android:orientation="vertical">
-        <LinearLayout
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/_20sdp"
+        android:paddingRight="@dimen/_20sdp">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:backgroundTint="@color/colorPrimary"
-            tools:ignore="UseCompoundDrawables,UselessLeaf">
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:gravity="center|left"
+            tools:ignore="RtlHardcoded,UselessLeaf,UselessParent">
             <ImageView
                 android:id="@+id/iv_back"
-                android:layout_marginStart="@dimen/_19sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
+                android:padding="@dimen/_10sdp"
                 android:src="@drawable/ic_back_chevron"
-                android:layout_gravity="center"
-                android:layout_width="@dimen/_12sdp"
-                android:layout_height="@dimen/_18sdp"
-                tools:ignore="ContentDescription,ObsoleteLayoutParam" />
+                tools:ignore="ContentDescription" />
             <TextView
-                android:layout_toRightOf="@+id/tv_data_diri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_25sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_toRightOf="@+id/iv_back"
                 android:fontFamily="@font/nunito_bold"
                 android:text="@string/tv_dokumen_ktp"
                 android:textColor="@color/colorPrimaryFont"
-                android:textSize="@dimen/text_28"
-                android:layout_width="wrap_content"
+                android:textSize="@dimen/text_28" />
+        </RelativeLayout>
+        <com.shuhart.stepview.StepView
+            android:id="@+id/step_view_data_diri"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            app:sv_stepsNumber="5" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_125sdp"
+            android:gravity="fill"
+            android:orientation="horizontal"
+            tools:ignore="RtlHardcoded">
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:ignore="ObsoleteLayoutParam,RtlHardcoded" />
+                android:layout_marginTop="@dimen/_18sdp"
+                android:orientation="horizontal"
+                tools:ignore="MissingPrefix">
+                <ImageView
+                    android:id="@+id/bg_foto_ktp"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:src="@drawable/bg_document"
+                    tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_27sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="Upload \nFoto KTP"
+                    android:textColor="@color/colorPrimaryWhite"
+                    android:textSize="@dimen/text_18"
+                    tools:ignore="HardcodedText" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_17sdp"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_75sdp"
+                    android:src="@drawable/ic_document"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:orientation="horizontal"
+                tools:ignore="MissingPrefix">
+                <ImageView
+                    android:id="@+id/bg_foto_selfi"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:src="@drawable/bg_document"
+                    tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_27sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="Upload \nSelfie KTP"
+                    android:textColor="@color/colorPrimaryWhite"
+                    android:textSize="@dimen/text_18"
+                    tools:ignore="HardcodedText" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_17sdp"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_75sdp"
+                    android:src="@drawable/ic_smile"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
         </LinearLayout>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/_133sdp"
-            tools:ignore="MissingPrefix">
-            <ImageView
-                android:layout_gravity="top|left"
-                android:layout_width="@dimen/_150sdp"
-                android:layout_height="@dimen/_125sdp"
-                android:src="@drawable/bg_document"
-                android:layout_marginStart="@dimen/_26sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                tools:ignore="ContentDescription,RtlHardcoded" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/_12sdp"
+            tools:ignore="MissingPrefix,RtlHardcoded,RtlSymmetry,UseCompoundDrawables">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Upload \n Foto KTP"
                 android:fontFamily="@font/nunito_bold"
-                android:textSize="@dimen/_18sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginStart="@dimen/_40sdp"
-                android:textColor="@color/colorPrimaryWhite"
-                tools:ignore="HardcodedText" />
+                android:text="@string/tv_paduan_foto_ktp"
+                android:textColor="@color/colorPrimaryFont"
+                android:textSize="@dimen/text_16"
+                tools:ignore="RelativeOverlap" />
             <ImageView
+                android:layout_width="@dimen/_17sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_angle_right"
+                tools:ignore="ContentDescription" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_26sdp"
+            android:gravity="fill"
+            android:orientation="horizontal"
+            tools:ignore="RtlHardcoded">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:orientation="horizontal"
+                tools:ignore="MissingPrefix">
+                <ImageView
+                    android:layout_width="130dp"
+                    android:layout_height="79dp"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:src="@drawable/sample_ktp1"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:orientation="horizontal"
+                tools:ignore="MissingPrefix">
+                <ImageView
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginStart="@dimen/_40sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:src="@drawable/sample_ktp1"
+                    tools:ignore="ContentDescription" />
+            </RelativeLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_22sdp"
+            android:background="@color/colorPrimaryLine" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/_12sdp"
+            tools:ignore="MissingPrefix,RtlHardcoded,RtlSymmetry,UseCompoundDrawables">
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_document"
-                android:layout_marginTop="@dimen/_85sdp"
-                android:layout_marginStart="@dimen/_36sdp"
-                />
+                android:fontFamily="@font/nunito_bold"
+                android:text="@string/tv_paduan_selfie_ktp"
+                android:textColor="@color/colorPrimaryFont"
+                android:textSize="@dimen/text_16"
+                tools:ignore="RelativeOverlap" />
+
+            <ImageView
+                android:layout_width="@dimen/_17sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_angle_right"
+                tools:ignore="ContentDescription" />
+
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/btn_next_data_diri"
-            android:layout_marginTop="@dimen/_56sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
-            android:fontFamily="@font/nunito_semi_bold"
-            android:textSize="@dimen/text_18"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginRight="@dimen/_20sdp"
-            android:textColor="@color/colorPrimaryWhite"
-            android:textAllCaps="false"
-            android:text="@string/btn_selanjutnya"
-            android:background="@drawable/btn_design"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_26sdp"
+            android:baselineAligned="false"
+            android:gravity="fill"
+            android:orientation="horizontal"
+            tools:ignore="RtlHardcoded">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:orientation="horizontal"
+
+                tools:ignore="MissingPrefix">
+
+                <ImageView
+                    android:layout_width="130dp"
+                    android:layout_height="79dp"
+                    android:layout_marginStart="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:src="@drawable/sample_selfie1"
+                    tools:ignore="ContentDescription" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:orientation="horizontal"
+
+                tools:ignore="MissingPrefix">
+
+                <ImageView
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_marginStart="@dimen/_40sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:src="@drawable/sample_selfie2"
+                    tools:ignore="ContentDescription" />
+
+
+            </RelativeLayout>
+        </LinearLayout>
+        <RelativeLayout
+            android:gravity="bottom"
+            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp" />
+            android:layout_height="wrap_content"
+            tools:ignore="ObsoleteLayoutParam">
+            <Button
+                android:id="@+id/btn_end_register_data"
+                android:layout_marginTop="@dimen/_56sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:fontFamily="@font/nunito_semi_bold"
+                android:textSize="@dimen/text_18"
+                android:textColor="@color/colorPrimaryWhite"
+                android:textAllCaps="false"
+                android:text="@string/btn_selesai"
+                android:background="@drawable/btn_design"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp" />
+        </RelativeLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
 
