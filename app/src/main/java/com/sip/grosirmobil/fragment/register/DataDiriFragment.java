@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
+import com.shuhart.stepview.StepView;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.RegisterDataActivity;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -28,6 +31,11 @@ public class DataDiriFragment extends Fragment {
         return fragmentFirst;
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.et_nik) EditText etNik;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.step_view) StepView stepView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,7 +43,15 @@ public class DataDiriFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_data_diri, container, false);
         ButterKnife.bind(this, view);
 
+
+        stepView.go(0, true);
         return view;
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.iv_back)
+    void ivBackClick(){
+        getActivity().finish();
     }
 
     @SuppressLint("NonConstantResourceId")

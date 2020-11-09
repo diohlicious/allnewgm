@@ -1,6 +1,7 @@
 package com.sip.grosirmobil.fragment.register;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.activity.MainActivity;
 import com.sip.grosirmobil.activity.RegisterDataActivity;
-import com.sip.grosirmobil.fragment.navigationmenu.HomeFragment;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -40,8 +41,16 @@ public class JoinSuccessFragment extends Fragment {
     }
 
     @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.btn_end_register_data)
-    void btnEndRegisterDataClick(){
-       ((RegisterDataActivity)getActivity()).replaceFragment(new HomeFragment());
+    @OnClick(R.id.iv_back)
+    void ivBackClick(){
+        ((RegisterDataActivity)getActivity()).setFragment();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.btn_telusuri)
+    void btnTelusuriClick(){
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

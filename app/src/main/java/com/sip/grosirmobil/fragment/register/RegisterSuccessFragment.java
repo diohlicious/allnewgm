@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.RegisterDataActivity;
-import com.sip.grosirmobil.fragment.navigationmenu.HomeFragment;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -38,9 +37,17 @@ public class RegisterSuccessFragment extends Fragment {
         
         return view;
     }
+
     @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.btn_end_register_data)
-    void btnEndRegisterDataClick(){
-        ((RegisterDataActivity)getActivity()).replaceFragment(new HomeFragment());
+    @OnClick(R.id.iv_back)
+    void ivBackClick(){
+        ((RegisterDataActivity)getActivity()).setFragment();
+    }
+
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.btn_confirmation)
+    void btnConfirmationClick(){
+        ((RegisterDataActivity)getActivity()).replaceFragment(new JoinSuccessFragment());
     }
 }

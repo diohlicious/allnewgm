@@ -3,45 +3,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     tools:context=".fragment.register.JoinSuccessFragment">
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_on_join_success"
-        tools:ignore="ContentDescription" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:fontFamily="@font/nunito_bold"
-        android:text="@string/tv_selamat_bergabung"
-        android:textColor="@color/colorPrimaryFont"
-        android:textSize="@dimen/text_24" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:alpha="0.6"
-        android:fontFamily="@font/nunito_semi_bold"
-        android:gravity="center"
-        android:text="Anda telah bergabung dengan GrosirMobil \npilih mobil dan segera lakukan penawaran"
-        android:textColor="@color/colorPrimaryFont"
-        android:textSize="@dimen/text_14"
-        tools:ignore="HardcodedText" />
     <RelativeLayout
+        android:id="@+id/relative_toolbar"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="bottom"
-        android:layout_marginLeft="@dimen/_22sdp"
-        android:layout_marginRight="@dimen/_22sdp"
-        tools:ignore="ObsoleteLayoutParam">
-
+        android:layout_height="@dimen/_45sdp">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:src="@drawable/ic_back"
+            android:padding="@dimen/_10sdp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            tools:ignore="ContentDescription,RelativeOverlap" />
+    </RelativeLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_on_join_success"
+            tools:ignore="ContentDescription" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/tv_selamat_bergabung"
+            android:textColor="@color/colorPrimaryFont"
+            android:textSize="@dimen/text_24" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:alpha="0.6"
+            android:fontFamily="@font/nunito_semi_bold"
+            android:gravity="center"
+            android:text="Anda telah bergabung dengan GrosirMobil \npilih mobil dan segera lakukan penawaran"
+            android:textColor="@color/colorPrimaryFont"
+            android:textSize="@dimen/text_14"
+            tools:ignore="HardcodedText" />
         <Button
             android:id="@+id/btn_telusuri"
             android:layout_width="match_parent"
@@ -50,11 +57,11 @@
             android:layout_marginBottom="@dimen/_20sdp"
             android:background="@drawable/btn_design"
             android:fontFamily="@font/nunito_semi_bold"
+            android:layout_marginLeft="@dimen/_22sdp"
+            android:layout_marginRight="@dimen/_22sdp"
             android:text="@string/btn_telusuri"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimaryWhite"
             android:textSize="@dimen/text_18" />
-    </RelativeLayout>
-
-
+    </LinearLayout>
 </LinearLayout>

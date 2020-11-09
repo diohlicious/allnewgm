@@ -66,6 +66,7 @@ public class RegisterActivity extends GrosirMobilActivity {
             if(cbTermAndCondition.isChecked()){
                 Intent intent = new Intent(this, CodeOtpActivity.class);
                 startActivity(intent);
+                finish();
             }else {
                 Toast.makeText(this, "Mohon Centang Term And Condition", Toast.LENGTH_SHORT).show();
             }

@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTextChanged;
 
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.adjustFontScale;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarOnBoarding;
@@ -296,6 +294,7 @@ public class CodeOtpActivity extends GrosirMobilActivity {
         else{
             Intent intent = new Intent(this, RegisterDataActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 

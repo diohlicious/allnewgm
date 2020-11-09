@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.shuhart.stepview.StepView;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.RegisterDataActivity;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -28,6 +30,9 @@ public class ProfileUsahaFragment extends Fragment {
         return fragmentFirst;
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.step_view) StepView stepView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,7 +40,14 @@ public class ProfileUsahaFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile_usaha, container, false);
         ButterKnife.bind(this, view);
 
+        stepView.go(1, true);
         return view;
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.iv_back)
+    void ivBackClick(){
+        ((RegisterDataActivity)getActivity()).setFragment();
     }
 
     @SuppressLint("NonConstantResourceId")

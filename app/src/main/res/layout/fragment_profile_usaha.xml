@@ -38,12 +38,32 @@
                 android:layout_height="wrap_content"/>
         </RelativeLayout>
         <com.shuhart.stepview.StepView
-            android:id="@+id/step_view_data_diri"
-            app:sv_stepsNumber="5"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
+            android:id="@+id/step_view"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"/>
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_16sdp"
+            android:paddingLeft="@dimen/_16sdp"
+            android:paddingRight="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:sv_stepsNumber="4"
+            app:sv_stepLineWidth="@dimen/_2sdp"
+            app:sv_stepPadding="0dp"
+            app:sv_stepNumberTextSize="@dimen/text_18"
+            app:sv_doneCircleRadius="@dimen/_15sdp"
+            app:sv_selectedCircleRadius="@dimen/_15sdp"
+            app:sv_nextTextColor="@color/colorPrimaryWhite"
+            app:sv_nextStepLineColor="#DFDEDE"
+            app:sv_nextStepCircleColor="#DFDEDE"
+            app:sv_nextStepCircleEnabled="true"
+            app:sv_selectedCircleColor="@color/colorPrimaryTheme"
+            app:sv_selectedTextColor="@color/colorPrimaryWhite"
+            app:sv_selectedStepNumberColor="@color/colorPrimaryWhite"
+            app:sv_doneStepLineColor="@color/colorPrimaryTheme"
+            app:sv_doneCircleColor="@color/colorPrimaryTheme"
+            app:sv_doneStepMarkColor="@color/colorPrimaryWhite"
+            app:sv_doneTextColor="@color/colorPrimaryWhite"
+            app:sv_animationType="All" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -197,26 +217,18 @@
                 android:layout_marginStart="@dimen/_24sdp"
                 tools:ignore="Autofill,LabelFor,RtlHardcoded,TextFields" />
         </LinearLayout>
-        <RelativeLayout
-            android:gravity="bottom"
-            android:layout_alignParentBottom="true"
+        <Button
+            android:id="@+id/btn_next_profile_usaha"
+            android:layout_marginTop="@dimen/_56sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:fontFamily="@font/nunito_semi_bold"
+            android:textSize="@dimen/text_18"
+            android:textColor="@color/colorPrimaryWhite"
+            android:textAllCaps="false"
+            android:text="@string/btn_selanjutnya"
+            android:background="@drawable/btn_design"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="ObsoleteLayoutParam">
-            <Button
-                android:id="@+id/btn_next_profile_usaha"
-                android:layout_marginTop="@dimen/_56sdp"
-                android:layout_marginBottom="@dimen/_20sdp"
-                android:fontFamily="@font/nunito_semi_bold"
-                android:textSize="@dimen/text_18"
-                android:textColor="@color/colorPrimaryWhite"
-                android:textAllCaps="false"
-                android:text="@string/btn_selanjutnya"
-                android:background="@drawable/btn_design"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp" />
-
-        </RelativeLayout>
+            android:layout_height="@dimen/_40sdp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
 

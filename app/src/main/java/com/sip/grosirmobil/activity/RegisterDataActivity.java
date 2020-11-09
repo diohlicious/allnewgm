@@ -10,6 +10,7 @@ import android.widget.EditText;
 import androidx.fragment.app.Fragment;
 
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
 import com.sip.grosirmobil.fragment.register.DataDiriFragment;
 
@@ -28,8 +29,25 @@ public class RegisterDataActivity extends GrosirMobilActivity {
         replaceFragment(new DataDiriFragment());
     }
 
+
+    public void setFragment() {
+        try {
+            System.out.println("Count Fragment : "+ getSupportFragmentManager().getBackStackEntryCount());
+            if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+                getSupportFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+            }
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
+            finish();
+        }
+    }
+
+
     public void replaceFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.page_fragment, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.page_fragment, fragment).addToBackStack("my_fragment").commit();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.page_fragment, fragment).commit();
     }
 
     @Override
