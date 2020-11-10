@@ -26,6 +26,7 @@
         android:windowSoftInputMode="stateVisible"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="m">
+        <activity android:name=".activity.SuccessBiddingActivity"></activity>
         <activity android:name=".activity.ForgotPasswordActivity" />
         <activity android:name=".activity.ChangePasswordActivity" />
         <activity android:name=".activity.RegisterDataActivity" />

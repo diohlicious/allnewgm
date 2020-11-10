@@ -250,5 +250,10 @@
     <string name="tv_dealer_pos_code">15322</string>
     <string name="tv_date_success_bidding">23 Oktober 2020</string>
     <string name="tv_total_bid_success">2 Unit</string>
+    <string name="tv_success_bidding">Penawaran Dimenangkan</string>
+    <string name="tv_nomor_telepon">Nomor Telepon</string>
+    <string name="tv_province">Provinsi</string>
+    <string name="tv_pos_code">Kode Pos</string>
+    <string name="tv_account">Akun</string>
 
 </resources>

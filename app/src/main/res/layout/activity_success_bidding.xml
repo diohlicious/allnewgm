@@ -1,80 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="@dimen/_10sdp"
+    android:paddingRight="@dimen/_10sdp"
+    android:orientation="vertical"
     android:background="@color/colorPrimaryWhite"
-    tools:context=".activity.ProfileActivity">
-
-
-    <RelativeLayout
+    tools:context=".activity.SuccessBiddingActivity">
+    <LinearLayout
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_25sdp"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/relative_toolbar"
-            android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables,UselessParent">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:padding="@dimen/_10sdp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:orientation="vertical"
-            tools:ignore="UseCompoundDrawables,UselessParent">
-
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_back_icon_big"
-                tools:ignore="ContentDescription,RelativeOverlap" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_14sdp"
-                android:fontFamily="@font/nunito_semi_bold"
-                android:text="Penawaran Dimenangkan"
-                android:textColor="@color/colorPrimaryFont"
-                android:textSize="@dimen/text_24"
-                tools:ignore="HardcodedText" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_25sdp"
-                android:orientation="horizontal"
-                tools:ignore="RtlSymmetry,UselessLeaf">
-
-                <TextView
-                    android:id="@+id/tv_date_success_bidding"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_semi_bold"
-                    android:text="@string/tv_date_success_bidding"
-                    android:textColor="@color/colorPrimaryFont"
-                    android:textSize="@dimen/text_16" />
-
-                <TextView
-                    android:id="@+id/tv_total_bid_success"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/nunito_regular"
-                    android:text="@string/tv_total_bid_success"
-                    android:textColor="@color/colorPrimaryFont"
-                    android:textSize="@dimen/text_14"
-                    tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
-            </RelativeLayout>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_bid_success"
-                android:nestedScrollingEnabled="false"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
-
-</androidx.core.widget.NestedScrollView>
+            android:src="@drawable/ic_back_icon_big"
+            tools:ignore="ContentDescription,RelativeOverlap" />
+        <TextView
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:fontFamily="@font/nunito_semi_bold"
+            android:text="@string/tv_success_bidding"
+            android:textColor="@color/colorPrimaryFont"
+            android:textSize="@dimen/text_24"
+            tools:ignore="HardcodedText" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_bid_success"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>
