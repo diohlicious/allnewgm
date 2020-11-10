@@ -29,7 +29,8 @@ import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MULT
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.adjustFontScale;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarOnBoarding;
 
-public class OnBoardingActivity extends GrosirMobilActivity implements OnBoardingView {
+public class
+OnBoardingActivity extends GrosirMobilActivity implements OnBoardingView {
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_skip) TextView tvSkip;

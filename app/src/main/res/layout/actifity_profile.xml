@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryWhite"
+    tools:context=".activity.ProfileActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/relative_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables,UselessParent">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_back_icon_big"
+                tools:ignore="ContentDescription,RelativeOverlap" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:fontFamily="@font/nunito_semi_bold"
+                android:text="@string/tv_profil_saya"
+                android:textColor="@color/colorPrimaryFont"
+                android:textSize="@dimen/text_24" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_26sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:orientation="horizontal"
+            tools:ignore="UselessLeaf">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="@dimen/_58sdp"
+                android:layout_height="@dimen/_58sdp"
+                android:layout_alignParentStart="true"
+                android:src="@drawable/ic_syahrul"
+                tools:ignore="ObsoleteLayoutParam" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/nunito_regular"
+                android:gravity="left|center"
+                android:paddingLeft="@dimen/_16sdp"
+                android:text="@string/tv_syahrul_hajji"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_24"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_search_and_live"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/nunito_regular"
+                android:gravity="left|center"
+                android:text="@string/tv_voucher"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_16"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/design_card"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="UselessLeaf">
+
+                <TextView
+                    android:id="@+id/tv_kendaraan_tayang"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="Anda memiliki 4 voucher"
+                    android:textColor="@color/colorPrimaryWhite"
+                    android:textSize="@dimen/text_16"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/tv_see_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:background="@drawable/design_card_theme"
+                    android:fontFamily="@font/nunito_bold"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_7sdp"
+                    android:paddingRight="@dimen/_7sdp"
+                    android:text="@string/tv_lihat_semua"
+                    android:textColor="@color/colorPrimaryWhite"
+                    android:textSize="@dimen/text_12" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_17sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:gravity="left|center"
+                android:text="@string/tv_data_diri"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_16"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_20sdp"
+                tools:ignore="UselessLeaf" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    tools:ignore="RtlSymmetry,UselessLeaf">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scrollbarSize="@dimen/text_14"
+                        android:text="@string/tv_nama_lengkap"
+                        android:textColor="@color/colorFontGray"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/nunito_regular"
+                        android:text="@string/tv_syahrul_hajji"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@color/colorPrimaryLine" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    tools:ignore="RtlSymmetry,UselessLeaf">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scrollbarSize="@dimen/text_14"
+                        android:text="Nomor Telepon"
+                        android:textColor="@color/colorFontGray"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/nunito_regular"
+                        android:text="@string/tv_no_hp"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@color/colorPrimaryLine" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    tools:ignore="RtlSymmetry,UselessLeaf">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scrollbarSize="@dimen/text_14"
+                        android:text="Email"
+                        android:textColor="@color/colorFontGray"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/nunito_regular"
+                        android:text="@string/tv_email_address"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_17sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:gravity="left|center"
+                android:text="@string/tv_alamat"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_16"
+                tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_20sdp"
+                tools:ignore="UselessLeaf" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/_10sdp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    tools:ignore="RtlSymmetry,UselessLeaf">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scrollbarSize="@dimen/text_14"
+                        android:text="@string/tv_alamat_dealer"
+                        android:textColor="@color/colorFontGray"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/nunito_regular"
+                        android:text="@string/tv_dealer_address"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@color/colorPrimaryLine" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    tools:ignore="RtlSymmetry,UselessLeaf">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scrollbarSize="@dimen/text_14"
+                        android:text="Provinsi"
+                        android:textColor="@color/colorFontGray"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/nunito_regular"
+                        android:text="@string/tv_dealer_province"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@color/colorPrimaryLine" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    tools:ignore="RtlSymmetry,UselessLeaf">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scrollbarSize="@dimen/text_14"
+                        android:text="Kode Pos"
+                        android:textColor="@color/colorFontGray"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/nunito_regular"
+                        android:text="@string/tv_dealer_pos_code"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_17sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:gravity="left|center"
+                android:text="Riwayat"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_16"
+                tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:ignore="RtlHardcoded">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view_upload_photo_ktp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_120sdp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:ignore="MissingPrefix">
+
+                        <ImageView
+                            android:id="@+id/iv_success_bidding"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/bg_document"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_success_bidding"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_27sdp"
+                            android:layout_marginTop="@dimen/_18sdp"
+                            android:fontFamily="@font/nunito_bold"
+                            android:text="Penawaran \ndimenagkan"
+                            android:textColor="@color/colorPrimaryWhite"
+                            android:textSize="@dimen/text_18"
+                            tools:ignore="HardcodedText" />
+                        <ImageView
+                            android:id="@+id/iv_image_document_ktp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_17sdp"
+                            android:layout_marginStart="@dimen/_30sdp"
+                            android:layout_marginTop="@dimen/_75sdp"
+                            android:src="@drawable/ic_smile"
+                            tools:ignore="ContentDescription" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view_loss_bidding"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_120sdp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:ignore="MissingPrefix">
+
+                        <ImageView
+                            android:id="@+id/iv_loss_bidding"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_loss_bidding"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:id="@+id/tv_loss_bidding"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_27sdp"
+                            android:layout_marginTop="@dimen/_18sdp"
+                            android:fontFamily="@font/nunito_bold"
+                            android:text="Penawaran \nkalah"
+                            android:textColor="@color/colorPrimaryWhite"
+                            android:textSize="@dimen/text_18"
+                            tools:ignore="HardcodedText" />
+                        <ImageView
+                            android:id="@+id/iv_image_selfie_ktp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_17sdp"
+                            android:layout_marginStart="@dimen/_30sdp"
+                            android:layout_marginTop="@dimen/_75sdp"
+                            android:src="@drawable/ic_bad_mood"
+                            tools:ignore="ContentDescription" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_17sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:gravity="left|center"
+                android:text="Akun"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_16"
+                tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
+
+
+            <TextView
+                android:id="@+id/tv_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="Keluar Akun"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_14"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

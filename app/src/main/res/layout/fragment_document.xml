@@ -78,12 +78,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:ignore="MissingPrefix">
+
                     <ImageView
                         android:id="@+id/iv_photo_ktp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/bg_document"
                         tools:ignore="ContentDescription" />
+
                     <TextView
                         android:id="@+id/tv_description_upload_photo_ktp"
                         android:layout_width="wrap_content"
@@ -115,12 +117,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:ignore="MissingPrefix">
+
                     <ImageView
                         android:id="@+id/iv_photo_selfie"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/bg_document"
                         tools:ignore="ContentDescription" />
+
                     <TextView
                         android:id="@+id/tv_description_upload_selfie_ktp"
                         android:layout_width="wrap_content"

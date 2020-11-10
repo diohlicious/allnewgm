@@ -1,3 +1,5 @@
+
+
 package com.sip.grosirmobil.activity;
 
 import android.content.Context;
@@ -19,13 +21,11 @@ import java.util.Objects;
 import butterknife.ButterKnife;
 
 public class RegisterDataActivity extends GrosirMobilActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_data);
         ButterKnife.bind(this);
-
         replaceFragment(new DataDiriFragment());
     }
 
@@ -53,8 +53,7 @@ public class RegisterDataActivity extends GrosirMobilActivity {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View view = getCurrentFocus();
-        if ((ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE)
-                && view instanceof EditText && !view.getClass().getName().startsWith("android.webkit.")) {
+        if ((ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) && view instanceof EditText && !view.getClass().getName().startsWith("android.webkit.")) {
             int[] scrcoords = new int[2];
             view.getLocationOnScreen(scrcoords);
             float x = ev.getRawX() + view.getLeft() - scrcoords[0];
@@ -65,3 +64,4 @@ public class RegisterDataActivity extends GrosirMobilActivity {
         return super.dispatchTouchEvent(ev);
     }
 }
+

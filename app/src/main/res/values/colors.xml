@@ -170,4 +170,5 @@
     <color name="colorSlateGray">#708090</color>
     <color name="colorDarkSlateGray">#2F4F4F</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorFontGray">#9B9B9B</color>
 </resources>

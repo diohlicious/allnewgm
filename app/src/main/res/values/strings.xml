@@ -238,5 +238,17 @@
     <string name="btn_konfirmasi">Konfirmasi</string>
     <string name="tv_selamat_bergabung">Selamat bergabung!</string>
     <string name="btn_telusuri">Telusuri</string>
+    <string name="tv_profil_saya">Profil Saya</string>
+    <string name="tv_syahrul_hajji">Syahrul Hajji</string>
+    <string name="tv_nama_lengkap">Nama Lengkap</string>
+    <string name="tv_no_hp">+62 812 9884-7744</string>
+    <string name="tv_email_address">lilodpasha@yahoo.com</string>
+    <string name="tv_voucher">Voucher</string>
+    <string name="tv_alamat_dealer">Alamat Dealer</string>
+    <string name="tv_dealer_address">BSD City</string>
+    <string name="tv_dealer_province">Tanggerang Selatan</string>
+    <string name="tv_dealer_pos_code">15322</string>
+    <string name="tv_date_success_bidding">23 Oktober 2020</string>
+    <string name="tv_total_bid_success">2 Unit</string>
 
 </resources>

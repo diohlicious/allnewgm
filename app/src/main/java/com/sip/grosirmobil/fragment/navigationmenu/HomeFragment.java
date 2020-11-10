@@ -20,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.FilterActivity;
+import com.sip.grosirmobil.activity.ProfileActivity;
 import com.sip.grosirmobil.activity.SearchActivity;
 import com.sip.grosirmobil.adapter.LiveAdapter;
 import com.sip.grosirmobil.adapter.LiveSoonAdapter;
@@ -319,5 +320,11 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     public void hideDialogLoading() {
 
     }
-
+//Edit Profile
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.iv_profile)
+    void ivProfileClick(){
+        Intent intent = new Intent (getActivity(), ProfileActivity.class);
+        startActivityForResult(intent, FILTER_REQUEST);
+    }
 }

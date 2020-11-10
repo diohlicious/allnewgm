@@ -31,6 +31,7 @@ public class ChangePasswordActivity extends GrosirMobilActivity {
 
         email = getIntent().getStringExtra(EMAIL);
     }
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_change_password)
     void btnChangePasswordClick(){
         Intent intent = new Intent(this, LoginActivity.class);

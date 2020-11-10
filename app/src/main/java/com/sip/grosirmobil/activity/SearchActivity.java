@@ -1,5 +1,6 @@
 package com.sip.grosirmobil.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -25,6 +26,7 @@ public class SearchActivity extends GrosirMobilActivity {
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_search)
     void btnSearchClick() {
         setResult(RESULT_OK);
