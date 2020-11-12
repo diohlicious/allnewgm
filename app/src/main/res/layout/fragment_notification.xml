@@ -4,34 +4,125 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.navigationmenu.NotificationFragment">
+    
+<!--    TODO: ji tolong di teks beda warna dalam 1 textview belum bisa aku buat seperti teks klik disini-->
     <RelativeLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_50sdp"
+        android:orientation="vertical"
         tools:ignore="UselessLeaf">
         <ImageView
             android:id="@+id/iv_background"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_background_notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_background_notification"
             tools:ignore="ContentDescription" />
         <TextView
-            android:layout_marginLeft="@dimen/_30sdp"
-            android:layout_marginRight="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:textColor="@color/colorPrimaryWhite"
-            android:fontFamily="@font/nunito_bold"
-            android:textSize="@dimen/text_34"
-            android:text="Open House"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/tv_open_house"
+            android:textColor="@color/colorPrimaryWhite"
+            android:textSize="@dimen/text_34"
             tools:ignore="RelativeOverlap" />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tv_notification"
-            android:layout_below="@id/iv_background"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_75sdp"
+            android:layout_marginRight="@dimen/_30sdp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/tv_open_house_date"
+            android:textColor="@color/colorPrimaryWhite"
+            android:textSize="@dimen/text_18"
+            tools:ignore="RelativeOverlap" />
+        <Button
+            android:id="@+id/btn_view_all_unit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_155sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:background="@drawable/btn_design"
+            android:fontFamily="@font/nunito_semi_bold"
+            android:text="@string/tv_lihat_semua_unit"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimaryWhite"
+            android:textSize="@dimen/text_18" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_236sdp"
+            android:orientation="horizontal"
+            android:padding="@dimen/_6sdp">
+            <TextView
+                android:id="@+id/tv_ready_unit_to_bid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_28sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_28sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:drawableEnd="@drawable/ic_angle_right"
+                android:drawableTint="@color/colorBlack"
+                android:fontFamily="@font/nunito_regular"
+                android:gravity="center|left"
+                android:text="@string/tv_ready_to_bid"
+                android:textColor="@color/colorFontBlack"
+                android:textSize="@dimen/text_18"
+                tools:ignore="RelativeOverlap,RtlHardcoded,UnusedAttribute" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_320sdp"
+            android:background="@color/colorRedAlpha20"
+            android:orientation="horizontal"
+            android:padding="@dimen/_6sdp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_28sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_28sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:drawableEnd="@drawable/ic_angle_right"
+                android:drawableTint="@color/colorFontBlack"
+                android:fontFamily="@font/nunito_regular"
+                android:gravity="center|left"
+                android:text="@string/tv_bid_again"
+                android:textColor="@color/colorFontBlack"
+                android:textSize="@dimen/text_18"
+                tools:ignore="RelativeOverlap,RtlHardcoded,UnusedAttribute" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_400sdp"
+            android:background="@color/colorAccentAlpha20"
+            android:orientation="horizontal"
+            android:padding="@dimen/_6sdp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_28sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_28sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:drawableEnd="@drawable/ic_angle_right"
+                android:drawableTint="@color/colorAccent"
+                android:fontFamily="@font/nunito_regular"
+                android:gravity="center|left"
+                android:text="@string/tv_bid_success_to_pay"
+                android:textColor="#000"
+                android:textSize="@dimen/text_18"
+                tools:ignore="RelativeOverlap,RtlHardcoded,UnusedAttribute" />
+        </LinearLayout>
     </RelativeLayout>
-
 </androidx.core.widget.NestedScrollView>

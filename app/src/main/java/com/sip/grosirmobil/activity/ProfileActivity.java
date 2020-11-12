@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.adapter.LostBiddingAdapter;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
 
 import butterknife.BindView;
@@ -18,7 +19,8 @@ import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBar
 public class ProfileActivity extends GrosirMobilActivity {
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.iv_back) ImageView ivBack;
+    @BindView(R.id.iv_back)
+    ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +35,22 @@ public class ProfileActivity extends GrosirMobilActivity {
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.iv_success_bidding)
-    void ivSuccessBiddingClick(){
+    void ivSuccessBiddingClick() {
         Intent intent = new Intent(this, SuccessBiddingActivity.class);
         startActivity(intent);
     }
 
     @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.iv_lost_bidding)
+    void ivLostBiddingClick() {
+        Intent intent = new Intent(this, LostBiddingActivity.class);
+        startActivity(intent);
+
+    }
+
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.iv_back)
-    void ivBackClick(){
+    void ivBackClick() {
         onBackPressed();
     }
 

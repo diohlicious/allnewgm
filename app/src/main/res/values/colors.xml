@@ -3,6 +3,7 @@
     <color name="colorPrimary">#f2f2f2</color>
     <color name="colorPrimaryDark">#f2f2f2</color>
     <color name="colorAccent">#94C12C</color>
+    <color name="colorAccentAlpha20">#3394C12C</color>
 
     <!--COLOR PRIMARY CHANGE-->
     <color name="colorPrimaryTheme">#94C12C</color>
@@ -32,6 +33,7 @@
     <color name="colorRed">#FF0000</color>
     <color name="colorFireBrick">#B22222</color>
     <color name="colorDarkRed">#8B0000</color>
+    <color name="colorRedAlpha20">#33E6242C</color>
     <!--ORANGE COLOR NAMES-->
     <color name="colorCoral">#FF7F50</color>
     <color name="colorTomato">#FF6347</color>
@@ -171,4 +173,5 @@
     <color name="colorDarkSlateGray">#2F4F4F</color>
     <color name="colorBlack">#000000</color>
     <color name="colorFontGray">#9B9B9B</color>
+    <color name="colorFontBlack">#444444</color>
 </resources>

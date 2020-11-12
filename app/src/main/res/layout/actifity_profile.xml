@@ -345,7 +345,7 @@
                             android:layout_height="match_parent"
                             tools:ignore="MissingPrefix">
                             <ImageView
-                                android:id="@+id/iv_loss_bidding"
+                                android:id="@+id/iv_lost_bidding"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:src="@drawable/ic_loss_bidding"

@@ -55,7 +55,6 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     @BindView(R.id.rv_image_car) RecyclerView rvImageCar;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_description) RecyclerView rvDescription;
-
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_car_data) TextView tvCarData;
     @SuppressLint("NonConstantResourceId")

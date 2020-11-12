@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_vehicle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginEnd="@dimen/_15sdp"
+    android:layout_marginBottom="@dimen/_5sdp"
+    android:background="@color/colorPrimaryWhite"
+    app:cardCornerRadius="@dimen/_10sdp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="UselessLeaf">
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/image_car_ex2"
+            tools:ignore="ContentDescription" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:gravity="left"
+            android:orientation="vertical"
+            tools:ignore="RtlHardcoded">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp"
+                android:gravity="center|left"
+                android:orientation="horizontal"
+                android:paddingRight="@dimen/_7sdp"
+                tools:ignore="RtlSymmetry">
+                <LinearLayout
+                    android:id="@+id/linear_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/design_card_expired_date">
+                    <ImageView
+                        android:id="@+id/iv_timer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:foregroundGravity="center"
+                        android:src="@drawable/ic_timer"
+                        tools:ignore="ContentDescription" />
+                    <TextView
+                        android:id="@+id/tv_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:fontFamily="@font/nunito_regular"
+                        android:gravity="center"
+                        android:text="04h 27m 03s"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_11"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right">
+                    <ImageView
+                        android:scaleType="fitCenter"
+                        android:layout_centerInParent="true"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_gravity="right"
+                        android:src="@drawable/ic_favorite"
+                        tools:ignore="ContentDescription,ObsoleteLayoutParam" />
+                </LinearLayout>
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_vehicle_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_regular"
+                android:maxLines="2"
+                android:text="Masserati DSE AT 2015"
+                android:textColor="@color/colorPrimaryFont"
+                android:textSize="@dimen/text_16" />
+            <TextView
+                android:id="@+id/tv_plat_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginBottom="@dimen/_2sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="NI 21231324"
+                android:textColor="@color/colorPrimaryHintFont"
+                android:textSize="@dimen/text_10" />
+            <TextView
+                android:id="@+id/tv_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_regular"
+                android:text="Jakarta"
+                android:textColor="@color/colorPrimaryHintFont"
+                android:textSize="@dimen/text_10" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_25sdp"
+                android:gravity="left|center"
+                android:orientation="horizontal"
+                tools:ignore="UselessLeaf">
+                <ImageView
+                    android:id="@+id/iv_min"
+                    android:layout_width="@dimen/_13sdp"
+                    android:layout_height="@dimen/_13sdp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_minus_circle"
+                    tools:ignore="ContentDescription" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:background="@drawable/design_search"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_price"
+                        android:layout_width="@dimen/_85sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:background="@drawable/design_search"
+                        android:fontFamily="@font/nunito_regular"
+                        android:gravity="left|center"
+                        android:hint="Rp 111.000.000"
+                        android:maxLength="16"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_2sdp"
+                        android:scrollbarSize="@dimen/text_10"
+                        android:textColorHint="@color/colorPrimaryHintFont"
+                        android:textSize="@dimen/text_10"
+                        tools:ignore="Autofill,HardcodedText,LabelFor,RelativeOverlap,RtlSymmetry" />
+
+                    <ImageView
+                        android:id="@+id/iv_clear_price"
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:src="@drawable/ic_clear_price"
+                        tools:ignore="ContentDescription" />
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/iv_plus"
+                    android:layout_width="@dimen/_13sdp"
+                    android:layout_height="@dimen/_13sdp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_plus_circle"
+                    tools:ignore="ContentDescription" />
+                <Button
+                    android:id="@+id/btn_nego"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:background="@drawable/btn_design"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="@string/btn_nego"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimaryWhite"
+                    android:textSize="@dimen/text_10" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

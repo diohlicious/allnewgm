@@ -29,6 +29,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -51,6 +52,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -66,7 +68,7 @@ public class GrosirMobilFunction {
 
     Context context;
 
-    public GrosirMobilFunction(Context context){
+    public GrosirMobilFunction(Context context) {
         super();
         this.context = context;
     }
@@ -90,6 +92,15 @@ public class GrosirMobilFunction {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(activity.getResources().getColor(android.R.color.transparent));
             window.setBackgroundDrawable(background);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void setStatusBarNotificationFragment(Fragment fragment) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = Objects.requireNonNull(fragment.getActivity()).getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+            window.setStatusBarColor(fragment.getResources().getColor(android.R.color.transparent));
         }
     }
 
@@ -231,11 +242,11 @@ public class GrosirMobilFunction {
         return ssb;
     }
 
-    public void refreshToken(Activity activity, Context context){
+    public void refreshToken(Activity activity, Context context) {
         GrosirMobilPreference grosirMobilPreference = new GrosirMobilPreference(context);
         GrosirMobilFunction funcUtil = new GrosirMobilFunction(context);
 
-        final Call<LoginResponse> refreshTokenApi = getApiTemplate().refreshTokenApi("Bearer "+ grosirMobilPreference.getToken());
+        final Call<LoginResponse> refreshTokenApi = getApiTemplate().refreshTokenApi("Bearer " + grosirMobilPreference.getToken());
         ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setCancelable(false);
         progressDialog.setMessage(context.getString(R.string.base_tv_please_wait));
@@ -244,28 +255,27 @@ public class GrosirMobilFunction {
             @Override
             public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 progressDialog.dismiss();
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
-                        if (response.body()==null){
+                        if (response.body() == null) {
                             Intent intent = new Intent(context, LoginActivity.class);
                             context.startActivity(intent);
                             activity.finish();
-                        }
-                        else if(response.body().getErrorCode().equals("0000")) {
+                        } else if (response.body().getErrorCode().equals("0000")) {
                             grosirMobilPreference.saveToken(response.body().getToken());
                             Intent intentMain = new Intent(context, MainActivity.class);
                             context.startActivity(intentMain);
                             activity.finish();
-                        }else {
+                        } else {
                             Intent intent = new Intent(context, LoginActivity.class);
                             context.startActivity(intent);
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         GrosirMobilLog.printStackTrace(e);
                     }
-                }else {
+                } else {
                     try {
-                        funcUtil.showMessage(context, context.getString(R.string.base_null_error_title),response.errorBody().string());
+                        funcUtil.showMessage(context, context.getString(R.string.base_null_error_title), response.errorBody().string());
                     } catch (IOException e) {
                         GrosirMobilLog.printStackTrace(e);
                     }
@@ -275,7 +285,7 @@ public class GrosirMobilFunction {
             @Override
             public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 progressDialog.dismiss();
-                funcUtil.showMessage(context, context.getString(R.string.base_null_error_title),context.getString(R.string.base_null_server));
+                funcUtil.showMessage(context, context.getString(R.string.base_null_error_title), context.getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);
             }
         });
@@ -297,20 +307,20 @@ public class GrosirMobilFunction {
         });
     }
 
-    public Bitmap decodeFile(File f){
+    public Bitmap decodeFile(File f) {
         try {
             BitmapFactory.Options o = new BitmapFactory.Options();
             o.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(new FileInputStream(f),null,o);
+            BitmapFactory.decodeStream(new FileInputStream(f), null, o);
 
-            final int REQUIRED_SIZE=200;
-            int scale=1;
+            final int REQUIRED_SIZE = 200;
+            int scale = 1;
 
-            while(o.outWidth/scale/2>=REQUIRED_SIZE && o.outHeight/scale/2>=REQUIRED_SIZE)
-                scale*=2;
+            while (o.outWidth / scale / 2 >= REQUIRED_SIZE && o.outHeight / scale / 2 >= REQUIRED_SIZE)
+                scale *= 2;
 
             BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize=scale;
+            o2.inSampleSize = scale;
 
             return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
 
@@ -321,8 +331,9 @@ public class GrosirMobilFunction {
     }
 
     private static DecimalFormatSymbols commaSeparator = null;
+
     public static String setCurrencyFormat(String str) {
-        if(commaSeparator == null) {
+        if (commaSeparator == null) {
             commaSeparator = new DecimalFormatSymbols();
             commaSeparator.setGroupingSeparator('.');
         }

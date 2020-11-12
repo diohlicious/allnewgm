@@ -255,5 +255,14 @@
     <string name="tv_province">Provinsi</string>
     <string name="tv_pos_code">Kode Pos</string>
     <string name="tv_account">Akun</string>
+    <string name="tv_lost_bidding">Penawaran Kalah</string>
+    <string name="tv_open_house_date">Nov 12 - 24</string>
+    <string name="tv_open_house">Open House</string>
+    <string name="tv_lihat_semua_unit">Lihat Semua Unit</string>
+    <string name="tv_ready_to_bid">[TGR] 15 unit sudah tersedia untuk dibeli, segera lakukan penawaran!</string>
+    <string name="tv_bid_again">Penawaran anda disalip orang lain! Klik di sini untuk menawar kembali.</string>
+    <string name="tv_bid_success_to_pay">Anda memenangkan penawaran! \nKlik di sini untuk pembayarannya.</string>
+    <string name="tv_price">Rp 111.000.000</string>
+    <string name="btn_pay">Lanjut Pembayaran</string>
 
 </resources>
