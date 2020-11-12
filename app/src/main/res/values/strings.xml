@@ -42,8 +42,6 @@
     <!--  TOAST  -->
     <string name="toast_please_click_back_again_to_exit">Please click BACK again to exit</string>
     <string name="tv_empty_email_password">Email and Password Empty</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tv_lewati"><![CDATA[Lewati>>]]></string>
     <string name="tv_selamat_datang_sobat_gmob">Selamat datang sobat GMob!</string>
     <string name="tv_dengan_grosirmobil_cari_dan_pilih_unit_yang_anda_butuhkan_kini_lebih_mudah">Dengan GrosirMobil, cari dan pilih unit\nyang anda butuhkan kini lebih mudah!</string>
@@ -264,5 +262,26 @@
     <string name="tv_bid_success_to_pay">Anda memenangkan penawaran! \nKlik di sini untuk pembayarannya.</string>
     <string name="tv_price">Rp 111.000.000</string>
     <string name="btn_pay">Lanjut Pembayaran</string>
+    <string name="tv_penawaran_anda_berhasil">Penawaran Anda berhasil!</string>
+    <string name="tv_filter_berdasarkan">Filter Berdasarkan</string>
+    <string name="tv_penawaran_diterima">Penawaran Diterima</string>
+    <string name="tv_penawaran_sedang_berlangsung">Penawaran Sedang Berlangsung</string>
+    <string name="tv_penawaran_ditolak">Penawaran Ditolak</string>
+    <string name="tv_pembayaran_diterima">Pembayaran Diterima</string>
+    <string name="tv_kendaraan_siap_diambil">Kendaraan Siap Diambil</string>
+    <string name="tv_pembayaran">Pembayaran</string>
+    <string name="tv_harga_kendaraan">Harga Kendaraan:</string>
+    <string name="tv_biaya_admin">Biaya Admin:</string>
+    <string name="tv_total">Total:</string>
+    <string name="tv_total_yang_harus_dibayar">Total yang harus dibayar</string>
+    <string name="tv_metode_pembayaran">Metode Pembayaran</string>
+    <string name="tv_segera_lakukan_pembayaran_dalam_waktu">Segera lakukan pembayaran dalam waktu</string>
+    <string name="tv_informasi_pembelian">Informasi Pembelian</string>
+    <string name="tv_unit_yang_dibeli">Unit yang dibeli:</string>
+    <string name="tv_pembayaran_dash">Pembayaran:</string>
+    <string name="tv_tipe_pembayaran">Tipe Pembayaran:</string>
+    <string name="tv_total_pembayaran">Total Pembayaran:</string>
+    <string name="tv_cara_pembayaran">Cara Pembayaran</string>
+    <string name="btn_cek_status_di_garasi">Cek status di Garasi</string>
 
 </resources>

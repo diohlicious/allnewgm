@@ -10,12 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
-import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehicle;
+import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehicleSuccessGarage;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
 
 import java.util.List;
 
-public class SuccessGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
+public class SuccessGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicleSuccessGarage> {
 
     private List<HardCodeDataBaruMasukModel> hardCodeDataBaruMasukModelList;
     private Context contexts;
@@ -28,26 +28,23 @@ public class SuccessGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVeh
 
     @NonNull
     @Override
-    public ViewHolderItemVehicle onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolderItemVehicleSuccessGarage onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_vehicle_success_garage, viewGroup, false);
-        return new ViewHolderItemVehicle(itemView);
+        return new ViewHolderItemVehicleSuccessGarage(itemView);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderItemVehicle holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolderItemVehicleSuccessGarage holder, int position) {
         HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = hardCodeDataBaruMasukModelList.get(position);
         holder.tvVehicleName.setText(hardCodeDataBaruMasukModel.getVehicleName());
         holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber());
         holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());
         holder.tvPrice.setText(hardCodeDataBaruMasukModel.getPrice());
-//        holder.tvDescription.setText(hardCodeDataBaruMasukModel.getExpiredDate());
 
-        holder.cardVehicle.setOnClickListener(view -> {
-//            Intent intent = new Intent(contexts, VehicleDetailActivity.class);
-//            intent.putExtra(ID_VEHICLE, "");
-//            contexts.startActivity(intent);
+        holder.btnNextPayment.setOnClickListener(view -> {
+
         });
     }
 

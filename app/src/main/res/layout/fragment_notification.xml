@@ -4,8 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.navigationmenu.NotificationFragment">
-    
-<!--    TODO: ji tolong di teks beda warna dalam 1 textview belum bisa aku buat seperti teks klik disini-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,9 +54,10 @@
             android:textColor="@color/colorPrimaryWhite"
             android:textSize="@dimen/text_18" />
         <LinearLayout
+            android:id="@+id/linear_ready_unit_to_bid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_236sdp"
+            android:layout_below="@id/iv_background"
             android:orientation="horizontal"
             android:padding="@dimen/_6sdp">
             <TextView
@@ -79,13 +78,15 @@
                 tools:ignore="RelativeOverlap,RtlHardcoded,UnusedAttribute" />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/linear_bid_again"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_320sdp"
+            android:layout_below="@id/linear_ready_unit_to_bid"
             android:background="@color/colorRedAlpha20"
             android:orientation="horizontal"
             android:padding="@dimen/_6sdp">
             <TextView
+                android:id="@+id/tv_bid_again"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_28sdp"
@@ -102,16 +103,19 @@
                 tools:ignore="RelativeOverlap,RtlHardcoded,UnusedAttribute" />
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/linear_bid_success_to_pay"
+            android:layout_below="@id/linear_bid_again"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_400sdp"
+            android:layout_marginBottom="@dimen/_100sdp"
             android:background="@color/colorAccentAlpha20"
             android:orientation="horizontal"
             android:padding="@dimen/_6sdp">
             <TextView
+                android:id="@+id/tv_bid_success_to_pay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_28sdp"
+                android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_28sdp"
                 android:layout_marginBottom="@dimen/_15sdp"

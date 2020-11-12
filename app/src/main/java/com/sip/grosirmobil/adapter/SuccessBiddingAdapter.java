@@ -38,6 +38,7 @@ public class SuccessBiddingAdapter extends RecyclerView.Adapter<ViewHolderItemVe
     @Override
     public void onBindViewHolder(@NonNull ViewHolderItemVehicle holder, int position) {
         HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = hardCodeDataBaruMasukModelList.get(position);
+        holder.linearDescription.setVisibility(View.GONE);
         holder.tvVehicleName.setText(hardCodeDataBaruMasukModel.getVehicleName());
         holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber());
         holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());

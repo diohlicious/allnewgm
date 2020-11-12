@@ -9,6 +9,7 @@
     <color name="colorPrimaryTheme">#94C12C</color>
     <color name="colorPrimaryThemeSecond">#FF7F00</color>
     <color name="colorPrimaryBackgroundApps">#94C12C</color>
+    <color name="colorPrimaryThemeCart">#E4F1BF</color>
     <color name="colorPrimaryBackgroundDialog">#99000000</color>
     <color name="colorPrimaryTransparent">#00000000</color>
     <color name="colorPrimaryFont">#444444</color>

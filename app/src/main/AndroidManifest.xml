@@ -26,6 +26,8 @@
         android:windowSoftInputMode="stateVisible"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="m">
+        <activity android:name=".activity.PayDetailActivity"></activity>
+        <activity android:name=".activity.PayPaymentActivity" />
         <activity android:name=".activity.LostBiddingActivity" />
         <activity android:name=".activity.SuccessBiddingActivity" />
         <activity android:name=".activity.ForgotPasswordActivity" />

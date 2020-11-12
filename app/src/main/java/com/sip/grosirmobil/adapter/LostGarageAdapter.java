@@ -30,7 +30,7 @@ public class LostGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
     @Override
     public ViewHolderItemVehicle onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_vehicle_lost_garage, viewGroup, false);
+                .inflate(R.layout.item_vehicle, viewGroup, false);
         return new ViewHolderItemVehicle(itemView);
     }
 
@@ -38,11 +38,11 @@ public class LostGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
     @Override
     public void onBindViewHolder(@NonNull ViewHolderItemVehicle holder, int position) {
         HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = hardCodeDataBaruMasukModelList.get(position);
+        holder.linearDescription.setVisibility(View.GONE);
         holder.tvVehicleName.setText(hardCodeDataBaruMasukModel.getVehicleName());
         holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber());
         holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());
         holder.tvPrice.setText(hardCodeDataBaruMasukModel.getPrice());
-//        holder.tvDescription.setText(hardCodeDataBaruMasukModel.getExpiredDate());
 
         holder.cardVehicle.setOnClickListener(view -> {
 //            Intent intent = new Intent(contexts, VehicleDetailActivity.class);

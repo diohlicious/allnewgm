@@ -2,7 +2,6 @@ package com.sip.grosirmobil.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
-import com.sip.grosirmobil.activity.VehicleDetailActivity;
-import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehicle;
+import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehicleLiveGarage;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
 
 import java.util.List;
 
 
-public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
+public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicleLiveGarage> {
 
     private List<HardCodeDataBaruMasukModel> hardCodeDataBaruMasukModelList;
     private Context contexts;
@@ -31,26 +29,24 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
 
     @NonNull
     @Override
-    public ViewHolderItemVehicle onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolderItemVehicleLiveGarage onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.item_vehicle_live_garage, viewGroup, false);
-        return new ViewHolderItemVehicle(itemView);
+        return new ViewHolderItemVehicleLiveGarage(itemView);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderItemVehicle holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolderItemVehicleLiveGarage holder, int position) {
         HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = hardCodeDataBaruMasukModelList.get(position);
         holder.tvVehicleName.setText(hardCodeDataBaruMasukModel.getVehicleName());
         holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber());
         holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());
         holder.tvPrice.setText(hardCodeDataBaruMasukModel.getPrice());
-        holder.tvDescription.setText(hardCodeDataBaruMasukModel.getExpiredDate());
+        holder.tvTimer.setText(hardCodeDataBaruMasukModel.getExpiredDate());
 
-        holder.cardVehicle.setOnClickListener(view -> {
-//            Intent intent = new Intent(contexts, VehicleDetailActivity.class);
-//            intent.putExtra(ID_VEHICLE, "");
-//            contexts.startActivity(intent);
+        holder.btnNego.setOnClickListener(view -> {
+            holder.cardViewSuccessBidding.setVisibility(View.VISIBLE);
         });
     }
 

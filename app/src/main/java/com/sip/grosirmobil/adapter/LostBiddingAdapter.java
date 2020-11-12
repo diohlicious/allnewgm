@@ -30,7 +30,7 @@ public class LostBiddingAdapter extends RecyclerView.Adapter<ViewHolderItemVehic
     @Override
     public ViewHolderItemVehicle onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_vehicle_lost, viewGroup, false);
+                .inflate(R.layout.item_vehicle, viewGroup, false);
         return new ViewHolderItemVehicle(itemView);
     }
 
@@ -38,6 +38,7 @@ public class LostBiddingAdapter extends RecyclerView.Adapter<ViewHolderItemVehic
     @Override
     public void onBindViewHolder(@NonNull ViewHolderItemVehicle holder, int position) {
         HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = hardCodeDataBaruMasukModelList.get(position);
+        holder.linearDescription.setVisibility(View.GONE);
         holder.tvVehicleName.setText(hardCodeDataBaruMasukModel.getVehicleName());
         holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber());
         holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());

@@ -68,7 +68,7 @@
                     android:fontFamily="@font/nunito_regular"
                     android:textColor="@color/colorPrimaryFont"
                     android:text="Rp 111.000.000"
-                    android:textSize="@dimen/text_14"
+                    android:textSize="@dimen/text_12"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"/>
