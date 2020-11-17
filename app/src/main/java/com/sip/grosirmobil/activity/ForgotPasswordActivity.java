@@ -38,7 +38,7 @@ public class ForgotPasswordActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_next)
     void btnNextClick(){
-        Intent intent = new Intent(this, ChangePasswordActivity.class);
+        Intent intent = new Intent(this, SetNewPasswordActivity.class);
         intent.putExtra(EMAIL, email);
         startActivity(intent);
         finish();

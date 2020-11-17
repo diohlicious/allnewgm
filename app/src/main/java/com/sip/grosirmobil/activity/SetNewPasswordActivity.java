@@ -2,45 +2,48 @@ package com.sip.grosirmobil.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
 
 import java.util.Objects;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.sip.grosirmobil.base.function.GrosirMobilFunction.adjustFontScale;
-import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarOnBoarding;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.EMAIL;
 
-public class ChangePasswordActivity extends GrosirMobilActivity {
+public class SetNewPasswordActivity extends GrosirMobilActivity {
+
+    private String email = "";
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.et_email) TextInputEditText etEmail;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.et_password) TextInputEditText etPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStatusBarOnBoarding(this);
-        setContentView(R.layout.activity_change_password);
-        adjustFontScale(this, getResources().getConfiguration());
+        setContentView(R.layout.activity_set_new_password);
         ButterKnife.bind(this);
 
-
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.iv_back)
-    void ivBackClick() {
-        finish();
+        email = getIntent().getStringExtra(EMAIL);
     }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_change_password)
     void btnChangePasswordClick(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
         finish();
     }
 

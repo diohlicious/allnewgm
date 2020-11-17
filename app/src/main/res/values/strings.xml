@@ -283,5 +283,10 @@
     <string name="tv_total_pembayaran">Total Pembayaran:</string>
     <string name="tv_cara_pembayaran">Cara Pembayaran</string>
     <string name="btn_cek_status_di_garasi">Cek status di Garasi</string>
+    <string name="tv_ubah_password">Ubah Password</string>
+    <string name="tv_keluar_akun">Keluar Akun</string>
+    <string name="tv_rubah_password_lama_anda">Rubah password lama Anda</string>
+    <string name="tv_confirm_password_baru">Confirm Password Baru</string>
+    <string name="tv_password_lama">Password Lama</string>
 
 </resources>

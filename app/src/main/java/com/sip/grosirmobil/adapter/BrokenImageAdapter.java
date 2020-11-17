@@ -2,6 +2,7 @@ package com.sip.grosirmobil.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.activity.PreviewImageActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderBrokenImage;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataModel;
 
 import java.util.List;
+
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.DESCRIPTION;
 
 public class BrokenImageAdapter extends RecyclerView.Adapter<ViewHolderBrokenImage> {
 
@@ -40,6 +44,12 @@ public class BrokenImageAdapter extends RecyclerView.Adapter<ViewHolderBrokenIma
         HardCodeDataModel hardCodeDataModel = hardCodeDataModelList.get(position);
         holder.tvDescription.setText(hardCodeDataModel.getDescription());
         holder.tvImageNumber.setText(hardCodeDataModel.getImageNumber());
+
+        holder.cardView.setOnClickListener(view -> {
+            Intent intent = new Intent(contexts, PreviewImageActivity.class);
+            intent.putExtra(DESCRIPTION, hardCodeDataModel.getDescription());
+            contexts.startActivity(intent);
+        });
     }
 
     @Override

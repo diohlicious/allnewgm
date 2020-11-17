@@ -26,12 +26,14 @@
         android:windowSoftInputMode="stateVisible"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="m">
-        <activity android:name=".activity.PayDetailActivity"></activity>
+        <activity android:name=".activity.ChangePasswordActivity"></activity>
+        <activity android:name=".activity.PreviewImageActivity" />
+        <activity android:name=".activity.PayDetailActivity" />
         <activity android:name=".activity.PayPaymentActivity" />
         <activity android:name=".activity.LostBiddingActivity" />
         <activity android:name=".activity.SuccessBiddingActivity" />
         <activity android:name=".activity.ForgotPasswordActivity" />
-        <activity android:name=".activity.ChangePasswordActivity" />
+        <activity android:name=".activity.SetNewPasswordActivity" />
         <activity android:name=".activity.RegisterDataActivity" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.CodeOtpActivity" />

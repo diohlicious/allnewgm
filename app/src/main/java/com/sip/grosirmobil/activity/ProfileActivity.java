@@ -51,5 +51,20 @@ public class ProfileActivity extends GrosirMobilActivity {
         finish();
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_change_password)
+    void tvChangePasswordClick(){
+        Intent intent = new Intent(this, ChangePasswordActivity.class);
+        startActivity(intent);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_logout)
+    void tvLogoutClick(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
 
 }
