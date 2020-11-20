@@ -175,7 +175,7 @@
             android:textSize="@dimen/text_16"
             android:fontFamily="@font/nunito_bold"
             android:textColor="@color/colorPrimaryWhite"
-            android:background="@drawable/btn_design"
+            android:background="@drawable/btn_design_blue"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginBottom="@dimen/_15sdp"
             android:layout_width="match_parent"
@@ -187,7 +187,7 @@
             android:textSize="@dimen/text_16"
             android:fontFamily="@font/nunito_bold"
             android:textColor="@color/colorPrimaryWhite"
-            android:background="@drawable/btn_design_second"
+            android:background="@drawable/btn_design"
             android:layout_marginBottom="@dimen/_15sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

@@ -3,17 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_marginBottom="@dimen/_5sdp"
-    android:layout_height="@dimen/_124sdp"
+    android:layout_height="wrap_content"
     android:background="@color/colorPrimaryWhite">
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="@dimen/_10sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="@dimen/_155sdp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,11 +26,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:gravity="center|start"
                 android:orientation="vertical"
                 tools:ignore="RtlHardcoded">
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:gravity="center"
                     android:layout_width="wrap_content"
@@ -57,40 +54,95 @@
                 </LinearLayout>
                 <TextView
                     android:id="@+id/tv_vehicle_name"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:fontFamily="@font/nunito_regular"
+                    android:text="Masserati DSE AT 2015"
+                    android:fontFamily="@font/nunito_semi_bold"
                     android:maxLines="2"
                     android:textColor="@color/colorPrimaryFont"
                     android:textSize="@dimen/text_16" />
-                <TextView
-                    android:id="@+id/tv_plat_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_1sdp"
-                    android:fontFamily="@font/nunito_regular"
-                    android:textColor="@color/colorPrimaryHintFont"
-                    android:textSize="@dimen/text_10" />
-                <TextView
-                    android:id="@+id/tv_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_regular"
-                    android:textColor="@color/colorPrimaryHintFont"
-                    android:textSize="@dimen/text_10" />
                 <LinearLayout
-                    android:layout_marginBottom="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_20sdp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_plat_number"
+                        android:text="NI 21231324 - "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_1sdp"
+                        android:fontFamily="@font/nunito_regular"
+                        android:textColor="@color/colorPrimaryHintFont"
+                        android:textSize="@dimen/text_11" />
+                    <TextView
+                        android:id="@+id/tv_city"
+                        android:text="Jakarta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
+                        android:textColor="@color/colorRed"
+                        android:textSize="@dimen/text_11" />
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    tools:ignore="DisableBaselineAlignment">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="@dimen/text_12"
+                            android:textColor="@color/colorPrimaryFont"
+                            android:fontFamily="@font/nunito_regular"
+                            android:text="@string/tv_penawaran_terakhir"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/tv_penawaran_terakhir"
+                            android:textSize="@dimen/text_14"
+                            android:textColor="@color/colorPrimaryFont"
+                            android:fontFamily="@font/nunito_bold"
+                            android:text="Rp 111.000.000"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <RelativeLayout
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:layout_width="@dimen/_35sdp"
+                        android:layout_height="@dimen/_35sdp">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/circle_image_view_item"
+                            android:background="@drawable/ic_circle_red"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                        <TextView
+                            android:id="@+id/tv_initial_name"
+                            android:text="B"
+                            android:textColor="@color/colorPrimaryWhite"
+                            android:textSize="@dimen/text_24"
+                            android:fontFamily="@font/nunito_semi_bold"
+                            android:layout_centerInParent="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
                     android:gravity="left|center"
                     android:orientation="horizontal"
                     tools:ignore="UselessLeaf">
                     <ImageView
                         android:id="@+id/iv_min"
-                        android:layout_width="@dimen/_13sdp"
-                        android:layout_height="@dimen/_13sdp"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_minus_circle"
                         tools:ignore="ContentDescription" />
@@ -117,12 +169,12 @@
                             android:paddingEnd="@dimen/_2sdp"
                             android:scrollbarSize="@dimen/text_10"
                             android:textColorHint="@color/colorPrimaryHintFont"
-                            android:textSize="@dimen/text_10"
+                            android:textSize="@dimen/text_11"
                             tools:ignore="Autofill,HardcodedText,LabelFor,NestedWeights,RelativeOverlap,RtlSymmetry" />
                         <ImageView
                             android:id="@+id/iv_clear_price"
-                            android:layout_width="@dimen/_10sdp"
-                            android:layout_height="@dimen/_10sdp"
+                            android:layout_width="@dimen/_16sdp"
+                            android:layout_height="@dimen/_16sdp"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:layout_marginEnd="@dimen/_5sdp"
                             android:src="@drawable/ic_clear_price"
@@ -130,29 +182,31 @@
                     </LinearLayout>
                     <ImageView
                         android:id="@+id/iv_plus"
-                        android:layout_width="@dimen/_13sdp"
-                        android:layout_height="@dimen/_13sdp"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_plus_circle"
                         tools:ignore="ContentDescription" />
-                    <Button
-                        android:id="@+id/btn_nego"
-                        android:layout_width="@dimen/_40sdp"
-                        android:layout_height="@dimen/_20sdp"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:background="@drawable/btn_design_radius_5"
-                        android:fontFamily="@font/nunito_bold"
-                        android:text="@string/btn_nego"
-                        android:textAllCaps="false"
-                        android:textColor="@color/colorPrimaryWhite"
-                        android:textSize="@dimen/text_10" />
                 </LinearLayout>
+                <Button
+                    android:id="@+id/btn_nego"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_28sdp"
+                    android:background="@drawable/btn_design_radius_5_blue"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="@string/btn_nego"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimaryWhite"
+                    android:textSize="@dimen/text_12" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:id="@+id/card_favorite"
         android:layout_alignParentEnd="true"
+        android:visibility="gone"
         app:cardCornerRadius="@dimen/_30sdp"
         app:cardElevation="@dimen/_2sdp"
         android:layout_marginEnd="@dimen/_10sdp"
@@ -175,19 +229,16 @@
         app:cardCornerRadius="@dimen/_10sdp"
         android:elevation="0dp"
         android:visibility="gone"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="@dimen/_155sdp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <View
-                android:alpha="0.5"
-                android:background="@color/colorPrimaryTheme"
+                android:background="#0A84FE"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"/>
             <TextView
                 android:fontFamily="@font/nunito_regular"
                 android:textSize="@dimen/text_18"

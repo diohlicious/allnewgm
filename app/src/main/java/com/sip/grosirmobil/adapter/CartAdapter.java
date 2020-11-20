@@ -48,10 +48,12 @@ public class CartAdapter extends RecyclerView.Adapter<ViewHolderItemCart> {
         holder.cbCart.setOnCheckedChangeListener((compoundButton, checked) -> {
             if(checked){
                 totalPrice = hardCodeDataBaruMasukModel.getPrice();
-                holder.relativeCart.setBackgroundResource(R.color.colorPrimaryThemeCart);
+                holder.linearCart.setBackgroundResource(R.color.colorPrimaryThemeCart);
+                holder.tvVehicleName.setTextColor(context.getResources().getColor(R.color.colorPrimaryTheme));
             }else {
                 totalPrice = "0";
-                holder.relativeCart.setBackgroundResource(R.color.colorPrimaryWhite);
+                holder.linearCart.setBackgroundResource(R.color.colorPrimaryWhite);
+                holder.tvVehicleName.setTextColor(context.getResources().getColor(R.color.colorPrimaryFont));
             }
         });
 

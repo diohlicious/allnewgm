@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/linear_garasi"
+            android:id="@+id/linear_cart"
             android:orientation="vertical"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -57,16 +57,16 @@
             android:layout_height="match_parent"
             tools:ignore="UseCompoundDrawables,UselessParent">
             <ImageView
-                android:id="@+id/iv_garasi"
-                android:src="@drawable/ic_garasi_disable"
+                android:id="@+id/iv_cart"
+                android:src="@drawable/ic_cart_disable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:ignore="ContentDescription" />
             <TextView
-                android:id="@+id/tv_garasi"
+                android:id="@+id/tv_cart"
                 android:textSize="@dimen/text_12"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="@string/menu_garasi"
+                android:text="@string/menu_keranjang"
                 android:textColor="@color/colorPrimaryTextInactive"
                 android:fontFamily="@font/nunito_semi_bold"
                 android:gravity="center"
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/linear_keranjang"
+            android:id="@+id/linear_win"
             android:orientation="vertical"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -109,15 +109,15 @@
             android:layout_height="match_parent"
             tools:ignore="UseCompoundDrawables,UselessParent">
             <ImageView
-                android:id="@+id/iv_keranjang"
-                android:src="@drawable/ic_cart_disable"
+                android:id="@+id/iv_win"
+                android:src="@drawable/ic_win_disable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:ignore="ContentDescription" />
             <TextView
-                android:id="@+id/tv_keranjang"
+                android:id="@+id/tv_win"
                 android:textSize="@dimen/text_12"
-                android:text="@string/menu_keranjang"
+                android:text="@string/menu_menang"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/nunito_semi_bold"
                 android:textColor="@color/colorPrimaryTextInactive"

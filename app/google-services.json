@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "864805763527",
+    "firebase_url": "https://grosir-mobil.firebaseio.com",
+    "project_id": "grosir-mobil",
+    "storage_bucket": "grosir-mobil.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:864805763527:android:6f0692d6b30ebc2d3bc1e2",
+        "android_client_info": {
+          "package_name": "com.sip.grosirmobil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "864805763527-0e390gau29gf8pmlsnog1jlnfvfire8h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-Lo7nENXA_q0BgMqBYIDm-Umz-sEPHvI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "864805763527-0e390gau29gf8pmlsnog1jlnfvfire8h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,21 +1,29 @@
 package com.sip.grosirmobil.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
 
 import java.util.Objects;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
+
 public class FilterActivity extends GrosirMobilActivity {
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_merek) LinearLayout linearMerek;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +31,20 @@ public class FilterActivity extends GrosirMobilActivity {
         setContentView(R.layout.activity_filter);
         ButterKnife.bind(this);
 
+        if(getIntent().getStringExtra(FROM_PAGE).equals("BEFORE_SEARCH")){
+            linearMerek.setVisibility(View.VISIBLE);
+        }else {
+            linearMerek.setVisibility(View.GONE);
+        }
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.iv_back)
+    void ivBackClick(){
+        finish();
+    }
+
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_filter)
     void btnFilterClick() {
         setResult(RESULT_OK);

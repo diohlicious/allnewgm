@@ -53,7 +53,7 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
+                    android:layout_height="wrap_content"
                     tools:ignore="UselessParent">
                     <ImageView
                         android:id="@+id/iv_back"
@@ -61,32 +61,71 @@
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_back_chevron"
                         android:layout_width="@dimen/_30sdp"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/_35sdp"
                         tools:ignore="ContentDescription" />
-                    <TextView
-                        android:id="@+id/iv_all_unit"
+                    <LinearLayout
+                        android:id="@+id/linear_all_unit"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
                         android:layout_toEndOf="@+id/iv_back"
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:fontFamily="@font/nunito_bold"
-                        android:text="@string/tv_semua_unit"
-                        android:textColor="@color/colorPrimaryFont"
-                        android:textSize="@dimen/text_28"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        tools:ignore="RelativeOverlap" />
-                    <TextView
-                        android:id="@+id/tv_search_result_all_unit"
-                        android:text="23 Unit"
-                        android:textSize="@dimen/text_14"
-                        android:gravity="center"
-                        android:textColor="@color/colorPrimaryFont"
-                        android:fontFamily="@font/nunito_regular"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp">
+                        <TextView
+                            android:id="@+id/tv_all_unit"
+                            android:gravity="center|start"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:fontFamily="@font/nunito_bold"
+                            android:text="@string/tv_semua_unit"
+                            android:textColor="@color/colorPrimaryFont"
+                            android:textSize="@dimen/text_28"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            tools:ignore="RelativeOverlap" />
+                        <TextView
+                            android:id="@+id/tv_search_result_all_unit"
+                            android:text="23 Unit"
+                            android:textSize="@dimen/text_14"
+                            android:gravity="center"
+                            android:textColor="@color/colorPrimaryFont"
+                            android:fontFamily="@font/nunito_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"/>
+                    </LinearLayout>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_search_result"
+                        android:background="@color/colorPrimaryWhite"
+                        android:layout_toEndOf="@+id/iv_back"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_marginEnd="@dimen/_3sdp"
+                        android:layout_marginBottom="@dimen/_3sdp"
+                        android:layout_height="@dimen/_35sdp">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:id="@+id/tv_search_result"
+                                android:gravity="center|start"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:fontFamily="@font/nunito_regular"
+                                android:textColor="@color/colorPrimaryFont"
+                                android:textSize="@dimen/text_16"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                tools:ignore="RelativeOverlap" />
+                            <ImageView
+                                android:id="@+id/iv_clear"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_clear_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:ignore="ContentDescription" />
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
                 </RelativeLayout>
                 <RelativeLayout
                     android:id="@+id/relative_filter"
@@ -129,14 +168,11 @@
             <LinearLayout
                 android:id="@+id/linear_search_and_live"
                 android:layout_marginTop="@dimen/_30sdp"
-                android:paddingLeft="@dimen/_25sdp"
-                android:paddingRight="@dimen/_25sdp"
                 android:visibility="visible"
                 android:layout_marginBottom="@dimen/_12sdp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <TextView
                     android:id="@+id/tv_search"
                     android:layout_width="match_parent"
@@ -148,42 +184,52 @@
                     android:gravity="center|left"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingRight="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
                     android:text="@string/tv_kendaraan_yang_sedang_anda_cari"
                     android:textColor="#999999"
                     android:textSize="@dimen/text_14"
                     tools:ignore="RtlHardcoded" />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:background="@drawable/design_card"
+                <RelativeLayout
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_height="@dimen/_180sdp">
+                    <com.sip.grosirmobil.base.util.AutoScrollViewPager
+                        android:id="@+id/view_pager_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                    <me.relex.circleindicator.CircleIndicator
+                        android:id="@+id/circle_indicator"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:gravity="start"
+                        android:layout_gravity="start"
+                        app:ci_drawable="@drawable/ic_circle_indicator_round"
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_30sdp"/>
+                </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/linear_result_title_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_15sdp"
+                    android:background="@drawable/design_card_live"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
                     tools:ignore="UselessLeaf">
                     <TextView
-                        android:id="@+id/tv_kendaraan_tayang"
+                        android:id="@+id/tv_result_title_content"
                         android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
                         android:textColor="@color/colorPrimaryWhite"
                         android:textSize="@dimen/text_16"
                         android:fontFamily="@font/nunito_bold"
-                        android:text="Ada 32 kendaraan tayang!"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
+                        android:text="Ada 32 kendaraan Live!"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-                    <TextView
-                        android:id="@+id/tv_see_all"
-                        android:layout_marginEnd="@dimen/_12sdp"
-                        android:paddingLeft="@dimen/_7sdp"
-                        android:paddingRight="@dimen/_7sdp"
-                        android:textColor="@color/colorPrimaryWhite"
-                        android:textSize="@dimen/text_12"
-                        android:fontFamily="@font/nunito_bold"
-                        android:background="@drawable/design_card_theme"
-                        android:text="@string/tv_lihat_semua"
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_25sdp"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -231,21 +277,43 @@
                         android:layout_weight="1"
                         android:layout_height="match_parent"/>
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/tv_in_new"
+                <LinearLayout
+                    android:id="@+id/linear_title_content"
+                    android:orientation="horizontal"
                     android:paddingLeft="@dimen/_15sdp"
                     android:paddingRight="@dimen/_15sdp"
-                    android:text="@string/tv_baru_masuk"
                     android:layout_marginBottom="@dimen/_20sdp"
-                    android:textColor="@color/colorPrimaryFont"
-                    android:fontFamily="@font/nunito_bold"
-                    android:textSize="@dimen/text_22"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_title_content"
+                        android:text="@string/tv_baru_masuk"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:fontFamily="@font/nunito_bold"
+                        android:textSize="@dimen/text_22"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/tv_filter_title_content"
+                        android:text="@string/tv_filter"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:textSize="@dimen/text_16"
+                        android:drawableStart="@drawable/ic_filter"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:textColor="@color/colorPrimaryHintFont"
+                        android:fontFamily="@font/nunito_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        tools:ignore="RelativeOverlap" />
+                </LinearLayout>
                 <RelativeLayout
                     android:id="@+id/relative_result_search"
                     android:paddingLeft="@dimen/_15sdp"
                     android:paddingRight="@dimen/_15sdp"
+                    android:visibility="gone"
                     android:layout_marginBottom="@dimen/_20sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -255,6 +323,7 @@
                         android:fontFamily="@font/nunito_regular"
                         android:textSize="@dimen/text_16"
                         android:gravity="center"
+                        android:layout_centerVertical="true"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         tools:ignore="RelativeOverlap" />
@@ -262,6 +331,7 @@
                         android:id="@+id/tv_result_search"
                         android:layout_alignParentEnd="true"
                         android:text="3 Unit"
+                        android:layout_centerVertical="true"
                         android:gravity="center"
                         android:textColor="@color/colorPrimaryFont"
                         android:fontFamily="@font/nunito_regular"

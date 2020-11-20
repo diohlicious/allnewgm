@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_180sdp">
+    <ImageView
+        android:id="@+id/iv_banner"
+        android:scaleType="fitXY"
+        android:background="@drawable/ic_ex_banner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="ContentDescription" />
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:fontFamily="@font/nunito_bold"
+        android:textSize="@dimen/text_28"
+        android:textColor="@color/colorPrimaryWhite"
+        android:text="Promo\nAkhir 2020"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:fontFamily="@font/nunito_bold"
+        android:textSize="@dimen/text_12"
+        android:textColor="@color/colorPrimaryWhite"
+        android:text="Dapatkan promo akhir tahun dengan berbagai\nmacam unit yang ada!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

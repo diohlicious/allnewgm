@@ -322,7 +322,7 @@
                 android:id="@+id/btn_check_status"
                 android:fontFamily="@font/nunito_regular"
                 android:textSize="@dimen/text_18"
-                android:text="@string/btn_cek_status_di_garasi"
+                android:text="@string/btn_cek_status_di_keranjang"
                 android:textColor="@color/colorPrimaryWhite"
                 android:textAllCaps="false"
                 android:layout_marginTop="@dimen/_30sdp"

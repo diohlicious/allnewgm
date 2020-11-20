@@ -10,12 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
-import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehicle;
+import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemHistoryBidding;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
 
 import java.util.List;
 
-public class LostBiddingAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
+public class LostBiddingAdapter  extends RecyclerView.Adapter<ViewHolderItemHistoryBidding> {
 
     private List<HardCodeDataBaruMasukModel> hardCodeDataBaruMasukModelList;
     private Context contexts;
@@ -28,28 +28,22 @@ public class LostBiddingAdapter extends RecyclerView.Adapter<ViewHolderItemVehic
 
     @NonNull
     @Override
-    public ViewHolderItemVehicle onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolderItemHistoryBidding onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_vehicle, viewGroup, false);
-        return new ViewHolderItemVehicle(itemView);
+                .inflate(R.layout.item_history_bidding, viewGroup, false);
+        return new ViewHolderItemHistoryBidding(itemView);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderItemVehicle holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolderItemHistoryBidding holder, int position) {
         HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = hardCodeDataBaruMasukModelList.get(position);
-        holder.linearDescription.setVisibility(View.GONE);
         holder.tvVehicleName.setText(hardCodeDataBaruMasukModel.getVehicleName());
-        holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber());
+        holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber()+" - ");
         holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());
-        holder.tvPrice.setText(hardCodeDataBaruMasukModel.getPrice());
-//        holder.tvDescription.setText(hardCodeDataBaruMasukModel.getExpiredDate());
+        holder.tvPriceWin.setText(hardCodeDataBaruMasukModel.getPrice());
+        holder.tvOpenPrice.setText(hardCodeDataBaruMasukModel.getPrice());
 
-        holder.cardVehicle.setOnClickListener(view -> {
-//            Intent intent = new Intent(contexts, VehicleDetailActivity.class);
-//            intent.putExtra(ID_VEHICLE, "");
-//            contexts.startActivity(intent);
-        });
     }
 
     @Override

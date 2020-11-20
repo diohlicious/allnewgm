@@ -40,5 +40,6 @@ public class GrosirMobilContract {
     public static final String STATUS_BUY = "status_buy";
     public static final String PRODUCT = "product";
     public static final String DATE = "date";
+    public static final String FROM_PAGE = "from_page";
 
 }

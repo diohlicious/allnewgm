@@ -31,7 +31,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.adjustFontScale;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarOnBoarding;
 
@@ -44,7 +46,13 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_city) TextView tvCity;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_price) TextView tvPrice;
+    @BindView(R.id.tv_harga_awal) TextView tvHargaAwal;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_harga_sekarang) TextView tvHargaSekarang;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_initial_name) TextView tvInitialName;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.circle_image_view_item) CircleImageView circleImageViewItem;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.linear_description) LinearLayout linearDescription;
     @SuppressLint("NonConstantResourceId")
@@ -363,6 +371,11 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
         grosirMobilPreference = new GrosirMobilPreference(this);
         grosirMobilFunction = new GrosirMobilFunction(this);
 
+        if(getIntent().getStringExtra(FROM_PAGE).equals("LIVE")){
+            btnNego.setVisibility(View.VISIBLE);
+        }else {
+            btnNego.setVisibility(View.GONE);
+        }
         setDataHardCodeImageVehicleDetail();
         setDataHardCodeDescription();
         setDataHardCodeBrokenImage();

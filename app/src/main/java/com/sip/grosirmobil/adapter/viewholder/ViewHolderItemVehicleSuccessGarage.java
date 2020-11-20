@@ -10,12 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ViewHolderItemVehicleSuccessGarage extends RecyclerView.ViewHolder {
 
-    public TextView tvVehicleName, tvPlatNumber, tvCity, tvPrice, tvDescription;
+    public TextView tvVehicleName, tvPlatNumber, tvCity, tvPrice, tvInitialName;
     public CardView cardVehicle;
     public ImageView ivImage;
     public Button btnNextPayment;
+    public CircleImageView circleImageViewItem;
 
     public ViewHolderItemVehicleSuccessGarage(View view) {
         super(view);
@@ -25,6 +28,8 @@ public class ViewHolderItemVehicleSuccessGarage extends RecyclerView.ViewHolder 
         tvPlatNumber        = view.findViewById(R.id.tv_plat_number);
         tvCity              = view.findViewById(R.id.tv_city);
         tvPrice             = view.findViewById(R.id.tv_price);
+        circleImageViewItem     = view.findViewById(R.id.circle_image_view_item);
+        tvInitialName         = view.findViewById(R.id.tv_initial_name);
         btnNextPayment      = view.findViewById(R.id.btn_next_payment);
     }
 }

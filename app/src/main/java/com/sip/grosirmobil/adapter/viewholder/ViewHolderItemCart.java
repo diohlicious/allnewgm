@@ -3,7 +3,7 @@ package com.sip.grosirmobil.adapter.viewholder;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -17,7 +17,7 @@ public class ViewHolderItemCart extends RecyclerView.ViewHolder {
     public CardView cardVehicle;
     public ImageView ivImage;
     public CheckBox cbCart;
-    public RelativeLayout relativeCart;
+    public LinearLayout linearCart;
 
     public ViewHolderItemCart(View view) {
         super(view);
@@ -26,8 +26,8 @@ public class ViewHolderItemCart extends RecyclerView.ViewHolder {
         tvVehicleName       = view.findViewById(R.id.tv_vehicle_name);
         tvPlatNumber        = view.findViewById(R.id.tv_plat_number);
         tvPrice             = view.findViewById(R.id.tv_price);
-        relativeCart        = view.findViewById(R.id.relative_cart);
         cbCart              = view.findViewById(R.id.cb_cart);
+        linearCart          = view.findViewById(R.id.linear_cart);
     }
 
 //    public void bind(HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel, int selected, int position, final CartAdapter.OnItemClickListener listener) {

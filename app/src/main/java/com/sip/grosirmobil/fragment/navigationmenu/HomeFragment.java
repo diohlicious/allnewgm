@@ -6,13 +6,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,15 +23,18 @@ import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.FilterActivity;
 import com.sip.grosirmobil.activity.ProfileActivity;
 import com.sip.grosirmobil.activity.SearchActivity;
+import com.sip.grosirmobil.adapter.BannerGalleryAdapter;
 import com.sip.grosirmobil.adapter.LiveAdapter;
 import com.sip.grosirmobil.adapter.LiveSoonAdapter;
 import com.sip.grosirmobil.adapter.RecordAdapter;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.implement.HomePresenterImp;
 import com.sip.grosirmobil.base.presenter.HomePresenter;
+import com.sip.grosirmobil.base.util.AutoScrollViewPager;
 import com.sip.grosirmobil.base.util.GrosirMobilFragment;
 import com.sip.grosirmobil.base.view.HomeView;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
+import com.sip.grosirmobil.cloud.config.model.HardCodeDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +43,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.relex.circleindicator.CircleIndicator;
 
 import static android.app.Activity.RESULT_OK;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FILTER_REQUEST;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.SEARCH_REQUEST;
 
 /**
@@ -59,15 +65,19 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_profile) CircleImageView ivProfile;
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.view_pager_home) AutoScrollViewPager viewPagerHome;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.circle_indicator) CircleIndicator circleIndicator;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.linear_search_and_filter_show) LinearLayout linearSearchAndFilterShow;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.linear_search_and_live) LinearLayout linearSearchAndLive;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_search) TextView tvSearch;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_kendaraan_tayang) TextView tvKendaraanTayang;
+    @BindView(R.id.linear_result_title_content) LinearLayout linearResultTitleContent;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_see_all) TextView tvSeeAll;
+    @BindView(R.id.tv_result_title_content) TextView tvResultTitleContent;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_live) TextView tvLive;
     @SuppressLint("NonConstantResourceId")
@@ -75,7 +85,11 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_record) TextView tvRecord;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_in_new) TextView tvInNew;
+    @BindView(R.id.linear_title_content) LinearLayout linearTitleContent;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_title_content) TextView tvTitleContent;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_filter_title_content) TextView tvFilterTitleContent;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.relative_result_search) RelativeLayout relativeResultSearch;
     @SuppressLint("NonConstantResourceId")
@@ -86,12 +100,25 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @BindView(R.id.rv_live_soon) RecyclerView rvLiveSoon;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_record) RecyclerView rvRecord;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_all_unit) LinearLayout linearAllUnit;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_all_unit) TextView tvAllUnit;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_search_result_all_unit) TextView tvSearchResultAllUnit;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.card_search_result) CardView cardSearchResult;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_search_result) TextView tvSearchResult;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.iv_clear) ImageView ivClear;
 
     private GrosirMobilFunction grosirMobilFunction;
     private HomePresenter homePresenter;
     private List<HardCodeDataBaruMasukModel> liveHardCodeDataBaruMasukModelList = new ArrayList<>();
     private List<HardCodeDataBaruMasukModel> liveSoonHardCodeDataBaruMasukModelList = new ArrayList<>();
     private List<HardCodeDataBaruMasukModel> recordHardCodeDataBaruMasukModelList = new ArrayList<>();
+    private List<HardCodeDataModel> hardCodeDataModelList = new ArrayList<>();
     private boolean search = false;
 
     @Override
@@ -104,6 +131,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         grosirMobilFunction = new GrosirMobilFunction(getActivity());
         homePresenter = new HomePresenterImp(getActivity(), this);
 
+        setDataBanner();
         setDataLive();
         setDataLiveSoon();
         setDataRecord();
@@ -130,6 +158,15 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         recordAdapter.notifyDataSetChanged();
 
         setUiReset();
+
+        viewPagerHome.startAutoScroll();
+        viewPagerHome.setInterval(3000);
+        viewPagerHome.setCycle(true);
+        viewPagerHome.setStopScrollWhenTouch(true);
+        BannerGalleryAdapter viewPagerAdapter = new BannerGalleryAdapter(getActivity(), hardCodeDataModelList);
+        viewPagerHome.setAdapter(viewPagerAdapter);
+        circleIndicator.setViewPager(viewPagerHome);
+
         swipeRefreshHome.setOnRefreshListener(() -> {
             swipeRefreshHome.setRefreshing(false);
             setUiReset();
@@ -142,10 +179,19 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         relativeHome.setVisibility(View.VISIBLE);
         linearSearchAndFilterShow.setVisibility(View.GONE);
         linearSearchAndLive.setVisibility(View.VISIBLE);
-        tvInNew.setVisibility(View.VISIBLE);
+        linearTitleContent.setVisibility(View.VISIBLE);
         relativeResultSearch.setVisibility(View.GONE);
+        tvLiveClick();
     }
 
+    private void setDataBanner(){
+        HardCodeDataModel hardCodeDataModel = new HardCodeDataModel("Dapatkan promo akhir tahun dengan berbagai\nmacam unit yang ada!","Promo\nAkhir 2020");
+        hardCodeDataModelList.add(hardCodeDataModel);
+        hardCodeDataModel = new HardCodeDataModel("Dapatkan promo akhir tahun dengan berbagai\nmacam unit yang ada!","Promo\nAkhir 2020");
+        hardCodeDataModelList.add(hardCodeDataModel);
+        hardCodeDataModel = new HardCodeDataModel("Dapatkan promo akhir tahun dengan berbagai\nmacam unit yang ada!","Promo\nAkhir 2020");
+        hardCodeDataModelList.add(hardCodeDataModel);
+    }
 
     private void setDataLive(){
         HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
@@ -223,21 +269,51 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         startActivityForResult(intent, SEARCH_REQUEST);
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_filter_title_content)
+    void tvFilterTitleContentClick(){
+        Intent intent = new Intent(getActivity(), FilterActivity.class);
+        intent.putExtra(FROM_PAGE, "BEFORE_SEARCH");
+        startActivityForResult(intent, FILTER_REQUEST);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.iv_clear)
+    void ivClearClick(){
+        setUiReset();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == SEARCH_REQUEST){
             if(resultCode==RESULT_OK){
+                String keySearch = data.getStringExtra("keySearch");
+                tvSearchResult.setText(keySearch);
                 search = true;
                 relativeHome.setVisibility(View.GONE);
                 linearSearchAndFilterShow.setVisibility(View.VISIBLE);
                 linearSearchAndLive.setVisibility(View.GONE);
-                tvInNew.setVisibility(View.GONE);
+                linearTitleContent.setVisibility(View.GONE);
                 relativeResultSearch.setVisibility(View.VISIBLE);
+                cardSearchResult.setVisibility(View.VISIBLE);
+                linearAllUnit.setVisibility(View.GONE);
+
             }
         }else if(requestCode == FILTER_REQUEST){
             if(resultCode==RESULT_OK){
-                Toast.makeText(getActivity(), "Set Filter", Toast.LENGTH_SHORT).show();
+                if(search){
+                    cardSearchResult.setVisibility(View.VISIBLE);
+                    linearAllUnit.setVisibility(View.GONE);
+                }else {
+                    cardSearchResult.setVisibility(View.GONE);
+                    linearAllUnit.setVisibility(View.VISIBLE);
+                }
+                relativeHome.setVisibility(View.GONE);
+                linearSearchAndFilterShow.setVisibility(View.VISIBLE);
+                linearSearchAndLive.setVisibility(View.GONE);
+                linearTitleContent.setVisibility(View.GONE);
+                relativeResultSearch.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -252,14 +328,20 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @OnClick(R.id.tv_live)
     void tvLiveClick(){
         if(search){
+            linearTitleContent.setVisibility(View.GONE);
             linearSearchAndLive.setVisibility(View.GONE);
         }else {
+            linearTitleContent.setVisibility(View.VISIBLE);
             linearSearchAndLive.setVisibility(View.VISIBLE);
         }
         nestedView.setBackgroundResource(R.color.colorPrimaryWhite);
         rvLive.setVisibility(View.VISIBLE);
         rvLiveSoon.setVisibility(View.GONE);
         rvRecord.setVisibility(View.GONE);
+        tvTitleContent.setText("Ada 32 kendaraan Live!");
+        linearResultTitleContent.setBackgroundResource(R.drawable.design_card_live);
+        tvResultTitleContent.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvTitleContent.setText("Baru Masuk");
         tvLive.setBackgroundResource(R.drawable.design_line_selected_live);
         tvLive.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
         tvLiveSoon.setBackgroundResource(R.drawable.design_line);
@@ -272,18 +354,24 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @OnClick(R.id.tv_live_soon)
     void tvLiveSoonClick(){
         if(search){
+            linearTitleContent.setVisibility(View.GONE);
             linearSearchAndLive.setVisibility(View.GONE);
         }else {
+            linearTitleContent.setVisibility(View.VISIBLE);
             linearSearchAndLive.setVisibility(View.VISIBLE);
         }
         nestedView.setBackgroundResource(R.color.colorPrimaryWhite);
         rvLive.setVisibility(View.GONE);
         rvLiveSoon.setVisibility(View.VISIBLE);
         rvRecord.setVisibility(View.GONE);
+        tvTitleContent.setText("Ada 32 kendaraan Akan Tayang!");
+        linearResultTitleContent.setBackgroundResource(R.drawable.design_card_soon);
+        tvResultTitleContent.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvTitleContent.setText("Segera Tayang");
         tvLive.setBackgroundResource(R.drawable.design_line);
         tvLive.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
-        tvLiveSoon.setBackgroundResource(R.drawable.design_line_selected);
-        tvLiveSoon.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvLiveSoon.setBackgroundResource(R.drawable.design_line_selected_soon);
+        tvLiveSoon.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvRecord.setBackgroundResource(R.drawable.design_line);
         tvRecord.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
     }
@@ -296,6 +384,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         rvLive.setVisibility(View.GONE);
         rvLiveSoon.setVisibility(View.GONE);
         rvRecord.setVisibility(View.VISIBLE);
+        linearTitleContent.setVisibility(View.GONE);
         tvLive.setBackgroundResource(R.drawable.design_line);
         tvLive.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvLiveSoon.setBackgroundResource(R.drawable.design_line);
@@ -307,6 +396,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @OnClick({R.id.relative_filter,R.id.tv_filter_ket, R.id.tv_filter})
     void relativeFilterClick(){
         Intent intent = new Intent(getActivity(), FilterActivity.class);
+        intent.putExtra(FROM_PAGE, "AFTER_SEARCH");
         startActivityForResult(intent, FILTER_REQUEST);
     }
 

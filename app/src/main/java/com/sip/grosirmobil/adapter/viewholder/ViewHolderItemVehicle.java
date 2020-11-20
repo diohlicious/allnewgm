@@ -10,12 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ViewHolderItemVehicle extends RecyclerView.ViewHolder {
 
-    public TextView tvVehicleName, tvPlatNumber, tvCity, tvPrice, tvDescription;
+    public TextView tvVehicleName, tvPlatNumber, tvCity, tvOpenPrice, tvBottomPrice, tvTimer, tvInitialName;
     public CardView cardVehicle;
-    public ImageView ivImage,ivTimer;
+    public ImageView ivImage;
     public LinearLayout linearDescription;
+    public CircleImageView circleImageViewItem;
 
     public ViewHolderItemVehicle(View view) {
         super(view);
@@ -24,9 +27,11 @@ public class ViewHolderItemVehicle extends RecyclerView.ViewHolder {
         tvVehicleName       = view.findViewById(R.id.tv_vehicle_name);
         tvPlatNumber        = view.findViewById(R.id.tv_plat_number);
         tvCity              = view.findViewById(R.id.tv_city);
-        tvPrice             = view.findViewById(R.id.tv_price);
+        tvOpenPrice         = view.findViewById(R.id.tv_open_price);
+        tvBottomPrice       = view.findViewById(R.id.tv_bottom_price);
         linearDescription   = view.findViewById(R.id.linear_description);
-        ivTimer             = view.findViewById(R.id.iv_timer);
-        tvDescription       = view.findViewById(R.id.tv_description);
+        tvTimer             = view.findViewById(R.id.tv_timer);
+        circleImageViewItem = view.findViewById(R.id.circle_image_view_item);
+        tvInitialName       = view.findViewById(R.id.tv_initial_name);
     }
 }

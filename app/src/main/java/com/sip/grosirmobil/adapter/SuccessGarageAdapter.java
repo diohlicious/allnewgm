@@ -2,6 +2,7 @@ package com.sip.grosirmobil.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.activity.PayPaymentActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehicleSuccessGarage;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
 
@@ -39,12 +41,13 @@ public class SuccessGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVeh
     public void onBindViewHolder(@NonNull ViewHolderItemVehicleSuccessGarage holder, int position) {
         HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = hardCodeDataBaruMasukModelList.get(position);
         holder.tvVehicleName.setText(hardCodeDataBaruMasukModel.getVehicleName());
-        holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber());
+        holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber()+" - ");
         holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());
         holder.tvPrice.setText(hardCodeDataBaruMasukModel.getPrice());
 
         holder.btnNextPayment.setOnClickListener(view -> {
-
+            Intent intent = new Intent(contexts, PayPaymentActivity.class);
+            contexts.startActivity(intent);
         });
     }
 

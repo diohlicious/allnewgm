@@ -25,7 +25,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_30sdp"
             android:fontFamily="@font/nunito_bold"
-            android:text="@string/tv_open_house"
+            android:text="@string/tv_notification"
             android:textColor="@color/colorPrimaryWhite"
             android:textSize="@dimen/text_34"
             tools:ignore="RelativeOverlap" />
@@ -36,7 +36,7 @@
             android:layout_marginTop="@dimen/_75sdp"
             android:layout_marginRight="@dimen/_30sdp"
             android:fontFamily="@font/nunito_bold"
-            android:text="@string/tv_open_house_date"
+            android:text="@string/tv_live_grosir"
             android:textColor="@color/colorPrimaryWhite"
             android:textSize="@dimen/text_18"
             tools:ignore="RelativeOverlap" />
@@ -49,7 +49,7 @@
             android:layout_marginRight="@dimen/_16sdp"
             android:background="@drawable/btn_design"
             android:fontFamily="@font/nunito_semi_bold"
-            android:text="@string/tv_lihat_semua_unit"
+            android:text="@string/tv_lihat_semua_kendaraan"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimaryWhite"
             android:textSize="@dimen/text_18" />

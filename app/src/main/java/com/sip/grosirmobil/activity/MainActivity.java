@@ -59,11 +59,11 @@ public class MainActivity extends GrosirMobilActivity implements GrosirMobilFrag
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_home) ImageView ivHome;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.linear_garasi) LinearLayout linearGarasi;
+    @BindView(R.id.linear_cart) LinearLayout linearCart;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_garasi) TextView tvGarasi;
+    @BindView(R.id.tv_cart) TextView tvCart;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.iv_garasi) ImageView ivGarasi;
+    @BindView(R.id.iv_cart) ImageView ivCart;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.linear_notification) LinearLayout linearNotification;
     @SuppressLint("NonConstantResourceId")
@@ -71,11 +71,11 @@ public class MainActivity extends GrosirMobilActivity implements GrosirMobilFrag
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_notification) ImageView ivNotification;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.linear_keranjang) LinearLayout linearKeranjang;
+    @BindView(R.id.linear_win) LinearLayout linearWin;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_keranjang) TextView tvKeranjang;
+    @BindView(R.id.tv_win) TextView tvWin;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.iv_keranjang) ImageView ivKeranjang;
+    @BindView(R.id.iv_win) ImageView ivWin;
 
     private GrosirMobilPreference grosirMobilPreference;
     private GrosirMobilFunction grosirMobilFunction;
@@ -107,27 +107,27 @@ public class MainActivity extends GrosirMobilActivity implements GrosirMobilFrag
         presenter.cannotReplaceFragmentHome();
         ivHome.setImageResource(R.drawable.ic_home_enable);
         tvHome.setTextColor(getResources().getColor(R.color.colorPrimaryTextActive));
-        ivGarasi.setImageResource(R.drawable.ic_garasi_disable);
-        tvGarasi.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
+        ivCart.setImageResource(R.drawable.ic_cart_disable);
+        tvCart.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
         ivNotification.setImageResource(R.drawable.ic_notification_disable);
         tvNotification.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
-        ivKeranjang.setImageResource(R.drawable.ic_cart_disable);
-        tvKeranjang.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
+        ivWin.setImageResource(R.drawable.ic_win_disable);
+        tvWin.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
     }
 
 
     @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.linear_garasi)
+    @OnClick(R.id.linear_cart)
     public void linearGarasiClick(){
         presenter.replaceFragmentGarasi();
         ivHome.setImageResource(R.drawable.ic_home_disable);
         tvHome.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
-        ivGarasi.setImageResource(R.drawable.ic_garasi_enable);
-        tvGarasi.setTextColor(getResources().getColor(R.color.colorPrimaryTextActive));
+        ivCart.setImageResource(R.drawable.ic_cart_enable);
+        tvCart.setTextColor(getResources().getColor(R.color.colorPrimaryTextActive));
         ivNotification.setImageResource(R.drawable.ic_notification_disable);
         tvNotification.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
-        ivKeranjang.setImageResource(R.drawable.ic_cart_disable);
-        tvKeranjang.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
+        ivWin.setImageResource(R.drawable.ic_win_disable);
+        tvWin.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -136,26 +136,26 @@ public class MainActivity extends GrosirMobilActivity implements GrosirMobilFrag
         presenter.replaceFragmentNotification();
         ivHome.setImageResource(R.drawable.ic_home_disable);
         tvHome.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
-        ivGarasi.setImageResource(R.drawable.ic_garasi_disable);
-        tvGarasi.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
+        ivCart.setImageResource(R.drawable.ic_cart_disable);
+        tvCart.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
         ivNotification.setImageResource(R.drawable.ic_notification_enable);
         tvNotification.setTextColor(getResources().getColor(R.color.colorPrimaryTextActive));
-        ivKeranjang.setImageResource(R.drawable.ic_cart_disable);
-        tvKeranjang.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
+        ivWin.setImageResource(R.drawable.ic_win_disable);
+        tvWin.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
     }
 
     @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.linear_keranjang)
+    @OnClick(R.id.linear_win)
     void linearCartClick(){
         presenter.replaceFragmentCart();
         ivHome.setImageResource(R.drawable.ic_home_disable);
         tvHome.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
-        ivGarasi.setImageResource(R.drawable.ic_garasi_disable);
-        tvGarasi.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
+        ivCart.setImageResource(R.drawable.ic_cart_disable);
+        tvCart.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
         ivNotification.setImageResource(R.drawable.ic_notification_disable);
         tvNotification.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
-        ivKeranjang.setImageResource(R.drawable.ic_cart_enable);
-        tvKeranjang.setTextColor(getResources().getColor(R.color.colorPrimaryTextActive));
+        ivWin.setImageResource(R.drawable.ic_win_enable);
+        tvWin.setTextColor(getResources().getColor(R.color.colorPrimaryTextActive));
     }
 
     @Override
@@ -172,12 +172,12 @@ public class MainActivity extends GrosirMobilActivity implements GrosirMobilFrag
         presenter.cannotReplaceFragmentHome();
         ivHome.setImageResource(R.drawable.ic_home_enable);
         tvHome.setTextColor(getResources().getColor(R.color.colorPrimaryTextActive));
-        ivGarasi.setImageResource(R.drawable.ic_garasi_disable);
-        tvGarasi.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
+        ivCart.setImageResource(R.drawable.ic_cart_disable);
+        tvCart.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
         ivNotification.setImageResource(R.drawable.ic_notification_disable);
         tvNotification.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
-        ivKeranjang.setImageResource(R.drawable.ic_cart_disable);
-        tvKeranjang.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
+        ivWin.setImageResource(R.drawable.ic_win_disable);
+        tvWin.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
         new Handler().postDelayed(() -> doubleBackToExitPressedOnce=false, 2000);
 
     }

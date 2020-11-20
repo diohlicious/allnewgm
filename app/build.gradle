@@ -158,7 +158,9 @@ dependencies {
     api "com.google.firebase:firebase-analytics:${versions.firebaseAnalytics}"
     //noinspection GradleDependency
     api "com.google.firebase:firebase-crashlytics:${versions.firebaseCrashlytics}"
+    //noinspection GradleDependency
     api "com.google.android.gms:play-services-auth:${versions.googlePlayServiceAuth}"
+    api "com.rizlee.view:rangeseekbar:${versions.seekbar}"
     //Library Feature Finish
 
     //Library Retrofit Start

@@ -40,10 +40,11 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
     public void onBindViewHolder(@NonNull ViewHolderItemVehicleLiveGarage holder, int position) {
         HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = hardCodeDataBaruMasukModelList.get(position);
         holder.tvVehicleName.setText(hardCodeDataBaruMasukModel.getVehicleName());
-        holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber());
+        holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber()+" - ");
         holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());
+        holder.tvPenawaranTerakhir.setText(hardCodeDataBaruMasukModel.getPrice());
         holder.tvPrice.setText(hardCodeDataBaruMasukModel.getPrice());
-        holder.tvTimer.setText(hardCodeDataBaruMasukModel.getExpiredDate());
+//        holder.tvTimer.setText(hardCodeDataBaruMasukModel.getExpiredDate());
 
         holder.btnNego.setOnClickListener(view -> {
             holder.cardViewSuccessBidding.setVisibility(View.VISIBLE);

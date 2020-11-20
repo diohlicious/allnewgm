@@ -18,6 +18,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.adapter.LiveGarageAdapter;
 import com.sip.grosirmobil.adapter.LostGarageAdapter;
+import com.sip.grosirmobil.adapter.PaymentReceiveAdapter;
+import com.sip.grosirmobil.adapter.ReadyTakeOutAdapter;
 import com.sip.grosirmobil.adapter.SuccessGarageAdapter;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.util.GrosirMobilFragment;
@@ -47,11 +49,17 @@ public class GarasiFragment extends GrosirMobilFragment {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_success_garage) RecyclerView rvSuccessGarage;
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rv_ready_take_out) RecyclerView rvReadyTakeOut;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_lost_garage) RecyclerView rvLostGarage;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rv_payment_receive) RecyclerView rvPaymentReceive;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.relative_background_dialog_filter) RelativeLayout relativeBackgroundDialogFilter;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.linear_dialog_filter) LinearLayout linearDialogFilter;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_penawaran_sedang_berlangsung) TextView tvPenawaranSedangBerlangsung;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_penawaran_diterima) TextView tvPenawaranDiterima;
     @SuppressLint("NonConstantResourceId")
@@ -60,6 +68,16 @@ public class GarasiFragment extends GrosirMobilFragment {
     @BindView(R.id.tv_pembayaran_diterima) TextView tvPembayaranDiterima;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_kendaraan_siap_diambil) TextView tvKendaraanSiapDiambil;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_live_garage) LinearLayout linearLiveGarage;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_success_garage) LinearLayout linearSuccessGarage;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_lost_garage) LinearLayout linearLostGarage;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_payment_receive) LinearLayout linearPaymentReceive;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_ready_take_out) LinearLayout linearReadyTakeOut;
 
     private GrosirMobilFunction grosirMobilFunction;
     private List<HardCodeDataBaruMasukModel> liveHardCodeDataBaruMasukModelList = new ArrayList<>();
@@ -80,6 +98,22 @@ public class GarasiFragment extends GrosirMobilFragment {
         setDataSuccess();
         setDataLost();
 
+        setDataAdapter();
+
+        swipeRefreshHome.setOnRefreshListener(() -> {
+            setDataAdapter();
+            swipeRefreshHome.setRefreshing(false);
+            linearLiveGarage.setVisibility(View.VISIBLE);
+            linearSuccessGarage.setVisibility(View.VISIBLE);
+            linearLostGarage.setVisibility(View.VISIBLE);
+            linearPaymentReceive.setVisibility(View.VISIBLE);
+            linearReadyTakeOut.setVisibility(View.VISIBLE);
+        });
+
+        return view;
+    }
+
+    private void setDataAdapter(){
         RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
         rvLiveGarage.setLayoutManager(layoutManagerLive);
         rvLiveGarage.setNestedScrollingEnabled(false);
@@ -94,6 +128,13 @@ public class GarasiFragment extends GrosirMobilFragment {
         rvSuccessGarage.setAdapter(successGarageAdapter);
         successGarageAdapter.notifyDataSetChanged();
 
+        RecyclerView.LayoutManager layoutManagerReadyTakeOut = new LinearLayoutManager(getActivity());
+        rvReadyTakeOut.setLayoutManager(layoutManagerReadyTakeOut);
+        rvReadyTakeOut.setNestedScrollingEnabled(false);
+        ReadyTakeOutAdapter readyTakeOutAdapter = new ReadyTakeOutAdapter(getActivity(), successHardCodeDataBaruMasukModelList);
+        rvReadyTakeOut.setAdapter(readyTakeOutAdapter);
+        readyTakeOutAdapter.notifyDataSetChanged();
+
         RecyclerView.LayoutManager layoutManagerLost = new LinearLayoutManager(getActivity());
         rvLostGarage.setLayoutManager(layoutManagerLost);
         rvLostGarage.setNestedScrollingEnabled(false);
@@ -101,12 +142,23 @@ public class GarasiFragment extends GrosirMobilFragment {
         rvLostGarage.setAdapter(lostGarageAdapter);
         lostGarageAdapter.notifyDataSetChanged();
 
-        swipeRefreshHome.setOnRefreshListener(() -> {
-            swipeRefreshHome.setRefreshing(false);
+        RecyclerView.LayoutManager layoutManagerReceive = new LinearLayoutManager(getActivity());
+        rvPaymentReceive.setLayoutManager(layoutManagerReceive);
+        rvPaymentReceive.setNestedScrollingEnabled(false);
+        PaymentReceiveAdapter paymentReceiveAdapter = new PaymentReceiveAdapter(getActivity(), lostHardCodeDataBaruMasukModelList);
+        rvPaymentReceive.setAdapter(paymentReceiveAdapter);
+        paymentReceiveAdapter.notifyDataSetChanged();
 
-        });
-
-        return view;
+        tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvKendaraanSiapDiambil.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvKendaraanSiapDiambil.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPembayaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPembayaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
     }
 
     private void setDataLive(){
@@ -117,15 +169,11 @@ public class GarasiFragment extends GrosirMobilFragment {
     private void setDataSuccess(){
         HardCodeDataBaruMasukModel 
         hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
-        successHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel); 
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
         successHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
     }
 
     private void setDataLost(){
         HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
-        lostHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
         lostHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
     }
 
@@ -142,10 +190,12 @@ public class GarasiFragment extends GrosirMobilFragment {
     }
 
     @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.tv_kendaraan_siap_diambil)
-    void tvKendaraanSiapDiambilClick(){
-        tvKendaraanSiapDiambil.setBackgroundResource(R.color.colorPrimaryTheme);
-        tvKendaraanSiapDiambil.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+    @OnClick(R.id.tv_penawaran_sedang_berlangsung)
+    void tvPenawaranSedangBerlangsungClick(){
+        tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryTheme);
+        tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvKendaraanSiapDiambil.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvKendaraanSiapDiambil.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
         tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
@@ -153,6 +203,32 @@ public class GarasiFragment extends GrosirMobilFragment {
         tvPembayaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
         tvPembayaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         relativeBackgroundDialogFilterClick();
+        linearLiveGarage.setVisibility(View.VISIBLE);
+        linearSuccessGarage.setVisibility(View.GONE);
+        linearLostGarage.setVisibility(View.GONE);
+        linearPaymentReceive.setVisibility(View.GONE);
+        linearReadyTakeOut.setVisibility(View.GONE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_kendaraan_siap_diambil)
+    void tvKendaraanSiapDiambilClick(){
+        tvKendaraanSiapDiambil.setBackgroundResource(R.color.colorPrimaryTheme);
+        tvKendaraanSiapDiambil.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPembayaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPembayaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        relativeBackgroundDialogFilterClick();
+        linearLiveGarage.setVisibility(View.GONE);
+        linearSuccessGarage.setVisibility(View.GONE);
+        linearLostGarage.setVisibility(View.GONE);
+        linearPaymentReceive.setVisibility(View.GONE);
+        linearReadyTakeOut.setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -162,11 +238,18 @@ public class GarasiFragment extends GrosirMobilFragment {
         tvKendaraanSiapDiambil.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryTheme);
         tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
         tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvPembayaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
         tvPembayaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         relativeBackgroundDialogFilterClick();
+        linearLiveGarage.setVisibility(View.GONE);
+        linearSuccessGarage.setVisibility(View.VISIBLE);
+        linearLostGarage.setVisibility(View.GONE);
+        linearPaymentReceive.setVisibility(View.GONE);
+        linearReadyTakeOut.setVisibility(View.GONE);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -180,7 +263,14 @@ public class GarasiFragment extends GrosirMobilFragment {
         tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
         tvPembayaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
         tvPembayaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         relativeBackgroundDialogFilterClick();
+        linearLiveGarage.setVisibility(View.GONE);
+        linearSuccessGarage.setVisibility(View.GONE);
+        linearLostGarage.setVisibility(View.VISIBLE);
+        linearPaymentReceive.setVisibility(View.GONE);
+        linearReadyTakeOut.setVisibility(View.GONE);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -194,7 +284,14 @@ public class GarasiFragment extends GrosirMobilFragment {
         tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvPembayaranDiterima.setBackgroundResource(R.color.colorPrimaryTheme);
         tvPembayaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         relativeBackgroundDialogFilterClick();
+        linearLiveGarage.setVisibility(View.GONE);
+        linearSuccessGarage.setVisibility(View.GONE);
+        linearLostGarage.setVisibility(View.GONE);
+        linearPaymentReceive.setVisibility(View.VISIBLE);
+        linearReadyTakeOut.setVisibility(View.GONE);
     }
 
 
