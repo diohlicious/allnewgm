@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.PayPaymentActivity;
@@ -34,6 +36,8 @@ import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyF
 public class CartFragment extends GrosirMobilFragment {
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.swipe_refresh_cart) SwipeRefreshLayout swipeRefreshCart;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.linear_cart) LinearLayout linearCart;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_cart) RecyclerView rvCart;
@@ -44,8 +48,6 @@ public class CartFragment extends GrosirMobilFragment {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_total) TextView tvTotal;
 
-    private String totalPrice = "";
-    private String totalPriceAndAdmin = "";
     private List<HardCodeDataBaruMasukModel> liveHardCodeDataBaruMasukModelList = new ArrayList<>();
 
     @SuppressLint("SetTextI18n")
@@ -58,30 +60,52 @@ public class CartFragment extends GrosirMobilFragment {
 
         setDataCart();
 
-        RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
-        rvCart.setLayoutManager(layoutManagerLive);
-        rvCart.setNestedScrollingEnabled(false);
-        CartAdapter cartAdapter = new CartAdapter(getActivity(), totalPrice, liveHardCodeDataBaruMasukModelList);
-        rvCart.setAdapter(cartAdapter);
-        cartAdapter.notifyDataSetChanged();
+        loadData();
 
-        tvHargaKendaraan.setText("Rp "+setCurrencyFormat(totalPrice));
-        tvTotal.setText("Rp "+setCurrencyFormat(totalPrice));
+        swipeRefreshCart.setOnRefreshListener(() -> {
+            loadData();
+            swipeRefreshCart.setRefreshing(false);
+        });
 
         return view;
     }
 
+    private void loadData(){
+        tvHargaKendaraan.setText("");
+        tvTotal.setText("");
+        RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
+        rvCart.setLayoutManager(layoutManagerLive);
+        rvCart.setNestedScrollingEnabled(false);
+        @SuppressLint("SetTextI18n") CartAdapter cartAdapter = new CartAdapter(getActivity(), tvHargaKendaraan, liveHardCodeDataBaruMasukModelList, hardCodeDataBaruMasukModel -> {
+            if(tvHargaKendaraan.getText().toString().equals("Rp 0")){
+                tvTotal.setText("");
+            }else {
+                String hargaKendaraanTemp = tvHargaKendaraan.getText().toString().replace("Rp ", "");
+                String hargaKendaraan = hargaKendaraanTemp.replace(".", "");
+                long priceTotal = Long.parseLong(hargaKendaraan)+500000;
+                tvTotal.setText("Rp "+ setCurrencyFormat(String.valueOf(priceTotal)));
+            }
+        });
+        rvCart.setAdapter(cartAdapter);
+        cartAdapter.notifyDataSetChanged();
+
+    }
+
     private void setDataCart(){
-        HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","","111000000","");
+        HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","100000000","");
         liveHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","","111000000","");
+        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","200000000","");
         liveHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
     }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_pay)
     void btnPayClick(){
-        Intent intent = new Intent(getActivity(), PayPaymentActivity.class);
-        startActivity(intent);
+        if(tvTotal.getText().toString().equals("")){
+            Toast.makeText(getActivity(), "Mohon Pilih Kendaraan yang mau dibayar", Toast.LENGTH_SHORT).show();
+        }else {
+            Intent intent = new Intent(getActivity(), PayPaymentActivity.class);
+            startActivity(intent);
+        }
     }
 }

@@ -309,4 +309,6 @@
     <string name="tv_sms_untuk_membuat_kata_sandi_baru_ntelah_dikirim_ke_nomor_anda">SMS untuk membuat kata sandi baru\ntelah dikirim ke nomor Anda</string>
     <string name="tv_edit_foto">Edit Foto</string>
     <string name="toast_cancel_add_image">Batal Ambil Gambar</string>
+    <string name="tv_menunggu_verifikasi_dari_admin_harap_tunggu_sebentar_atau_balik_nanti">Menunggu verifikasi dari admin,\nharap tunggu sebentar atau balik nanti lagi.</string>
+    <string name="tv_anda_telah_bergabung_dengan_grosir_mobil">Anda telah bergabung dengan GrosirMobil\npilih mobil dan segera lakukan penawaran</string>
 </resources>

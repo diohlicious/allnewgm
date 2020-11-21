@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,11 +16,14 @@ import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
 
 import java.util.List;
 
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
+
 
 public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicleLiveGarage> {
 
     private List<HardCodeDataBaruMasukModel> hardCodeDataBaruMasukModelList;
     private Context contexts;
+    private long negoPrice = 0;
 
 
     public LiveGarageAdapter(Context context, List<HardCodeDataBaruMasukModel> hardCodeDataBaruMasukModels) {
@@ -42,12 +46,31 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
         holder.tvVehicleName.setText(hardCodeDataBaruMasukModel.getVehicleName());
         holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber()+" - ");
         holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());
-        holder.tvPenawaranTerakhir.setText(hardCodeDataBaruMasukModel.getPrice());
-        holder.tvPrice.setText(hardCodeDataBaruMasukModel.getPrice());
-//        holder.tvTimer.setText(hardCodeDataBaruMasukModel.getExpiredDate());
+        holder.tvPenawaranTerakhir.setText("Rp "+setCurrencyFormat(hardCodeDataBaruMasukModel.getPrice()));
+        holder.tvPrice.setText("Rp "+setCurrencyFormat(hardCodeDataBaruMasukModel.getPrice()));
+        long lastPrice = Long.parseLong(hardCodeDataBaruMasukModel.getPrice());
+        negoPrice = Long.parseLong(hardCodeDataBaruMasukModel.getPrice());
+        holder.ivMin.setOnClickListener(view -> {
+            if(negoPrice==lastPrice){
+                Toast.makeText(contexts, "Minimum Tawar Harus Lebih Besar dari Penawaran Terakhir", Toast.LENGTH_SHORT).show();
+            }else {
+                negoPrice = negoPrice-500000;
+                holder.tvPrice.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
+            }
+        });
+
+        holder.ivPlus.setOnClickListener(view -> {
+            negoPrice = negoPrice+500000;
+            holder.tvPrice.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
+        });
 
         holder.btnNego.setOnClickListener(view -> {
             holder.cardViewSuccessBidding.setVisibility(View.VISIBLE);
+        });
+
+        holder.ivClearPrice.setOnClickListener(view -> {
+            negoPrice = Long.parseLong(hardCodeDataBaruMasukModel.getPrice());
+            holder.tvPrice.setText("Rp "+setCurrencyFormat(hardCodeDataBaruMasukModel.getPrice()));
         });
     }
 

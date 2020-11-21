@@ -81,5 +81,6 @@ public class PayPaymentActivity extends GrosirMobilActivity {
     void btnPayClick(){
         Intent intent = new Intent(this, PayDetailActivity.class);
         startActivity(intent);
+        finish();
     }
 }

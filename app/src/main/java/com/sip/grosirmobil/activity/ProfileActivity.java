@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.fxn.pix.Pix;
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
 
@@ -32,6 +33,8 @@ public class ProfileActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_profile) CircleImageView ivProfile;
 
+    private GrosirMobilPreference grosirMobilPreference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +42,8 @@ public class ProfileActivity extends GrosirMobilActivity {
         setContentView(R.layout.actifity_profile);
         adjustFontScale(this, getResources().getConfiguration());
         ButterKnife.bind(this);
+
+        grosirMobilPreference = new GrosirMobilPreference(this);
 
     }
 
@@ -79,6 +84,7 @@ public class ProfileActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_logout)
     void tvLogoutClick(){
+        grosirMobilPreference.saveToken("");
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

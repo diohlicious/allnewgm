@@ -3,9 +3,11 @@ package com.sip.grosirmobil.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,7 +50,7 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle>
         holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());
         holder.tvOpenPrice.setText(hardCodeDataBaruMasukModel.getPrice());
         holder.tvBottomPrice.setText(hardCodeDataBaruMasukModel.getPrice());
-        holder.tvTimer.setText(hardCodeDataBaruMasukModel.getExpiredDate());
+        startTimer(holder.tvTimer, 20000000);
 
         holder.cardVehicle.setOnClickListener(view -> {
             Intent intent = new Intent(contexts, VehicleDetailActivity.class);
@@ -63,4 +65,23 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle>
         return hardCodeDataBaruMasukModelList.size();
     }
 
+    public void startTimer(TextView tvTimer, long noOfMinutes) {
+        new CountDownTimer(noOfMinutes,  1000) {
+            @SuppressLint({"SetTextI18n", "DefaultLocale"})
+            public void onTick(long millisUntilFinished) {
+                int seconds = (int) (millisUntilFinished / 1000);
+                int hours = seconds / (60 * 60);
+                int tempMint = (seconds - (hours * 60 * 60));
+                int minutes = tempMint / 60;
+                seconds = tempMint - (minutes * 60);
+                tvTimer.setText(String.format("%02d", hours) + "h " +
+                        String.format("%02d", minutes) + "m " +
+                        String.format("%02d", seconds) + "s ");
+            }
+            @SuppressLint("SetTextI18n")
+            public void onFinish() {
+                tvTimer.setText("00h 00m 00s");
+            }
+        }.start();
+    }
 }

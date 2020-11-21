@@ -46,7 +46,7 @@
             android:alpha="0.6"
             android:fontFamily="@font/nunito_semi_bold"
             android:gravity="center"
-            android:text="Segera klik link yang telah kami kirimkan  \nke SMS / Email Anda"
+            android:text="@string/tv_menunggu_verifikasi_dari_admin_harap_tunggu_sebentar_atau_balik_nanti"
             android:textColor="@color/colorPrimaryFont"
             android:textSize="@dimen/text_14"
             tools:ignore="HardcodedText" />

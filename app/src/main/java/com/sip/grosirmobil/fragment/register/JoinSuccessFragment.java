@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.MainActivity;
 import com.sip.grosirmobil.activity.RegisterDataActivity;
+import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -20,6 +21,8 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  */
 public class JoinSuccessFragment extends Fragment {
+
+    private GrosirMobilPreference grosirMobilPreference;
 
     public static JoinSuccessFragment newInstance(int page, String title) {
         JoinSuccessFragment fragmentFirst = new JoinSuccessFragment();
@@ -37,6 +40,7 @@ public class JoinSuccessFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_join_success, container, false);
         ButterKnife.bind(this, view);
 
+        grosirMobilPreference = new GrosirMobilPreference(getActivity());
         return view;
     }
 
@@ -49,6 +53,7 @@ public class JoinSuccessFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_telusuri)
     void btnTelusuriClick(){
+        grosirMobilPreference.saveToken("TOKEN");
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
         getActivity().finish();

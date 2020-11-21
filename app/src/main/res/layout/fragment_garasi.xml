@@ -6,7 +6,7 @@
     android:background="@color/colorPrimaryWhite"
     tools:context=".fragment.navigationmenu.GarasiFragment">
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_home"
+        android:id="@+id/swipe_refresh_garage"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.core.widget.NestedScrollView

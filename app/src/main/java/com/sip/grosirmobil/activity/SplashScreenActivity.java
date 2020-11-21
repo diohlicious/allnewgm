@@ -38,9 +38,15 @@ public class SplashScreenActivity extends GrosirMobilActivity {
                 progressBarValue++;
                 handler.post(() -> {
                     if(progressBarValue==100){
-                        Intent mainActivity = new Intent(SplashScreenActivity.this, OnBoardingActivity.class);
-                        startActivity(mainActivity);
-                        finish();
+                        if(grosirMobilPreference.getToken()==null||grosirMobilPreference.getToken().equals("")){
+                            Intent splashScreenActivity = new Intent(SplashScreenActivity.this, OnBoardingActivity.class);
+                            startActivity(splashScreenActivity);
+                            finish();
+                        }else {
+                            Intent mainActivity = new Intent(SplashScreenActivity.this, MainActivity.class);
+                            startActivity(mainActivity);
+                            finish();
+                        }
                     }
                 });
                 try {

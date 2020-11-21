@@ -46,7 +46,7 @@
             android:alpha="0.6"
             android:fontFamily="@font/nunito_semi_bold"
             android:gravity="center"
-            android:text="Anda telah bergabung dengan GrosirMobil \npilih mobil dan segera lakukan penawaran"
+            android:text="@string/tv_anda_telah_bergabung_dengan_grosir_mobil"
             android:textColor="@color/colorPrimaryFont"
             android:textSize="@dimen/text_14"
             tools:ignore="HardcodedText" />

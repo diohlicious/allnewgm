@@ -3,12 +3,14 @@ package com.sip.grosirmobil.activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -35,6 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.adjustFontScale;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarOnBoarding;
 
 public class VehicleDetailActivity extends GrosirMobilActivity {
@@ -354,12 +357,14 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     private boolean engine = false;
     private boolean other = false;
     private boolean brokenImage = false;
+    private long negoPrice, lastPrice;
 
     private List<HardCodeDataModel> hardCodeDataImageVehicleDetailModelList = new ArrayList<>();
     private List<HardCodeDataModel> hardCodeDataDescriptionModelList = new ArrayList<>();
     private List<HardCodeDataModel> hardCodeDataBrokenImageModelList = new ArrayList<>();
     private Context context;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -408,6 +413,19 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
         rvBid.setLayoutManager(layoutManagerBid);
 
 //        getIntent().getStringExtra(ID_VEHICLE);
+
+        loadData();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void loadData(){
+
+        startTimerDialog(1000000000);
+        startTimer(tvDescription, 1000000000);
+        lastPrice = Long.parseLong("120000000");
+        negoPrice = Long.parseLong("120000000");
+
+        tvInputPriceNego.setText("Rp "+setCurrencyFormat("120000000"));
     }
 
     private void setDataHardCodeImageVehicleDetail(){
@@ -641,16 +659,30 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
         relativeBackgroundDialog.setVisibility(View.VISIBLE);
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.iv_min)
     void ivMinClick(){
-
+        if(negoPrice==lastPrice){
+            Toast.makeText(this, "Minimum Tawar Harus Lebih Besar dari Penawaran Terakhir", Toast.LENGTH_SHORT).show();
+        }else {
+            negoPrice = negoPrice-500000;
+            tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
+        }
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.iv_plus)
     void ivPlusClick(){
+        negoPrice = negoPrice+500000;
+        tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
+    }
 
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
+    @OnClick(R.id.iv_clear_price)
+    void ivClearPriceClick(){
+        lastPrice = Long.parseLong("120000000");
+        negoPrice = Long.parseLong("120000000");
+        tvInputPriceNego.setText("Rp "+setCurrencyFormat("120000000"));
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -659,5 +691,54 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
         finish();
     }
 
+    public void startTimerDialog(long noOfMinutes) {
+        new CountDownTimer(noOfMinutes,  1000) {
+            @SuppressLint({"SetTextI18n", "DefaultLocale"})
+            public void onTick(long millisUntilFinished) {
+                int seconds = (int) (millisUntilFinished / 1000);
+                int hours = seconds / (60 * 60);
+                int tempMint = (seconds - (hours * 60 * 60));
+                int minutes = tempMint / 60;
+                seconds = tempMint - (minutes * 60);
+
+                tvHourFirst.setText(String.format("%02d", hours).substring(0,1));
+                tvHourSecond.setText(String.format("%02d", hours).substring(1,2));
+                tvMinuteFirst.setText(String.format("%02d", minutes).substring(0,1));
+                tvMinuteSecond.setText(String.format("%02d", minutes).substring(1,2));
+                tvSecondFirst.setText(String.format("%02d", seconds).substring(0,1));
+                tvSecondSecond.setText(String.format("%02d", seconds).substring(1,2));
+
+            }
+            @SuppressLint("SetTextI18n")
+            public void onFinish() {
+                tvHourFirst.setText("0");
+                tvHourSecond.setText("0");
+                tvMinuteFirst.setText("0");
+                tvMinuteSecond.setText("0");
+                tvSecondFirst.setText("0");
+                tvSecondSecond.setText("0");
+            }
+        }.start();
+    }
+
+    public void startTimer(TextView tvTimer, long noOfMinutes) {
+        new CountDownTimer(noOfMinutes,  1000) {
+            @SuppressLint({"SetTextI18n", "DefaultLocale"})
+            public void onTick(long millisUntilFinished) {
+                int seconds = (int) (millisUntilFinished / 1000);
+                int hours = seconds / (60 * 60);
+                int tempMint = (seconds - (hours * 60 * 60));
+                int minutes = tempMint / 60;
+                seconds = tempMint - (minutes * 60);
+                tvTimer.setText(String.format("%02d", hours) + "h " +
+                        String.format("%02d", minutes) + "m " +
+                        String.format("%02d", seconds) + "s");
+            }
+            @SuppressLint("SetTextI18n")
+            public void onFinish() {
+                tvTimer.setText("00h 00m 00s");
+            }
+        }.start();
+    }
 
 }

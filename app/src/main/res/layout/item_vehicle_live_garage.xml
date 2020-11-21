@@ -169,7 +169,8 @@
                             android:paddingEnd="@dimen/_2sdp"
                             android:scrollbarSize="@dimen/text_10"
                             android:textColorHint="@color/colorPrimaryHintFont"
-                            android:textSize="@dimen/text_11"
+                            android:textColor="@color/colorPrimaryFont"
+                            android:textSize="@dimen/text_12"
                             tools:ignore="Autofill,HardcodedText,LabelFor,NestedWeights,RelativeOverlap,RtlSymmetry" />
                         <ImageView
                             android:id="@+id/iv_clear_price"

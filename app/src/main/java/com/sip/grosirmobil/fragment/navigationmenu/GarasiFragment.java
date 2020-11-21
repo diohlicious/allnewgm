@@ -39,7 +39,7 @@ import butterknife.OnClick;
 public class GarasiFragment extends GrosirMobilFragment {
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.swipe_refresh_home) SwipeRefreshLayout swipeRefreshHome;
+    @BindView(R.id.swipe_refresh_garage) SwipeRefreshLayout swipeRefreshGarage;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.nested_view) NestedScrollView nestedView;
     @SuppressLint("NonConstantResourceId")
@@ -100,9 +100,9 @@ public class GarasiFragment extends GrosirMobilFragment {
 
         setDataAdapter();
 
-        swipeRefreshHome.setOnRefreshListener(() -> {
+        swipeRefreshGarage.setOnRefreshListener(() -> {
             setDataAdapter();
-            swipeRefreshHome.setRefreshing(false);
+            swipeRefreshGarage.setRefreshing(false);
             linearLiveGarage.setVisibility(View.VISIBLE);
             linearSuccessGarage.setVisibility(View.VISIBLE);
             linearLostGarage.setVisibility(View.VISIBLE);
@@ -163,7 +163,7 @@ public class GarasiFragment extends GrosirMobilFragment {
 
     private void setDataLive(){
         HardCodeDataBaruMasukModel 
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
+        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","111000000","04h 27m 03s");
         liveHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
     }
     private void setDataSuccess(){

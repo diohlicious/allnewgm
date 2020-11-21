@@ -36,7 +36,7 @@ public class RegisterDataActivity extends GrosirMobilActivity {
             if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
                 getSupportFragmentManager().popBackStack();
             } else {
-                super.onBackPressed();
+                finish();
             }
         }catch (Exception e){
             GrosirMobilLog.printStackTrace(e);
@@ -44,6 +44,20 @@ public class RegisterDataActivity extends GrosirMobilActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        try {
+            System.out.println("Count Fragment : "+ getSupportFragmentManager().getBackStackEntryCount());
+            if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+                getSupportFragmentManager().popBackStack();
+            } else {
+                finish();
+            }
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
+            finish();
+        }
+    }
 
     public void replaceFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.page_fragment, fragment).addToBackStack("my_fragment").commit();

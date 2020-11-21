@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.sip.grosirmobil.R;
@@ -49,19 +50,19 @@ public class RegisterActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_register)
     void btnRegisterClick(){
-//        if(etPhoneNumber.getText().toString().isEmpty()){
-//            Toast.makeText(this, "Mohon Isi Nomor Telepon", Toast.LENGTH_SHORT).show();
-//        }else if(etPassword.getText().toString().isEmpty()){
-//            Toast.makeText(this, "Mohon Isi Password", Toast.LENGTH_SHORT).show();
-//        }else {
-//            if(cbTermAndCondition.isChecked()){
+        if(etPhoneNumber.getText().toString().isEmpty()){
+            Toast.makeText(this, "Mohon Isi Nomor Telepon", Toast.LENGTH_SHORT).show();
+        }else if(etPassword.getText().toString().isEmpty()){
+            Toast.makeText(this, "Mohon Isi Password", Toast.LENGTH_SHORT).show();
+        }else {
+            if(cbTermAndCondition.isChecked()){
                 Intent intent = new Intent(this, CodeOtpActivity.class);
                 startActivity(intent);
                 finish();
-//            }else {
-//                Toast.makeText(this, "Mohon Centang Term And Condition", Toast.LENGTH_SHORT).show();
-//            }
-//        }
+            }else {
+                Toast.makeText(this, "Mohon Centang Term And Condition", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @OnClick({R.id.linear_login,R.id.tv_login})
