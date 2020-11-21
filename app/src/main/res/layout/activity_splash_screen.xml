@@ -5,10 +5,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryBackgroundApps"
+    android:background="#0C2C33"
     tools:context="com.sip.grosirmobil.activity.SplashScreenActivity">
     <ImageView
-        android:src="@drawable/ic_logo_splash_screen"
+        android:src="@drawable/ic_logo_grosir_mobil"
         android:layout_width="@dimen/_250sdp"
         android:layout_height="@dimen/_60sdp"
         tools:ignore="ContentDescription" />

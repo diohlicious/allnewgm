@@ -62,15 +62,15 @@ public class LoginActivity extends GrosirMobilActivity implements LoginView {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_login)
     void btnLoginClick(){
-        if(etEmail.getText().toString().isEmpty()){
-            Toast.makeText(this, "Mohon Isi Email", Toast.LENGTH_SHORT).show();
-        }else if(etPassword.getText().toString().isEmpty()){
-            Toast.makeText(this, "Mohon Isi Password", Toast.LENGTH_SHORT).show();
-        }else {
+//        if(etEmail.getText().toString().isEmpty()){
+//            Toast.makeText(this, "Mohon Isi Email", Toast.LENGTH_SHORT).show();
+//        }else if(etPassword.getText().toString().isEmpty()){
+//            Toast.makeText(this, "Mohon Isi Password", Toast.LENGTH_SHORT).show();
+//        }else {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
-        }
+//        }
 //        loginPresenter.login(etEmail.getText().toString(), etPassword.getText().toString());
     }
 

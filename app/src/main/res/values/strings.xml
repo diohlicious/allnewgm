@@ -62,7 +62,7 @@
     <string name="tv_menang">Menang</string>
     <string name="tv_garasi">Garasi</string>
     <string name="btn_bayar">Bayar</string>
-    <string name="tv_cek_email_anda">Cek email Anda!</string>
+    <string name="tv_cek_email_anda">Cek SMS Anda!</string>
     <string name="tv_kendaraan_yang_sedang_anda_cari">Kendaraan yang sedang Anda cari?</string>
     <string name="tv_baru_masuk">Baru Masuk</string>
     <string name="tv_live">Live</string>
@@ -306,4 +306,7 @@
     <string name="message_dialog_turn_on_gps">Apakah anda ingin menghidupkan GPS</string>
     <string name="btn_yes">Ya</string>
     <string name="btn_no">Tidak</string>
+    <string name="tv_sms_untuk_membuat_kata_sandi_baru_ntelah_dikirim_ke_nomor_anda">SMS untuk membuat kata sandi baru\ntelah dikirim ke nomor Anda</string>
+    <string name="tv_edit_foto">Edit Foto</string>
+    <string name="toast_cancel_add_image">Batal Ambil Gambar</string>
 </resources>

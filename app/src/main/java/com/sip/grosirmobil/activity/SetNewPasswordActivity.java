@@ -37,6 +37,7 @@ public class SetNewPasswordActivity extends GrosirMobilActivity {
         ButterKnife.bind(this);
 
         email = getIntent().getStringExtra(EMAIL);
+        etEmail.setText(email);
     }
 
     @SuppressLint("NonConstantResourceId")

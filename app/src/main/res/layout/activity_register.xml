@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,214 +7,161 @@
     android:background="@color/colorPrimaryWhite"
     tools:context=".activity.RegisterActivity">
     <LinearLayout
-        android:paddingLeft="@dimen/_25sdp"
-        android:paddingRight="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:paddingLeft="@dimen/_30sdp"
+        android:paddingRight="@dimen/_30sdp"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="UselessLeaf">
         <ImageView
             android:id="@+id/iv_logo"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_gravity="center"
             android:src="@drawable/ic_logo_grosir_mobil"
             android:layout_width="@dimen/_152sdp"
             android:layout_height="@dimen/_30sdp"
             tools:ignore="ContentDescription" />
-        <LinearLayout
-            android:id="@+id/linear_input"
+        <TextView
             android:layout_marginTop="@dimen/_50sdp"
-            android:paddingLeft="@dimen/_5sdp"
-            android:paddingRight="@dimen/_5sdp"
-            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimaryFont"
+            android:textSize="@dimen/text_24"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/tv_daftar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_gravity="center"
+            android:alpha="0.6"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:textColor="@color/colorPrimaryFont"
+            android:textSize="@dimen/text_14"
+            android:fontFamily="@font/nunito_semi_bold"
+            android:text="@string/tv_registrasikan_diri_anda_sekarang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tv_phone_number"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:hint="@string/tv_phone_number"
+            android:theme="@style/myTextInputLabelTheme"
+            android:textColorHint="@color/colorPrimaryHintFont"
+            android:backgroundTint="@color/colorPrimaryTheme"
+            android:fontFamily="@font/nunito_semi_bold"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="UselessLeaf">
-            <TextView
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_phone_number"
                 android:textColor="@color/colorPrimaryFont"
-                android:textSize="@dimen/text_24"
-                android:fontFamily="@font/nunito_bold"
-                android:text="@string/tv_daftar"
+                android:backgroundTint="@color/colorPrimaryFont"
+                android:textSize="@dimen/text_16"
+                android:drawableStart="@drawable/ic_phone_number"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/nunito_semi_bold"
+                android:gravity="center|left"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry"
+                android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tv_password"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:hint="@string/tv_password"
+            android:theme="@style/myTextInputLabelTheme"
+            android:textColorHint="@color/colorPrimaryHintFont"
+            android:backgroundTint="@color/colorPrimaryTheme"
+            android:fontFamily="@font/nunito_semi_bold"
+            app:passwordToggleEnabled="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
+                android:textColor="@color/colorPrimaryFont"
+                android:backgroundTint="@color/colorPrimaryFont"
+                android:textSize="@dimen/text_16"
+                android:drawableStart="@drawable/ic_password"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/nunito_semi_bold"
+                android:gravity="center|left"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
+            android:layout_marginTop="@dimen/_20sdp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/cb_term_and_condition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-            <TextView
-                android:alpha="0.6"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:textColor="@color/colorPrimaryFont"
-                android:textSize="@dimen/text_14"
-                android:fontFamily="@font/nunito_semi_bold"
-                android:text="@string/tv_registrasikan_diri_anda_sekarang"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tv_full_name"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:hint="@string/tv_full_name"
-                android:theme="@style/myTextInputLabelTheme"
-                android:textColorHint="@color/colorPrimaryHintFont"
-                android:backgroundTint="@color/colorPrimaryTheme"
-                android:fontFamily="@font/nunito_semi_bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_full_name"
-                    android:textColor="@color/colorPrimaryFont"
-                    android:backgroundTint="@color/colorPrimaryFont"
-                    android:textSize="@dimen/text_16"
-                    android:drawableStart="@drawable/ic_email_user"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:fontFamily="@font/nunito_semi_bold"
-                    android:gravity="center|left"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry"
-                    android:inputType="textPersonName" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tv_email"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:hint="@string/tv_email"
-                android:theme="@style/myTextInputLabelTheme"
-                android:textColorHint="@color/colorPrimaryHintFont"
-                android:backgroundTint="@color/colorPrimaryTheme"
-                android:fontFamily="@font/nunito_semi_bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_email"
-                    android:textColor="@color/colorPrimaryFont"
-                    android:backgroundTint="@color/colorPrimaryFont"
-                    android:textSize="@dimen/text_16"
-                    android:drawableStart="@drawable/ic_email"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:fontFamily="@font/nunito_semi_bold"
-                    android:gravity="center|left"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry"
-                    android:inputType="textEmailAddress" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tv_phone_number"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:hint="@string/tv_phone_number"
-                android:theme="@style/myTextInputLabelTheme"
-                android:textColorHint="@color/colorPrimaryHintFont"
-                android:backgroundTint="@color/colorPrimaryTheme"
-                android:fontFamily="@font/nunito_semi_bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_phone_number"
-                    android:textColor="@color/colorPrimaryFont"
-                    android:backgroundTint="@color/colorPrimaryFont"
-                    android:textSize="@dimen/text_16"
-                    android:drawableStart="@drawable/ic_phone_number"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:fontFamily="@font/nunito_semi_bold"
-                    android:gravity="center|left"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry"
-                    android:inputType="phone" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tv_password"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:hint="@string/tv_password"
-                android:theme="@style/myTextInputLabelTheme"
-                android:textColorHint="@color/colorPrimaryHintFont"
-                android:backgroundTint="@color/colorPrimaryTheme"
-                android:fontFamily="@font/nunito_semi_bold"
-                app:passwordToggleEnabled="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_password"
-                    android:textColor="@color/colorPrimaryFont"
-                    android:backgroundTint="@color/colorPrimaryFont"
-                    android:textSize="@dimen/text_16"
-                    android:drawableStart="@drawable/ic_password"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:fontFamily="@font/nunito_semi_bold"
-                    android:gravity="center|left"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry"
-                    android:inputType="textPassword" />
-            </com.google.android.material.textfield.TextInputLayout>
             <LinearLayout
-                android:layout_marginTop="@dimen/_20sdp"
-                android:orientation="horizontal"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <CheckBox
-                    android:id="@+id/cb_term_and_condition"
+                <TextView
+                    android:textColor="@color/colorPrimaryFont"
+                    android:textSize="@dimen/text_12"
+                    android:fontFamily="@font/nunito_regular"
+                    android:text="@string/tv_dengan_membuat_akun_anda_menyetujui"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-                <LinearLayout
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:textColor="@color/colorPrimaryFont"
-                        android:textSize="@dimen/text_12"
-                        android:fontFamily="@font/nunito_regular"
-                        android:text="@string/tv_dengan_membuat_akun_anda_menyetujui"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:textSize="@dimen/text_12"
-                        android:fontFamily="@font/nunito_semi_bold"
-                        android:textColor="@color/colorPrimaryTheme"
-                        android:text="@string/tv_syarat_amp_ketentuan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-            </LinearLayout>
-            <RelativeLayout
-                android:layout_marginBottom="@dimen/_30sdp"
-                android:layout_marginTop="@dimen/_40sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/btn_register"
+                <TextView
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textSize="@dimen/text_12"
                     android:fontFamily="@font/nunito_semi_bold"
-                    android:textSize="@dimen/text_18"
-                    android:layout_marginLeft="@dimen/_16sdp"
-                    android:layout_marginRight="@dimen/_16sdp"
-                    android:textColor="@color/colorPrimaryWhite"
-                    android:textAllCaps="false"
-                    android:text="@string/btn_register"
-                    android:background="@drawable/btn_design"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp" />
-                <LinearLayout
-                    android:id="@+id/linear_login"
-                    android:layout_below="@id/btn_register"
-                    android:layout_marginTop="@dimen/_13sdp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:textColor="#979797"
-                        android:textSize="@dimen/text_14"
-                        android:fontFamily="@font/nunito_regular"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:text="@string/tv_sudah_punya_akun"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:id="@+id/tv_login"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="@dimen/text_14"
-                        android:fontFamily="@font/nunito_semi_bold"
-                        android:text="@string/tv_login"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </LinearLayout>
-            </RelativeLayout>
+                    android:textColor="@color/colorPrimaryTheme"
+                    android:text="@string/tv_syarat_amp_ketentuan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_register"
+            android:fontFamily="@font/nunito_semi_bold"
+            android:textSize="@dimen/text_18"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:textColor="@color/colorPrimaryWhite"
+            android:textAllCaps="false"
+            android:text="@string/btn_register"
+            android:background="@drawable/btn_design"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp" />
+        <LinearLayout
+            android:id="@+id/linear_login"
+            android:layout_below="@id/btn_register"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="#979797"
+                android:textSize="@dimen/text_14"
+                android:fontFamily="@font/nunito_regular"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:text="@string/tv_sudah_punya_akun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_login"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_14"
+                android:fontFamily="@font/nunito_semi_bold"
+                android:text="@string/tv_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

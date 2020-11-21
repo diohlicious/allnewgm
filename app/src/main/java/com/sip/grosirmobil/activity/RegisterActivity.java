@@ -12,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.sip.grosirmobil.R;
@@ -26,10 +25,6 @@ import butterknife.OnClick;
 
 public class RegisterActivity extends GrosirMobilActivity {
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.et_full_name) TextInputEditText etFullName;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.et_email) TextInputEditText etEmail;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.et_phone_number) TextInputEditText etPhoneNumber;
     @SuppressLint("NonConstantResourceId")
@@ -54,23 +49,19 @@ public class RegisterActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_register)
     void btnRegisterClick(){
-        if(etFullName.getText().toString().isEmpty()){
-            Toast.makeText(this, "Mohon Isi Nama Lengkap", Toast.LENGTH_SHORT).show();
-        }else if(etEmail.getText().toString().isEmpty()){
-            Toast.makeText(this, "Mohon Isi Email", Toast.LENGTH_SHORT).show();
-        }else if(etPhoneNumber.getText().toString().isEmpty()){
-            Toast.makeText(this, "Mohon Isi Nomor Telepon", Toast.LENGTH_SHORT).show();
-        }else if(etPassword.getText().toString().isEmpty()){
-            Toast.makeText(this, "Mohon Isi Password", Toast.LENGTH_SHORT).show();
-        }else {
-            if(cbTermAndCondition.isChecked()){
+//        if(etPhoneNumber.getText().toString().isEmpty()){
+//            Toast.makeText(this, "Mohon Isi Nomor Telepon", Toast.LENGTH_SHORT).show();
+//        }else if(etPassword.getText().toString().isEmpty()){
+//            Toast.makeText(this, "Mohon Isi Password", Toast.LENGTH_SHORT).show();
+//        }else {
+//            if(cbTermAndCondition.isChecked()){
                 Intent intent = new Intent(this, CodeOtpActivity.class);
                 startActivity(intent);
                 finish();
-            }else {
-                Toast.makeText(this, "Mohon Centang Term And Condition", Toast.LENGTH_SHORT).show();
-            }
-        }
+//            }else {
+//                Toast.makeText(this, "Mohon Centang Term And Condition", Toast.LENGTH_SHORT).show();
+//            }
+//        }
     }
 
     @OnClick({R.id.linear_login,R.id.tv_login})

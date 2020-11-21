@@ -54,17 +54,37 @@
                     android:layout_alignParentStart="true"
                     android:src="@drawable/ic_syahrul"
                     tools:ignore="ObsoleteLayoutParam" />
-                <TextView
-                    android:id="@+id/tv_full_name"
+                <LinearLayout
+                    android:gravity="center"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/nunito_regular"
-                    android:gravity="left|center"
-                    android:paddingLeft="@dimen/_16sdp"
-                    android:text="@string/tv_syahrul_hajji"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/text_24"
-                    tools:ignore="RtlHardcoded,RtlSymmetry" />
+                    tools:ignore="RtlSymmetry">
+                    <TextView
+                        android:id="@+id/tv_full_name"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
+                        android:gravity="left|center"
+                        android:text="@string/tv_syahrul_hajji"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_24"
+                        tools:ignore="RtlHardcoded,RtlSymmetry" />
+                    <TextView
+                        android:id="@+id/tv_edit_foto"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
+                        android:gravity="left|center"
+                        android:text="@string/tv_edit_foto"
+                        android:textColor="@color/colorPrimaryTheme"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="RtlHardcoded,RtlSymmetry" />
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
