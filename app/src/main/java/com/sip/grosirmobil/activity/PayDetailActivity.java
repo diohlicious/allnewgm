@@ -18,12 +18,20 @@ import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBar
 
 public class PayDetailActivity extends GrosirMobilActivity {
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_hour_first) TextView tvHourFirst;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_hour_second) TextView tvHourSecond;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_minute_first) TextView tvMinuteFirst;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_minute_second) TextView tvMinuteSecond;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_second_first) TextView tvSecondFirst;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_second_second) TextView tvSecondSecond;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_pembayaran_dash) TextView tvPembayaranDash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -68,7 +68,7 @@ buildscript {
             'firebaseCrashlytics'   : '17.1.1',
             'googlePlayServiceAuth' : '18.1.0',
             'stepIndicator'         : '1.5.1',
-            'seekbar'               : '1.0.0',
+            'seekbar'               : '0.2.0',
     ]
 }
 

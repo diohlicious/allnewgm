@@ -319,7 +319,7 @@
                     android:orientation="horizontal"
                     tools:ignore="RtlHardcoded">
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/card_view_upload_photo_ktp"
+                        android:id="@+id/card_view_success_bidding"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_120sdp">
@@ -328,29 +328,32 @@
                             android:layout_height="match_parent"
                             tools:ignore="MissingPrefix">
                             <ImageView
-                                android:id="@+id/iv_success_bidding"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:src="@drawable/bg_document"
                                 tools:ignore="ContentDescription" />
                             <TextView
-                                android:id="@+id/tv_success_bidding"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_27sdp"
                                 android:layout_marginTop="@dimen/_18sdp"
-                                android:fontFamily="@font/nunito_bold"
                                 android:text="Penawaran \ndimenagkan"
+                                android:fontFamily="@font/nunito_bold"
                                 android:textColor="@color/colorPrimaryWhite"
                                 android:textSize="@dimen/text_18"
                                 tools:ignore="HardcodedText" />
-                            <ImageView
-                                android:id="@+id/iv_image_document_ktp"
+                            <TextView
+                                android:id="@+id/tv_success_bidding"
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_17sdp"
+                                android:layout_height="wrap_content"
+                                android:text="12 Unit"
+                                android:fontFamily="@font/nunito_regular"
+                                android:textColor="@color/colorPrimaryWhite"
+                                android:textSize="@dimen/text_16"
                                 android:layout_marginStart="@dimen/_30sdp"
                                 android:layout_marginTop="@dimen/_75sdp"
-                                android:src="@drawable/ic_smile"
+                                android:drawablePadding="@dimen/_5sdp"
+                                android:drawableStart="@drawable/ic_smile"
                                 tools:ignore="ContentDescription" />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
@@ -365,13 +368,11 @@
                             android:layout_height="match_parent"
                             tools:ignore="MissingPrefix">
                             <ImageView
-                                android:id="@+id/iv_lost_bidding"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:src="@drawable/ic_loss_bidding"
                                 tools:ignore="ContentDescription" />
                             <TextView
-                                android:id="@+id/tv_loss_bidding"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_27sdp"
@@ -381,13 +382,18 @@
                                 android:textColor="@color/colorPrimaryWhite"
                                 android:textSize="@dimen/text_18"
                                 tools:ignore="HardcodedText" />
-                            <ImageView
-                                android:id="@+id/iv_image_selfie_ktp"
+                            <TextView
+                                android:id="@+id/tv_loss_bidding"
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_17sdp"
+                                android:layout_height="wrap_content"
+                                android:text="12 Unit"
+                                android:fontFamily="@font/nunito_regular"
+                                android:textColor="@color/colorPrimaryWhite"
+                                android:textSize="@dimen/text_16"
                                 android:layout_marginStart="@dimen/_30sdp"
                                 android:layout_marginTop="@dimen/_75sdp"
-                                android:src="@drawable/ic_bad_mood"
+                                android:drawablePadding="@dimen/_5sdp"
+                                android:drawableStart="@drawable/ic_bad_mood"
                                 tools:ignore="ContentDescription" />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>

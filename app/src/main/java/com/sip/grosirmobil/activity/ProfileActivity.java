@@ -48,18 +48,17 @@ public class ProfileActivity extends GrosirMobilActivity {
     }
 
     @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.iv_success_bidding)
-    void ivSuccessBiddingClick() {
+    @OnClick(R.id.card_view_success_bidding)
+    void cardViewSuccessBiddingClick() {
         Intent intent = new Intent(this, SuccessBiddingActivity.class);
         startActivity(intent);
     }
 
     @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.iv_lost_bidding)
-    void ivLostBiddingClick() {
+    @OnClick(R.id.card_view_loss_bidding)
+    void cardViewLostBiddingClick() {
         Intent intent = new Intent(this, LostBiddingActivity.class);
         startActivity(intent);
-
     }
 
     @SuppressLint("NonConstantResourceId")

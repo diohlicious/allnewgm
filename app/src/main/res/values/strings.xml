@@ -60,14 +60,14 @@
     <string name="menu_keranjang">Keranjang</string>
     <string name="tv_home">Galeri</string>
     <string name="tv_menang">Menang</string>
-    <string name="tv_garasi">Garasi</string>
+    <string name="tv_garasi">Keranjang</string>
     <string name="btn_bayar">Bayar</string>
     <string name="tv_cek_email_anda">Cek SMS Anda!</string>
     <string name="tv_kendaraan_yang_sedang_anda_cari">Kendaraan yang sedang Anda cari?</string>
     <string name="tv_baru_masuk">Baru Masuk</string>
     <string name="tv_live">Live</string>
     <string name="tv_akan_tayang">Akan Tayang</string>
-    <string name="tv_record">Record</string>
+    <string name="tv_record">History</string>
     <string name="tv_lihat_semua">Lihat Semua</string>
     <string name="tv_registrasikan_diri_anda_sekarang">Registrasikan diri Anda sekarang</string>
     <string name="tv_full_name">Nama Lengkap</string>
@@ -101,6 +101,7 @@
     <string name="tv_score">Skor</string>
     <string name="tv_no_polisi">No. Polisi</string>
     <string name="tv_year">Year</string>
+    <string name="tv_year_filter">Tahun</string>
     <string name="tv_transmition">Transmition</string>
     <string name="tv_color">Color</string>
     <string name="tv_km">KM</string>
@@ -194,7 +195,7 @@
     <string name="tv_apakah_anda_ingin_menawar">Apakah Anda ingin\nmenawar?</string>
     <string name="btn_buy_now">Buy Now</string>
     <string name="tv_apakah_anda_ingin_buy_now">Apakah anda ingin\nBuy Now?</string>
-    <string name="btn_garasi">Garasi</string>
+    <string name="btn_garasi">Keranjang</string>
     <string name="tv_berhasil_menawar">Berhasil Menawar</string>
     <string name="tv_berhasil_buy_now">Berhasil Buy Now</string>
     <string name="btn_pembayaran">Pembayaran</string>
@@ -311,4 +312,5 @@
     <string name="toast_cancel_add_image">Batal Ambil Gambar</string>
     <string name="tv_menunggu_verifikasi_dari_admin_harap_tunggu_sebentar_atau_balik_nanti">Menunggu verifikasi dari admin,\nharap tunggu sebentar atau balik nanti lagi.</string>
     <string name="tv_anda_telah_bergabung_dengan_grosir_mobil">Anda telah bergabung dengan GrosirMobil\npilih mobil dan segera lakukan penawaran</string>
+    <string name="btn_menang">Menang</string>
 </resources>

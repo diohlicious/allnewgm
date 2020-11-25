@@ -185,17 +185,22 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"/>
                 </LinearLayout>
-                <com.rizlee.rangeseekbar.RangeSeekBar
-                    android:id="@+id/rangeSeekBar2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <me.bendik.simplerangeview.SimpleRangeView
+                    android:id="@+id/range_seek_bar"
+                    app:lineColor="#DADADA"
+                    app:activeLineColor="@color/colorPrimaryTheme"
+                    app:showFixedTicks="false"
+                    app:showActiveTicks="false"
+                    app:showTicks="false"
+                    app:movable="true"
+                    app:count="10"
+                    app:start="0"
+                    app:end="10"
+                    app:minDistance="1"
+                    app:activeThumbColor="@color/colorPrimaryTheme"
                     android:layout_marginTop="@dimen/_10sdp"
-                    app:active="true"
-                    app:centerColor="@color/colorPrimaryTheme"
-                    app:roundedCorners="true"
-                    app:sideColor="#DADADA"
-                    app:showAdditionalText="none"
-                    app:showThumbsText="none"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
                 <RelativeLayout
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_width="match_parent"
@@ -239,6 +244,41 @@
                 <TextView
                     android:id="@+id/tv_type_car"
                     android:text="Sedan"
+                    android:gravity="center"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:textColor="@color/colorPrimaryHintFont"
+                    android:fontFamily="@font/nunito_regular"
+                    android:textSize="@dimen/text_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+                <ImageView
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:src="@drawable/ic_next_chevron"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linear_year"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                tools:ignore="UselessParent">
+                <TextView
+                    android:text="@string/tv_year_filter"
+                    android:textColor="@color/colorPrimaryFont"
+                    android:fontFamily="@font/nunito_regular"
+                    android:textSize="@dimen/text_20"
+                    android:gravity="center|left"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    tools:ignore="RtlHardcoded" />
+                <TextView
+                    android:id="@+id/tv_year"
+                    android:text="2020-2015"
                     android:gravity="center"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:textColor="@color/colorPrimaryHintFont"

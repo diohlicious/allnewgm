@@ -2,12 +2,14 @@ package com.sip.grosirmobil.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +34,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -306,6 +309,12 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_second_second) TextView tvSecondSecond;
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rb_500_ribu) RadioButton rb500Ribu;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rb_1_jt) RadioButton rb1Jt;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rb_2_jt) RadioButton rb2Jt;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_min) ImageView ivMin;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_input_price_nego) TextView tvInputPriceNego;
@@ -357,7 +366,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     private boolean engine = false;
     private boolean other = false;
     private boolean brokenImage = false;
-    private long negoPrice, lastPrice;
+    private long negoPrice, lastPrice, bidNego;
 
     private List<HardCodeDataModel> hardCodeDataImageVehicleDetailModelList = new ArrayList<>();
     private List<HardCodeDataModel> hardCodeDataDescriptionModelList = new ArrayList<>();
@@ -419,6 +428,8 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
 
     @SuppressLint("SetTextI18n")
     private void loadData(){
+        rb1Jt.setChecked(false);
+        rb2Jt.setChecked(false);
 
         startTimerDialog(1000000000);
         startTimer(tvDescription, 1000000000);
@@ -426,6 +437,61 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
         negoPrice = Long.parseLong("120000000");
 
         tvInputPriceNego.setText("Rp "+setCurrencyFormat("120000000"));
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnCheckedChanged(R.id.rb_500_ribu)
+    void rb500RibuClick(){
+        if(rb500Ribu.isChecked()){
+            bidNego = 500000;
+//            ColorStateList myColorStateList = new ColorStateList(
+//                    new int[][]{new int[]{getResources().getColor(R.color.colorPrimaryBlue)}},
+//                    new int[]{getResources().getColor(R.color.colorPrimaryBlue)}
+//            );
+            rb500Ribu.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryBlue)));
+            rb500Ribu.setTextColor(getResources().getColor(R.color.colorPrimaryBlue));
+            rb1Jt.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorGray)));
+            rb1Jt.setTextColor(getResources().getColor(R.color.colorGray));
+            rb2Jt.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorGray)));
+            rb2Jt.setTextColor(getResources().getColor(R.color.colorGray));
+        }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnCheckedChanged(R.id.rb_1_jt)
+    void rb1JtClick(){
+        if(rb1Jt.isChecked()){
+            bidNego = 1000000;
+//            ColorStateList myColorStateList = new ColorStateList(
+//                    new int[][]{new int[]{getResources().getColor(R.color.colorPrimaryBlue)}},
+//                    new int[]{getResources().getColor(R.color.colorPrimaryBlue)}
+//            );
+            rb1Jt.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryBlue)));
+            rb1Jt.setTextColor(getResources().getColor(R.color.colorPrimaryBlue));
+            rb500Ribu.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorGray)));
+            rb500Ribu.setTextColor(getResources().getColor(R.color.colorGray));
+            rb2Jt.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorGray)));
+            rb2Jt.setTextColor(getResources().getColor(R.color.colorGray));
+
+        }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnCheckedChanged(R.id.rb_2_jt)
+    void rb2JtClick(){
+        if(rb2Jt.isChecked()){
+            bidNego = 2000000;
+//            ColorStateList myColorStateList = new ColorStateList(
+//                    new int[][]{new int[]{getResources().getColor(R.color.colorPrimaryBlue)}},
+//                    new int[]{getResources().getColor(R.color.colorPrimaryBlue)}
+//            );
+            rb2Jt.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryBlue)));
+            rb2Jt.setTextColor(getResources().getColor(R.color.colorPrimaryBlue));
+            rb500Ribu.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorGray)));
+            rb500Ribu.setTextColor(getResources().getColor(R.color.colorGray));
+            rb1Jt.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorGray)));
+            rb1Jt.setTextColor(getResources().getColor(R.color.colorGray));
+        }
     }
 
     private void setDataHardCodeImageVehicleDetail(){
@@ -665,7 +731,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
         if(negoPrice==lastPrice){
             Toast.makeText(this, "Minimum Tawar Harus Lebih Besar dari Penawaran Terakhir", Toast.LENGTH_SHORT).show();
         }else {
-            negoPrice = negoPrice-500000;
+            negoPrice = negoPrice-bidNego;
             tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
         }
     }
@@ -673,7 +739,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.iv_plus)
     void ivPlusClick(){
-        negoPrice = negoPrice+500000;
+        negoPrice = negoPrice+bidNego;
         tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
     }
 
