@@ -16,7 +16,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.sip.grosirmobil.base.GrosirMobilApp.getApiTemplate;
+import static com.sip.grosirmobil.base.GrosirMobilApp.getApiGrosirMobil;
+
 
 public class LoginPresenterImp implements LoginPresenter {
 
@@ -40,22 +41,23 @@ public class LoginPresenterImp implements LoginPresenter {
             progressDialog.setCancelable(false);
             progressDialog.setMessage(context.getString(R.string.base_tv_please_wait));
             loginView.showDialogLoading(progressDialog);
-            final Single<LoginResponse> loginAPi = getApiTemplate().loginApi(loginRequest);
+            final Single<LoginResponse> loginAPi = getApiGrosirMobil().loginApi(loginRequest);
             loginAPi.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new DisposableSingleObserver<LoginResponse>() {
                         @Override
                         public void onSuccess(LoginResponse loginResponse) {
                             loginView.hideDialogLoading(progressDialog);
-                            try {
-                                if(loginResponse.getErrorCode().equals("0000")){
-                                    loginView.loginSuccess(loginResponse);
-                                }else {
-                                    loginView.loginErrorResponse(loginResponse.getErrorDesc());
-                                }
-                            }catch (Exception e){
-                                GrosirMobilLog.printStackTrace(e);
-                            }
+                            loginView.loginSuccess(loginResponse);
+//                            try {
+//                                if(loginResponse.getErrorCode().equals("0000")){
+//                                    loginView.loginSuccess(loginResponse);
+//                                }else {
+//                                    loginView.loginErrorResponse(loginResponse.getErrorDesc());
+//                                }
+//                            }catch (Exception e){
+//                                GrosirMobilLog.printStackTrace(e);
+//                            }
                         }
 
                         @Override

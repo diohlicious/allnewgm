@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
 
 import java.util.Objects;
@@ -39,11 +40,15 @@ public class RegisterActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_login) TextView tvLogin;
 
+    private GrosirMobilPreference grosirMobilPreference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
+
+        grosirMobilPreference = new GrosirMobilPreference(this);
 
     }
 
@@ -56,6 +61,8 @@ public class RegisterActivity extends GrosirMobilActivity {
             Toast.makeText(this, "Mohon Isi Password", Toast.LENGTH_SHORT).show();
         }else {
             if(cbTermAndCondition.isChecked()){
+                grosirMobilPreference.savePhoneNumber(etPhoneNumber.getText().toString());
+                grosirMobilPreference.savePassword(etPassword.getText().toString());
                 Intent intent = new Intent(this, CodeOtpActivity.class);
                 startActivity(intent);
                 finish();

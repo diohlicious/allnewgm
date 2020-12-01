@@ -68,13 +68,8 @@ public class LoginActivity extends GrosirMobilActivity implements LoginView {
         }else if(etPassword.getText().toString().isEmpty()){
             Toast.makeText(this, "Mohon Isi Password", Toast.LENGTH_SHORT).show();
         }else {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(REQUEST_MAIN, "");
-            grosirMobilPreference.saveToken("TOKEN");
-            startActivity(intent);
-            finish();
+            loginPresenter.login(etEmail.getText().toString(), etPassword.getText().toString());
         }
-//        loginPresenter.login(etEmail.getText().toString(), etPassword.getText().toString());
     }
 
     @SuppressLint("NonConstantResourceId")

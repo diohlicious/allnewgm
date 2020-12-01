@@ -21,6 +21,8 @@ public class GrosirMobilContract {
     public static final int CAMERA_REQUEST = 12;
     public static final int SEARCH_REQUEST = 13;
     public static final int FILTER_REQUEST = 14;
+    public static final int REQUEST_KTP = 15;
+    public static final int REQUEST_SELFIE_KTP = 16;
 
     public static final String REQUEST_MAIN = "main";
     public static final String EMAIL = "email";

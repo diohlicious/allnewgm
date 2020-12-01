@@ -318,4 +318,8 @@
     <string name="tv_provinsi">Provinsi</string>
     <string name="tv_kelurahan">Kelurahan</string>
     <string name="tv_kode_pos">Kode Pos</string>
+    <string name="toast_mohon_pilih_provinsi_terlebih_dahulu">Mohon Pilih Provinsi Terlebih Dahulu</string>
+    <string name="toast_mohon_pilih_kabupaten_terlebih_dahulu">Mohon Pilih Kabupaten Terlebih Dahulu</string>
+    <string name="toast_mohon_pilih_kecamatan_terlebih_dahulu">Mohon Pilih Kecamatan Terlebih Dahulu</string>
+    <string name="toast_mohon_pilih_kelurahan_terlebih_dahulu">Mohon Pilih Kelurahan Terlebih Dahulu</string>
 </resources>

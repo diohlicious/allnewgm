@@ -28,7 +28,7 @@ public class GrosirMobilApp extends Application {
 //        Fabric.with(this, new Crashlytics());
     }
 
-    public static GrosirMobilApi getApiTemplate() {
+    public static GrosirMobilApi getApiGrosirMobil() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BuildConfig.BASE_URL).client(getClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build();

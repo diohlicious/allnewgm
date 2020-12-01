@@ -14,7 +14,7 @@ import com.sip.grosirmobil.cloud.config.GrosirMobilApi;
 @SuppressLint("Registered")
 public class GrosirMobilActivity extends AppCompatActivity {
 
-    public GrosirMobilApi getApiTemplate() {
-        return GrosirMobilApp.getApiTemplate();
+    public GrosirMobilApi getApiGrosirMobil() {
+        return GrosirMobilApp.getApiGrosirMobil();
     }
 }

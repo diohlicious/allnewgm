@@ -2,9 +2,7 @@ package com.sip.grosirmobil.base.function;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,24 +24,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.sip.grosirmobil.R;
-import com.sip.grosirmobil.activity.LoginActivity;
-import com.sip.grosirmobil.activity.MainActivity;
-import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilSpannable;
-import com.sip.grosirmobil.cloud.config.response.login.LoginResponse;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -52,13 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import static android.content.Context.WINDOW_SERVICE;
-import static com.sip.grosirmobil.base.GrosirMobilApp.getApiTemplate;
-import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MAIN;
 
 /**
  * Created by Syahrul Hajji on 22/09/18.
@@ -254,55 +240,55 @@ public class GrosirMobilFunction {
         return ssb;
     }
 
-    public void refreshToken(Activity activity, Context context) {
-        GrosirMobilPreference grosirMobilPreference = new GrosirMobilPreference(context);
-        GrosirMobilFunction funcUtil = new GrosirMobilFunction(context);
-
-        final Call<LoginResponse> refreshTokenApi = getApiTemplate().refreshTokenApi("Bearer " + grosirMobilPreference.getToken());
-        ProgressDialog progressDialog = new ProgressDialog(context);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage(context.getString(R.string.base_tv_please_wait));
-        progressDialog.show();
-        refreshTokenApi.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
-                progressDialog.dismiss();
-                if (response.isSuccessful()) {
-                    try {
-                        if (response.body() == null) {
-                            Intent intent = new Intent(context, LoginActivity.class);
-                            context.startActivity(intent);
-                            activity.finish();
-                        } else if (response.body().getErrorCode().equals("0000")) {
-                            grosirMobilPreference.saveToken(response.body().getToken());
-                            Intent intentMain = new Intent(context, MainActivity.class);
-                            intentMain.putExtra(REQUEST_MAIN, "");
-                            context.startActivity(intentMain);
-                            activity.finish();
-                        } else {
-                            Intent intent = new Intent(context, LoginActivity.class);
-                            context.startActivity(intent);
-                        }
-                    } catch (Exception e) {
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                } else {
-                    try {
-                        funcUtil.showMessage(context, context.getString(R.string.base_null_error_title), response.errorBody().string());
-                    } catch (IOException e) {
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
-                progressDialog.dismiss();
-                funcUtil.showMessage(context, context.getString(R.string.base_null_error_title), context.getString(R.string.base_null_server));
-                GrosirMobilLog.printStackTrace(t);
-            }
-        });
-    }
+//    public void refreshToken(Activity activity, Context context) {
+//        GrosirMobilPreference grosirMobilPreference = new GrosirMobilPreference(context);
+//        GrosirMobilFunction funcUtil = new GrosirMobilFunction(context);
+//
+//        final Call<LoginResponse> refreshTokenApi = getApiGrosirMobil().refreshTokenApi("Bearer " + grosirMobilPreference.getToken());
+//        ProgressDialog progressDialog = new ProgressDialog(context);
+//        progressDialog.setCancelable(false);
+//        progressDialog.setMessage(context.getString(R.string.base_tv_please_wait));
+//        progressDialog.show();
+//        refreshTokenApi.enqueue(new Callback<LoginResponse>() {
+//            @Override
+//            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
+//                progressDialog.dismiss();
+//                if (response.isSuccessful()) {
+//                    try {
+//                        if (response.body() == null) {
+//                            Intent intent = new Intent(context, LoginActivity.class);
+//                            context.startActivity(intent);
+//                            activity.finish();
+//                        } else if (response.body().getErrorCode().equals("0000")) {
+//                            grosirMobilPreference.saveToken(response.body().getToken());
+//                            Intent intentMain = new Intent(context, MainActivity.class);
+//                            intentMain.putExtra(REQUEST_MAIN, "");
+//                            context.startActivity(intentMain);
+//                            activity.finish();
+//                        } else {
+//                            Intent intent = new Intent(context, LoginActivity.class);
+//                            context.startActivity(intent);
+//                        }
+//                    } catch (Exception e) {
+//                        GrosirMobilLog.printStackTrace(e);
+//                    }
+//                } else {
+//                    try {
+//                        funcUtil.showMessage(context, context.getString(R.string.base_null_error_title), response.errorBody().string());
+//                    } catch (IOException e) {
+//                        GrosirMobilLog.printStackTrace(e);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
+//                progressDialog.dismiss();
+//                funcUtil.showMessage(context, context.getString(R.string.base_null_error_title), context.getString(R.string.base_null_server));
+//                GrosirMobilLog.printStackTrace(t);
+//            }
+//        });
+//    }
 
     public void showMessageResponse(Activity activity, Context context, String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

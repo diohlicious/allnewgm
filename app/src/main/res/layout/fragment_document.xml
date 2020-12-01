@@ -73,21 +73,19 @@
                 android:id="@+id/card_view_upload_photo_ktp"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_120sdp">
+                app:cardCornerRadius="@dimen/_10sdp"
+                android:layout_height="@dimen/_115sdp">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:ignore="MissingPrefix">
-
                     <ImageView
-                        android:id="@+id/iv_photo_ktp"
+                        android:scaleType="fitXY"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/bg_document"
                         tools:ignore="ContentDescription" />
-
                     <TextView
-                        android:id="@+id/tv_description_upload_photo_ktp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_27sdp"
@@ -98,12 +96,17 @@
                         android:textSize="@dimen/text_18"
                         tools:ignore="HardcodedText" />
                     <ImageView
-                        android:id="@+id/iv_image_document_ktp"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_17sdp"
                         android:layout_marginStart="@dimen/_30sdp"
                         android:layout_marginTop="@dimen/_75sdp"
                         android:src="@drawable/ic_document"
+                        tools:ignore="ContentDescription" />
+                    <ImageView
+                        android:id="@+id/iv_photo_ktp"
+                        android:scaleType="fitXY"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         tools:ignore="ContentDescription" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -112,21 +115,19 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_120sdp">
+                app:cardCornerRadius="@dimen/_10sdp"
+                android:layout_height="@dimen/_115sdp">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:ignore="MissingPrefix">
-
                     <ImageView
-                        android:id="@+id/iv_photo_selfie"
+                        android:scaleType="fitXY"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/bg_document"
                         tools:ignore="ContentDescription" />
-
                     <TextView
-                        android:id="@+id/tv_description_upload_selfie_ktp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_27sdp"
@@ -137,12 +138,17 @@
                         android:textSize="@dimen/text_18"
                         tools:ignore="HardcodedText" />
                     <ImageView
-                        android:id="@+id/iv_image_selfie_ktp"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_17sdp"
                         android:layout_marginStart="@dimen/_30sdp"
                         android:layout_marginTop="@dimen/_75sdp"
                         android:src="@drawable/ic_smile"
+                        tools:ignore="ContentDescription" />
+                    <ImageView
+                        android:id="@+id/iv_photo_selfie"
+                        android:scaleType="fitXY"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         tools:ignore="ContentDescription" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>

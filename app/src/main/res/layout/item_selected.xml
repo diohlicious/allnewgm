@@ -10,8 +10,10 @@
         android:textColor="@color/colorPrimaryFont"
         android:paddingLeft="@dimen/_16sdp"
         android:gravity="center|left"
+        android:textAllCaps="false"
+        android:inputType="textCapSentences"
         android:fontFamily="@font/nunito_regular"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="RtlHardcoded,RtlSymmetry" />
+        tools:ignore="RtlHardcoded,RtlSymmetry,TextViewEdits" />
 </LinearLayout>

@@ -5,35 +5,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse {
 
-    @SerializedName("error_code")
+    @SerializedName("logged_in_user")
     @Expose
-    private String errorCode;
-
-    @SerializedName("error_desc")
-    @Expose
-    private String errorDesc;
+    private LoggedInUserResponse loggedInUserResponse;
 
     @SerializedName("token")
     @Expose
     private String token;
 
-    @SerializedName("expire_at")
+    @SerializedName("authUser")
     @Expose
-    private String expireAt;
+    private boolean authUser;
 
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public String getErrorDesc() {
-        return errorDesc;
+    public LoggedInUserResponse getLoggedInUserResponse() {
+        return loggedInUserResponse;
     }
 
     public String getToken() {
         return token;
     }
 
-    public String getExpireAt() {
-        return expireAt;
+    public boolean isAuthUser() {
+        return authUser;
     }
 }
