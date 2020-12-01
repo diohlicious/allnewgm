@@ -17,6 +17,8 @@ import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MAIN;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -55,6 +57,7 @@ public class JoinSuccessFragment extends Fragment {
     void btnTelusuriClick(){
         grosirMobilPreference.saveToken("TOKEN");
         Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.putExtra(REQUEST_MAIN, "");
         startActivity(intent);
         getActivity().finish();
     }

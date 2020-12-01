@@ -13,8 +13,13 @@ public class LoginRequest {
     @Expose
     private String password;
 
-    public LoginRequest(String email, String password) {
+    @SerializedName("remember_me")
+    @Expose
+    private boolean rememberMe;
+
+    public LoginRequest(String email, String password, boolean rememberMe) {
         this.email = email;
         this.password = password;
+        this.rememberMe = rememberMe;
     }
 }

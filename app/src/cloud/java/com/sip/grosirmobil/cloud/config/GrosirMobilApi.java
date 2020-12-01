@@ -21,11 +21,11 @@ public interface GrosirMobilApi {
     String v1 = "v1";
     String v2 = "v2";
 
-    String loginPath = "app/"+v1+"/auth.php?m=login";
+    String loginPath = "/api/auth/login";
     String historyBillPaymentPath = "app/"+v1+"/user/history/bill.php";
     String refreshTokenPath = "app/"+v1+"/refreshtoken.php";
 
-    @Headers("Content-Type: application/json")
+    @Headers("X-Requested-With:XMLHttpRequest")
     @POST(loginPath)
     Single<LoginResponse> loginApi(@Body LoginRequest loginRequest);
 

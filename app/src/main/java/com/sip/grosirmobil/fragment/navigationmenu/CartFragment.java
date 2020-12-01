@@ -1,23 +1,27 @@
 package com.sip.grosirmobil.fragment.navigationmenu;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sip.grosirmobil.R;
-import com.sip.grosirmobil.activity.PayPaymentActivity;
-import com.sip.grosirmobil.adapter.CartAdapter;
+import com.sip.grosirmobil.adapter.LiveGarageAdapter;
+import com.sip.grosirmobil.adapter.LostGarageAdapter;
+import com.sip.grosirmobil.adapter.PaymentReceiveAdapter;
+import com.sip.grosirmobil.adapter.ReadyTakeOutAdapter;
+import com.sip.grosirmobil.adapter.SuccessGarageAdapter;
+import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.util.GrosirMobilFragment;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
 
@@ -28,84 +32,270 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarFragment;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link androidx.fragment.app.Fragment} subclass.
  */
+
 public class CartFragment extends GrosirMobilFragment {
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.swipe_refresh_cart) SwipeRefreshLayout swipeRefreshCart;
+    @BindView(R.id.swipe_refresh_garage) SwipeRefreshLayout swipeRefreshGarage;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.linear_cart) LinearLayout linearCart;
+    @BindView(R.id.nested_view) NestedScrollView nestedView;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.rv_cart) RecyclerView rvCart;
+    @BindView(R.id.tv_filter) TextView tvFilter;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_harga_kendaraan) TextView tvHargaKendaraan;
+    @BindView(R.id.rv_live_garage) RecyclerView rvLiveGarage;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_biaya_admin) TextView tvBiayaAdmin;
+    @BindView(R.id.rv_success_garage) RecyclerView rvSuccessGarage;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_total) TextView tvTotal;
+    @BindView(R.id.rv_ready_take_out) RecyclerView rvReadyTakeOut;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rv_lost_garage) RecyclerView rvLostGarage;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rv_payment_receive) RecyclerView rvPaymentReceive;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.relative_background_dialog_filter) RelativeLayout relativeBackgroundDialogFilter;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_dialog_filter) LinearLayout linearDialogFilter;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_penawaran_sedang_berlangsung) TextView tvPenawaranSedangBerlangsung;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_penawaran_diterima) TextView tvPenawaranDiterima;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_penawaran_ditolak) TextView tvPenawaranDitolak;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_pembayaran_diterima) TextView tvPembayaranDiterima;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_kendaraan_siap_diambil) TextView tvKendaraanSiapDiambil;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_live_garage) LinearLayout linearLiveGarage;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_success_garage) LinearLayout linearSuccessGarage;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_lost_garage) LinearLayout linearLostGarage;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_payment_receive) LinearLayout linearPaymentReceive;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_ready_take_out) LinearLayout linearReadyTakeOut;
 
+    private GrosirMobilFunction grosirMobilFunction;
     private List<HardCodeDataBaruMasukModel> liveHardCodeDataBaruMasukModelList = new ArrayList<>();
+    private List<HardCodeDataBaruMasukModel> successHardCodeDataBaruMasukModelList = new ArrayList<>();
+    private List<HardCodeDataBaruMasukModel> lostHardCodeDataBaruMasukModelList = new ArrayList<>();
 
-    @SuppressLint("SetTextI18n")
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setStatusBarFragment(getActivity());
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
         ButterKnife.bind(this, view);
 
-        setDataCart();
+        grosirMobilFunction = new GrosirMobilFunction(getActivity());
 
-        loadData();
+        setDataLive();
+        setDataSuccess();
+        setDataLost();
 
-        swipeRefreshCart.setOnRefreshListener(() -> {
-            loadData();
-            swipeRefreshCart.setRefreshing(false);
+        setDataAdapter();
+
+        swipeRefreshGarage.setOnRefreshListener(() -> {
+            setDataAdapter();
+            swipeRefreshGarage.setRefreshing(false);
+            linearLiveGarage.setVisibility(View.VISIBLE);
+            linearSuccessGarage.setVisibility(View.VISIBLE);
+            linearLostGarage.setVisibility(View.VISIBLE);
+            linearPaymentReceive.setVisibility(View.VISIBLE);
+            linearReadyTakeOut.setVisibility(View.VISIBLE);
         });
 
         return view;
     }
 
-    private void loadData(){
-        tvHargaKendaraan.setText("");
-        tvTotal.setText("");
+    private void setDataAdapter(){
         RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
-        rvCart.setLayoutManager(layoutManagerLive);
-        rvCart.setNestedScrollingEnabled(false);
-        @SuppressLint("SetTextI18n") CartAdapter cartAdapter = new CartAdapter(getActivity(), tvHargaKendaraan, liveHardCodeDataBaruMasukModelList, hardCodeDataBaruMasukModel -> {
-            if(tvHargaKendaraan.getText().toString().equals("Rp 0")){
-                tvTotal.setText("");
-            }else {
-                String hargaKendaraanTemp = tvHargaKendaraan.getText().toString().replace("Rp ", "");
-                String hargaKendaraan = hargaKendaraanTemp.replace(".", "");
-                long priceTotal = Long.parseLong(hargaKendaraan)+500000;
-                tvTotal.setText("Rp "+ setCurrencyFormat(String.valueOf(priceTotal)));
-            }
-        });
-        rvCart.setAdapter(cartAdapter);
-        cartAdapter.notifyDataSetChanged();
+        rvLiveGarage.setLayoutManager(layoutManagerLive);
+        rvLiveGarage.setNestedScrollingEnabled(false);
+        LiveGarageAdapter liveGarageAdapter = new LiveGarageAdapter(getActivity(), liveHardCodeDataBaruMasukModelList);
+        rvLiveGarage.setAdapter(liveGarageAdapter);
+        liveGarageAdapter.notifyDataSetChanged();
 
+        RecyclerView.LayoutManager layoutManagerSuccess = new LinearLayoutManager(getActivity());
+        rvSuccessGarage.setLayoutManager(layoutManagerSuccess);
+        rvSuccessGarage.setNestedScrollingEnabled(false);
+        SuccessGarageAdapter successGarageAdapter = new SuccessGarageAdapter(getActivity(), successHardCodeDataBaruMasukModelList);
+        rvSuccessGarage.setAdapter(successGarageAdapter);
+        successGarageAdapter.notifyDataSetChanged();
+
+        RecyclerView.LayoutManager layoutManagerReadyTakeOut = new LinearLayoutManager(getActivity());
+        rvReadyTakeOut.setLayoutManager(layoutManagerReadyTakeOut);
+        rvReadyTakeOut.setNestedScrollingEnabled(false);
+        ReadyTakeOutAdapter readyTakeOutAdapter = new ReadyTakeOutAdapter(getActivity(), successHardCodeDataBaruMasukModelList);
+        rvReadyTakeOut.setAdapter(readyTakeOutAdapter);
+        readyTakeOutAdapter.notifyDataSetChanged();
+
+        RecyclerView.LayoutManager layoutManagerLost = new LinearLayoutManager(getActivity());
+        rvLostGarage.setLayoutManager(layoutManagerLost);
+        rvLostGarage.setNestedScrollingEnabled(false);
+        LostGarageAdapter lostGarageAdapter = new LostGarageAdapter(getActivity(), lostHardCodeDataBaruMasukModelList);
+        rvLostGarage.setAdapter(lostGarageAdapter);
+        lostGarageAdapter.notifyDataSetChanged();
+
+        RecyclerView.LayoutManager layoutManagerReceive = new LinearLayoutManager(getActivity());
+        rvPaymentReceive.setLayoutManager(layoutManagerReceive);
+        rvPaymentReceive.setNestedScrollingEnabled(false);
+        PaymentReceiveAdapter paymentReceiveAdapter = new PaymentReceiveAdapter(getActivity(), lostHardCodeDataBaruMasukModelList);
+        rvPaymentReceive.setAdapter(paymentReceiveAdapter);
+        paymentReceiveAdapter.notifyDataSetChanged();
+
+        tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvKendaraanSiapDiambil.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvKendaraanSiapDiambil.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPembayaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPembayaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
     }
 
-    private void setDataCart(){
-        HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","100000000","");
+    private void setDataLive(){
+        HardCodeDataBaruMasukModel 
+        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","111000000","04h 27m 03s");
         liveHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","200000000","");
-        liveHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
+    }
+    private void setDataSuccess(){
+        HardCodeDataBaruMasukModel 
+        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
+        successHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
+    }
+
+    private void setDataLost(){
+        HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
+        lostHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
     }
 
     @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.btn_pay)
-    void btnPayClick(){
-        if(tvTotal.getText().toString().equals("")){
-            Toast.makeText(getActivity(), "Mohon Pilih Kendaraan yang mau dibayar", Toast.LENGTH_SHORT).show();
-        }else {
-            Intent intent = new Intent(getActivity(), PayPaymentActivity.class);
-            startActivity(intent);
-        }
+    @OnClick({R.id.tv_filter, R.id.linear_dialog_filter})
+    void tvFilterClick(){
+        relativeBackgroundDialogFilter.setVisibility(View.VISIBLE);
     }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.relative_background_dialog_filter)
+    void relativeBackgroundDialogFilterClick(){
+        relativeBackgroundDialogFilter.setVisibility(View.GONE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_penawaran_sedang_berlangsung)
+    void tvPenawaranSedangBerlangsungClick(){
+        tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryTheme);
+        tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvKendaraanSiapDiambil.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvKendaraanSiapDiambil.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPembayaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPembayaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        relativeBackgroundDialogFilterClick();
+        linearLiveGarage.setVisibility(View.VISIBLE);
+        linearSuccessGarage.setVisibility(View.GONE);
+        linearLostGarage.setVisibility(View.GONE);
+        linearPaymentReceive.setVisibility(View.GONE);
+        linearReadyTakeOut.setVisibility(View.GONE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_kendaraan_siap_diambil)
+    void tvKendaraanSiapDiambilClick(){
+        tvKendaraanSiapDiambil.setBackgroundResource(R.color.colorPrimaryTheme);
+        tvKendaraanSiapDiambil.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPembayaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPembayaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        relativeBackgroundDialogFilterClick();
+        linearLiveGarage.setVisibility(View.GONE);
+        linearSuccessGarage.setVisibility(View.GONE);
+        linearLostGarage.setVisibility(View.GONE);
+        linearPaymentReceive.setVisibility(View.GONE);
+        linearReadyTakeOut.setVisibility(View.VISIBLE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_penawaran_diterima)
+    void tvPenawaranDiterimaClick(){
+        tvKendaraanSiapDiambil.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvKendaraanSiapDiambil.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryTheme);
+        tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPembayaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPembayaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        relativeBackgroundDialogFilterClick();
+        linearLiveGarage.setVisibility(View.GONE);
+        linearSuccessGarage.setVisibility(View.VISIBLE);
+        linearLostGarage.setVisibility(View.GONE);
+        linearPaymentReceive.setVisibility(View.GONE);
+        linearReadyTakeOut.setVisibility(View.GONE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_penawaran_ditolak)
+    void tvPenawaranDitolakClick(){
+        tvKendaraanSiapDiambil.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvKendaraanSiapDiambil.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryTheme);
+        tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvPembayaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPembayaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        relativeBackgroundDialogFilterClick();
+        linearLiveGarage.setVisibility(View.GONE);
+        linearSuccessGarage.setVisibility(View.GONE);
+        linearLostGarage.setVisibility(View.VISIBLE);
+        linearPaymentReceive.setVisibility(View.GONE);
+        linearReadyTakeOut.setVisibility(View.GONE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_pembayaran_diterima)
+    void tvPembayaranDiterimaClick(){
+        tvKendaraanSiapDiambil.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvKendaraanSiapDiambil.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPembayaranDiterima.setBackgroundResource(R.color.colorPrimaryTheme);
+        tvPembayaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        relativeBackgroundDialogFilterClick();
+        linearLiveGarage.setVisibility(View.GONE);
+        linearSuccessGarage.setVisibility(View.GONE);
+        linearLostGarage.setVisibility(View.GONE);
+        linearPaymentReceive.setVisibility(View.VISIBLE);
+        linearReadyTakeOut.setVisibility(View.GONE);
+    }
+
+
 }

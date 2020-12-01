@@ -29,7 +29,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -52,7 +51,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,6 +58,7 @@ import retrofit2.Response;
 
 import static android.content.Context.WINDOW_SERVICE;
 import static com.sip.grosirmobil.base.GrosirMobilApp.getApiTemplate;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MAIN;
 
 /**
  * Created by Syahrul Hajji on 22/09/18.
@@ -96,11 +95,24 @@ public class GrosirMobilFunction {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void setStatusBarNotificationFragment(Fragment fragment) {
+    public static void setStatusBarNotificationFragment(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = Objects.requireNonNull(fragment.getActivity()).getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-            window.setStatusBarColor(fragment.getResources().getColor(android.R.color.transparent));
+            Window window = activity.getWindow();
+            Drawable background = activity.getResources().getDrawable(R.drawable.ic_bar_notification);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(activity.getResources().getColor(android.R.color.transparent));
+            window.setBackgroundDrawable(background);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void setStatusBarFragment(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            Drawable drawable = activity.getResources().getDrawable(R.drawable.toolbar_gradient);
+            window.setBackgroundDrawable(drawable);
         }
     }
 
@@ -264,6 +276,7 @@ public class GrosirMobilFunction {
                         } else if (response.body().getErrorCode().equals("0000")) {
                             grosirMobilPreference.saveToken(response.body().getToken());
                             Intent intentMain = new Intent(context, MainActivity.class);
+                            intentMain.putExtra(REQUEST_MAIN, "");
                             context.startActivity(intentMain);
                             activity.finish();
                         } else {

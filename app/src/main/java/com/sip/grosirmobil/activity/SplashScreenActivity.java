@@ -10,6 +10,7 @@ import com.sip.grosirmobil.base.util.GrosirMobilActivity;
 
 import butterknife.ButterKnife;
 
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MAIN;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.adjustFontScale;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarSplashScreen;
 
@@ -44,6 +45,7 @@ public class SplashScreenActivity extends GrosirMobilActivity {
                             finish();
                         }else {
                             Intent mainActivity = new Intent(SplashScreenActivity.this, MainActivity.class);
+                            mainActivity.putExtra(REQUEST_MAIN, "");
                             startActivity(mainActivity);
                             finish();
                         }

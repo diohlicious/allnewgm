@@ -11,7 +11,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_50sdp"
             android:orientation="vertical"
             tools:ignore="UselessLeaf">
             <ImageView
@@ -57,11 +56,18 @@
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimaryWhite"
                 android:textSize="@dimen/text_18" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_notification"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/_50sdp"
+                android:layout_below="@id/iv_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
             <LinearLayout
                 android:id="@+id/linear_ready_unit_to_bid"
+                android:layout_below="@id/iv_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/iv_background"
                 android:orientation="horizontal"
                 android:padding="@dimen/_6sdp">
                 <TextView
@@ -111,7 +117,6 @@
                 android:layout_below="@id/linear_bid_again"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_100sdp"
                 android:background="@color/colorAccentAlpha20"
                 android:orientation="horizontal"
                 android:padding="@dimen/_6sdp">

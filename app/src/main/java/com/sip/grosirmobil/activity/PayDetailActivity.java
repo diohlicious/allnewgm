@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MAIN;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.adjustFontScale;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarOnBoarding;
 
@@ -55,6 +56,7 @@ public class PayDetailActivity extends GrosirMobilActivity {
     @OnClick(R.id.btn_check_status)
     void btnCheckStatusClick(){
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(REQUEST_MAIN, "cart");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();

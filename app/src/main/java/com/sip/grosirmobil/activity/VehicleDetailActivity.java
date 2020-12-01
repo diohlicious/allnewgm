@@ -2,6 +2,7 @@ package com.sip.grosirmobil.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -39,6 +40,7 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MAIN;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.adjustFontScale;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarOnBoarding;
@@ -690,20 +692,28 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     }
 
     @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.btn_garasi)
-    void btnGarasiClick(){
+    @OnClick(R.id.btn_cart)
+    void btnCartClick(){
         relativeBackgroundDialog.setVisibility(View.GONE);
         relativeBackgroundDialogConfirmNego.setVisibility(View.GONE);
         relativeBackgroundDialogSuccessNego.setVisibility(View.GONE);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(REQUEST_MAIN, "cart");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
         finish();
     }
 
     @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.btn_pembayaran)
-    void btnPembayaranClick(){
+    @OnClick(R.id.btn_win)
+    void btnWinClick(){
         relativeBackgroundDialog.setVisibility(View.GONE);
         relativeBackgroundDialogConfirmBuyNow.setVisibility(View.GONE);
         relativeBackgroundDialogSuccessBuyNow.setVisibility(View.GONE);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(REQUEST_MAIN, "win");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
         finish();
     }
 

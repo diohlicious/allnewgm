@@ -39,7 +39,7 @@ android {
             debuggable true
             minifyEnabled false
             shrinkResources false
-            buildConfigField 'String', 'BASE_URL', '"http://development.paidbaq.com/"'
+            buildConfigField 'String', 'BASE_URL', '"https://dev.grosirmobil.id"'
             buildConfigField 'String', 'SOCKET_URL', '"http://"'
             buildConfigField 'String', 'ENVIRONTMENT', '"STAGING"'
             buildConfigField 'String', 'APP_TYPE', '""'
@@ -51,7 +51,7 @@ android {
             debuggable false
             minifyEnabled false
             shrinkResources false
-            buildConfigField 'String', 'BASE_URL', '"https://marketplace.paidbaq.com/"'
+            buildConfigField 'String', 'BASE_URL', '"https://grosirmobil.id"'
             buildConfigField 'String', 'SOCKET_URL', '"https://"'
             buildConfigField 'String', 'ENVIRONTMENT', '"PRODUCTION"'
             buildConfigField 'String', 'APP_TYPE', '""'
@@ -104,50 +104,48 @@ android {
         }
     }
 }
-
 dependencies {
     //Library Android Start
+    api fileTree(include: ['*.jar'], dir: 'libs')
     //noinspection GradleDependency
     api "androidx.appcompat:appcompat:${versions.appCompat}"
     //noinspection GradleDependency
     api "androidx.constraintlayout:constraintlayout:${versions.constraint}"
-    api fileTree(include: ['*.jar'], dir: 'libs')
     //noinspection GradleDependency
     api "com.google.android.play:core:${versions.playCore}"
+    //noinspection GradleDependency
+    api "com.google.android.gms:play-services-maps:${versions.servicesMap}"
+    //noinspection GradleDependency
+    api "com.google.android.gms:play-services-auth:${versions.googlePlayServiceAuth}"
     //Library Android End
 
     //Library Feature Start
-    api "com.google.android.gms:play-services-maps:${versions.servicesMap}"
-    api "androidx.legacy:legacy-support-v4:${versions.legacySupport}"
-    //noinspection GradleDependency
     implementation "com.jakewharton:butterknife:${versions.butterKnife}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${versions.butterKnife}"
-    //noinspection GradleDependency
     api "commons-codec:commons-codec:${versions.commonsCodec}"
-    //noinspection GradleDependency
     api "com.fxn769:pix:${versions.pixWhatApps}"
-    api "com.github.shrikanth7698:Collapsible-Calendar-View-Android:${versions.calendarView}"
     api "id.zelory:compressor:${versions.compressorImage}"
-    //noinspection GradleDependency
     api "de.hdodenhof:circleimageview:${versions.circleImageView}"
-    api "me.dm7.barcodescanner:zxing:${versions.zxing}"
-//    api "com.scottyab:rootbeer-lib:${versions.rootDevice}"
     api "com.intuit.sdp:sdp-android:${versions.dimemsLayout}"
-    //noinspection GradleDependency
     api "me.relex:circleindicator:${versions.circleIndicator}"
-    //noinspection OutdatedLibrary
-    api "com.crashlytics.sdk.android:crashlytics:${versions.crashlyticsFabric}"
-//    api "com.facebook.shimmer:shimmer:${versions.shimmerFacebook}"
     api "com.github.barteksc:android-pdf-viewer:${versions.pdfViewer}"
     api "com.github.kk121:File-Loader:${versions.fileLoader}"
+    api "com.github.chrisbanes:PhotoView:${versions.photoView}"
+    api "com.shuhart.stepview:stepview:${versions.stepIndicator}"
+    api "me.bendik.simplerangeview:simplerangeview:${versions.seekbar}"
+//    api "me.dm7.barcodescanner:zxing:${versions.zxing}"
+//    api "com.scottyab:rootbeer-lib:${versions.rootDevice}"
+//    api "com.crashlytics.sdk.android:crashlytics:${versions.crashlyticsFabric}"
+//    api "com.facebook.shimmer:shimmer:${versions.shimmerFacebook}"
 //    api "com.github.nkzawa:socket.io-client:${versions.socket}"
 //    api "com.treebo:internetavailabilitychecker:${versions.internetChecker}"
-    api "ja.burhanrashid52:photoeditor:${versions.photoEditor}"
-    api "com.github.chrisbanes:PhotoView:${versions.photoView}"
-    //noinspection GradleDependency
-    api "com.theartofdev.edmodo:android-image-cropper:${versions.cropEditor}"
-    api "com.shuhart.stepview:stepview:${versions.stepIndicator}"
+//    api "ja.burhanrashid52:photoeditor:${versions.photoEditor}"
+//    api "com.theartofdev.edmodo:android-image-cropper:${versions.cropEditor}"
 //    api "com.github.rtugeek:colorseekbar:${versions.colorSeekBar}"
+//    api "com.github.shrikanth7698:Collapsible-Calendar-View-Android:${versions.calendarView}"
+    //Library Feature Finish
+
+    //Library FireBase Start
     //noinspection GradleDependency
     api "com.google.firebase:firebase-database:${versions.firebaseDatabase}"
     //noinspection GradleDependency
@@ -158,11 +156,7 @@ dependencies {
     api "com.google.firebase:firebase-analytics:${versions.firebaseAnalytics}"
     //noinspection GradleDependency
     api "com.google.firebase:firebase-crashlytics:${versions.firebaseCrashlytics}"
-    //noinspection GradleDependency
-    api "com.google.android.gms:play-services-auth:${versions.googlePlayServiceAuth}"
-//    api "com.rizlee.view:rangeseekbar:${versions.seekbar}"
-    api "me.bendik.simplerangeview:simplerangeview:${versions.seekbar}"
-    //Library Feature Finish
+    //Library FireBase Finish
 
     //Library Retrofit Start
     //noinspection GradleDependency
@@ -182,6 +176,7 @@ dependencies {
     api "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}"
     //noinspection GradleDependency
     api "io.reactivex.rxjava2:rxjava:${versions.rxjava}"
+    api "androidx.legacy:legacy-support-v4:${versions.legacySupport}"
     //Android RX Finish
 
     //Library Test Start
@@ -191,3 +186,4 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${versions.espresso}"
     //Library Test Finish
 }
+

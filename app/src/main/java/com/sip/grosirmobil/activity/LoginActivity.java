@@ -30,6 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.EMAIL;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MAIN;
 
 @SuppressLint("Registered")
 public class LoginActivity extends GrosirMobilActivity implements LoginView {
@@ -68,6 +69,7 @@ public class LoginActivity extends GrosirMobilActivity implements LoginView {
             Toast.makeText(this, "Mohon Isi Password", Toast.LENGTH_SHORT).show();
         }else {
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(REQUEST_MAIN, "");
             grosirMobilPreference.saveToken("TOKEN");
             startActivity(intent);
             finish();
@@ -108,6 +110,7 @@ public class LoginActivity extends GrosirMobilActivity implements LoginView {
     public void loginSuccess(LoginResponse response) {
         grosirMobilPreference.saveToken(response.getToken());
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(REQUEST_MAIN, "");
         startActivity(intent);
         finish();
     }

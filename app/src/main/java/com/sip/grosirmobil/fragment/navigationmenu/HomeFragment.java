@@ -49,6 +49,7 @@ import static android.app.Activity.RESULT_OK;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FILTER_REQUEST;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.SEARCH_REQUEST;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarFragment;
 
 /**
  * A simple {@link androidx.fragment.app.Fragment} subclass.
@@ -125,6 +126,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setStatusBarFragment(getActivity());
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
 

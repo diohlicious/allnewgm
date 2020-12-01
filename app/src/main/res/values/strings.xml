@@ -313,4 +313,9 @@
     <string name="tv_menunggu_verifikasi_dari_admin_harap_tunggu_sebentar_atau_balik_nanti">Menunggu verifikasi dari admin,\nharap tunggu sebentar atau balik nanti lagi.</string>
     <string name="tv_anda_telah_bergabung_dengan_grosir_mobil">Anda telah bergabung dengan GrosirMobil\npilih mobil dan segera lakukan penawaran</string>
     <string name="btn_menang">Menang</string>
+    <string name="tv_kecamatan">Kecamatan</string>
+    <string name="tv_kabupaten">Kabupaten</string>
+    <string name="tv_provinsi">Provinsi</string>
+    <string name="tv_kelurahan">Kelurahan</string>
+    <string name="tv_kode_pos">Kode Pos</string>
 </resources>

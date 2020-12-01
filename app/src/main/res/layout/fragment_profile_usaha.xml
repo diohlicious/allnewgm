@@ -200,7 +200,7 @@
                     android:drawablePadding="@dimen/_10sdp"
                     android:fontFamily="@font/nunito_semi_bold"
                     android:gravity="center|left"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:text=""
                     android:textColor="@color/colorPrimaryFont"
                     android:textSize="@dimen/text_16"

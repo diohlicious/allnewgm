@@ -6,10 +6,10 @@ public interface MainPresenter {
 
     void replaceFragmentHome();
 
-    void replaceFragmentGarasi();
+    void replaceFragmentCart();
 
     void replaceFragmentNotification();
 
-    void replaceFragmentCart();
+    void replaceFragmentWin();
 
 }

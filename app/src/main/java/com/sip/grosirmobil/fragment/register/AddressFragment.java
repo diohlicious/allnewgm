@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.shuhart.stepview.StepView;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.RegisterDataActivity;
@@ -32,6 +36,20 @@ public class AddressFragment extends Fragment {
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.step_view) StepView stepView;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.et_provinsi) TextInputEditText etProvinsi;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.et_kabupaten) TextInputEditText etKabupaten;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.et_kecamatan) TextInputEditText etKecamatan;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.et_kelurahan) TextInputEditText etKelurahan;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.et_kode_pos) TextInputEditText etKodePos;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.relative_dialog) RelativeLayout relativeDialog;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rv_choose) RecyclerView rvChoose;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +60,55 @@ public class AddressFragment extends Fragment {
 
         stepView.go(2, true);
         return view;
+    }
+
+    private void showDialogChoose(){
+        relativeDialog.setVisibility(View.VISIBLE);
+        RecyclerView.LayoutManager layoutManagerChoose = new LinearLayoutManager(getActivity());
+        rvChoose.setLayoutManager(layoutManagerChoose);
+        rvChoose.setNestedScrollingEnabled(false);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.linear_content_dialog)
+    void linearContentDialogClick(){
+        relativeDialog.setVisibility(View.VISIBLE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.relative_dialog)
+    void relativeDialogClick(){
+        relativeDialog.setVisibility(View.GONE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.et_provinsi)
+    void etProvinsiClick(){
+        showDialogChoose();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.et_kabupaten)
+    void etKabupatenClick(){
+        showDialogChoose();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.et_kecamatan)
+    void etKecamatanClick(){
+        showDialogChoose();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.et_kelurahan)
+    void etKelurahanClick(){
+        showDialogChoose();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.et_kode_pos)
+    void etKodePosClick(){
+        showDialogChoose();
     }
 
     @SuppressLint("NonConstantResourceId")

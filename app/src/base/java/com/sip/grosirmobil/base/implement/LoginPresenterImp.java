@@ -35,7 +35,7 @@ public class LoginPresenterImp implements LoginPresenter {
         if(email.isEmpty()&&password.isEmpty()){
             loginView.showValidationError();
         }else {
-            LoginRequest loginRequest = new LoginRequest(email,password);
+            LoginRequest loginRequest = new LoginRequest(email,password, false);
             progressDialog = new ProgressDialog(context);
             progressDialog.setCancelable(false);
             progressDialog.setMessage(context.getString(R.string.base_tv_please_wait));

@@ -6,7 +6,7 @@ import android.content.Context;
 import com.sip.grosirmobil.base.presenter.MainPresenter;
 import com.sip.grosirmobil.base.view.MainView;
 import com.sip.grosirmobil.fragment.navigationmenu.CartFragment;
-import com.sip.grosirmobil.fragment.navigationmenu.GarasiFragment;
+import com.sip.grosirmobil.fragment.navigationmenu.WinFragment;
 import com.sip.grosirmobil.fragment.navigationmenu.HomeFragment;
 import com.sip.grosirmobil.fragment.navigationmenu.NotificationFragment;
 
@@ -32,8 +32,8 @@ public class MainPresenterImp implements MainPresenter {
     }
 
     @Override
-    public void replaceFragmentGarasi() {
-        mainView.replaceFragment(new GarasiFragment());
+    public void replaceFragmentCart() {
+        mainView.replaceFragment(new CartFragment());
     }
 
     @Override
@@ -42,7 +42,7 @@ public class MainPresenterImp implements MainPresenter {
     }
 
     @Override
-    public void replaceFragmentCart() {
-        mainView.replaceFragment(new CartFragment());
+    public void replaceFragmentWin() {
+        mainView.replaceFragment(new WinFragment());
     }
 }

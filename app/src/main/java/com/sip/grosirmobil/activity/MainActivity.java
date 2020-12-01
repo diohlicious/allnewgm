@@ -41,6 +41,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_CODE_MULTI_PERMISSION_ACTIVITY;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MAIN;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MULTI_PERMISSION;
 
 /**
@@ -94,17 +95,25 @@ public class MainActivity extends GrosirMobilActivity implements GrosirMobilFrag
         grosirMobilFunction = new GrosirMobilFunction(this);
 
         presenter = new MainPresenterImp(this, this);
-
         checkAndRequestPermissions();
 
-        presenter.cannotReplaceFragmentHome();
-
+        switch (getIntent().getStringExtra(REQUEST_MAIN)) {
+            case "":
+                presenter.replaceFragmentHome();
+                break;
+            case "cart":
+                linearCartClick();
+                break;
+            case "win":
+                linearWinClick();
+                break;
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.linear_home)
     void linearHomeClick(){
-        presenter.cannotReplaceFragmentHome();
+        presenter.replaceFragmentHome();
         ivHome.setImageResource(R.drawable.ic_home_enable);
         tvHome.setTextColor(getResources().getColor(R.color.colorPrimaryTextActive));
         ivCart.setImageResource(R.drawable.ic_cart_disable);
@@ -118,8 +127,8 @@ public class MainActivity extends GrosirMobilActivity implements GrosirMobilFrag
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.linear_cart)
-    public void linearGarasiClick(){
-        presenter.replaceFragmentGarasi();
+    public void linearCartClick(){
+        presenter.replaceFragmentCart();
         ivHome.setImageResource(R.drawable.ic_home_disable);
         tvHome.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
         ivCart.setImageResource(R.drawable.ic_cart_enable);
@@ -146,8 +155,8 @@ public class MainActivity extends GrosirMobilActivity implements GrosirMobilFrag
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.linear_win)
-    void linearCartClick(){
-        presenter.replaceFragmentCart();
+    void linearWinClick(){
+        presenter.replaceFragmentWin();
         ivHome.setImageResource(R.drawable.ic_home_disable);
         tvHome.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));
         ivCart.setImageResource(R.drawable.ic_cart_disable);
@@ -169,7 +178,7 @@ public class MainActivity extends GrosirMobilActivity implements GrosirMobilFrag
         }
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, getString(R.string.toast_please_click_back_again_to_exit), Toast.LENGTH_SHORT).show();
-        presenter.cannotReplaceFragmentHome();
+        presenter.replaceFragmentHome();
         ivHome.setImageResource(R.drawable.ic_home_enable);
         tvHome.setTextColor(getResources().getColor(R.color.colorPrimaryTextActive));
         ivCart.setImageResource(R.drawable.ic_cart_disable);
