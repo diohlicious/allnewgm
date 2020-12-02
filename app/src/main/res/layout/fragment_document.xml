@@ -46,7 +46,7 @@
             android:paddingRight="@dimen/_16sdp"
             android:paddingBottom="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            app:sv_stepsNumber="4"
+            app:sv_stepsNumber="5"
             app:sv_stepLineWidth="@dimen/_2sdp"
             app:sv_stepPadding="0dp"
             app:sv_stepNumberTextSize="@dimen/text_18"
