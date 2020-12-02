@@ -4,15 +4,17 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.sip.grosirmobil.R;
@@ -23,14 +25,17 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 public class RegisterActivity extends GrosirMobilActivity {
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.et_phone_number) TextInputEditText etPhoneNumber;
+    @BindView(R.id.et_full_name) TextInputEditText etFullName;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.et_password) TextInputEditText etPassword;
+    @BindView(R.id.et_phone_number) TextInputEditText etPhoneNumber;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.et_password) TextInputEditText etPassword;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.cb_term_and_condition) CheckBox cbTermAndCondition;
     @SuppressLint("NonConstantResourceId")
@@ -39,6 +44,14 @@ public class RegisterActivity extends GrosirMobilActivity {
     @BindView(R.id.linear_login) LinearLayout linearLogin;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_login) TextView tvLogin;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.relative_dialog) RelativeLayout relativeLayoutDialog;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btn_tidak_setuju) Button btnTidakSetuju;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btn_setuju) Button btnSetuju;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.iv_close) ImageView ivClose;
 
     private GrosirMobilPreference grosirMobilPreference;
 
@@ -50,26 +63,46 @@ public class RegisterActivity extends GrosirMobilActivity {
 
         grosirMobilPreference = new GrosirMobilPreference(this);
 
+        etFullName.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick({R.id.iv_close,R.id.btn_tidak_setuju})
+    void ivCloseClick(){
+        cbTermAndCondition.setChecked(false);
+        relativeLayoutDialog.setVisibility(View.GONE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.btn_setuju)
+    void btnSetujuClick(){
+        cbTermAndCondition.setChecked(true);
+        relativeLayoutDialog.setVisibility(View.GONE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnCheckedChanged(R.id.cb_term_and_condition)
+    void cbTermAndConditionChecked(){
+        relativeLayoutDialog.setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_register)
     void btnRegisterClick(){
-        if(etPhoneNumber.getText().toString().isEmpty()){
-            Toast.makeText(this, "Mohon Isi Nomor Telepon", Toast.LENGTH_SHORT).show();
-        }else if(etPassword.getText().toString().isEmpty()){
-            Toast.makeText(this, "Mohon Isi Password", Toast.LENGTH_SHORT).show();
-        }else {
-            if(cbTermAndCondition.isChecked()){
-                grosirMobilPreference.savePhoneNumber(etPhoneNumber.getText().toString());
-                grosirMobilPreference.savePassword(etPassword.getText().toString());
-                Intent intent = new Intent(this, CodeOtpActivity.class);
+//        if(etPhoneNumber.getText().toString().isEmpty()){
+//            Toast.makeText(this, "Mohon Isi Nomor Telepon", Toast.LENGTH_SHORT).show();
+//        }else if(etPassword.getText().toString().isEmpty()){
+//            Toast.makeText(this, "Mohon Isi Password", Toast.LENGTH_SHORT).show();
+//        }else {
+//            if(cbTermAndCondition.isChecked()){
+//                grosirMobilPreference.savePhoneNumber(etPhoneNumber.getText().toString());
+//                grosirMobilPreference.savePassword(etPassword.getText().toString());
+                Intent intent = new Intent(this, RegisterDataActivity.class);
                 startActivity(intent);
-                finish();
-            }else {
-                Toast.makeText(this, "Mohon Centang Term And Condition", Toast.LENGTH_SHORT).show();
-            }
-        }
+//            }else {
+//                Toast.makeText(this, "Mohon Centang Term And Condition", Toast.LENGTH_SHORT).show();
+//            }
+//        }
     }
 
     @OnClick({R.id.linear_login,R.id.tv_login})

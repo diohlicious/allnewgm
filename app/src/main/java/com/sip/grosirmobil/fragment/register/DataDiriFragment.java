@@ -2,6 +2,7 @@ package com.sip.grosirmobil.fragment.register;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,8 @@ public class DataDiriFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.et_nik) EditText etNik;
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.et_full_name) EditText etFullName;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.step_view) StepView stepView;
 
     @Override
@@ -43,8 +46,9 @@ public class DataDiriFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_data_diri, container, false);
         ButterKnife.bind(this, view);
 
-
+        etFullName.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
         stepView.go(0, true);
+
         return view;
     }
 

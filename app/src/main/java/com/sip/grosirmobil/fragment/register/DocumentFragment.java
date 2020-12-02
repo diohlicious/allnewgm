@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.fxn.pix.Pix;
 import com.shuhart.stepview.StepView;
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.activity.EditImageActivity;
 import com.sip.grosirmobil.activity.RegisterDataActivity;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 
@@ -26,6 +27,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.PATH_IMAGE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_EDIT_IMAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_KTP;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_SELFIE_KTP;
 
@@ -62,7 +65,7 @@ public class DocumentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_document, container, false);
         ButterKnife.bind(this, view);
 
-        stepView.go(3, true);
+        stepView.go(2, true);
         return view;
     }
 
@@ -73,9 +76,9 @@ public class DocumentFragment extends Fragment {
     }
 
     @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.btn_end_register_data)
+    @OnClick(R.id.btn_next_document)
     void btnEndRegisterDataClick(){
-        ((RegisterDataActivity)getActivity()).replaceFragment(new RegisterSuccessFragment());
+        ((RegisterDataActivity)getActivity()).replaceFragment(new AddressFragment());
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -98,7 +101,10 @@ public class DocumentFragment extends Fragment {
                 ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
                 System.out.println("Path : " + returnValue.get(0));
                 String imageFilePath = returnValue.get(0);
-                Glide.with(this).load(imageFilePath).into(ivPhotoKtp);
+//                Glide.with(this).load(imageFilePath).into(ivPhotoKtp);
+                Intent intentDisplay = new Intent(getActivity(), EditImageActivity.class);
+                intentDisplay.putExtra(PATH_IMAGE, imageFilePath);
+                startActivityForResult(intentDisplay, REQUEST_EDIT_IMAGE);
             }
             catch (Exception e){
                 GrosirMobilLog.printStackTrace(e);
@@ -115,6 +121,14 @@ public class DocumentFragment extends Fragment {
                 GrosirMobilLog.printStackTrace(e);
                 Toast.makeText(getActivity(), getString(R.string.toast_cancel_add_image), Toast.LENGTH_SHORT).show();
             }
+        }else if(requestCode==REQUEST_EDIT_IMAGE){
+            try {
+                String pathImage = data.getStringExtra(PATH_IMAGE);
+                Glide.with(this).load(pathImage).into(ivPhotoKtp);
+            }catch (Exception e){
+                GrosirMobilLog.printStackTrace(e);
+            }
         }
+
     }
 }

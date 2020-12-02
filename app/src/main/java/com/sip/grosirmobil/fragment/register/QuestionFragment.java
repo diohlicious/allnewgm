@@ -10,19 +10,25 @@ import androidx.fragment.app.Fragment;
 
 import com.shuhart.stepview.StepView;
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.activity.CodeOtpFragment;
 import com.sip.grosirmobil.activity.RegisterDataActivity;
+import com.sip.grosirmobil.base.data.GrosirMobilPreference;
+import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ProfileUsahaFragment extends Fragment {
+public class QuestionFragment extends Fragment {
 
-    public static ProfileUsahaFragment newInstance(int page, String title) {
-        ProfileUsahaFragment fragmentFirst = new ProfileUsahaFragment();
+    private GrosirMobilPreference grosirMobilPreference;
+    private GrosirMobilFunction grosirMobilFunction;
+
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.step_view) StepView stepView;
+
+    public static QuestionFragment newInstance(int page, String title) {
+        QuestionFragment fragmentFirst = new QuestionFragment();
         Bundle args = new Bundle();
         args.putInt("someInt", page);
         args.putString("someTitle", title);
@@ -30,17 +36,17 @@ public class ProfileUsahaFragment extends Fragment {
         return fragmentFirst;
     }
 
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.step_view) StepView stepView;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_profile_usaha, container, false);
+        View view = inflater.inflate(R.layout.fragment_question, container, false);
         ButterKnife.bind(this, view);
 
-        stepView.go(1, true);
+        grosirMobilPreference = new GrosirMobilPreference(getActivity());
+        grosirMobilFunction = new GrosirMobilFunction(getActivity());
+
+        stepView.go(4, true);
         return view;
     }
 
@@ -51,8 +57,8 @@ public class ProfileUsahaFragment extends Fragment {
     }
 
     @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.btn_next_profile_usaha)
-    void btnNextProfileUsahaClick(){
-        ((RegisterDataActivity)getActivity()).replaceFragment(new DocumentFragment());
+    @OnClick(R.id.btn_save)
+    void btnSaveClick(){
+        ((RegisterDataActivity)getActivity()).replaceFragment(new CodeOtpFragment());
     }
 }

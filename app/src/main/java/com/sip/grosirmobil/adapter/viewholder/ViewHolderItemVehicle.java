@@ -16,7 +16,7 @@ public class ViewHolderItemVehicle extends RecyclerView.ViewHolder {
 
     public TextView tvVehicleName, tvPlatNumber, tvCity, tvOpenPrice, tvBottomPrice, tvTimer, tvInitialName;
     public CardView cardVehicle;
-    public ImageView ivImage;
+    public ImageView ivImage, ivFavorite;
     public LinearLayout linearDescription;
     public CircleImageView circleImageViewItem;
 
@@ -33,5 +33,6 @@ public class ViewHolderItemVehicle extends RecyclerView.ViewHolder {
         tvTimer             = view.findViewById(R.id.tv_timer);
         circleImageViewItem = view.findViewById(R.id.circle_image_view_item);
         tvInitialName       = view.findViewById(R.id.tv_initial_name);
+        ivFavorite          = view.findViewById(R.id.iv_favorite);
     }
 }

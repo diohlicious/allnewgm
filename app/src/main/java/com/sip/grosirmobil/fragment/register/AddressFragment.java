@@ -1,11 +1,11 @@
 package com.sip.grosirmobil.fragment.register;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -73,6 +73,8 @@ public class AddressFragment extends Fragment {
     @BindView(R.id.relative_dialog) RelativeLayout relativeDialog;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_choose) RecyclerView rvChoose;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.progress_circular) ProgressBar progressBar;
 
     private GrosirMobilPreference grosirMobilPreference;
     private GrosirMobilFunction grosirMobilFunction;
@@ -87,7 +89,7 @@ public class AddressFragment extends Fragment {
         grosirMobilPreference = new GrosirMobilPreference(getActivity());
         grosirMobilFunction = new GrosirMobilFunction(getActivity());
 
-        stepView.go(2, true);
+        stepView.go(3, true);
         return view;
     }
 
@@ -96,8 +98,16 @@ public class AddressFragment extends Fragment {
         RecyclerView.LayoutManager layoutManagerChoose = new LinearLayoutManager(getActivity());
         rvChoose.setLayoutManager(layoutManagerChoose);
         rvChoose.setNestedScrollingEnabled(false);
+        rvChoose.setAdapter(null);
     }
 
+    private void showProgressBar(){
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressBar(){
+        progressBar.setVisibility(View.GONE);
+    }
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.linear_content_dialog)
     void linearContentDialogClick(){
@@ -110,51 +120,79 @@ public class AddressFragment extends Fragment {
         relativeDialog.setVisibility(View.GONE);
     }
 
+
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.et_provinsi)
     void etProvinsiClick(){
-        ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage(getString(R.string.base_tv_please_wait));
-        progressDialog.show();
-        final Call<ProvinceResponse> provinceApi = getApiGrosirMobil().provinceApi();
-        provinceApi.enqueue(new Callback<ProvinceResponse>() {
-            @Override
-            public void onResponse(Call<ProvinceResponse> call, Response<ProvinceResponse> response) {
-                progressDialog.dismiss();
-                if (response.isSuccessful()) {
-                    try {
-                        if(response.body().getMessage().equals("success")){
-                            showDialogChoose();
-                            ProvinceAdapter provinceAdapter = new ProvinceAdapter(response.body().getData(), dataProvinceResponse -> {
-                               etProvinsi.setText(dataProvinceResponse.getProvinceName());
-                               etProvinsi.setTag(dataProvinceResponse.getProvinceCode());
-                               relativeDialogClick();
-                            });
-                            rvChoose.setAdapter(provinceAdapter);
-                            provinceAdapter.notifyDataSetChanged();
-                        }else {
-                            grosirMobilFunction.showMessage(getActivity(), "GET Province", response.body().getMessage());
+        if(grosirMobilPreference.getDataProvinceList()==null||grosirMobilPreference.getDataProvinceList().isEmpty()){
+            showDialogChoose();
+            showProgressBar();
+            final Call<ProvinceResponse> provinceApi = getApiGrosirMobil().provinceApi();
+            provinceApi.enqueue(new Callback<ProvinceResponse>() {
+                @Override
+                public void onResponse(Call<ProvinceResponse> call, Response<ProvinceResponse> response) {
+                    hideProgressBar();
+                    if (response.isSuccessful()) {
+                        try {
+                            if(response.body().getMessage().equals("success")){
+                                if(!response.body().getData().isEmpty()){
+                                    grosirMobilPreference.saveDataProvinceList(response.body().getData());
+                                }
+                                ProvinceAdapter provinceAdapter = new ProvinceAdapter(response.body().getData(), dataProvinceResponse -> {
+                                    etProvinsi.setText(dataProvinceResponse.getProvinceName());
+                                    etProvinsi.setTag(dataProvinceResponse.getProvinceCode());
+                                    etKabupaten.setText("");
+                                    etKabupaten.setTag("");
+                                    etKecamatan.setText("");
+                                    etKecamatan.setTag("");
+                                    etKelurahan.setText("");
+                                    etKelurahan.setTag("");
+                                    etKodePos.setText("");
+                                    relativeDialogClick();
+                                });
+                                rvChoose.setAdapter(provinceAdapter);
+                                provinceAdapter.notifyDataSetChanged();
+                            }else {
+                                grosirMobilFunction.showMessage(getActivity(), "GET Province", response.body().getMessage());
+                            }
+                        }catch (Exception e){
+                            GrosirMobilLog.printStackTrace(e);
                         }
-                    }catch (Exception e){
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }else {
-                    try {
-                        grosirMobilFunction.showMessage(getActivity(), getString(R.string.base_null_error_title), response.errorBody().string());
-                    } catch (IOException e) {
-                        GrosirMobilLog.printStackTrace(e);
+                    }else {
+                        try {
+                            grosirMobilFunction.showMessage(getActivity(), getString(R.string.base_null_error_title), response.errorBody().string());
+                        } catch (IOException e) {
+                            GrosirMobilLog.printStackTrace(e);
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ProvinceResponse> call, Throwable t) {
-                progressDialog.dismiss();
-                grosirMobilFunction.showMessage(getActivity(), "GET Province", getString(R.string.base_null_server));
-                GrosirMobilLog.printStackTrace(t);
-            }
-        });
+                @Override
+                public void onFailure(Call<ProvinceResponse> call, Throwable t) {
+                    hideProgressBar();
+                    grosirMobilFunction.showMessage(getActivity(), "GET Province", getString(R.string.base_null_server));
+                    GrosirMobilLog.printStackTrace(t);
+                }
+            });
+        }
+        else {
+            showDialogChoose();
+            hideProgressBar();
+            ProvinceAdapter provinceAdapter = new ProvinceAdapter(grosirMobilPreference.getDataProvinceList(), dataProvinceResponse -> {
+                etProvinsi.setText(dataProvinceResponse.getProvinceName());
+                etProvinsi.setTag(dataProvinceResponse.getProvinceCode());
+                etKabupaten.setText("");
+                etKabupaten.setTag("");
+                etKecamatan.setText("");
+                etKecamatan.setTag("");
+                etKelurahan.setText("");
+                etKelurahan.setTag("");
+                etKodePos.setText("");
+                relativeDialogClick();
+            });
+            rvChoose.setAdapter(provinceAdapter);
+            provinceAdapter.notifyDataSetChanged();
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -163,16 +201,14 @@ public class AddressFragment extends Fragment {
         if(etProvinsi.getText().toString().equals("")){
             Toast.makeText(getActivity(), getString(R.string.toast_mohon_pilih_provinsi_terlebih_dahulu), Toast.LENGTH_SHORT).show();
         }else {
-            ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setCancelable(false);
-            progressDialog.setMessage(getString(R.string.base_tv_please_wait));
-            progressDialog.show();
+            showDialogChoose();
+            showProgressBar();
             KabupatenRequest kabupatenRequest = new KabupatenRequest(etProvinsi.getTag().toString());
             final Call<KabupatenResponse> kabupatenApi = getApiGrosirMobil().kabupatenApi(kabupatenRequest);
             kabupatenApi.enqueue(new Callback<KabupatenResponse>() {
                 @Override
                 public void onResponse(Call<KabupatenResponse> call, Response<KabupatenResponse> response) {
-                    progressDialog.dismiss();
+                    hideProgressBar();
                     if (response.isSuccessful()) {
                         try {
                             if(response.body().getMessage().equals("success")){
@@ -180,6 +216,11 @@ public class AddressFragment extends Fragment {
                                 KabupatenAdapter kabupatenAdapter = new KabupatenAdapter(response.body().getData(), dataKabupatenResponse -> {
                                     etKabupaten.setText(dataKabupatenResponse.getCity());
                                     etKabupaten.setTag(dataKabupatenResponse.getCity());
+                                    etKecamatan.setText("");
+                                    etKecamatan.setTag("");
+                                    etKelurahan.setText("");
+                                    etKelurahan.setTag("");
+                                    etKodePos.setText("");
                                     relativeDialogClick();
                                 });
                                 rvChoose.setAdapter(kabupatenAdapter);
@@ -201,7 +242,7 @@ public class AddressFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<KabupatenResponse> call, Throwable t) {
-                    progressDialog.dismiss();
+                    hideProgressBar();
                     grosirMobilFunction.showMessage(getActivity(), "GET Kabupaten", getString(R.string.base_null_server));
                     GrosirMobilLog.printStackTrace(t);
                 }
@@ -215,16 +256,14 @@ public class AddressFragment extends Fragment {
         if(etKabupaten.getText().toString().equals("")){
             Toast.makeText(getActivity(), getString(R.string.toast_mohon_pilih_kabupaten_terlebih_dahulu), Toast.LENGTH_SHORT).show();
         }else {
-            ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setCancelable(false);
-            progressDialog.setMessage(getString(R.string.base_tv_please_wait));
-            progressDialog.show();
+            showDialogChoose();
+            showProgressBar();
             KecamatanRequest kecamatanRequest = new KecamatanRequest(etKabupaten.getTag().toString());
             final Call<KecamatanResponse> kecamatanApi = getApiGrosirMobil().kecamatanApi(kecamatanRequest);
             kecamatanApi.enqueue(new Callback<KecamatanResponse>() {
                 @Override
                 public void onResponse(Call<KecamatanResponse> call, Response<KecamatanResponse> response) {
-                    progressDialog.dismiss();
+                    hideProgressBar();
                     if (response.isSuccessful()) {
                         try {
                             if(response.body().getMessage().equals("success")){
@@ -232,6 +271,9 @@ public class AddressFragment extends Fragment {
                                 KecamatanAdapter kecamatanAdapter = new KecamatanAdapter(response.body().getData(), dataKecamatanResponse -> {
                                     etKecamatan.setText(dataKecamatanResponse.getSubDistrict());
                                     etKecamatan.setTag(dataKecamatanResponse.getSubDistrict());
+                                    etKelurahan.setText("");
+                                    etKelurahan.setTag("");
+                                    etKodePos.setText("");
                                     relativeDialogClick();
                                 });
                                 rvChoose.setAdapter(kecamatanAdapter);
@@ -253,7 +295,7 @@ public class AddressFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<KecamatanResponse> call, Throwable t) {
-                    progressDialog.dismiss();
+                    hideProgressBar();
                     grosirMobilFunction.showMessage(getActivity(), "GET Kecamatan", getString(R.string.base_null_server));
                     GrosirMobilLog.printStackTrace(t);
                 }
@@ -267,16 +309,14 @@ public class AddressFragment extends Fragment {
         if(etKecamatan.getText().toString().equals("")){
             Toast.makeText(getActivity(), getString(R.string.toast_mohon_pilih_kecamatan_terlebih_dahulu), Toast.LENGTH_SHORT).show();
         }else {
-            ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setCancelable(false);
-            progressDialog.setMessage(getString(R.string.base_tv_please_wait));
-            progressDialog.show();
+            showDialogChoose();
+            showProgressBar();
             KelurahanRequest kelurahanRequest = new KelurahanRequest(etKabupaten.getTag().toString(),etKecamatan.getTag().toString());
             final Call<KelurahanResponse> kelurahanApi = getApiGrosirMobil().kelurahanApi(kelurahanRequest);
             kelurahanApi.enqueue(new Callback<KelurahanResponse>() {
                 @Override
                 public void onResponse(Call<KelurahanResponse> call, Response<KelurahanResponse> response) {
-                    progressDialog.dismiss();
+                    hideProgressBar();
                     if (response.isSuccessful()) {
                         try {
                             if(response.body().getMessage().equals("success")){
@@ -306,7 +346,7 @@ public class AddressFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<KelurahanResponse> call, Throwable t) {
-                    progressDialog.dismiss();
+                    hideProgressBar();
                     grosirMobilFunction.showMessage(getActivity(), "GET Kelurahan", getString(R.string.base_null_server));
                     GrosirMobilLog.printStackTrace(t);
                 }
@@ -323,6 +363,6 @@ public class AddressFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_next_data_address)
     void btnNextDataAddressClick(){
-        ((RegisterDataActivity)getActivity()).replaceFragment(new DocumentFragment());
+        ((RegisterDataActivity)getActivity()).replaceFragment(new QuestionFragment());
     }
 }

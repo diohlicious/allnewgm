@@ -56,6 +56,8 @@ public class MainActivity extends GrosirMobilActivity implements GrosirMobilFrag
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.linear_home) LinearLayout linearHome;
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_menu_nav_bar) public LinearLayout linearMenuNavBar;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_home) TextView tvHome;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_home) ImageView ivHome;

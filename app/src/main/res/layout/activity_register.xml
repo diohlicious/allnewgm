@@ -7,7 +7,7 @@
     android:background="@color/colorPrimaryWhite"
     tools:context=".activity.RegisterActivity">
     <LinearLayout
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:paddingLeft="@dimen/_30sdp"
         android:paddingRight="@dimen/_30sdp"
         android:orientation="vertical"
@@ -41,6 +41,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tv_full_name"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:hint="@string/tv_full_name"
+            android:theme="@style/myTextInputLabelTheme"
+            android:textColorHint="@color/colorPrimaryHintFont"
+            android:backgroundTint="@color/colorPrimaryTheme"
+            android:fontFamily="@font/nunito_semi_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_full_name"
+                android:textColor="@color/colorPrimaryFont"
+                android:backgroundTint="@color/colorPrimaryFont"
+                android:textSize="@dimen/text_16"
+                android:drawableStart="@drawable/ic_email_user"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/nunito_semi_bold"
+                android:gravity="center|left"
+                android:textAllCaps="true"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry"
+                android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tv_phone_number"
             android:layout_marginTop="@dimen/_20sdp"
             android:hint="@string/tv_phone_number"
@@ -68,6 +93,7 @@
             android:id="@+id/tv_password"
             android:layout_marginTop="@dimen/_20sdp"
             android:hint="@string/tv_password"
+            android:visibility="gone"
             android:theme="@style/myTextInputLabelTheme"
             android:textColorHint="@color/colorPrimaryHintFont"
             android:backgroundTint="@color/colorPrimaryTheme"
@@ -163,5 +189,104 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relative_dialog"
+        android:visibility="gone"
+        android:background="@color/colorPrimaryBackgroundDialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:layout_marginBottom="@dimen/_40sdp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.cardview.widget.CardView
+                app:cardCornerRadius="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:ignore="UselessLeaf">
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:fontFamily="@font/nunito_regular"
+                        android:textSize="@dimen/text_18"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:text="@string/tv_syarat_dan_ketentuan_grosir_mobil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <androidx.core.widget.NestedScrollView
+                        android:background="@drawable/design_line_radius_2sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:fontFamily="@font/nunito_regular"
+                                android:textSize="@dimen/text_14"
+                                android:textColor="@color/colorPrimaryFont"
+                                android:gravity="center"
+                                android:padding="@dimen/_5sdp"
+                                android:text="Dengan menggunakan Aplikasi ini, maka Anda berjanji dan menjamin kepada Kami untuk tidak akan melakukan tindakan-tindakan yang antara lain sebagai berikut:\n\n1. Menggunakan Aplikasi dengan cara-cara yang dilarang oleh Kami maupun ketentuan peraturan perundang-undangan yang berlaku, maupun menggunakan Aplikasi dengan cara apapun yang dapat merusak, mematikan baik untuk sementara maupun seterusnya, membebani secara berlebihan atau melemahkan Aplikasi.\n2. Mengunakan software tertentu yang dapat mengakses Aplikasi dan menyebabkan peningkatan jumlah panggilan terhadap server Kami dalam jangka waktu tertentu yang lebih dari jumlah panggilan normal yang dapat dilakukan oleh manusia.\n3. Menyalin, menduplikasi, mengubah maupun menciptakan karya turunan dari Aplikasi, atau berupaya untuk menemukan sumber atau mengizinkan pihak ketiga\n1. Menggunakan Aplikasi dengan cara-cara yang dilarang oleh Kami maupun ketentuan peraturan perundang-undangan yang berlaku, maupun menggunakan Aplikasi dengan cara apapun yang dapat merusak, mematikan baik untuk sementara maupun seterusnya, membebani secara berlebihan atau melemahkan Aplikasi.\n2. Mengunakan software tertentu yang dapat mengakses Aplikasi dan menyebabkan peningkatan jumlah panggilan terhadap server Kami dalam jangka waktu tertentu yang lebih dari jumlah panggilan normal yang dapat dilakukan oleh manusia.\n3. Menyalin, menduplikasi, mengubah maupun menciptakan karya turunan dari Aplikasi, atau berupaya untuk menemukan sumber atau mengizinkan pihak ketiga\n1. Menggunakan Aplikasi dengan cara-cara yang dilarang oleh Kami maupun ketentuan peraturan perundang-undangan yang berlaku, maupun menggunakan Aplikasi dengan cara apapun yang dapat merusak, mematikan baik untuk sementara maupun seterusnya, membebani secara berlebihan atau melemahkan Aplikasi.\n2. Mengunakan software tertentu yang dapat mengakses Aplikasi dan menyebabkan peningkatan jumlah panggilan terhadap server Kami dalam jangka waktu tertentu yang lebih dari jumlah panggilan normal yang dapat dilakukan oleh manusia.\n3. Menyalin, menduplikasi, mengubah maupun menciptakan karya turunan dari Aplikasi, atau berupaya untuk menemukan sumber atau mengizinkan pihak ketiga\n1. Menggunakan Aplikasi dengan cara-cara yang dilarang oleh Kami maupun ketentuan peraturan perundang-undangan yang berlaku, maupun menggunakan Aplikasi dengan cara apapun yang dapat merusak, mematikan baik untuk sementara maupun seterusnya, membebani secara berlebihan atau melemahkan Aplikasi.\n2. Mengunakan software tertentu yang dapat mengakses Aplikasi dan menyebabkan peningkatan jumlah panggilan terhadap server Kami dalam jangka waktu tertentu yang lebih dari jumlah panggilan normal yang dapat dilakukan oleh manusia.\n3. Menyalin, menduplikasi, mengubah maupun menciptakan karya turunan dari Aplikasi, atau berupaya untuk menemukan sumber atau mengizinkan pihak ketiga"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                            <LinearLayout
+                                android:layout_marginTop="@dimen/_30sdp"
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <Button
+                                    android:id="@+id/btn_tidak_setuju"
+                                    android:fontFamily="@font/nunito_semi_bold"
+                                    android:textSize="@dimen/text_18"
+                                    android:textColor="@color/colorPrimaryFont"
+                                    android:textAllCaps="false"
+                                    android:text="@string/btn_tidak_setuju"
+                                    android:background="@drawable/btn_design_rectangle_second"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="@dimen/_40sdp"
+                                    tools:ignore="ButtonStyle" />
+                                <Button
+                                    android:id="@+id/btn_setuju"
+                                    android:fontFamily="@font/nunito_semi_bold"
+                                    android:textSize="@dimen/text_18"
+                                    android:textColor="@color/colorPrimaryWhite"
+                                    android:textAllCaps="false"
+                                    android:text="@string/btn_setuju"
+                                    android:background="@drawable/btn_design_rectangle"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="@dimen/_40sdp"
+                                    tools:ignore="ButtonStyle" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.core.widget.NestedScrollView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_close"
+            android:src="@drawable/ic_close_dialog"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:padding="@dimen/_3sdp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            tools:ignore="ContentDescription" />
     </RelativeLayout>
 </RelativeLayout>

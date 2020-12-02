@@ -140,7 +140,7 @@ dependencies {
 //    api "com.github.nkzawa:socket.io-client:${versions.socket}"
 //    api "com.treebo:internetavailabilitychecker:${versions.internetChecker}"
 //    api "ja.burhanrashid52:photoeditor:${versions.photoEditor}"
-//    api "com.theartofdev.edmodo:android-image-cropper:${versions.cropEditor}"
+    api "com.theartofdev.edmodo:android-image-cropper:${versions.cropEditor}"
 //    api "com.github.rtugeek:colorseekbar:${versions.colorSeekBar}"
 //    api "com.github.shrikanth7698:Collapsible-Calendar-View-Android:${versions.calendarView}"
     //Library Feature Finish

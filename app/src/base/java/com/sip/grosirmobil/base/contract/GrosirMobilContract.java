@@ -23,10 +23,12 @@ public class GrosirMobilContract {
     public static final int FILTER_REQUEST = 14;
     public static final int REQUEST_KTP = 15;
     public static final int REQUEST_SELFIE_KTP = 16;
+    public static final int REQUEST_EDIT_IMAGE = 17;
 
+    public static final String BEARER = "Bearer";
     public static final String REQUEST_MAIN = "main";
     public static final String EMAIL = "email";
-    public static final String UPLOAD_KEY = "image";
+    public static final String PATH_IMAGE = "pathImage";
     public static final String TRANSACTION_ID = "transactionid";
     public static final String NAME = "name";
     public static final String ADDRESS = "address";

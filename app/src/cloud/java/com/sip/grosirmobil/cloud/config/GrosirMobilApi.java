@@ -5,6 +5,7 @@ import com.sip.grosirmobil.cloud.config.request.kabupaten.KabupatenRequest;
 import com.sip.grosirmobil.cloud.config.request.kecamatan.KecamatanRequest;
 import com.sip.grosirmobil.cloud.config.request.kelurahan.KelurahanRequest;
 import com.sip.grosirmobil.cloud.config.request.login.LoginRequest;
+import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 import com.sip.grosirmobil.cloud.config.response.history.HistoryBillPaymentResponse;
 import com.sip.grosirmobil.cloud.config.response.kabupaten.KabupatenResponse;
 import com.sip.grosirmobil.cloud.config.response.kecamatan.KecamatanResponse;
@@ -41,6 +42,10 @@ public interface GrosirMobilApi {
     @Headers("X-Requested-With:XMLHttpRequest")
     @POST(loginPath)
     Single<LoginResponse> loginApi(@Body LoginRequest loginRequest);
+
+    @Headers("Content-Type: application/json")
+    @GET(logoutPath)
+    Call<GeneralResponse> logoutApi(@Header("Authorization") String authToken);
 
     @Headers("Content-Type: application/json")
     @POST(historyBillPaymentPath)

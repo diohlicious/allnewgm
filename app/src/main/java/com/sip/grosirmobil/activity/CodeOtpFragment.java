@@ -1,22 +1,24 @@
 package com.sip.grosirmobil.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.sip.grosirmobil.R;
-import com.sip.grosirmobil.base.util.GrosirMobilActivity;
+import com.sip.grosirmobil.fragment.register.RegisterSuccessFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.sip.grosirmobil.base.function.GrosirMobilFunction.adjustFontScale;
-import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarOnBoarding;
+public class CodeOtpFragment extends Fragment {
 
-public class CodeOtpActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.et_new_otp_1) EditText etNewOtp1;
     @SuppressLint("NonConstantResourceId")
@@ -26,16 +28,23 @@ public class CodeOtpActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.et_new_otp_4) EditText etNewOtp4;
 
+    public static CodeOtpFragment newInstance(int page, String title) {
+        CodeOtpFragment fragmentFirst = new CodeOtpFragment();
+        Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
+        fragmentFirst.setArguments(args);
+        return fragmentFirst;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStatusBarOnBoarding(this);
-        setContentView(R.layout.activity_code_otp);
-        adjustFontScale(this, getResources().getConfiguration());
-        ButterKnife.bind(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_code_otp, container, false);
+        ButterKnife.bind(this, view);
 
-
+        return view;
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -283,18 +292,16 @@ public class CodeOtpActivity extends GrosirMobilActivity {
     @OnClick(R.id.btn_verified_password)
     void btnVerifiedPassword(){
         if(etNewOtp1.getText().toString().isEmpty()){
-            Toast.makeText(this, "Kode 1 is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Kode 1 is empty", Toast.LENGTH_SHORT).show();
         }else if(etNewOtp2.getText().toString().isEmpty()){
-            Toast.makeText(this, "Kode 2 is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Kode 2 is empty", Toast.LENGTH_SHORT).show();
         }else if(etNewOtp3.getText().toString().isEmpty()){
-            Toast.makeText(this, "Kode 3 is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Kode 3 is empty", Toast.LENGTH_SHORT).show();
         }else if(etNewOtp4.getText().toString().isEmpty()){
-            Toast.makeText(this, "Kode 4 is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Kode 4 is empty", Toast.LENGTH_SHORT).show();
         }
         else{
-            Intent intent = new Intent(this, RegisterDataActivity.class);
-            startActivity(intent);
-            finish();
+            ((RegisterDataActivity)getActivity()).replaceFragment(new RegisterSuccessFragment());
         }
     }
 

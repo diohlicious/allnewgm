@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.sip.grosirmobil.BuildConfig;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
@@ -56,6 +57,11 @@ public class LoginActivity extends GrosirMobilActivity implements LoginView {
 
         grosirMobilPreference = new GrosirMobilPreference(getApplicationContext());
         templateFunction = new GrosirMobilFunction(getApplicationContext());
+
+        if(BuildConfig.ENVIRONTMENT.equals("STAGING")){
+            etEmail.setText("rahanpas.rap@gmail.com");
+            etPassword.setText("16011989");
+        }
 
         loginPresenter = new LoginPresenterImp(this, this);
     }

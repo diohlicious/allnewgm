@@ -47,10 +47,6 @@ public class FilterActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.range_seek_bar) SimpleRangeView rangeSeekBar;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.linear_type_car) LinearLayout linearTypeCar;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_type_car) TextView tvTypeCar;
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.linear_year) LinearLayout linearYear;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_year) TextView tvYear;
@@ -135,11 +131,6 @@ public class FilterActivity extends GrosirMobilActivity {
         showDialogChoose();
     }
 
-    @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.linear_type_car)
-    void linearTypeCarClick(){
-        showDialogChoose();
-    }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.linear_year)
@@ -166,7 +157,6 @@ public class FilterActivity extends GrosirMobilActivity {
         tvLocation.setText("");
         tvStartRange.setText("");
         tvEndRange.setText("");
-        tvTypeCar.setText("");
         tvYear.setText("");
         tvGrade.setText("");
     }

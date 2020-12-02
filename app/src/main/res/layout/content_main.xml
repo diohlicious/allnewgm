@@ -16,6 +16,8 @@
         android:layout_weight="1"
         tools:ignore="Suspicious0dp" />
     <LinearLayout
+        android:id="@+id/linear_menu_nav_bar"
+        android:visibility="visible"
         android:orientation="horizontal"
         android:background="@color/colorPrimaryWhite"
         android:layout_width="match_parent"

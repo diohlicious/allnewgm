@@ -3,7 +3,13 @@ package com.sip.grosirmobil.base.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
 import com.sip.grosirmobil.BuildConfig;
+import com.sip.grosirmobil.cloud.config.response.province.DataProvinceResponse;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GrosirMobilPreference {
 
@@ -21,6 +27,7 @@ public class GrosirMobilPreference {
     private static final String USIA_BISNIS = "usiaBisnis";
     private static final String PERPUTARAN_UNIT = "perputaranUnit";
     private static final String DEALER_ADDRESS = "dealerAddress";
+    private static final String DATA_PROVINCE = "data_province";
     private static final String PROVINCE = "province";
     private static final String PROVINCE_CODE = "provinceCode";
     private static final String KABUPATEN = "kabupaten";
@@ -32,7 +39,8 @@ public class GrosirMobilPreference {
     private static final String KODE_POS = "kodePos";
     private static final String URL_IMAGE_KTP = "urlImageKtp";
     private static final String URL_IMAGE_SELFIE_KTP = "urlImageSelfieKtp";
-    private SharedPreferences sharedpreferences;
+
+    private final SharedPreferences sharedpreferences;
 
     public GrosirMobilPreference(Context context) {
         sharedpreferences = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
@@ -159,36 +167,59 @@ public class GrosirMobilPreference {
     }
 
 
-//    public void saveCategoryList(List<DataCategoryResponse> dataCategoryResponseList){
-//        SharedPreferences.Editor editor = sharedpreferences.edit();
-//        Gson gson = new Gson();
-//        String dataCategoryJson = gson.toJson(dataCategoryResponseList);
-//        editor.putString(CATEGORY, dataCategoryJson);
-//        editor.apply();
-//    }
+    public void saveDataProvinceList(List<DataProvinceResponse> dataProvinceResponseList){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        Gson gson = new Gson();
+        String dataProvinceJson = gson.toJson(dataProvinceResponseList);
+        editor.putString(DATA_PROVINCE, dataProvinceJson);
+        editor.apply();
+    }
 
-//    public ArrayList<DataCategoryResponse> getCategoryList(){
-//        List<DataCategoryResponse> dataCategoryResponseList;
-//        if (sharedpreferences.contains(CATEGORY)) {
-//            String jsonFavorites = sharedpreferences.getString(CATEGORY, null);
-//            Gson gson = new Gson();
-//            DataCategoryResponse[] dataCategoryResponses = gson.fromJson(jsonFavorites,
-//                    DataCategoryResponse[].class);
-//
-//            dataCategoryResponseList = Arrays.asList(dataCategoryResponses);
-//            dataCategoryResponseList = new ArrayList<>(dataCategoryResponseList);
-//        } else
-//            return null;
-//
-//        return (ArrayList<DataCategoryResponse>) dataCategoryResponseList;
-//    }
-//
+    public ArrayList<DataProvinceResponse> getDataProvinceList(){
+        List<DataProvinceResponse> dataProvinceResponseList;
+        if (sharedpreferences.contains(DATA_PROVINCE)) {
+            String dataProvinceJson = sharedpreferences.getString(DATA_PROVINCE, null);
+            Gson gson = new Gson();
+            DataProvinceResponse[] dataProvinceResponses = gson.fromJson(dataProvinceJson,
+                    DataProvinceResponse[].class);
+
+            dataProvinceResponseList = Arrays.asList(dataProvinceResponses);
+            dataProvinceResponseList = new ArrayList<>(dataProvinceResponseList);
+        } else
+            return null;
+
+        return (ArrayList<DataProvinceResponse>) dataProvinceResponseList;
+    }
 
 
 
     public void clearSharePreference() {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.remove(TOKEN);
+        editor.remove(PHONE_NUMBER);
+        editor.remove(PASSWORD);
+        editor.remove(EMAIL);
+        editor.remove(NO_KTP);
+        editor.remove(FULL_NAME);
+        editor.remove(ADDRESS);
+        editor.remove(TYPE_USAHA);
+        editor.remove(DEALER_NAME);
+        editor.remove(PHONE_NUMBER_DEALER);
+        editor.remove(USIA_BISNIS);
+        editor.remove(PERPUTARAN_UNIT);
+        editor.remove(DEALER_ADDRESS);
+        editor.remove(DATA_PROVINCE);
+        editor.remove(PROVINCE);
+        editor.remove(PROVINCE_CODE);
+        editor.remove(KABUPATEN);
+        editor.remove(KABUPATEN_CODE);
+        editor.remove(KECAMATAN);
+        editor.remove(KECAMATAN_CODE);
+        editor.remove(KELURAHAN);
+        editor.remove(KELURAHAN_CODE);
+        editor.remove(KODE_POS);
+        editor.remove(URL_IMAGE_KTP);
+        editor.remove(URL_IMAGE_SELFIE_KTP);
         editor.apply();
     }
 }

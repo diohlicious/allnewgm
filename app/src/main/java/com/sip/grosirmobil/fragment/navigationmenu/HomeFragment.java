@@ -21,6 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.FilterActivity;
+import com.sip.grosirmobil.activity.MainActivity;
 import com.sip.grosirmobil.activity.ProfileActivity;
 import com.sip.grosirmobil.activity.SearchActivity;
 import com.sip.grosirmobil.adapter.BannerGalleryAdapter;
@@ -90,7 +91,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_title_content) TextView tvTitleContent;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_filter_title_content) TextView tvFilterTitleContent;
+    @BindView(R.id.iv_filter_title_content) ImageView ivFilterTitleContent;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.relative_result_search) RelativeLayout relativeResultSearch;
     @SuppressLint("NonConstantResourceId")
@@ -113,6 +114,8 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @BindView(R.id.tv_search_result) TextView tvSearchResult;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_clear) ImageView ivClear;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.relative_background_dialog_sort) RelativeLayout relativeBackgroundDialogSort;
 
     private GrosirMobilFunction grosirMobilFunction;
     private HomePresenter homePresenter;
@@ -272,11 +275,25 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     }
 
     @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.tv_filter_title_content)
-    void tvFilterTitleContentClick(){
+    @OnClick(R.id.iv_filter_title_content)
+    void ivFilterTitleContentClick(){
         Intent intent = new Intent(getActivity(), FilterActivity.class);
         intent.putExtra(FROM_PAGE, "BEFORE_SEARCH");
         startActivityForResult(intent, FILTER_REQUEST);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick({R.id.iv_sort_title_content,R.id.iv_sort_search})
+    void ivSortTitleContentClick(){
+        ((MainActivity)getActivity()).linearMenuNavBar.setVisibility(View.GONE);
+        relativeBackgroundDialogSort.setVisibility(View.VISIBLE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.relative_background_dialog_sort)
+    void relativeBackgroundDialogSortClickClick(){
+        ((MainActivity)getActivity()).linearMenuNavBar.setVisibility(View.VISIBLE);
+        relativeBackgroundDialogSort.setVisibility(View.GONE);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -340,7 +357,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         rvLive.setVisibility(View.VISIBLE);
         rvLiveSoon.setVisibility(View.GONE);
         rvRecord.setVisibility(View.GONE);
-        tvTitleContent.setText("Ada 32 kendaraan Live!");
+        tvResultTitleContent.setText("Ada 32 kendaraan Live!");
         linearResultTitleContent.setBackgroundResource(R.drawable.design_card_live);
         tvResultTitleContent.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
         tvTitleContent.setText("Baru Masuk");
@@ -366,7 +383,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         rvLive.setVisibility(View.GONE);
         rvLiveSoon.setVisibility(View.VISIBLE);
         rvRecord.setVisibility(View.GONE);
-        tvTitleContent.setText("Ada 32 kendaraan Akan Tayang!");
+        tvResultTitleContent.setText("Ada 32 kendaraan yang Akan Tayang!");
         linearResultTitleContent.setBackgroundResource(R.drawable.design_card_soon);
         tvResultTitleContent.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvTitleContent.setText("Segera Tayang");
@@ -395,7 +412,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         tvRecord.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
     }
 
-    @OnClick({R.id.relative_filter,R.id.tv_filter_ket, R.id.tv_filter})
+    @OnClick(R.id.iv_filter_search)
     void relativeFilterClick(){
         Intent intent = new Intent(getActivity(), FilterActivity.class);
         intent.putExtra(FROM_PAGE, "AFTER_SEARCH");

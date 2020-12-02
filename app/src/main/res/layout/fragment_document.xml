@@ -217,14 +217,14 @@
                 tools:ignore="ContentDescription" />
         </LinearLayout>
         <Button
-            android:id="@+id/btn_end_register_data"
+            android:id="@+id/btn_next_document"
             android:layout_marginTop="@dimen/_50sdp"
             android:layout_marginBottom="@dimen/_20sdp"
             android:fontFamily="@font/nunito_semi_bold"
             android:textSize="@dimen/text_18"
             android:textColor="@color/colorPrimaryWhite"
             android:textAllCaps="false"
-            android:text="@string/btn_selesai"
+            android:text="@string/btn_selanjutnya"
             android:background="@drawable/btn_design"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp" />
