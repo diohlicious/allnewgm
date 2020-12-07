@@ -22,6 +22,8 @@ public class GrosirMobilPreference {
     private static final String FULL_NAME = "fullName";
     private static final String ADDRESS = "address";
     private static final String TYPE_USAHA = "typeUsaha";
+    private static final String TYPE_USAHA_CODE = "typeUsahaCode";
+    private static final String DATA_TYPE_USAHA = "dataTypeUsaha";
     private static final String DEALER_NAME = "dealerName";
     private static final String PHONE_NUMBER_DEALER = "phoneNumberDealer";
     private static final String USIA_BISNIS = "usiaBisnis";
@@ -64,6 +66,16 @@ public class GrosirMobilPreference {
 
     public String getProvince() {
         return sharedpreferences.getString(PROVINCE, null);
+    }
+
+    public void saveDealerAddress(String dealerAddress) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(DEALER_ADDRESS, dealerAddress);
+        editor.apply();
+    }
+
+    public String getDealerAddress() {
+        return sharedpreferences.getString(DEALER_ADDRESS, null);
     }
 
     public void saveProvinceCode(String provinceCode) {
@@ -156,6 +168,36 @@ public class GrosirMobilPreference {
         return sharedpreferences.getString(PHONE_NUMBER, null);
     }
 
+    public void saveFullName(String fullName) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(FULL_NAME, fullName);
+        editor.apply();
+    }
+
+    public String getFullName() {
+        return sharedpreferences.getString(FULL_NAME, null);
+    }
+
+    public void saveNoKtp(String noKtp) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(NO_KTP, noKtp);
+        editor.apply();
+    }
+
+    public String getNoKtp() {
+        return sharedpreferences.getString(NO_KTP, null);
+    }
+
+    public void saveEmail(String email) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(EMAIL, email);
+        editor.apply();
+    }
+
+    public String getEmail() {
+        return sharedpreferences.getString(EMAIL, null);
+    }
+
     public void savePassword(String password) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(PASSWORD, password);
@@ -166,6 +208,89 @@ public class GrosirMobilPreference {
         return sharedpreferences.getString(PASSWORD, null);
     }
 
+    public void saveTypeUsaha(String typeUsaha) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(TYPE_USAHA, typeUsaha);
+        editor.apply();
+    }
+
+    public String getTypeUsaha() {
+        return sharedpreferences.getString(TYPE_USAHA, null);
+    }
+
+    public void saveTypeUsahaCode(String typeUsahaCode) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(TYPE_USAHA_CODE, typeUsahaCode);
+        editor.apply();
+    }
+
+    public String getTypeUsahaCode() {
+        return sharedpreferences.getString(TYPE_USAHA_CODE, null);
+    }
+
+    public void saveDealerName(String dealerName) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(DEALER_NAME, dealerName);
+        editor.apply();
+    }
+
+    public String getDealerName() {
+        return sharedpreferences.getString(DEALER_NAME, null);
+    }
+
+    public void saveDealerPhoneNumber(String dealerPhoneNumber) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(PHONE_NUMBER_DEALER, dealerPhoneNumber);
+        editor.apply();
+    }
+
+    public String getDealerPhoneNumber() {
+        return sharedpreferences.getString(PHONE_NUMBER_DEALER, null);
+    }
+
+    public void saveUrlImageKtp(String urlImageKtp) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(URL_IMAGE_KTP, urlImageKtp);
+        editor.apply();
+    }
+
+    public String getUrlImageKtp() {
+        return sharedpreferences.getString(URL_IMAGE_KTP, null);
+    }
+
+    public void saveUrlImageSelfieKtp(String urlImageSelfieKtp) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(URL_IMAGE_SELFIE_KTP, urlImageSelfieKtp);
+        editor.apply();
+    }
+
+    public String getUrlImageSelfieKtp() {
+        return sharedpreferences.getString(URL_IMAGE_SELFIE_KTP, null);
+    }
+
+    public void saveDataTypeUsahaList(List<DataProvinceResponse> dataProvinceResponseList){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        Gson gson = new Gson();
+        String dataProvinceJson = gson.toJson(dataProvinceResponseList);
+        editor.putString(DATA_TYPE_USAHA, dataProvinceJson);
+        editor.apply();
+    }
+
+    public ArrayList<DataProvinceResponse> getDataTypeUsahaList(){
+        List<DataProvinceResponse> dataProvinceResponseList;
+        if (sharedpreferences.contains(DATA_TYPE_USAHA)) {
+            String dataProvinceJson = sharedpreferences.getString(DATA_TYPE_USAHA, null);
+            Gson gson = new Gson();
+            DataProvinceResponse[] dataProvinceResponses = gson.fromJson(dataProvinceJson,
+                    DataProvinceResponse[].class);
+
+            dataProvinceResponseList = Arrays.asList(dataProvinceResponses);
+            dataProvinceResponseList = new ArrayList<>(dataProvinceResponseList);
+        } else
+            return null;
+
+        return (ArrayList<DataProvinceResponse>) dataProvinceResponseList;
+    }
 
     public void saveDataProvinceList(List<DataProvinceResponse> dataProvinceResponseList){
         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -193,6 +318,7 @@ public class GrosirMobilPreference {
 
 
 
+
     public void clearSharePreference() {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.remove(TOKEN);
@@ -203,6 +329,8 @@ public class GrosirMobilPreference {
         editor.remove(FULL_NAME);
         editor.remove(ADDRESS);
         editor.remove(TYPE_USAHA);
+        editor.remove(TYPE_USAHA_CODE);
+        editor.remove(DATA_TYPE_USAHA);
         editor.remove(DEALER_NAME);
         editor.remove(PHONE_NUMBER_DEALER);
         editor.remove(USIA_BISNIS);

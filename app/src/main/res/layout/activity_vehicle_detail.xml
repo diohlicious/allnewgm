@@ -23,6 +23,15 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             tools:ignore="ContentDescription,RelativeOverlap" />
+        <ImageView
+            android:id="@+id/iv_favorite"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:src="@drawable/ic_favorite_empty"
+            android:layout_alignParentEnd="true"
+            android:padding="@dimen/_10sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            tools:ignore="ContentDescription" />
     </RelativeLayout>
     <androidx.core.widget.NestedScrollView
         android:layout_below="@id/relative_toolbar"

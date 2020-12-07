@@ -71,9 +71,7 @@ public class SearchActivity extends GrosirMobilActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
+            public void afterTextChanged(Editable editable) {}
         });
     }
 

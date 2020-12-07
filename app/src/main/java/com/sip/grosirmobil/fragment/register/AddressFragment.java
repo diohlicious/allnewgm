@@ -62,6 +62,8 @@ public class AddressFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.et_provinsi) TextInputEditText etProvinsi;
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.et_dealer_address) TextInputEditText etDealerAddress;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.et_kabupaten) TextInputEditText etKabupaten;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.et_kecamatan) TextInputEditText etKecamatan;
@@ -125,8 +127,8 @@ public class AddressFragment extends Fragment {
     @OnClick(R.id.et_provinsi)
     void etProvinsiClick(){
         if(grosirMobilPreference.getDataProvinceList()==null||grosirMobilPreference.getDataProvinceList().isEmpty()){
-            showDialogChoose();
             showProgressBar();
+            showDialogChoose();
             final Call<ProvinceResponse> provinceApi = getApiGrosirMobil().provinceApi();
             provinceApi.enqueue(new Callback<ProvinceResponse>() {
                 @Override
@@ -363,6 +365,30 @@ public class AddressFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_next_data_address)
     void btnNextDataAddressClick(){
-        ((RegisterDataActivity)getActivity()).replaceFragment(new QuestionFragment());
+        if(etDealerAddress.getText().toString().equals("")){
+            Toast.makeText(getActivity(), "Mohon Isi Alamat Lengkap", Toast.LENGTH_SHORT).show();
+        }else if(etProvinsi.getText().toString().equals("")){
+            Toast.makeText(getActivity(), "Mohon Pilih Provinsi", Toast.LENGTH_SHORT).show();
+        }else if(etKabupaten.getText().toString().equals("")){
+            Toast.makeText(getActivity(), "Mohon Pilih Kabupaten", Toast.LENGTH_SHORT).show();
+        }else if(etKecamatan.getText().toString().equals("")){
+            Toast.makeText(getActivity(), "Mohon Pilih Kecamatan", Toast.LENGTH_SHORT).show();
+        }else if(etKelurahan.getText().toString().equals("")){
+            Toast.makeText(getActivity(), "Mohon Pilih Kelurahan", Toast.LENGTH_SHORT).show();
+        }else if(etKodePos.getText().toString().equals("")){
+            Toast.makeText(getActivity(), "Mohon Isi Kode Pos", Toast.LENGTH_SHORT).show();
+        }else {
+            grosirMobilPreference.saveDealerAddress(etDealerAddress.getText().toString());
+            grosirMobilPreference.saveProvince(etProvinsi.getText().toString());
+            grosirMobilPreference.saveProvinceCode(etProvinsi.getTag().toString());
+            grosirMobilPreference.saveKabupaten(etKabupaten.getText().toString());
+            grosirMobilPreference.saveKabupatenCode(etKabupaten.getTag().toString());
+            grosirMobilPreference.saveKecamatan(etKecamatan.getText().toString());
+            grosirMobilPreference.saveKecamatanCode(etKecamatan.getTag().toString());
+            grosirMobilPreference.saveKelurahan(etKelurahan.getText().toString());
+            grosirMobilPreference.saveKelurahanCode(etKelurahan.getTag().toString());
+            grosirMobilPreference.saveKodePos(etKodePos.getText().toString());
+            ((RegisterDataActivity)getActivity()).replaceFragment(new QuestionFragment());
+        }
     }
 }

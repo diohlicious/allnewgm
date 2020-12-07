@@ -19,6 +19,7 @@ import com.shuhart.stepview.StepView;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.EditImageActivity;
 import com.sip.grosirmobil.activity.RegisterDataActivity;
+import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 
 import java.util.ArrayList;
@@ -57,6 +58,7 @@ public class DocumentFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_photo_selfie) ImageView ivPhotoSelfie;
 
+    private GrosirMobilPreference grosirMobilPreference;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,6 +66,8 @@ public class DocumentFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_document, container, false);
         ButterKnife.bind(this, view);
+
+        grosirMobilPreference = new GrosirMobilPreference(getActivity());
 
         stepView.go(2, true);
         return view;
@@ -116,6 +120,7 @@ public class DocumentFragment extends Fragment {
                 System.out.println("Path : " + returnValue.get(0));
                 String imageFilePath = returnValue.get(0);
                 Glide.with(this).load(imageFilePath).into(ivPhotoSelfie);
+                grosirMobilPreference.saveUrlImageSelfieKtp(imageFilePath);
             }
             catch (Exception e){
                 GrosirMobilLog.printStackTrace(e);
@@ -125,6 +130,7 @@ public class DocumentFragment extends Fragment {
             try {
                 String pathImage = data.getStringExtra(PATH_IMAGE);
                 Glide.with(this).load(pathImage).into(ivPhotoKtp);
+                grosirMobilPreference.saveUrlImageKtp(pathImage);
             }catch (Exception e){
                 GrosirMobilLog.printStackTrace(e);
             }

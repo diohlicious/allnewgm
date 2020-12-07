@@ -3,6 +3,7 @@ package com.sip.grosirmobil.adapter.viewholder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -18,10 +19,12 @@ public class ViewHolderItemVehicleLiveGarage extends RecyclerView.ViewHolder {
     public CardView cardViewSuccessBidding;
     public ImageView ivImage, ivMin, ivPlus, ivClearPrice;
     public Button btnNego;
+    public RelativeLayout relativeVehicle;
     public CircleImageView circleImageViewItem;
 
     public ViewHolderItemVehicleLiveGarage(View view) {
         super(view);
+        relativeVehicle         = view.findViewById(R.id.relative_vehicle);
         ivImage                 = view.findViewById(R.id.iv_image);
         tvVehicleName           = view.findViewById(R.id.tv_vehicle_name);
         tvPlatNumber            = view.findViewById(R.id.tv_plat_number);

@@ -8,6 +8,7 @@ import android.text.InputFilter;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.sip.grosirmobil.R;
@@ -52,6 +54,8 @@ public class RegisterActivity extends GrosirMobilActivity {
     @BindView(R.id.btn_setuju) Button btnSetuju;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_close) ImageView ivClose;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.web_view_term) WebView webViewTerm;
 
     private GrosirMobilPreference grosirMobilPreference;
 
@@ -64,6 +68,9 @@ public class RegisterActivity extends GrosirMobilActivity {
         grosirMobilPreference = new GrosirMobilPreference(this);
 
         etFullName.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+
+        webViewTerm.setNestedScrollingEnabled(false);
+        webViewTerm.loadData(getString(R.string.tv_term_and_condition_html), "text/html; charset=utf-8", "utf-8");
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -89,20 +96,20 @@ public class RegisterActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_register)
     void btnRegisterClick(){
-//        if(etPhoneNumber.getText().toString().isEmpty()){
-//            Toast.makeText(this, "Mohon Isi Nomor Telepon", Toast.LENGTH_SHORT).show();
-//        }else if(etPassword.getText().toString().isEmpty()){
-//            Toast.makeText(this, "Mohon Isi Password", Toast.LENGTH_SHORT).show();
-//        }else {
-//            if(cbTermAndCondition.isChecked()){
-//                grosirMobilPreference.savePhoneNumber(etPhoneNumber.getText().toString());
-//                grosirMobilPreference.savePassword(etPassword.getText().toString());
+        if(etFullName.getText().toString().isEmpty()){
+            Toast.makeText(this, "Mohon Isi Nama Lengkap", Toast.LENGTH_SHORT).show();
+        }else if(etPhoneNumber.getText().toString().isEmpty()){
+            Toast.makeText(this, "Mohon Isi Nomor Telepon", Toast.LENGTH_SHORT).show();
+        }else {
+            if(cbTermAndCondition.isChecked()){
+                grosirMobilPreference.saveFullName(etFullName.getText().toString());
+                grosirMobilPreference.savePhoneNumber(etPhoneNumber.getText().toString());
                 Intent intent = new Intent(this, RegisterDataActivity.class);
                 startActivity(intent);
-//            }else {
-//                Toast.makeText(this, "Mohon Centang Term And Condition", Toast.LENGTH_SHORT).show();
-//            }
-//        }
+            }else {
+                Toast.makeText(this, "Mohon Centang Term And Condition", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @OnClick({R.id.linear_login,R.id.tv_login})

@@ -47,7 +47,8 @@
                     android:layout_height="match_parent"
                     android:imeOptions="actionSearch"
                     tools:ignore="RelativeOverlap"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:importantForAutofill="no" />
                 <ImageView
                     android:id="@+id/iv_clear"
                     android:visibility="gone"
@@ -90,7 +91,7 @@
             android:fontFamily="@font/nunito_bold"
             android:textSize="@dimen/text_20"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="Produk tidak ditemukan"
+            android:text="@string/tv_kendaraan_tidak_ditemukan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <Button

@@ -5,9 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.shuhart.stepview.StepView;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.CodeOtpFragment;
@@ -26,6 +31,22 @@ public class QuestionFragment extends Fragment {
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.step_view) StepView stepView;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.et_question_1) TextInputEditText etQuestion1;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.et_question_2) TextInputEditText etQuestion2;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.et_question_3) TextInputEditText etQuestion3;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.et_question_4) TextInputEditText etQuestion4;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.et_question_5) TextInputEditText etQuestion5;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.relative_dialog) RelativeLayout relativeDialog;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.rv_choose) RecyclerView rvChoose;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.progress_circular) ProgressBar progressBar;
 
     public static QuestionFragment newInstance(int page, String title) {
         QuestionFragment fragmentFirst = new QuestionFragment();
@@ -48,6 +69,33 @@ public class QuestionFragment extends Fragment {
 
         stepView.go(4, true);
         return view;
+    }
+
+    private void showDialogChoose(){
+        relativeDialog.setVisibility(View.VISIBLE);
+        RecyclerView.LayoutManager layoutManagerChoose = new LinearLayoutManager(getActivity());
+        rvChoose.setLayoutManager(layoutManagerChoose);
+        rvChoose.setNestedScrollingEnabled(false);
+        rvChoose.setAdapter(null);
+    }
+
+    private void showProgressBar(){
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressBar(){
+        progressBar.setVisibility(View.GONE);
+    }
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.linear_content_dialog)
+    void linearContentDialogClick(){
+        relativeDialog.setVisibility(View.VISIBLE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.relative_dialog)
+    void relativeDialogClick(){
+        relativeDialog.setVisibility(View.GONE);
     }
 
     @SuppressLint("NonConstantResourceId")

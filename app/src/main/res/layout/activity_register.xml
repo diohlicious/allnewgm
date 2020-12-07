@@ -217,7 +217,7 @@
                         android:layout_gravity="center"
                         android:textColor="@color/colorPrimaryFont"
                         android:fontFamily="@font/nunito_regular"
-                        android:textSize="@dimen/text_18"
+                        android:textSize="@dimen/text_14"
                         android:layout_marginTop="@dimen/_25sdp"
                         android:text="@string/tv_syarat_dan_ketentuan_grosir_mobil"
                         android:layout_width="wrap_content"
@@ -234,15 +234,21 @@
                             android:orientation="vertical"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
-                            <TextView
-                                android:fontFamily="@font/nunito_regular"
-                                android:textSize="@dimen/text_14"
-                                android:textColor="@color/colorPrimaryFont"
-                                android:gravity="center"
+<!--                            <TextView-->
+<!--                                android:fontFamily="@font/nunito_regular"-->
+<!--                                android:textSize="@dimen/text_14"-->
+<!--                                android:textColor="@color/colorPrimaryFont"-->
+<!--                                android:textAlignment="viewStart"-->
+<!--                                android:padding="@dimen/_5sdp"-->
+<!--                                android:text="@string/tv_term_and_condition_html"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"/>-->
+                            <WebView
+                                android:id="@+id/web_view_term"
                                 android:padding="@dimen/_5sdp"
-                                android:text="Dengan menggunakan Aplikasi ini, maka Anda berjanji dan menjamin kepada Kami untuk tidak akan melakukan tindakan-tindakan yang antara lain sebagai berikut:\n\n1. Menggunakan Aplikasi dengan cara-cara yang dilarang oleh Kami maupun ketentuan peraturan perundang-undangan yang berlaku, maupun menggunakan Aplikasi dengan cara apapun yang dapat merusak, mematikan baik untuk sementara maupun seterusnya, membebani secara berlebihan atau melemahkan Aplikasi.\n2. Mengunakan software tertentu yang dapat mengakses Aplikasi dan menyebabkan peningkatan jumlah panggilan terhadap server Kami dalam jangka waktu tertentu yang lebih dari jumlah panggilan normal yang dapat dilakukan oleh manusia.\n3. Menyalin, menduplikasi, mengubah maupun menciptakan karya turunan dari Aplikasi, atau berupaya untuk menemukan sumber atau mengizinkan pihak ketiga\n1. Menggunakan Aplikasi dengan cara-cara yang dilarang oleh Kami maupun ketentuan peraturan perundang-undangan yang berlaku, maupun menggunakan Aplikasi dengan cara apapun yang dapat merusak, mematikan baik untuk sementara maupun seterusnya, membebani secara berlebihan atau melemahkan Aplikasi.\n2. Mengunakan software tertentu yang dapat mengakses Aplikasi dan menyebabkan peningkatan jumlah panggilan terhadap server Kami dalam jangka waktu tertentu yang lebih dari jumlah panggilan normal yang dapat dilakukan oleh manusia.\n3. Menyalin, menduplikasi, mengubah maupun menciptakan karya turunan dari Aplikasi, atau berupaya untuk menemukan sumber atau mengizinkan pihak ketiga\n1. Menggunakan Aplikasi dengan cara-cara yang dilarang oleh Kami maupun ketentuan peraturan perundang-undangan yang berlaku, maupun menggunakan Aplikasi dengan cara apapun yang dapat merusak, mematikan baik untuk sementara maupun seterusnya, membebani secara berlebihan atau melemahkan Aplikasi.\n2. Mengunakan software tertentu yang dapat mengakses Aplikasi dan menyebabkan peningkatan jumlah panggilan terhadap server Kami dalam jangka waktu tertentu yang lebih dari jumlah panggilan normal yang dapat dilakukan oleh manusia.\n3. Menyalin, menduplikasi, mengubah maupun menciptakan karya turunan dari Aplikasi, atau berupaya untuk menemukan sumber atau mengizinkan pihak ketiga\n1. Menggunakan Aplikasi dengan cara-cara yang dilarang oleh Kami maupun ketentuan peraturan perundang-undangan yang berlaku, maupun menggunakan Aplikasi dengan cara apapun yang dapat merusak, mematikan baik untuk sementara maupun seterusnya, membebani secara berlebihan atau melemahkan Aplikasi.\n2. Mengunakan software tertentu yang dapat mengakses Aplikasi dan menyebabkan peningkatan jumlah panggilan terhadap server Kami dalam jangka waktu tertentu yang lebih dari jumlah panggilan normal yang dapat dilakukan oleh manusia.\n3. Menyalin, menduplikasi, mengubah maupun menciptakan karya turunan dari Aplikasi, atau berupaya untuk menemukan sumber atau mengizinkan pihak ketiga"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                tools:ignore="WebViewLayout" />
                             <LinearLayout
                                 android:layout_marginTop="@dimen/_30sdp"
                                 android:orientation="horizontal"

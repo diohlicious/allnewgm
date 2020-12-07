@@ -48,6 +48,8 @@ import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBar
 public class VehicleDetailActivity extends GrosirMobilActivity {
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.iv_favorite) ImageView ivFavorite;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_title_vehicle) TextView tvTitleVehicle;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_plat_number) TextView tvPlatNumber;
@@ -368,6 +370,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     private boolean engine = false;
     private boolean other = false;
     private boolean brokenImage = false;
+    private boolean favorite = false;
     private long negoPrice, lastPrice, bidNego;
 
     private List<HardCodeDataModel> hardCodeDataImageVehicleDetailModelList = new ArrayList<>();
@@ -426,6 +429,18 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
 //        getIntent().getStringExtra(ID_VEHICLE);
 
         loadData();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.iv_favorite)
+    void ivFavoriteClick(){
+        if(favorite){
+            favorite = false;
+            ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+        }else {
+            favorite = true;
+            ivFavorite.setImageResource(R.drawable.ic_favorite);
+        }
     }
 
     @SuppressLint("SetTextI18n")

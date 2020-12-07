@@ -1,262 +1,301 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryWhite"
     tools:context=".fragment.register.ProfileUsahaFragment">
-    <LinearLayout
-        android:paddingLeft="@dimen/_20sdp"
-        android:paddingRight="@dimen/_20sdp"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <RelativeLayout
-            android:layout_marginTop="@dimen/_10sdp"
-            android:gravity="center|left"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_60sdp"
-            tools:ignore="RtlHardcoded,UselessLeaf,UselessParent">
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_back_chevron"
-                android:padding="@dimen/_10sdp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                tools:ignore="ContentDescription" />
-            <TextView
-                android:layout_toRightOf="@+id/iv_back"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:fontFamily="@font/nunito_bold"
-                android:text="@string/tv_profil_usaha"
-                android:textColor="@color/colorPrimaryFont"
-                android:textSize="@dimen/text_28"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
-        <com.shuhart.stepview.StepView
-            android:id="@+id/step_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_16sdp"
-            android:paddingLeft="@dimen/_16sdp"
-            android:paddingRight="@dimen/_16sdp"
-            android:paddingBottom="@dimen/_16sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            app:sv_stepsNumber="5"
-            app:sv_stepLineWidth="@dimen/_2sdp"
-            app:sv_stepPadding="0dp"
-            app:sv_stepNumberTextSize="@dimen/text_18"
-            app:sv_doneCircleRadius="@dimen/_15sdp"
-            app:sv_selectedCircleRadius="@dimen/_15sdp"
-            app:sv_nextTextColor="@color/colorPrimaryWhite"
-            app:sv_nextStepLineColor="#DFDEDE"
-            app:sv_nextStepCircleColor="#DFDEDE"
-            app:sv_nextStepCircleEnabled="true"
-            app:sv_selectedCircleColor="@color/colorPrimaryTheme"
-            app:sv_selectedTextColor="@color/colorPrimaryWhite"
-            app:sv_selectedStepNumberColor="@color/colorPrimaryWhite"
-            app:sv_doneStepLineColor="@color/colorPrimaryTheme"
-            app:sv_doneCircleColor="@color/colorPrimaryTheme"
-            app:sv_doneStepMarkColor="@color/colorPrimaryWhite"
-            app:sv_doneTextColor="@color/colorPrimaryWhite"
-            app:sv_animationType="All" />
+        android:layout_height="match_parent">
         <LinearLayout
+            android:paddingLeft="@dimen/_20sdp"
+            android:paddingRight="@dimen/_20sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:alpha="0.6"
-                android:fontFamily="@font/nunito_semi_bold"
-                android:scrollbarSize="@dimen/_12sdp"
-                android:text="Tipe Usaha"
-                android:textColor="@color/colorPrimaryFont"
-                android:textSize="@dimen/text_12"
-                tools:ignore="HardcodedText" />
-            <com.google.android.material.textfield.TextInputLayout
+            <RelativeLayout
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center|left"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60sdp"
+                tools:ignore="RtlHardcoded,UselessLeaf,UselessParent">
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_back_chevron"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_toRightOf="@+id/iv_back"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:fontFamily="@font/nunito_bold"
+                    android:text="@string/tv_profil_usaha"
+                    android:textColor="@color/colorPrimaryFont"
+                    android:textSize="@dimen/text_28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+            <com.shuhart.stepview.StepView
+                android:id="@+id/step_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:backgroundTint="@color/colorPrimaryTheme"
-                android:fontFamily="@font/nunito_semi_bold"
-                android:textColorHint="@color/colorPrimaryHintFont"
-                android:theme="@style/myTextInputLabelTheme">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/type_usaha"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    android:backgroundTint="@color/colorPrimaryFont"
-                    android:drawableStart="@drawable/ic_type_usaha"
-                    android:drawableEnd="@drawable/ic_chevron_down"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:fontFamily="@font/nunito_semi_bold"
-                    android:gravity="center|left"
-                    android:inputType="text"
-                    android:focusable="false"
-                    android:textColor="@color/colorPrimaryFont"
-                    android:textSize="@dimen/text_16"
-                    app:backgroundTint="@color/colorSoftGray"
-                    tools:ignore="Autofill,HardcodedText,LabelFor,RtlHardcoded,RtlSymmetry" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:alpha="0.6"
-                android:fontFamily="@font/nunito_semi_bold"
-                android:scrollbarSize="@dimen/_12sdp"
-                android:text="Nama Dealer"
-                android:textColor="@color/colorPrimaryFont"
-                android:textSize="@dimen/text_12"
-                tools:ignore="HardcodedText" />
-            <com.google.android.material.textfield.TextInputLayout
+                android:paddingTop="@dimen/_16sdp"
+                android:paddingLeft="@dimen/_16sdp"
+                android:paddingRight="@dimen/_16sdp"
+                android:paddingBottom="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                app:sv_stepsNumber="5"
+                app:sv_stepLineWidth="@dimen/_2sdp"
+                app:sv_stepPadding="0dp"
+                app:sv_stepNumberTextSize="@dimen/text_18"
+                app:sv_doneCircleRadius="@dimen/_15sdp"
+                app:sv_selectedCircleRadius="@dimen/_15sdp"
+                app:sv_nextTextColor="@color/colorPrimaryWhite"
+                app:sv_nextStepLineColor="#DFDEDE"
+                app:sv_nextStepCircleColor="#DFDEDE"
+                app:sv_nextStepCircleEnabled="true"
+                app:sv_selectedCircleColor="@color/colorPrimaryTheme"
+                app:sv_selectedTextColor="@color/colorPrimaryWhite"
+                app:sv_selectedStepNumberColor="@color/colorPrimaryWhite"
+                app:sv_doneStepLineColor="@color/colorPrimaryTheme"
+                app:sv_doneCircleColor="@color/colorPrimaryTheme"
+                app:sv_doneStepMarkColor="@color/colorPrimaryWhite"
+                app:sv_doneTextColor="@color/colorPrimaryWhite"
+                app:sv_animationType="All" />
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:backgroundTint="@color/colorPrimaryTheme"
-                android:fontFamily="@font/nunito_semi_bold"
-                android:textColorHint="@color/colorPrimaryHintFont"
-                android:theme="@style/myTextInputLabelTheme">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_dealer_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    android:backgroundTint="@color/colorPrimaryFont"
-                    android:drawableStart="@drawable/ic_type_usaha"
-                    android:drawablePadding="@dimen/_10sdp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:alpha="0.6"
                     android:fontFamily="@font/nunito_semi_bold"
-                    android:gravity="center|left"
-                    android:inputType="text"
-                    android:text=""
+                    android:scrollbarSize="@dimen/_12sdp"
+                    android:text="Tipe Usaha"
                     android:textColor="@color/colorPrimaryFont"
-                    android:textSize="@dimen/text_16"
-                    app:backgroundTint="@color/colorSoftGray"
-                    tools:ignore="Autofill,HardcodedText,LabelFor,RtlHardcoded,RtlSymmetry" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:alpha="0.6"
+                    android:textSize="@dimen/text_12"
+                    tools:ignore="HardcodedText" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:backgroundTint="@color/colorPrimaryTheme"
+                    android:fontFamily="@font/nunito_semi_bold"
+                    android:textColorHint="@color/colorPrimaryHintFont"
+                    android:theme="@style/myTextInputLabelTheme">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_type_usaha"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:backgroundTint="@color/colorPrimaryFont"
+                        android:drawableStart="@drawable/ic_type_usaha"
+                        android:drawableEnd="@drawable/ic_chevron_down"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:fontFamily="@font/nunito_semi_bold"
+                        android:gravity="center|left"
+                        android:inputType="text"
+                        android:focusable="false"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_16"
+                        app:backgroundTint="@color/colorSoftGray"
+                        tools:ignore="Autofill,HardcodedText,LabelFor,RtlHardcoded,RtlSymmetry" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:alpha="0.6"
+                    android:fontFamily="@font/nunito_semi_bold"
+                    android:scrollbarSize="@dimen/_12sdp"
+                    android:text="Nama Dealer"
+                    android:textColor="@color/colorPrimaryFont"
+                    android:textSize="@dimen/text_12"
+                    tools:ignore="HardcodedText" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:backgroundTint="@color/colorPrimaryTheme"
+                    android:fontFamily="@font/nunito_semi_bold"
+                    android:textColorHint="@color/colorPrimaryHintFont"
+                    android:theme="@style/myTextInputLabelTheme">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_dealer_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:backgroundTint="@color/colorPrimaryFont"
+                        android:drawableStart="@drawable/ic_type_usaha"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:fontFamily="@font/nunito_semi_bold"
+                        android:gravity="center|left"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_16"
+                        app:backgroundTint="@color/colorSoftGray"
+                        tools:ignore="Autofill,HardcodedText,LabelFor,RtlHardcoded,RtlSymmetry" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:alpha="0.6"
+                    android:fontFamily="@font/nunito_semi_bold"
+                    android:scrollbarSize="@dimen/_12sdp"
+                    android:text="Nomor Telepon Dealer"
+                    android:textColor="@color/colorPrimaryFont"
+                    android:textSize="@dimen/text_12"
+                    tools:ignore="HardcodedText" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:backgroundTint="@color/colorPrimaryTheme"
+                    android:fontFamily="@font/nunito_semi_bold"
+                    android:textColorHint="@color/colorPrimaryHintFont"
+                    android:theme="@style/myTextInputLabelTheme">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_dealer_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:backgroundTint="@color/colorPrimaryFont"
+                        android:drawableStart="@drawable/ic_telpon"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:fontFamily="@font/nunito_semi_bold"
+                        android:gravity="center|left"
+                        android:inputType="phone"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_16"
+                        app:backgroundTint="@color/colorSoftGray"
+                        tools:ignore="Autofill,HardcodedText,LabelFor,RtlHardcoded,RtlSymmetry" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <!--            <TextView-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginTop="@dimen/_30sdp"-->
+                <!--                android:alpha="0.6"-->
+                <!--                android:fontFamily="@font/nunito_semi_bold"-->
+                <!--                android:scrollbarSize="@dimen/_12sdp"-->
+                <!--                android:text="Usia Bisnis"-->
+                <!--                android:textColor="@color/colorPrimaryFont"-->
+                <!--                android:textSize="@dimen/text_12"-->
+                <!--                tools:ignore="HardcodedText" />-->
+                <!--            <com.google.android.material.textfield.TextInputLayout-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginTop="@dimen/_2sdp"-->
+                <!--                android:backgroundTint="@color/colorPrimaryTheme"-->
+                <!--                android:fontFamily="@font/nunito_semi_bold"-->
+                <!--                android:textColorHint="@color/colorPrimaryHintFont"-->
+                <!--                android:theme="@style/myTextInputLabelTheme">-->
+                <!--                <com.google.android.material.textfield.TextInputEditText-->
+                <!--                    android:id="@+id/et_dealer_age"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="@dimen/_40sdp"-->
+                <!--                    android:backgroundTint="@color/colorPrimaryFont"-->
+                <!--                    android:drawableStart="@drawable/ic_type_usaha"-->
+                <!--                    android:drawablePadding="@dimen/_10sdp"-->
+                <!--                    android:fontFamily="@font/nunito_semi_bold"-->
+                <!--                    android:gravity="center|left"-->
+                <!--                    android:inputType="number"-->
+                <!--                    android:text=""-->
+                <!--                    android:textColor="@color/colorPrimaryFont"-->
+                <!--                    android:textSize="@dimen/text_16"-->
+                <!--                    app:backgroundTint="@color/colorSoftGray"-->
+                <!--                    tools:ignore="Autofill,HardcodedText,LabelFor,RtlHardcoded,RtlSymmetry" />-->
+                <!--            </com.google.android.material.textfield.TextInputLayout>-->
+                <!--            <TextView-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginTop="@dimen/_30sdp"-->
+                <!--                android:alpha="0.6"-->
+                <!--                android:fontFamily="@font/nunito_semi_bold"-->
+                <!--                android:scrollbarSize="@dimen/_12sdp"-->
+                <!--                android:text="Perputaran Unit"-->
+                <!--                android:textColor="@color/colorPrimaryFont"-->
+                <!--                android:textSize="@dimen/text_12"-->
+                <!--                tools:ignore="HardcodedText" />-->
+                <!--            <com.google.android.material.textfield.TextInputLayout-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginTop="@dimen/_2sdp"-->
+                <!--                android:backgroundTint="@color/colorPrimaryTheme"-->
+                <!--                android:fontFamily="@font/nunito_semi_bold"-->
+                <!--                android:textColorHint="@color/colorPrimaryHintFont"-->
+                <!--                android:theme="@style/myTextInputLabelTheme">-->
+                <!--                <com.google.android.material.textfield.TextInputEditText-->
+                <!--                    android:id="@+id/et_unit_rotation"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="@dimen/_40sdp"-->
+                <!--                    android:backgroundTint="@color/colorPrimaryFont"-->
+                <!--                    android:drawableStart="@drawable/ic_perputaran_unit"-->
+                <!--                    android:drawablePadding="@dimen/_10sdp"-->
+                <!--                    android:fontFamily="@font/nunito_semi_bold"-->
+                <!--                    android:gravity="center|left"-->
+                <!--                    android:inputType="text"-->
+                <!--                    android:text=""-->
+                <!--                    android:textColor="@color/colorPrimaryFont"-->
+                <!--                    android:textSize="@dimen/text_16"-->
+                <!--                    app:backgroundTint="@color/colorSoftGray"-->
+                <!--                    tools:ignore="Autofill,HardcodedText,LabelFor,RtlHardcoded,RtlSymmetry" />-->
+                <!--            </com.google.android.material.textfield.TextInputLayout>-->
+            </LinearLayout>
+            <Button
+                android:id="@+id/btn_next_profile_usaha"
+                android:layout_marginTop="@dimen/_56sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
                 android:fontFamily="@font/nunito_semi_bold"
-                android:scrollbarSize="@dimen/_12sdp"
-                android:text="Nomor Telepon Dealer"
-                android:textColor="@color/colorPrimaryFont"
-                android:textSize="@dimen/text_12"
-                tools:ignore="HardcodedText" />
-            <com.google.android.material.textfield.TextInputLayout
+                android:textSize="@dimen/text_18"
+                android:textColor="@color/colorPrimaryWhite"
+                android:textAllCaps="false"
+                android:text="@string/btn_selanjutnya"
+                android:background="@drawable/btn_design"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:backgroundTint="@color/colorPrimaryTheme"
-                android:fontFamily="@font/nunito_semi_bold"
-                android:textColorHint="@color/colorPrimaryHintFont"
-                android:theme="@style/myTextInputLabelTheme">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_dealer_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
-                    android:backgroundTint="@color/colorPrimaryFont"
-                    android:drawableStart="@drawable/ic_telpon"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:fontFamily="@font/nunito_semi_bold"
-                    android:gravity="center|left"
-                    android:inputType="phone"
-                    android:text=""
-                    android:textColor="@color/colorPrimaryFont"
-                    android:textSize="@dimen/text_16"
-                    app:backgroundTint="@color/colorSoftGray"
-                    tools:ignore="Autofill,HardcodedText,LabelFor,RtlHardcoded,RtlSymmetry" />
-            </com.google.android.material.textfield.TextInputLayout>
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/_30sdp"-->
-<!--                android:alpha="0.6"-->
-<!--                android:fontFamily="@font/nunito_semi_bold"-->
-<!--                android:scrollbarSize="@dimen/_12sdp"-->
-<!--                android:text="Usia Bisnis"-->
-<!--                android:textColor="@color/colorPrimaryFont"-->
-<!--                android:textSize="@dimen/text_12"-->
-<!--                tools:ignore="HardcodedText" />-->
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/_2sdp"-->
-<!--                android:backgroundTint="@color/colorPrimaryTheme"-->
-<!--                android:fontFamily="@font/nunito_semi_bold"-->
-<!--                android:textColorHint="@color/colorPrimaryHintFont"-->
-<!--                android:theme="@style/myTextInputLabelTheme">-->
-<!--                <com.google.android.material.textfield.TextInputEditText-->
-<!--                    android:id="@+id/et_dealer_age"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="@dimen/_40sdp"-->
-<!--                    android:backgroundTint="@color/colorPrimaryFont"-->
-<!--                    android:drawableStart="@drawable/ic_type_usaha"-->
-<!--                    android:drawablePadding="@dimen/_10sdp"-->
-<!--                    android:fontFamily="@font/nunito_semi_bold"-->
-<!--                    android:gravity="center|left"-->
-<!--                    android:inputType="number"-->
-<!--                    android:text=""-->
-<!--                    android:textColor="@color/colorPrimaryFont"-->
-<!--                    android:textSize="@dimen/text_16"-->
-<!--                    app:backgroundTint="@color/colorSoftGray"-->
-<!--                    tools:ignore="Autofill,HardcodedText,LabelFor,RtlHardcoded,RtlSymmetry" />-->
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/_30sdp"-->
-<!--                android:alpha="0.6"-->
-<!--                android:fontFamily="@font/nunito_semi_bold"-->
-<!--                android:scrollbarSize="@dimen/_12sdp"-->
-<!--                android:text="Perputaran Unit"-->
-<!--                android:textColor="@color/colorPrimaryFont"-->
-<!--                android:textSize="@dimen/text_12"-->
-<!--                tools:ignore="HardcodedText" />-->
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="@dimen/_2sdp"-->
-<!--                android:backgroundTint="@color/colorPrimaryTheme"-->
-<!--                android:fontFamily="@font/nunito_semi_bold"-->
-<!--                android:textColorHint="@color/colorPrimaryHintFont"-->
-<!--                android:theme="@style/myTextInputLabelTheme">-->
-<!--                <com.google.android.material.textfield.TextInputEditText-->
-<!--                    android:id="@+id/et_unit_rotation"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="@dimen/_40sdp"-->
-<!--                    android:backgroundTint="@color/colorPrimaryFont"-->
-<!--                    android:drawableStart="@drawable/ic_perputaran_unit"-->
-<!--                    android:drawablePadding="@dimen/_10sdp"-->
-<!--                    android:fontFamily="@font/nunito_semi_bold"-->
-<!--                    android:gravity="center|left"-->
-<!--                    android:inputType="text"-->
-<!--                    android:text=""-->
-<!--                    android:textColor="@color/colorPrimaryFont"-->
-<!--                    android:textSize="@dimen/text_16"-->
-<!--                    app:backgroundTint="@color/colorSoftGray"-->
-<!--                    tools:ignore="Autofill,HardcodedText,LabelFor,RtlHardcoded,RtlSymmetry" />-->
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
+                android:layout_height="@dimen/_40sdp" />
         </LinearLayout>
-        <Button
-            android:id="@+id/btn_next_profile_usaha"
-            android:layout_marginTop="@dimen/_56sdp"
-            android:layout_marginBottom="@dimen/_20sdp"
-            android:fontFamily="@font/nunito_semi_bold"
-            android:textSize="@dimen/text_18"
-            android:textColor="@color/colorPrimaryWhite"
-            android:textAllCaps="false"
-            android:text="@string/btn_selanjutnya"
-            android:background="@drawable/btn_design"
+    </androidx.core.widget.NestedScrollView>
+    <RelativeLayout
+        android:id="@+id/relative_dialog"
+        android:visibility="gone"
+        android:background="@color/colorPrimaryBackgroundDialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/linear_content_dialog"
+            android:background="@drawable/dialog_round_half"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp" />
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+            android:layout_height="@dimen/_200sdp">
+            <View
+                android:id="@+id/view_line"
+                android:background="@drawable/dialog_round"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_gravity="center"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_3sdp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_choose"
+                android:layout_below="@+id/view_line"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ProgressBar
+                android:id="@+id/progress_circular"
+                android:padding="@dimen/_80sdp"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
 

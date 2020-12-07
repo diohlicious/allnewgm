@@ -116,6 +116,19 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @BindView(R.id.iv_clear) ImageView ivClear;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.relative_background_dialog_sort) RelativeLayout relativeBackgroundDialogSort;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_waktu_penawaran_cepat_ke_lama) TextView tvWaktuPenawaranCepatKeLama;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_waktu_penawaran_lama_ke_cepat) TextView tvWaktuPenawaranLamaKeCepat;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_abjad_lokasi_warehouse_a_z) TextView tvAbjadLokasiWarehouseAZ;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_abjad_lokasi_warehouse_z_a) TextView tvAbjadLokasiWarehouseZA;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_bottom_price_terendah_ke_tertinggi) TextView tvBottomPriceTerendahKeTertinggi;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_bottom_price_tertinggi_ke_terendah) TextView tvBottomPriceTertinggiKeTerendah;
+
 
     private GrosirMobilFunction grosirMobilFunction;
     private HomePresenter homePresenter;
@@ -291,9 +304,117 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.relative_background_dialog_sort)
-    void relativeBackgroundDialogSortClickClick(){
+    void relativeBackgroundDialogSortClick(){
         ((MainActivity)getActivity()).linearMenuNavBar.setVisibility(View.VISIBLE);
         relativeBackgroundDialogSort.setVisibility(View.GONE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_waktu_penawaran_cepat_ke_lama)
+    void tvWaktuPenawaranCepatKeLamaClick(){
+        tvWaktuPenawaranCepatKeLama.setBackgroundResource(R.color.colorPrimaryTheme);
+        tvWaktuPenawaranCepatKeLama.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvBottomPriceTertinggiKeTerendah.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvBottomPriceTertinggiKeTerendah.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvBottomPriceTerendahKeTertinggi.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvBottomPriceTerendahKeTertinggi.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvAbjadLokasiWarehouseZA.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvAbjadLokasiWarehouseZA.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvAbjadLokasiWarehouseAZ.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvAbjadLokasiWarehouseAZ.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvWaktuPenawaranLamaKeCepat.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvWaktuPenawaranLamaKeCepat.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        relativeBackgroundDialogSortClick();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_waktu_penawaran_lama_ke_cepat)
+    void tvWaktuPenawaranLamaKeCepatClick(){
+        tvWaktuPenawaranLamaKeCepat.setBackgroundResource(R.color.colorPrimaryTheme);
+        tvWaktuPenawaranLamaKeCepat.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvBottomPriceTertinggiKeTerendah.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvBottomPriceTertinggiKeTerendah.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvBottomPriceTerendahKeTertinggi.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvBottomPriceTerendahKeTertinggi.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvAbjadLokasiWarehouseZA.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvAbjadLokasiWarehouseZA.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvAbjadLokasiWarehouseAZ.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvAbjadLokasiWarehouseAZ.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvWaktuPenawaranCepatKeLama.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvWaktuPenawaranCepatKeLama.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        relativeBackgroundDialogSortClick();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_abjad_lokasi_warehouse_a_z)
+    void tvAbjadLokasiWarehouseAZClick(){
+        tvAbjadLokasiWarehouseAZ.setBackgroundResource(R.color.colorPrimaryTheme);
+        tvAbjadLokasiWarehouseAZ.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvBottomPriceTertinggiKeTerendah.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvBottomPriceTertinggiKeTerendah.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvBottomPriceTerendahKeTertinggi.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvBottomPriceTerendahKeTertinggi.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvAbjadLokasiWarehouseZA.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvAbjadLokasiWarehouseZA.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvWaktuPenawaranLamaKeCepat.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvWaktuPenawaranLamaKeCepat.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvWaktuPenawaranCepatKeLama.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvWaktuPenawaranCepatKeLama.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        relativeBackgroundDialogSortClick();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_abjad_lokasi_warehouse_z_a)
+    void tvAbjadLokasiWarehouseZAClick(){
+        tvAbjadLokasiWarehouseZA.setBackgroundResource(R.color.colorPrimaryTheme);
+        tvAbjadLokasiWarehouseZA.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvBottomPriceTertinggiKeTerendah.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvBottomPriceTertinggiKeTerendah.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvBottomPriceTerendahKeTertinggi.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvBottomPriceTerendahKeTertinggi.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvAbjadLokasiWarehouseAZ.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvAbjadLokasiWarehouseAZ.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvWaktuPenawaranLamaKeCepat.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvWaktuPenawaranLamaKeCepat.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvWaktuPenawaranCepatKeLama.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvWaktuPenawaranCepatKeLama.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        relativeBackgroundDialogSortClick();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_bottom_price_terendah_ke_tertinggi)
+    void tvBottomPriceTerendahKeTertinggiClick(){
+        tvBottomPriceTerendahKeTertinggi.setBackgroundResource(R.color.colorPrimaryTheme);
+        tvBottomPriceTerendahKeTertinggi.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvBottomPriceTertinggiKeTerendah.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvBottomPriceTertinggiKeTerendah.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvAbjadLokasiWarehouseZA.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvAbjadLokasiWarehouseZA.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvAbjadLokasiWarehouseAZ.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvAbjadLokasiWarehouseAZ.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvWaktuPenawaranLamaKeCepat.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvWaktuPenawaranLamaKeCepat.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvWaktuPenawaranCepatKeLama.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvWaktuPenawaranCepatKeLama.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        relativeBackgroundDialogSortClick();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_bottom_price_tertinggi_ke_terendah)
+    void tvBottomPriceTertinggiKeTerendahClick(){
+        tvBottomPriceTertinggiKeTerendah.setBackgroundResource(R.color.colorPrimaryTheme);
+        tvBottomPriceTertinggiKeTerendah.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvBottomPriceTerendahKeTertinggi.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvBottomPriceTerendahKeTertinggi.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvAbjadLokasiWarehouseZA.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvAbjadLokasiWarehouseZA.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvAbjadLokasiWarehouseAZ.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvAbjadLokasiWarehouseAZ.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvWaktuPenawaranLamaKeCepat.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvWaktuPenawaranLamaKeCepat.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvWaktuPenawaranCepatKeLama.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvWaktuPenawaranCepatKeLama.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        relativeBackgroundDialogSortClick();
     }
 
     @SuppressLint("NonConstantResourceId")

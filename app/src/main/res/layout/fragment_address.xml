@@ -90,7 +90,7 @@
                     android:textColorHint="@color/colorPrimaryHintFont"
                     android:theme="@style/myTextInputLabelTheme">
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/dealer_address"
+                        android:id="@+id/et_dealer_address"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_40sdp"
                         android:backgroundTint="@color/colorPrimaryFont"

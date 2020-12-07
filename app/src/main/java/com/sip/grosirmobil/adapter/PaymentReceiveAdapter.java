@@ -2,6 +2,7 @@ package com.sip.grosirmobil.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.activity.VehicleDetailActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehiclePaymentReceive;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
 
 import java.util.List;
+
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
 
 public class PaymentReceiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehiclePaymentReceive> {
 
@@ -43,6 +48,13 @@ public class PaymentReceiveAdapter extends RecyclerView.Adapter<ViewHolderItemVe
         holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());
         holder.tvPrice.setText(hardCodeDataBaruMasukModel.getPrice());
         holder.tvPriceSold.setText("Rp 120.000.000");
+
+        holder.cardVehicle.setOnClickListener(view -> {
+            Intent intent = new Intent(contexts, VehicleDetailActivity.class);
+            intent.putExtra(ID_VEHICLE, "");
+            intent.putExtra(FROM_PAGE, "");
+            contexts.startActivity(intent);
+        });
     }
 
     @Override

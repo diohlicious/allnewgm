@@ -2,6 +2,7 @@ package com.sip.grosirmobil.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.activity.VehicleDetailActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemCart;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
 
 import java.util.List;
 
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
 
 
@@ -86,6 +90,13 @@ public class CartAdapter extends RecyclerView.Adapter<ViewHolderItemCart> {
         });
 
         holder.bind(hardCodeDataBaruMasukModel, onItemClickListener);
+
+        holder.cardVehicle.setOnClickListener(view -> {
+            Intent intent = new Intent(context, VehicleDetailActivity.class);
+            intent.putExtra(ID_VEHICLE, "");
+            intent.putExtra(FROM_PAGE, "");
+            context.startActivity(intent);
+        });
     }
 
     @Override
