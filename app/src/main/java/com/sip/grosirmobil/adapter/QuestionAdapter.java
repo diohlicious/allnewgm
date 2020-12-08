@@ -10,22 +10,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderSelected;
-import com.sip.grosirmobil.cloud.config.response.perputaranunit.DataPerputaranUnitResponse;
+import com.sip.grosirmobil.cloud.config.response.question.DataQuestionResponse;
 
 import java.util.List;
 
-public class PerputaranUnitAdapter extends RecyclerView.Adapter<ViewHolderSelected> {
+public class QuestionAdapter extends RecyclerView.Adapter<ViewHolderSelected> {
 
-    private final List<DataPerputaranUnitResponse> dataTipeUsahaResponseList;
+    private final List<DataQuestionResponse> dataQuestionResponseList;
 
     public interface OnItemClickListener {
-        void onItemClick(DataPerputaranUnitResponse dataPerputaranUnitResponse);
+        void onItemClick(DataQuestionResponse dataQuestionResponse);
     }
 
     private final OnItemClickListener onItemClickListener;
 
-    public PerputaranUnitAdapter(List<DataPerputaranUnitResponse> dataPerputaranUnitResponses, OnItemClickListener onItemClickListener) {
-        this.dataTipeUsahaResponseList = dataPerputaranUnitResponses;
+    public QuestionAdapter(List<DataQuestionResponse> dataQuestionResponses, OnItemClickListener onItemClickListener) {
+        this.dataQuestionResponseList = dataQuestionResponses;
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -40,12 +40,12 @@ public class PerputaranUnitAdapter extends RecyclerView.Adapter<ViewHolderSelect
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderSelected holder, int position) {
-        DataPerputaranUnitResponse dataPerputaranUnitResponse = dataTipeUsahaResponseList.get(position);
-        holder.bind(dataPerputaranUnitResponse, onItemClickListener);
+        DataQuestionResponse dataQuestionResponse = dataQuestionResponseList.get(position);
+        holder.bind(dataQuestionResponse, onItemClickListener);
     }
 
     @Override
     public int getItemCount() {
-        return dataTipeUsahaResponseList.size();
+        return dataQuestionResponseList.size();
     }
 }

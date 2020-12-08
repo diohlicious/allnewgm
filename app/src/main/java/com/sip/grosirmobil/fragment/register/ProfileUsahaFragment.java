@@ -101,6 +101,7 @@ public class ProfileUsahaFragment extends Fragment {
     private void hideProgressBar(){
         progressBar.setVisibility(View.GONE);
     }
+
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.linear_content_dialog)
     void linearContentDialogClick(){
