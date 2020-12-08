@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.sip.grosirmobil.BuildConfig;
 import com.sip.grosirmobil.cloud.config.response.province.DataProvinceResponse;
+import com.sip.grosirmobil.cloud.config.response.tipeusaha.DataTipeUsahaResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -268,30 +269,6 @@ public class GrosirMobilPreference {
         return sharedpreferences.getString(URL_IMAGE_SELFIE_KTP, null);
     }
 
-    public void saveDataTypeUsahaList(List<DataProvinceResponse> dataProvinceResponseList){
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        Gson gson = new Gson();
-        String dataProvinceJson = gson.toJson(dataProvinceResponseList);
-        editor.putString(DATA_TYPE_USAHA, dataProvinceJson);
-        editor.apply();
-    }
-
-    public ArrayList<DataProvinceResponse> getDataTypeUsahaList(){
-        List<DataProvinceResponse> dataProvinceResponseList;
-        if (sharedpreferences.contains(DATA_TYPE_USAHA)) {
-            String dataProvinceJson = sharedpreferences.getString(DATA_TYPE_USAHA, null);
-            Gson gson = new Gson();
-            DataProvinceResponse[] dataProvinceResponses = gson.fromJson(dataProvinceJson,
-                    DataProvinceResponse[].class);
-
-            dataProvinceResponseList = Arrays.asList(dataProvinceResponses);
-            dataProvinceResponseList = new ArrayList<>(dataProvinceResponseList);
-        } else
-            return null;
-
-        return (ArrayList<DataProvinceResponse>) dataProvinceResponseList;
-    }
-
     public void saveDataProvinceList(List<DataProvinceResponse> dataProvinceResponseList){
         SharedPreferences.Editor editor = sharedpreferences.edit();
         Gson gson = new Gson();
@@ -314,6 +291,30 @@ public class GrosirMobilPreference {
             return null;
 
         return (ArrayList<DataProvinceResponse>) dataProvinceResponseList;
+    }
+
+    public void saveDataTypeUsahaList(List<DataTipeUsahaResponse> dataTipeUsahaResponseList){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        Gson gson = new Gson();
+        String dataTipeUsahaJson = gson.toJson(dataTipeUsahaResponseList);
+        editor.putString(DATA_TYPE_USAHA, dataTipeUsahaJson);
+        editor.apply();
+    }
+
+    public ArrayList<DataTipeUsahaResponse> getDataTypeUsahaList(){
+        List<DataTipeUsahaResponse> dataTipeUsahaResponseList;
+        if (sharedpreferences.contains(DATA_TYPE_USAHA)) {
+            String dataTypeUsahaJson = sharedpreferences.getString(DATA_TYPE_USAHA, null);
+            Gson gson = new Gson();
+            DataTipeUsahaResponse[] dataTipeUsahaResponses = gson.fromJson(dataTypeUsahaJson,
+                    DataTipeUsahaResponse[].class);
+
+            dataTipeUsahaResponseList = Arrays.asList(dataTipeUsahaResponses);
+            dataTipeUsahaResponseList = new ArrayList<>(dataTipeUsahaResponseList);
+        } else
+            return null;
+
+        return (ArrayList<DataTipeUsahaResponse>) dataTipeUsahaResponseList;
     }
 
 

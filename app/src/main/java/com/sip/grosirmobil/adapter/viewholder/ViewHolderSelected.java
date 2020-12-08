@@ -9,11 +9,15 @@ import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.adapter.KabupatenAdapter;
 import com.sip.grosirmobil.adapter.KecamatanAdapter;
 import com.sip.grosirmobil.adapter.KelurahanAdapter;
+import com.sip.grosirmobil.adapter.PerputaranUnitAdapter;
 import com.sip.grosirmobil.adapter.ProvinceAdapter;
+import com.sip.grosirmobil.adapter.TipeUsahaAdapter;
 import com.sip.grosirmobil.cloud.config.response.kabupaten.DataKabupatenResponse;
 import com.sip.grosirmobil.cloud.config.response.kecamatan.DataKecamatanResponse;
 import com.sip.grosirmobil.cloud.config.response.kelurahan.DataKelurahanResponse;
+import com.sip.grosirmobil.cloud.config.response.perputaranunit.DataPerputaranUnitResponse;
 import com.sip.grosirmobil.cloud.config.response.province.DataProvinceResponse;
+import com.sip.grosirmobil.cloud.config.response.tipeusaha.DataTipeUsahaResponse;
 
 public class ViewHolderSelected extends RecyclerView.ViewHolder {
 
@@ -46,5 +50,17 @@ public class ViewHolderSelected extends RecyclerView.ViewHolder {
         tvSelected.setText(dataKelurahanResponse.getUrban());
         tvSelected.setTag(dataKelurahanResponse.getUrban());
         tvSelected.setOnClickListener(view -> listener.onItemClick(dataKelurahanResponse));
+    }
+    
+    public void bind(DataTipeUsahaResponse dataTipeUsahaResponse, final TipeUsahaAdapter.OnItemClickListener listener) {
+        tvSelected.setText(dataTipeUsahaResponse.getName());
+        tvSelected.setTag(dataTipeUsahaResponse.getName());
+        tvSelected.setOnClickListener(view -> listener.onItemClick(dataTipeUsahaResponse));
+    } 
+    
+    public void bind(DataPerputaranUnitResponse dataPerputaranUnitResponse, final PerputaranUnitAdapter.OnItemClickListener listener) {
+        tvSelected.setText(dataPerputaranUnitResponse.getText());
+        tvSelected.setTag(dataPerputaranUnitResponse.getText());
+        tvSelected.setOnClickListener(view -> listener.onItemClick(dataPerputaranUnitResponse));
     }
 }

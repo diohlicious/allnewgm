@@ -17,12 +17,22 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.shuhart.stepview.StepView;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.RegisterDataActivity;
+import com.sip.grosirmobil.adapter.TipeUsahaAdapter;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
+import com.sip.grosirmobil.cloud.config.response.tipeusaha.TipeUsahaResponse;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.sip.grosirmobil.base.GrosirMobilApp.getApiGrosirMobil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -105,13 +115,62 @@ public class ProfileUsahaFragment extends Fragment {
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.et_type_usaha)
-    void etTypeUsahaClick() {
-//        if (grosirMobilPreference.getDataTypeUsahaList() == null || grosirMobilPreference.getDataTypeUsahaList().isEmpty()) {
-//            showProgressBar();
-//            showDialogChoose();
-//        }else {
+    void etTypeUsahaClick(){
+        if(grosirMobilPreference.getDataTypeUsahaList()==null||grosirMobilPreference.getDataTypeUsahaList().isEmpty()){
+            showProgressBar();
             showDialogChoose();
-//        }
+            final Call<TipeUsahaResponse> tipeUsahaApi = getApiGrosirMobil().tipeUsahaApi();
+            tipeUsahaApi.enqueue(new Callback<TipeUsahaResponse>() {
+                @Override
+                public void onResponse(Call<TipeUsahaResponse> call, Response<TipeUsahaResponse> response) {
+                    hideProgressBar();
+                    if (response.isSuccessful()) {
+                        try {
+                            if(response.body().getMessage().equals("success")){
+                                if(!response.body().getData().isEmpty()){
+                                    grosirMobilPreference.saveDataTypeUsahaList(response.body().getData());
+                                }
+                                TipeUsahaAdapter tipeUsahaAdapter = new TipeUsahaAdapter(response.body().getData(), dataTipeUsahaResponse -> {
+                                    etTypeUsaha.setText(dataTipeUsahaResponse.getName());
+                                    etTypeUsaha.setTag(dataTipeUsahaResponse.getCode());
+                                    relativeDialogClick();
+                                });
+                                rvChoose.setAdapter(tipeUsahaAdapter);
+                                tipeUsahaAdapter.notifyDataSetChanged();
+                            }else {
+                                grosirMobilFunction.showMessage(getActivity(), "GET Tipe Usaha", response.body().getMessage());
+                            }
+                        }catch (Exception e){
+                            GrosirMobilLog.printStackTrace(e);
+                        }
+                    }else {
+                        try {
+                            grosirMobilFunction.showMessage(getActivity(), getString(R.string.base_null_error_title), response.errorBody().string());
+                        } catch (IOException e) {
+                            GrosirMobilLog.printStackTrace(e);
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<TipeUsahaResponse> call, Throwable t) {
+                    hideProgressBar();
+                    grosirMobilFunction.showMessage(getActivity(), "GET Tipe Usaha", getString(R.string.base_null_server));
+                    GrosirMobilLog.printStackTrace(t);
+                }
+            });
+        }
+        else {
+            showDialogChoose();
+            hideProgressBar();
+            TipeUsahaAdapter tipeUsahaAdapter = new TipeUsahaAdapter(grosirMobilPreference.getDataTypeUsahaList(), dataTipeUsahaResponse -> {
+                etTypeUsaha.setText(dataTipeUsahaResponse.getName());
+                etTypeUsaha.setTag(dataTipeUsahaResponse.getCode());
+                relativeDialogClick();
+            });
+            rvChoose.setAdapter(tipeUsahaAdapter);
+            tipeUsahaAdapter.notifyDataSetChanged();
+        }
     }
 
     @SuppressLint("NonConstantResourceId")

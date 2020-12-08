@@ -11,7 +11,9 @@ import com.sip.grosirmobil.cloud.config.response.kabupaten.KabupatenResponse;
 import com.sip.grosirmobil.cloud.config.response.kecamatan.KecamatanResponse;
 import com.sip.grosirmobil.cloud.config.response.kelurahan.KelurahanResponse;
 import com.sip.grosirmobil.cloud.config.response.login.LoginResponse;
+import com.sip.grosirmobil.cloud.config.response.perputaranunit.PerputaranUnitResponse;
 import com.sip.grosirmobil.cloud.config.response.province.ProvinceResponse;
+import com.sip.grosirmobil.cloud.config.response.tipeusaha.TipeUsahaResponse;
 
 import io.reactivex.Single;
 import retrofit2.Call;
@@ -31,6 +33,8 @@ public interface GrosirMobilApi {
     String v2 = "v2";
 
     String loginPath = "/api/auth/login";
+    String tipeUsahaPath = "/api/registrasi/tipeusahamobile";
+    String perputaranUnitaPath = "/api/registrasi/Rata2Penjualan";
     String logoutPath = "/api/auth/logout";
     String provincePath = "/api/registrasi/Propinsi";
     String kabupatenPath = "/api/registrasi/Kabupaten";
@@ -72,5 +76,12 @@ public interface GrosirMobilApi {
     @POST(kelurahanPath)
     Call<KelurahanResponse> kelurahanApi(@Body KelurahanRequest kelurahanRequest);
 
+    @Headers("Content-Type: application/json")
+    @GET(tipeUsahaPath)
+    Call<TipeUsahaResponse> tipeUsahaApi(); 
+    
+    @Headers("Content-Type: application/json")
+    @GET(perputaranUnitaPath)
+    Call<PerputaranUnitResponse> perputaranApi();
 
 }

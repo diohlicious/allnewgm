@@ -79,17 +79,18 @@ public class GrosirMobilFunction {
             window.setBackgroundDrawable(background);
         }
     }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void setStatusBarNotificationFragment(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = activity.getWindow();
-            Drawable background = activity.getResources().getDrawable(R.drawable.ic_bar_notification);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(activity.getResources().getColor(android.R.color.transparent));
-            window.setBackgroundDrawable(background);
-        }
-    }
+    
+//
+//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    public static void setStatusBarNotificationFragment(Activity activity) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            Window window = activity.getWindow();
+////            Drawable background = activity.getResources().getDrawable(R.drawable.ic_bar_notification);
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            window.setStatusBarColor(activity.getResources().getColor(android.R.color.transparent));
+////            window.setBackgroundDrawable(background);
+//        }
+//    }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static void setStatusBarFragment(Activity activity) {
