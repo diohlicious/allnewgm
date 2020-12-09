@@ -322,7 +322,7 @@
         android:background="@color/colorPrimaryBackgroundDialog"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/linear_content_dialog"
             android:background="@drawable/dialog_round_half"
             android:layout_alignParentBottom="true"
@@ -330,7 +330,9 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_200sdp">
             <View
+                android:id="@+id/view_line"
                 android:background="@drawable/dialog_round"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:layout_gravity="center"
@@ -338,10 +340,17 @@
                 android:layout_height="@dimen/_3sdp"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_choose"
+                android:layout_below="@+id/view_line"
                 android:layout_marginLeft="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_20sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-        </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progress_circular"
+                android:padding="@dimen/_80sdp"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

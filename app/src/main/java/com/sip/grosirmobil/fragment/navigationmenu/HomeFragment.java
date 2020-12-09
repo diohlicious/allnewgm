@@ -17,8 +17,12 @@ import androidx.cardview.widget.CardView;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.FilterActivity;
 import com.sip.grosirmobil.activity.MainActivity;
@@ -28,8 +32,10 @@ import com.sip.grosirmobil.adapter.BannerGalleryAdapter;
 import com.sip.grosirmobil.adapter.LiveAdapter;
 import com.sip.grosirmobil.adapter.LiveSoonAdapter;
 import com.sip.grosirmobil.adapter.RecordAdapter;
+import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.implement.HomePresenterImp;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.presenter.HomePresenter;
 import com.sip.grosirmobil.base.util.AutoScrollViewPager;
 import com.sip.grosirmobil.base.util.GrosirMobilFragment;
@@ -131,6 +137,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
 
 
     private GrosirMobilFunction grosirMobilFunction;
+    private GrosirMobilPreference grosirMobilPreference;
     private HomePresenter homePresenter;
     private List<HardCodeDataBaruMasukModel> liveHardCodeDataBaruMasukModelList = new ArrayList<>();
     private List<HardCodeDataBaruMasukModel> liveSoonHardCodeDataBaruMasukModelList = new ArrayList<>();
@@ -147,6 +154,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         ButterKnife.bind(this, view);
 
         grosirMobilFunction = new GrosirMobilFunction(getActivity());
+        grosirMobilPreference = new GrosirMobilPreference(getActivity());
         homePresenter = new HomePresenterImp(getActivity(), this);
 
         setDataBanner();
@@ -184,6 +192,24 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         BannerGalleryAdapter viewPagerAdapter = new BannerGalleryAdapter(getActivity(), hardCodeDataModelList);
         viewPagerHome.setAdapter(viewPagerAdapter);
         circleIndicator.setViewPager(viewPagerHome);
+
+        try {
+            CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(getActivity());
+            circularProgressDrawable.setStrokeWidth(5f);
+            circularProgressDrawable.setCenterRadius(30f);
+            circularProgressDrawable.start();
+            Glide.with(this)
+                    .load(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getProfilePhotoUrl())
+                    .apply(new RequestOptions()
+                            .placeholder(circularProgressDrawable)
+//                        .error(R.drawable.ic_image_empty)
+                            .dontAnimate()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true))
+                    .into(ivProfile);
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
+        }
 
         swipeRefreshHome.setOnRefreshListener(() -> {
             swipeRefreshHome.setRefreshing(false);

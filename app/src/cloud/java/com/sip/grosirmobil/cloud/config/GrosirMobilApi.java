@@ -14,6 +14,7 @@ import com.sip.grosirmobil.cloud.config.response.login.LoginResponse;
 import com.sip.grosirmobil.cloud.config.response.province.ProvinceResponse;
 import com.sip.grosirmobil.cloud.config.response.question.QuestionResponse;
 import com.sip.grosirmobil.cloud.config.response.tipeusaha.TipeUsahaResponse;
+import com.sip.grosirmobil.cloud.config.response.warehouse.WareHouseResponse;
 
 import io.reactivex.Single;
 import retrofit2.Call;
@@ -39,13 +40,16 @@ public interface GrosirMobilApi {
     String questionThreePath = "/api/registrasi/JenisMobilMobile";
     String questionFourPath = "/api/registrasi/Rata2PenjualanMobile";
     String questionFivePath = "/api/registrasi/SumberInfoMobile";
+    String tahunKendaraanPath = "/api/registrasi/TahunKendaraanMobile";
+    String asalKendaraanPath = "/api/registrasi/AsalKendaraanMobile";
     String logoutPath = "/api/auth/logout";
     String provincePath = "/api/registrasi/Propinsi";
     String kabupatenPath = "/api/registrasi/Kabupaten";
     String kecamatanPath = "/api/registrasi/Kecamatan";
     String kelurahanPath = "/api/registrasi/Kelurahan";
     String historyBillPaymentPath = "app/"+v1+"/user/history/bill.php";
-    String refreshTokenPath = "app/"+v1+"/refreshtoken.php";
+    String checkActiveTokenPath = "/api/cekaktiftokenMobile";
+    String wareHousePath = "/api/lokasi/warehouseMobile";
 
     @Headers("X-Requested-With:XMLHttpRequest")
     @POST(loginPath)
@@ -61,7 +65,8 @@ public interface GrosirMobilApi {
                                                              @Body HistoryTransactionRequest historyTransactionRequest);
 
     @Headers("Content-Type: application/json")
-    @POST(refreshTokenPath)
+    @GET(checkActiveTokenPath)
+    //TODO Gus nanti bikin model dari response api ini ya. lu test aja di postman /api/cekaktiftokenMobile
     Call<LoginResponse> refreshTokenApi(@Header("Authorization") String authToken);
 
     @Headers("Content-Type: application/json")
@@ -103,6 +108,18 @@ public interface GrosirMobilApi {
     @Headers("Content-Type: application/json")
     @GET(questionFivePath)
     Call<QuestionResponse> questionFiveApi();
+
+    @Headers("Content-Type: application/json")
+    @GET(tahunKendaraanPath)
+    Call<QuestionResponse> tahunKendaraanApi();
+
+    @Headers("Content-Type: application/json")
+    @GET(asalKendaraanPath)
+    Call<QuestionResponse> asalKendaraanApi();
+
+    @Headers("Content-Type: application/json")
+    @GET(wareHousePath)
+    Call<WareHouseResponse> wareHouseApi(@Header("Authorization") String authToken);
 
 
 }

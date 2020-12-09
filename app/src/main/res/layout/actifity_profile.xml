@@ -52,7 +52,6 @@
                     android:layout_width="@dimen/_58sdp"
                     android:layout_height="@dimen/_58sdp"
                     android:layout_alignParentStart="true"
-                    android:src="@drawable/ic_syahrul"
                     tools:ignore="ObsoleteLayoutParam" />
                 <LinearLayout
                     android:gravity="center"
@@ -68,7 +67,6 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
                         android:gravity="left|center"
-                        android:text="@string/tv_syahrul_hajji"
                         android:textColor="@color/colorPrimaryFont"
                         android:textSize="@dimen/text_24"
                         tools:ignore="RtlHardcoded,RtlSymmetry" />
@@ -108,8 +106,7 @@
                     android:orientation="horizontal"
                     tools:ignore="RtlSymmetry,UselessLeaf">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scrollbarSize="@dimen/text_14"
                         android:text="@string/tv_nama_lengkap"
@@ -122,7 +119,6 @@
                         android:gravity="end"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
-                        android:text="@string/tv_syahrul_hajji"
                         android:textColor="@color/colorPrimaryFont"
                         android:textSize="@dimen/text_14"
                         tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
@@ -140,8 +136,7 @@
                     android:orientation="horizontal"
                     tools:ignore="RtlSymmetry,UselessLeaf">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scrollbarSize="@dimen/text_14"
                         android:text="@string/tv_nomor_telepon"
@@ -156,7 +151,6 @@
                         android:gravity="end"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
-                        android:text="@string/tv_no_hp"
                         android:textColor="@color/colorPrimaryFont"
                         android:textSize="@dimen/text_14"
                         tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
@@ -174,8 +168,7 @@
                     android:orientation="horizontal"
                     tools:ignore="RtlSymmetry,UselessLeaf">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scrollbarSize="@dimen/text_14"
                         android:text="@string/tv_email"
@@ -190,7 +183,6 @@
                         android:gravity="end"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
-                        android:text="@string/tv_email_address"
                         android:textColor="@color/colorPrimaryFont"
                         android:textSize="@dimen/text_14"
                         tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
@@ -213,8 +205,7 @@
                     android:orientation="horizontal"
                     tools:ignore="RtlSymmetry,UselessLeaf">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scrollbarSize="@dimen/text_14"
                         android:text="@string/tv_alamat_dealer"
@@ -227,7 +218,6 @@
                         android:gravity="end"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
-                        android:text="@string/tv_dealer_address"
                         android:textColor="@color/colorPrimaryFont"
                         android:textSize="@dimen/text_14"
                         tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
@@ -245,8 +235,7 @@
                     android:orientation="horizontal"
                     tools:ignore="RtlSymmetry,UselessLeaf">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scrollbarSize="@dimen/text_14"
                         android:text="@string/tv_province"
@@ -261,7 +250,6 @@
                         android:gravity="end"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
-                        android:text="@string/tv_dealer_province"
                         android:textColor="@color/colorPrimaryFont"
                         android:textSize="@dimen/text_14"
                         tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
@@ -279,8 +267,103 @@
                     android:orientation="horizontal"
                     tools:ignore="RtlSymmetry,UselessLeaf">
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scrollbarSize="@dimen/text_14"
+                        android:text="@string/tv_kabupaten"
+                        android:textColor="@color/colorFontGray"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/tv_kabupaten"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:gravity="end"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
+                </LinearLayout>
+                <View
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/colorPrimaryLine" />
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:orientation="horizontal"
+                    tools:ignore="RtlSymmetry,UselessLeaf">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scrollbarSize="@dimen/text_14"
+                        android:text="@string/tv_kecamatan"
+                        android:textColor="@color/colorFontGray"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/tv_kecamatan"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
+                </LinearLayout>
+                <View
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/colorPrimaryLine" />
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:orientation="horizontal"
+                    tools:ignore="RtlSymmetry,UselessLeaf">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scrollbarSize="@dimen/text_14"
+                        android:text="@string/tv_kelurahan"
+                        android:textColor="@color/colorFontGray"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/tv_kelurahan"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_14"
+                        tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
+                </LinearLayout>
+                <View
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/colorPrimaryLine" />
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:orientation="horizontal"
+                    tools:ignore="RtlSymmetry,UselessLeaf">
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scrollbarSize="@dimen/text_14"
                         android:text="@string/tv_pos_code"
@@ -295,7 +378,6 @@
                         android:gravity="end"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
-                        android:text="@string/tv_dealer_pos_code"
                         android:textColor="@color/colorPrimaryFont"
                         android:textSize="@dimen/text_14"
                         tools:ignore="ObsoleteLayoutParam,RelativeOverlap" />
@@ -346,7 +428,7 @@
                                 android:id="@+id/tv_success_bidding"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="12 Unit"
+                                android:text="0 Unit"
                                 android:fontFamily="@font/nunito_regular"
                                 android:textColor="@color/colorPrimaryWhite"
                                 android:textSize="@dimen/text_16"
@@ -386,7 +468,7 @@
                                 android:id="@+id/tv_loss_bidding"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="12 Unit"
+                                android:text="0 Unit"
                                 android:fontFamily="@font/nunito_regular"
                                 android:textColor="@color/colorPrimaryWhite"
                                 android:textSize="@dimen/text_16"

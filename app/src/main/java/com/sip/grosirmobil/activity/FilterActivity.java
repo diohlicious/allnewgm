@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -58,6 +59,8 @@ public class FilterActivity extends GrosirMobilActivity {
     @BindView(R.id.relative_dialog) RelativeLayout relativeDialog;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_choose) RecyclerView rvChoose;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.progress_circular) ProgressBar progressBar;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -107,6 +110,14 @@ public class FilterActivity extends GrosirMobilActivity {
         rvChoose.setNestedScrollingEnabled(false);
     }
 
+    private void showProgressBar(){
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressBar(){
+        progressBar.setVisibility(View.GONE);
+    }
+
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.linear_content_dialog)
     void linearContentDialogClick(){
@@ -129,6 +140,8 @@ public class FilterActivity extends GrosirMobilActivity {
     @OnClick(R.id.linear_location)
     void linearLocationClick(){
         showDialogChoose();
+        //TODO Ini nanti HIT API Warehouse. konsepnya sama seperti type Usaha, provinsi dll,
+        // cuma nnti begitu setelah lu hit jgn lupa simpan di preference, gw udah bikin tadi utk function SaveWareHouse dan GetWareHouse
     }
 
 

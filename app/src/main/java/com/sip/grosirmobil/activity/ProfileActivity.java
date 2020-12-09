@@ -5,11 +5,15 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.fxn.pix.Pix;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
@@ -40,6 +44,30 @@ public class ProfileActivity extends GrosirMobilActivity {
     @BindView(R.id.iv_back) ImageView ivBack;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_profile) CircleImageView ivProfile;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_full_name) TextView tvFullName;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_full_name_data_diri) TextView tvFullNameDataDiri;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_phone_number) TextView tvPhoneNumber;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_email) TextView tvEmail;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_dealer_address) TextView tvDealerAddress;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_province) TextView tvProvince;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_kabupaten) TextView tvKabupaten;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_kecamatan) TextView tvKecamatan;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_kelurahan) TextView tvKelurahan;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_dealer_pos_code) TextView tvDealerPosCode;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_success_bidding) TextView tvSuccessBidding;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_loss_bidding) TextView tvLossBidding;
 
     private GrosirMobilPreference grosirMobilPreference;
     private GrosirMobilFunction grosirMobilFunction;
@@ -54,6 +82,35 @@ public class ProfileActivity extends GrosirMobilActivity {
 
         grosirMobilPreference = new GrosirMobilPreference(this);
         grosirMobilFunction = new GrosirMobilFunction(this);
+
+        try {
+            tvFullName.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getNamaLengkap());
+            tvFullNameDataDiri.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getNamaLengkap());
+            tvPhoneNumber.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getNoHP());
+            tvEmail.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getEmail());
+            tvDealerAddress.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getAlamatDealer());
+            tvProvince.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getPropinsi());
+            tvKabupaten.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getKabupaten());
+            tvKecamatan.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getKecamatan());
+            tvKelurahan.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getKelurahan());
+            tvDealerPosCode.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getPostalCode());
+
+            CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(this);
+            circularProgressDrawable.setStrokeWidth(5f);
+            circularProgressDrawable.setCenterRadius(30f);
+            circularProgressDrawable.start();
+            Glide.with(this)
+                    .load(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getProfilePhotoUrl())
+                    .apply(new RequestOptions()
+                            .placeholder(circularProgressDrawable)
+//                        .error(R.drawable.ic_image_empty)
+                            .dontAnimate()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true))
+                    .into(ivProfile);
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -105,6 +162,7 @@ public class ProfileActivity extends GrosirMobilActivity {
                     try {
                         if(response.body().getMessage().contains("success")){
                             grosirMobilPreference.saveToken("");
+                            grosirMobilPreference.clearSharePreference();
                             Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);

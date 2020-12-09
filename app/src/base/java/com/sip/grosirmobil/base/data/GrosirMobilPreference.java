@@ -5,8 +5,10 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.sip.grosirmobil.BuildConfig;
+import com.sip.grosirmobil.cloud.config.response.login.DataLoginResponse;
 import com.sip.grosirmobil.cloud.config.response.province.DataProvinceResponse;
 import com.sip.grosirmobil.cloud.config.response.tipeusaha.DataTipeUsahaResponse;
+import com.sip.grosirmobil.cloud.config.response.warehouse.DataWareHouseResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +44,9 @@ public class GrosirMobilPreference {
     private static final String KODE_POS = "kodePos";
     private static final String URL_IMAGE_KTP = "urlImageKtp";
     private static final String URL_IMAGE_SELFIE_KTP = "urlImageSelfieKtp";
+
+    private static final String DATA_LOGIN = "dataLogin";
+    private static final String DATA_WARE_HOUSE = "dataWareHouse";
 
     private final SharedPreferences sharedpreferences;
 
@@ -317,7 +322,43 @@ public class GrosirMobilPreference {
         return (ArrayList<DataTipeUsahaResponse>) dataTipeUsahaResponseList;
     }
 
+    public void saveDataLogin(DataLoginResponse dataLoginResponse){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        Gson gSonDataProfile = new Gson();
+        String jsonProfile = gSonDataProfile.toJson(dataLoginResponse);
+        editor.putString(DATA_LOGIN, jsonProfile);
+        editor.apply();
+    }
 
+    public DataLoginResponse getDataLogin(){
+        String json = sharedpreferences.getString(DATA_LOGIN, "");
+        Gson gson=new Gson();
+        return gson.fromJson(json, DataLoginResponse.class);
+    }
+
+    public void saveDataWareHouseList(List<DataWareHouseResponse> dataWareHouseResponseList){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        Gson gson = new Gson();
+        String dataWareHouseJson = gson.toJson(dataWareHouseResponseList);
+        editor.putString(DATA_WARE_HOUSE, dataWareHouseJson);
+        editor.apply();
+    }
+
+    public ArrayList<DataWareHouseResponse> getDataWareHouseList(){
+        List<DataWareHouseResponse> dataWareHouseResponseList;
+        if (sharedpreferences.contains(DATA_WARE_HOUSE)) {
+            String dataWareHouseJson = sharedpreferences.getString(DATA_WARE_HOUSE, null);
+            Gson gson = new Gson();
+            DataWareHouseResponse[] dataWareHouseResponses = gson.fromJson(dataWareHouseJson,
+                    DataWareHouseResponse[].class);
+
+            dataWareHouseResponseList = Arrays.asList(dataWareHouseResponses);
+            dataWareHouseResponseList = new ArrayList<>(dataWareHouseResponseList);
+        } else
+            return null;
+
+        return (ArrayList<DataWareHouseResponse>) dataWareHouseResponseList;
+    }
 
 
     public void clearSharePreference() {
@@ -349,6 +390,8 @@ public class GrosirMobilPreference {
         editor.remove(KODE_POS);
         editor.remove(URL_IMAGE_KTP);
         editor.remove(URL_IMAGE_SELFIE_KTP);
+        editor.remove(DATA_LOGIN);
+        editor.remove(DATA_WARE_HOUSE);
         editor.apply();
     }
 }

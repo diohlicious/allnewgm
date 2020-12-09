@@ -1,0 +1,39 @@
+package com.sip.grosirmobil.cloud.config.response.warehouse;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+public class DataWareHouseResponse {
+
+    @SerializedName("id")
+    @Expose
+    private String id;
+
+    @SerializedName("warehouse_code")
+    @Expose
+    private String warehouseCode;
+
+    @SerializedName("name")
+    @Expose
+    private String name;
+
+    @SerializedName("seq_no")
+    @Expose
+    private String seqNo;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getWarehouseCode() {
+        return warehouseCode;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSeqNo() {
+        return seqNo;
+    }
+}

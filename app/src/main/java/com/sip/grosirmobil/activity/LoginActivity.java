@@ -109,7 +109,8 @@ public class LoginActivity extends GrosirMobilActivity implements LoginView {
 
     @Override
     public void loginSuccess(LoginResponse response) {
-        grosirMobilPreference.saveToken(response.getToken());
+        grosirMobilPreference.saveToken(response.getDataLoginResponse().getToken());
+        grosirMobilPreference.saveDataLogin(response.getDataLoginResponse());
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(REQUEST_MAIN, "");
         startActivity(intent);

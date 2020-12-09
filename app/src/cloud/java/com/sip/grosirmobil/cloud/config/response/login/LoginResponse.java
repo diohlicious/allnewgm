@@ -2,30 +2,15 @@ package com.sip.grosirmobil.cloud.config.response.login;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 
-public class LoginResponse {
+public class LoginResponse extends GeneralResponse {
 
-    @SerializedName("logged_in_user")
+    @SerializedName("data")
     @Expose
-    private LoggedInUserResponse loggedInUserResponse;
+    private DataLoginResponse dataLoginResponse;
 
-    @SerializedName("token")
-    @Expose
-    private String token;
-
-    @SerializedName("authUser")
-    @Expose
-    private boolean authUser;
-
-    public LoggedInUserResponse getLoggedInUserResponse() {
-        return loggedInUserResponse;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public boolean isAuthUser() {
-        return authUser;
+    public DataLoginResponse getDataLoginResponse() {
+        return dataLoginResponse;
     }
 }
