@@ -28,7 +28,7 @@ public class ViewHolderItemCart extends RecyclerView.ViewHolder {
         tvVehicleName       = view.findViewById(R.id.tv_vehicle_name);
         tvPlatNumber        = view.findViewById(R.id.tv_plat_number);
         tvPrice             = view.findViewById(R.id.tv_price);
-        tvCity             = view.findViewById(R.id.tv_city);
+        tvCity              = view.findViewById(R.id.tv_city);
         cbCart              = view.findViewById(R.id.cb_cart);
         linearCart          = view.findViewById(R.id.linear_cart);
     }

@@ -10,21 +10,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderSelected;
-import com.sip.grosirmobil.cloud.config.response.tipeusaha.DataTipeUsahaResponse;
+import com.sip.grosirmobil.cloud.config.response.warehouse.DataWareHouseResponse;
 
 import java.util.List;
 
-public class TipeUsahaAdapter extends RecyclerView.Adapter<ViewHolderSelected> {
-    private final List<DataTipeUsahaResponse> dataTipeUsahaResponseList;
+public class WareHouseAdapter extends RecyclerView.Adapter<ViewHolderSelected> {
+    private final List<DataWareHouseResponse> dataWareHouseResponseList;
 
     public interface OnItemClickListener {
-        void onItemClick(DataTipeUsahaResponse dataTipeUsahaResponse);
+        void onItemClick(DataWareHouseResponse dataWareHouseResponse);
     }
 
     private final OnItemClickListener onItemClickListener;
 
-    public TipeUsahaAdapter(List<DataTipeUsahaResponse> dataTipeUsahaResponses, OnItemClickListener onItemClickListener) {
-        this.dataTipeUsahaResponseList = dataTipeUsahaResponses;
+    public WareHouseAdapter(List<DataWareHouseResponse> dataWareHouseResponses, OnItemClickListener onItemClickListener) {
+        this.dataWareHouseResponseList = dataWareHouseResponses;
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -39,12 +39,12 @@ public class TipeUsahaAdapter extends RecyclerView.Adapter<ViewHolderSelected> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderSelected holder, int position) {
-        DataTipeUsahaResponse dataTipeUsahaResponse = dataTipeUsahaResponseList.get(position);
-        holder.bind(dataTipeUsahaResponse, onItemClickListener);
+        DataWareHouseResponse dataWareHouseResponse = dataWareHouseResponseList.get(position);
+        holder.bind(dataWareHouseResponse,onItemClickListener);
     }
 
     @Override
     public int getItemCount() {
-        return dataTipeUsahaResponseList.size();
+        return dataWareHouseResponseList.size();
     }
 }

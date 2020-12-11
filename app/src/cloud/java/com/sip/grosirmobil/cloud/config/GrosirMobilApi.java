@@ -67,6 +67,7 @@ public interface GrosirMobilApi {
     @Headers("Content-Type: application/json")
     @GET(checkActiveTokenPath)
     //TODO Gus nanti bikin model dari response api ini ya. lu test aja di postman /api/cekaktiftokenMobile
+    
     Call<LoginResponse> refreshTokenApi(@Header("Authorization") String authToken);
 
     @Headers("Content-Type: application/json")

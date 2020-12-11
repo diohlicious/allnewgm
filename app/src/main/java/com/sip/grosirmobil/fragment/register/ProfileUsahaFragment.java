@@ -69,7 +69,6 @@ public class ProfileUsahaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile_usaha, container, false);
         ButterKnife.bind(this, view);
 
@@ -152,7 +151,6 @@ public class ProfileUsahaFragment extends Fragment {
                         }
                     }
                 }
-
                 @Override
                 public void onFailure(Call<TipeUsahaResponse> call, Throwable t) {
                     hideProgressBar();

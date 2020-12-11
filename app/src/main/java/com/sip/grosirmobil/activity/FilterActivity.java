@@ -16,16 +16,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.adapter.WareHouseAdapter;
+import com.sip.grosirmobil.base.data.GrosirMobilPreference;
+import com.sip.grosirmobil.base.function.GrosirMobilFunction;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
+import com.sip.grosirmobil.cloud.config.response.warehouse.WareHouseResponse;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.bendik.simplerangeview.SimpleRangeView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 
@@ -61,6 +70,8 @@ public class FilterActivity extends GrosirMobilActivity {
     @BindView(R.id.rv_choose) RecyclerView rvChoose;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.progress_circular) ProgressBar progressBar;
+    private GrosirMobilPreference grosirMobilPreference;
+    private GrosirMobilFunction grosirMobilFunction;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -68,6 +79,8 @@ public class FilterActivity extends GrosirMobilActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
         ButterKnife.bind(this);
+        grosirMobilPreference = new GrosirMobilPreference(this);
+        grosirMobilFunction = new GrosirMobilFunction(this);
 
         if(getIntent().getStringExtra(FROM_PAGE).equals("BEFORE_SEARCH")){
             linearMerek.setVisibility(View.VISIBLE);
@@ -139,11 +152,64 @@ public class FilterActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.linear_location)
     void linearLocationClick(){
-        showDialogChoose();
+//        showDialogChoose();
         //TODO Ini nanti HIT API Warehouse. konsepnya sama seperti type Usaha, provinsi dll,
         // cuma nnti begitu setelah lu hit jgn lupa simpan di preference, gw udah bikin tadi utk function SaveWareHouse dan GetWareHouse
+        if(grosirMobilPreference.getDataWareHouseList()==null||grosirMobilPreference.getDataWareHouseList().isEmpty()){
+            showProgressBar();
+            showDialogChoose();
+            final Call<WareHouseResponse> wareHouseApi = getApiGrosirMobil().wareHouseApi("");
+            wareHouseApi.enqueue(new Callback<WareHouseResponse>() {
+                @Override
+                public void onResponse(Call<WareHouseResponse> call, Response<WareHouseResponse> response) {
+                    hideProgressBar();
+                    if (response.isSuccessful()) {
+                        try {
+                            if(response.body().getMessage().equals("success")){
+                                if(!response.body().getData().isEmpty()){
+                                    grosirMobilPreference.saveDataWareHouseList(response.body().getData());
+                                }
+                                WareHouseAdapter wareHouseAdapter = new WareHouseAdapter(response.body().getData(), dataWareHouseResponse -> {
+                                    tvLocation.setText(dataWareHouseResponse.getName());
+                                    tvLocation.setTag(dataWareHouseResponse.getWarehouseCode());
+                                    relativeDialogClick();
+                                });
+                                rvChoose.setAdapter(wareHouseAdapter);
+                                wareHouseAdapter.notifyDataSetChanged();
+                            }else {
+                                grosirMobilFunction.showMessage(FilterActivity.this, "GET WareHouse", response.body().getMessage());
+                            }
+                        }catch (Exception e){
+                            GrosirMobilLog.printStackTrace(e);
+                        }
+                    }else {
+                        try {
+                            grosirMobilFunction.showMessage(FilterActivity.this, getString(R.string.base_null_error_title), response.errorBody().string());
+                        } catch (IOException e) {
+                            GrosirMobilLog.printStackTrace(e);
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<WareHouseResponse> call, Throwable t) {
+                    hideProgressBar();
+                    grosirMobilFunction.showMessage(FilterActivity.this, "GET WareHouse", getString(R.string.base_null_server));
+                    GrosirMobilLog.printStackTrace(t);
+                }
+            });
+        }
+        else {
+            showDialogChoose();
+            hideProgressBar();
+            WareHouseAdapter wareHouseAdapter = new WareHouseAdapter(grosirMobilPreference.getDataWareHouseList(), dataWareHouseResponse -> {
+                tvLocation.setText(dataWareHouseResponse.getName());
+                tvLocation.setTag(dataWareHouseResponse.getWarehouseCode());
+                relativeDialogClick();
+            });
+            rvChoose.setAdapter(wareHouseAdapter);
+            wareHouseAdapter.notifyDataSetChanged();
+        }
     }
-
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.linear_year)

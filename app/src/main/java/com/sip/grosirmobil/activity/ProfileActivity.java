@@ -84,6 +84,7 @@ public class ProfileActivity extends GrosirMobilActivity {
         grosirMobilFunction = new GrosirMobilFunction(this);
 
         try {
+            
             tvFullName.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getNamaLengkap());
             tvFullNameDataDiri.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getNamaLengkap());
             tvPhoneNumber.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getNoHP());
@@ -103,7 +104,7 @@ public class ProfileActivity extends GrosirMobilActivity {
                     .load(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getProfilePhotoUrl())
                     .apply(new RequestOptions()
                             .placeholder(circularProgressDrawable)
-//                        .error(R.drawable.ic_image_empty)
+//                          .error(R.drawable.ic_image_empty)
                             .dontAnimate()
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
                             .skipMemoryCache(true))
