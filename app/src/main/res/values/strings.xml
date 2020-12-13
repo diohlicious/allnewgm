@@ -430,4 +430,10 @@
             </html>
         ]]>
     </string>
+    <string name="tv_kendaraan_belum_tersedia">Kendaraan belum tersedia</string>
+    <string name="tv_empty_data_live">Saat ini belum ada kendaraan\nyang tersedia, silahkan tunggu informasi\nberikutnya pada saat LiveGrosir</string>
+    <string name="tv_empty_data_coming_soon">Saat ini belum ada kendaraan\nyang tersedia, silahkan tunggu informasi\nberikutnya pada saat Akan Tayang Grosir</string>
+    <string name="tv_empty_data_history">Saat ini belum ada kendaraan\nyang tersedia, silahkan tunggu informasi\nberikutnya pada saat Riwayat Grosir</string>
+    <string name="btn_lihat_info">Lihat Info</string>
+    <string name="tv_kirim_ulang_kode_otp">Kirim ulang kode OTP</string>
 </resources>

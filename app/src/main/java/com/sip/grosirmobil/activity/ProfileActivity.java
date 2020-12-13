@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
 import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
+import com.sip.grosirmobil.cloud.config.response.checkactivetoken.CheckActiveTokenResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,6 +71,8 @@ public class ProfileActivity extends GrosirMobilActivity {
     @BindView(R.id.tv_success_bidding) TextView tvSuccessBidding;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_loss_bidding) TextView tvLossBidding;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.progress_horizontal) ProgressBar progressHorizontal;
 
     private GrosirMobilPreference grosirMobilPreference;
     private GrosirMobilFunction grosirMobilFunction;
@@ -84,24 +89,23 @@ public class ProfileActivity extends GrosirMobilActivity {
         grosirMobilFunction = new GrosirMobilFunction(this);
 
         try {
-            
-            tvFullName.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getNamaLengkap());
-            tvFullNameDataDiri.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getNamaLengkap());
-            tvPhoneNumber.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getNoHP());
-            tvEmail.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getEmail());
-            tvDealerAddress.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getAlamatDealer());
-            tvProvince.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getPropinsi());
-            tvKabupaten.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getKabupaten());
-            tvKecamatan.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getKecamatan());
-            tvKelurahan.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getKelurahan());
-            tvDealerPosCode.setText(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getPostalCode());
+            tvFullName.setText(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getUserResponse().getNamaLengkap());
+            tvFullNameDataDiri.setText(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getUserResponse().getNamaLengkap());
+            tvPhoneNumber.setText(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getUserResponse().getNoHP());
+            tvEmail.setText(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getUserResponse().getEmail());
+            tvDealerAddress.setText(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getProfilResponse().getAlamatDealer());
+            tvProvince.setText(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getProfilResponse().getPropinsi());
+            tvKabupaten.setText(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getProfilResponse().getKabupaten());
+            tvKecamatan.setText(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getProfilResponse().getKecamatan());
+            tvKelurahan.setText(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getProfilResponse().getKelurahan());
+            tvDealerPosCode.setText(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getProfilResponse().getPostalCode());
 
             CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(this);
             circularProgressDrawable.setStrokeWidth(5f);
             circularProgressDrawable.setCenterRadius(30f);
             circularProgressDrawable.start();
             Glide.with(this)
-                    .load(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getProfilePhotoUrl())
+                    .load(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getUserResponse().getProfilePhotoUrl())
                     .apply(new RequestOptions()
                             .placeholder(circularProgressDrawable)
 //                          .error(R.drawable.ic_image_empty)
@@ -112,6 +116,65 @@ public class ProfileActivity extends GrosirMobilActivity {
         }catch (Exception e){
             GrosirMobilLog.printStackTrace(e);
         }
+        getCheckActiveTokenApi();
+    }
+
+    private void getCheckActiveTokenApi(){
+        progressHorizontal.setVisibility(View.VISIBLE);
+        final Call<CheckActiveTokenResponse> checkActiveTokenApi = getApiGrosirMobil().checkActiveTokenApi(BEARER+" "+grosirMobilPreference.getToken());
+        checkActiveTokenApi.enqueue(new Callback<CheckActiveTokenResponse>() {
+            @Override
+            public void onResponse(Call<CheckActiveTokenResponse> call, Response<CheckActiveTokenResponse> response) {
+                progressHorizontal.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    try {
+                        if(response.body().getMessage().equals("success")){
+                            grosirMobilPreference.saveDataCheckActiveToken(response.body().getData());
+                            tvFullName.setText(response.body().getData().getLoggedInUserResponse().getUserResponse().getNamaLengkap());
+                            tvFullNameDataDiri.setText(response.body().getData().getLoggedInUserResponse().getUserResponse().getNamaLengkap());
+                            tvPhoneNumber.setText(response.body().getData().getLoggedInUserResponse().getUserResponse().getNoHP());
+                            tvEmail.setText(response.body().getData().getLoggedInUserResponse().getUserResponse().getEmail());
+                            tvDealerAddress.setText(response.body().getData().getLoggedInUserResponse().getProfilResponse().getAlamatDealer());
+                            tvProvince.setText(response.body().getData().getLoggedInUserResponse().getProfilResponse().getPropinsi());
+                            tvKabupaten.setText(response.body().getData().getLoggedInUserResponse().getProfilResponse().getKabupaten());
+                            tvKecamatan.setText(response.body().getData().getLoggedInUserResponse().getProfilResponse().getKecamatan());
+                            tvKelurahan.setText(response.body().getData().getLoggedInUserResponse().getProfilResponse().getKelurahan());
+                            tvDealerPosCode.setText(response.body().getData().getLoggedInUserResponse().getProfilResponse().getPostalCode());
+
+                            CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(ProfileActivity.this);
+                            circularProgressDrawable.setStrokeWidth(5f);
+                            circularProgressDrawable.setCenterRadius(30f);
+                            circularProgressDrawable.start();
+                            Glide.with(ProfileActivity.this)
+                                    .load(response.body().getData().getLoggedInUserResponse().getUserResponse().getProfilePhotoUrl())
+                                    .apply(new RequestOptions()
+                                            .placeholder(circularProgressDrawable)
+//                          .error(R.drawable.ic_image_empty)
+                                            .dontAnimate()
+                                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                            .skipMemoryCache(true))
+                                    .into(ivProfile);
+                        }else {
+                            grosirMobilFunction.showMessage(ProfileActivity.this, "GET Check Active Token", response.body().getMessage());
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }else {
+                    try {
+                        grosirMobilFunction.showMessage(ProfileActivity.this, getString(R.string.base_null_error_title), response.errorBody().string());
+                    } catch (IOException e) {
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<CheckActiveTokenResponse> call, Throwable t) {
+                progressHorizontal.setVisibility(View.GONE);
+                grosirMobilFunction.showMessage(ProfileActivity.this, "GET Check Active Token", getString(R.string.base_null_server));
+                GrosirMobilLog.printStackTrace(t);
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")

@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class VehicleInteriorResponse {
+
     @SerializedName("InspectionDefGroupId")
     @Expose
     private String inspectionDefGroupId;
@@ -20,4 +21,19 @@ public class VehicleInteriorResponse {
     @Expose
     private String comment;
 
+    public String getInspectionDefGroupId() {
+        return inspectionDefGroupId;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public String getComment() {
+        return comment;
+    }
 }

@@ -44,6 +44,13 @@
                         android:layout_width="@dimen/_40sdp"
                         android:layout_height="@dimen/_40sdp"/>
                 </RelativeLayout>
+                <ProgressBar
+                    android:id="@+id/progress_horizontal"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminateOnly="true"/>
                 <LinearLayout
                     android:id="@+id/linear_search_and_filter_show"
                     android:orientation="vertical"
@@ -212,6 +219,7 @@
                         android:textSize="@dimen/text_14"
                         tools:ignore="RtlHardcoded" />
                     <RelativeLayout
+                        android:visibility="visible"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_180sdp">
@@ -363,6 +371,60 @@
                             android:layout_height="match_parent"
                             tools:ignore="RelativeOverlap" />
                     </RelativeLayout>
+                    <LinearLayout
+                        android:id="@+id/linear_empty_data"
+                        android:visibility="gone"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:gravity="center"
+                            android:fontFamily="@font/nunito_semi_bold"
+                            android:text="@string/tv_kendaraan_belum_tersedia"
+                            android:textColor="@color/colorPrimaryFont"
+                            android:textSize="@dimen/text_20"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <ImageView
+                            android:layout_marginTop="@dimen/_50sdp"
+                            android:layout_marginBottom="@dimen/_30sdp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_home_empty_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:ignore="ContentDescription" />
+                        <TextView
+                            android:id="@+id/tv_ket_empty_data_home"
+                            android:alpha="0.6"
+                            android:gravity="center"
+                            android:fontFamily="@font/nunito_regular"
+                            android:text="@string/tv_empty_data_live"
+                            android:textColor="@color/colorPrimaryFont"
+                            android:textSize="@dimen/text_14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                        <Button
+                            android:id="@+id/btn_see_info"
+                            android:layout_marginTop="@dimen/_30sdp"
+                            android:layout_marginBottom="@dimen/_20sdp"
+                            android:layout_marginRight="@dimen/_20sdp"
+                            android:layout_marginLeft="@dimen/_20sdp"
+                            android:fontFamily="@font/nunito_semi_bold"
+                            android:textSize="@dimen/text_18"
+                            android:textColor="@color/colorPrimaryWhite"
+                            android:textAllCaps="false"
+                            android:text="@string/btn_lihat_info"
+                            android:background="@drawable/btn_design"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40sdp" />
+                    </LinearLayout>
+                    <ProgressBar
+                        android:id="@+id/progress_bar_data"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_100sdp"
+                        android:layout_marginBottom="@dimen/_100sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_live"
                         android:nestedScrollingEnabled="false"

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -27,6 +28,8 @@ public class CodeOtpFragment extends Fragment {
     @BindView(R.id.et_new_otp_3) EditText etNewOtp3;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.et_new_otp_4) EditText etNewOtp4;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_resend_otp) TextView tvResendOtp;
 
     public static CodeOtpFragment newInstance(int page, String title) {
         CodeOtpFragment fragmentFirst = new CodeOtpFragment();
@@ -45,6 +48,11 @@ public class CodeOtpFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         return view;
+    }
+
+    @OnClick(R.id.tv_resend_otp)
+    void tvResendOtpClick(){
+
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -291,6 +299,7 @@ public class CodeOtpFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_verified_password)
     void btnVerifiedPassword(){
+        String otp;
         if(etNewOtp1.getText().toString().isEmpty()){
             Toast.makeText(getActivity(), "Kode 1 is empty", Toast.LENGTH_SHORT).show();
         }else if(etNewOtp2.getText().toString().isEmpty()){

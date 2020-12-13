@@ -27,6 +27,13 @@
                 android:layout_height="match_parent"
                 tools:ignore="ContentDescription,RelativeOverlap" />
         </RelativeLayout>
+        <ProgressBar
+            android:id="@+id/progress_horizontal"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminateOnly="true"/>
         <LinearLayout
             android:paddingLeft="@dimen/_20sdp"
             android:paddingRight="@dimen/_20sdp"

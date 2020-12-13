@@ -94,7 +94,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_40sdp"
                         android:backgroundTint="@color/colorPrimaryFont"
-                        android:drawableStart="@drawable/ic_type_usaha"
+                        android:drawableStart="@drawable/ic_car_question"
                         android:drawableEnd="@drawable/ic_chevron_down"
                         android:drawablePadding="@dimen/_10sdp"
                         android:fontFamily="@font/nunito_semi_bold"
@@ -112,7 +112,7 @@
                     android:alpha="0.6"
                     android:fontFamily="@font/nunito_semi_bold"
                     android:scrollbarSize="@dimen/_12sdp"
-                    android:text="2. Pembelian kebutuhan kendaraan dilakukan?"
+                    android:text="2. Rata-rata jumlah penjualan kendaraan dalam sebulan?"
                     android:textColor="@color/colorPrimaryFont"
                     android:textSize="@dimen/text_12" />
                 <com.google.android.material.textfield.TextInputLayout
@@ -128,7 +128,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_40sdp"
                         android:backgroundTint="@color/colorPrimaryFont"
-                        android:drawableStart="@drawable/ic_type_usaha"
+                        android:drawableStart="@drawable/ic_car_question"
                         android:drawableEnd="@drawable/ic_chevron_down"
                         android:drawablePadding="@dimen/_10sdp"
                         android:fontFamily="@font/nunito_semi_bold"
@@ -146,7 +146,7 @@
                     android:alpha="0.6"
                     android:fontFamily="@font/nunito_semi_bold"
                     android:scrollbarSize="@dimen/_12sdp"
-                    android:text="3. Minat Jenis Mobil?"
+                    android:text="3. Pembelian kebutuhan kendaraan menggunakan?"
                     android:textColor="@color/colorPrimaryFont"
                     android:textSize="@dimen/text_12"/>
                 <com.google.android.material.textfield.TextInputLayout
@@ -162,7 +162,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_40sdp"
                         android:backgroundTint="@color/colorPrimaryFont"
-                        android:drawableStart="@drawable/ic_type_usaha"
+                        android:drawableStart="@drawable/ic_car_question"
                         android:drawableEnd="@drawable/ic_chevron_down"
                         android:drawablePadding="@dimen/_10sdp"
                         android:fontFamily="@font/nunito_semi_bold"
@@ -180,7 +180,7 @@
                     android:alpha="0.6"
                     android:fontFamily="@font/nunito_semi_bold"
                     android:scrollbarSize="@dimen/_12sdp"
-                    android:text="4. Rata-rata jumlah penjualan kendaraan dalam sebulan ?"
+                    android:text="4. Tahun kendaraan yang dibutuhkan?"
                     android:textColor="@color/colorPrimaryFont"
                     android:textSize="@dimen/text_12" />
                 <com.google.android.material.textfield.TextInputLayout
@@ -196,7 +196,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_40sdp"
                         android:backgroundTint="@color/colorPrimaryFont"
-                        android:drawableStart="@drawable/ic_type_usaha"
+                        android:drawableStart="@drawable/ic_car_question"
                         android:drawableEnd="@drawable/ic_chevron_down"
                         android:drawablePadding="@dimen/_10sdp"
                         android:fontFamily="@font/nunito_semi_bold"
@@ -214,7 +214,7 @@
                     android:alpha="0.6"
                     android:fontFamily="@font/nunito_semi_bold"
                     android:scrollbarSize="@dimen/_12sdp"
-                    android:text="5. Mengetahui Grosir Mobil dari media?"
+                    android:text="5. Produk kendaraan yang dibutuhkan?"
                     android:textColor="@color/colorPrimaryFont"
                     android:textSize="@dimen/text_12"/>
                 <com.google.android.material.textfield.TextInputLayout
@@ -230,7 +230,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_40sdp"
                         android:backgroundTint="@color/colorPrimaryFont"
-                        android:drawableStart="@drawable/ic_type_usaha"
+                        android:drawableStart="@drawable/ic_car_question"
                         android:drawableEnd="@drawable/ic_chevron_down"
                         android:drawablePadding="@dimen/_10sdp"
                         android:fontFamily="@font/nunito_semi_bold"

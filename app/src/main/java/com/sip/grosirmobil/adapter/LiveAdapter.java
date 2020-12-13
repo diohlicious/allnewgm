@@ -15,23 +15,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.VehicleDetailActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehicle;
-import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
+import com.sip.grosirmobil.cloud.config.response.home.DataHomeLiveResponse;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
 
 public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
 
-    private List<HardCodeDataBaruMasukModel> hardCodeDataBaruMasukModelList;
+    private List<DataHomeLiveResponse> dataHomeLiveResponseList;
     private Context contexts;
 
 
-    public LiveAdapter(Context context, List<HardCodeDataBaruMasukModel> hardCodeDataBaruMasukModels) {
+    public LiveAdapter(Context context, List<DataHomeLiveResponse> dataHomeLiveResponses) {
         this.contexts = context;
-        this.hardCodeDataBaruMasukModelList = hardCodeDataBaruMasukModels;
+        this.dataHomeLiveResponseList = dataHomeLiveResponses;
     }
 
     @NonNull
@@ -45,12 +46,12 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderItemVehicle holder, int position) {
-        HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = hardCodeDataBaruMasukModelList.get(position);
-        holder.tvVehicleName.setText(hardCodeDataBaruMasukModel.getVehicleName());
-        holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber()+" - ");
-        holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());
-        holder.tvOpenPrice.setText(hardCodeDataBaruMasukModel.getPrice());
-        holder.tvBottomPrice.setText(hardCodeDataBaruMasukModel.getPrice());
+        DataHomeLiveResponse dataHomeLiveResponse = dataHomeLiveResponseList.get(position);
+        holder.tvVehicleName.setText(dataHomeLiveResponse.getVehicleName());
+        holder.tvPlatNumber.setText(dataHomeLiveResponse.getKikNumber().substring(0,10)+" - ");
+        holder.tvCity.setText(dataHomeLiveResponse.getWareHouse());
+        holder.tvOpenPrice.setText("Rp "+setCurrencyFormat(dataHomeLiveResponse.getOpenPrice()));
+        holder.tvBottomPrice.setText("Rp "+setCurrencyFormat(dataHomeLiveResponse.getOpenPrice()));
         startTimer(holder.tvTimer, 20000000);
 
         AtomicBoolean favorite = new AtomicBoolean(false);
@@ -74,7 +75,7 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
 
     @Override
     public int getItemCount() {
-        return hardCodeDataBaruMasukModelList.size();
+        return dataHomeLiveResponseList.size();
     }
 
     public void startTimer(TextView tvTimer, long noOfMinutes) {

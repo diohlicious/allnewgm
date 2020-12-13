@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.sip.grosirmobil.R;
@@ -96,20 +95,20 @@ public class RegisterActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_register)
     void btnRegisterClick(){
-        if(etFullName.getText().toString().isEmpty()){
-            Toast.makeText(this, "Mohon Isi Nama Lengkap", Toast.LENGTH_SHORT).show();
-        }else if(etPhoneNumber.getText().toString().isEmpty()){
-            Toast.makeText(this, "Mohon Isi Nomor Telepon", Toast.LENGTH_SHORT).show();
-        }else {
-            if(cbTermAndCondition.isChecked()){
-                grosirMobilPreference.saveFullName(etFullName.getText().toString());
-                grosirMobilPreference.savePhoneNumber(etPhoneNumber.getText().toString());
+//        if(etFullName.getText().toString().isEmpty()){
+//            Toast.makeText(this, "Mohon Isi Nama Lengkap", Toast.LENGTH_SHORT).show();
+//        }else if(etPhoneNumber.getText().toString().isEmpty()){
+//            Toast.makeText(this, "Mohon Isi Nomor Telepon", Toast.LENGTH_SHORT).show();
+//        }else {
+//            if(cbTermAndCondition.isChecked()){
+//                grosirMobilPreference.saveFullName(etFullName.getText().toString());
+//                grosirMobilPreference.savePhoneNumber(etPhoneNumber.getText().toString());
                 Intent intent = new Intent(this, RegisterDataActivity.class);
                 startActivity(intent);
-            }else {
-                Toast.makeText(this, "Mohon Centang Term And Condition", Toast.LENGTH_SHORT).show();
-            }
-        }
+//            }else {
+//                Toast.makeText(this, "Mohon Centang Term And Condition", Toast.LENGTH_SHORT).show();
+//            }
+//        }
     }
 
     @OnClick({R.id.linear_login,R.id.tv_login})

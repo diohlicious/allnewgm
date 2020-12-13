@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.sip.grosirmobil.BuildConfig;
+import com.sip.grosirmobil.cloud.config.response.checkactivetoken.DataCheckActiveTokenResponse;
 import com.sip.grosirmobil.cloud.config.response.login.DataLoginResponse;
 import com.sip.grosirmobil.cloud.config.response.province.DataProvinceResponse;
 import com.sip.grosirmobil.cloud.config.response.tipeusaha.DataTipeUsahaResponse;
@@ -47,6 +48,7 @@ public class GrosirMobilPreference {
 
     private static final String DATA_LOGIN = "dataLogin";
     private static final String DATA_WARE_HOUSE = "dataWareHouse";
+    private static final String DATA_CHECK_ACTIVE_TOKEN = "dataCheckActiveToken";
 
     private final SharedPreferences sharedpreferences;
 
@@ -336,6 +338,20 @@ public class GrosirMobilPreference {
         return gson.fromJson(json, DataLoginResponse.class);
     }
 
+    public void saveDataCheckActiveToken(DataCheckActiveTokenResponse dataCheckActiveTokenResponse){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        Gson gSonCheckActiveToken = new Gson();
+        String jsonCheckActiveToken = gSonCheckActiveToken.toJson(dataCheckActiveTokenResponse);
+        editor.putString(DATA_CHECK_ACTIVE_TOKEN, jsonCheckActiveToken);
+        editor.apply();
+    }
+
+    public DataCheckActiveTokenResponse getDataCheckActiveToken(){
+        String json = sharedpreferences.getString(DATA_CHECK_ACTIVE_TOKEN, "");
+        Gson gson=new Gson();
+        return gson.fromJson(json, DataCheckActiveTokenResponse.class);
+    }
+
     public void saveDataWareHouseList(List<DataWareHouseResponse> dataWareHouseResponseList){
         SharedPreferences.Editor editor = sharedpreferences.edit();
         Gson gson = new Gson();
@@ -392,6 +408,7 @@ public class GrosirMobilPreference {
         editor.remove(URL_IMAGE_SELFIE_KTP);
         editor.remove(DATA_LOGIN);
         editor.remove(DATA_WARE_HOUSE);
+        editor.remove(DATA_CHECK_ACTIVE_TOKEN);
         editor.apply();
     }
 }

@@ -183,6 +183,7 @@ public class ProfileUsahaFragment extends Fragment {
             Toast.makeText(getActivity(), "Mohon Isi No Telp Dealer", Toast.LENGTH_SHORT).show();
         } else {
             grosirMobilPreference.saveTypeUsaha(etTypeUsaha.getText().toString());
+            grosirMobilPreference.saveTypeUsahaCode(etTypeUsaha.getTag().toString());
             grosirMobilPreference.saveDealerName(etDealerName.getText().toString());
             grosirMobilPreference.saveDealerPhoneNumber(etDealerPhone.getText().toString());
             ((RegisterDataActivity)getActivity()).replaceFragment(new DocumentFragment());

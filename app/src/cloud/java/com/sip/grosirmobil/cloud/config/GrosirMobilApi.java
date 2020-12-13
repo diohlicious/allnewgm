@@ -1,19 +1,24 @@
 package com.sip.grosirmobil.cloud.config;
 
-import com.sip.grosirmobil.cloud.config.request.history.HistoryTransactionRequest;
+import com.sip.grosirmobil.cloud.config.request.home.HomeLiveRequest;
 import com.sip.grosirmobil.cloud.config.request.kabupaten.KabupatenRequest;
 import com.sip.grosirmobil.cloud.config.request.kecamatan.KecamatanRequest;
 import com.sip.grosirmobil.cloud.config.request.kelurahan.KelurahanRequest;
 import com.sip.grosirmobil.cloud.config.request.login.LoginRequest;
+import com.sip.grosirmobil.cloud.config.request.savedataregister.SaveDataRegisterRequest;
+import com.sip.grosirmobil.cloud.config.request.vehicledetail.VehicleDetailRequest;
 import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
-import com.sip.grosirmobil.cloud.config.response.history.HistoryBillPaymentResponse;
+import com.sip.grosirmobil.cloud.config.response.checkactivetoken.CheckActiveTokenResponse;
+import com.sip.grosirmobil.cloud.config.response.home.HomeLiveResponse;
 import com.sip.grosirmobil.cloud.config.response.kabupaten.KabupatenResponse;
 import com.sip.grosirmobil.cloud.config.response.kecamatan.KecamatanResponse;
 import com.sip.grosirmobil.cloud.config.response.kelurahan.KelurahanResponse;
 import com.sip.grosirmobil.cloud.config.response.login.LoginResponse;
 import com.sip.grosirmobil.cloud.config.response.province.ProvinceResponse;
 import com.sip.grosirmobil.cloud.config.response.question.QuestionResponse;
+import com.sip.grosirmobil.cloud.config.response.timeserver.TimeServerResponse;
 import com.sip.grosirmobil.cloud.config.response.tipeusaha.TipeUsahaResponse;
+import com.sip.grosirmobil.cloud.config.response.vehicledetail.VehicleDetailResponse;
 import com.sip.grosirmobil.cloud.config.response.warehouse.WareHouseResponse;
 
 import io.reactivex.Single;
@@ -42,14 +47,17 @@ public interface GrosirMobilApi {
     String questionFivePath = "/api/registrasi/SumberInfoMobile";
     String tahunKendaraanPath = "/api/registrasi/TahunKendaraanMobile";
     String asalKendaraanPath = "/api/registrasi/AsalKendaraanMobile";
+    String saveDataRegisterPath = "/api/registrasi/SimpanMobile";
     String logoutPath = "/api/auth/logout";
     String provincePath = "/api/registrasi/Propinsi";
     String kabupatenPath = "/api/registrasi/Kabupaten";
     String kecamatanPath = "/api/registrasi/Kecamatan";
     String kelurahanPath = "/api/registrasi/Kelurahan";
-    String historyBillPaymentPath = "app/"+v1+"/user/history/bill.php";
     String checkActiveTokenPath = "/api/cekaktiftokenMobile";
     String wareHousePath = "/api/lokasi/warehouseMobile";
+    String homeLivePath = "/api/Live/HomeMobile";
+    String liveVehicleDetailPath = "/api/Live/detailMobile";
+    String timeServerPath = "/api/jamserverMobile";
 
     @Headers("X-Requested-With:XMLHttpRequest")
     @POST(loginPath)
@@ -59,16 +67,14 @@ public interface GrosirMobilApi {
     @GET(logoutPath)
     Call<GeneralResponse> logoutApi(@Header("Authorization") String authToken);
 
-    @Headers("Content-Type: application/json")
-    @POST(historyBillPaymentPath)
-    Single<HistoryBillPaymentResponse> historyBillPaymentApi(@Header("Authorization") String authToken,
-                                                             @Body HistoryTransactionRequest historyTransactionRequest);
+//    @Headers("Content-Type: application/json")
+//    @POST(historyBillPaymentPath)
+//    Single<HistoryBillPaymentResponse> historyBillPaymentApi(@Header("Authorization") String authToken,
+//                                                             @Body HistoryTransactionRequest historyTransactionRequest);
 
     @Headers("Content-Type: application/json")
     @GET(checkActiveTokenPath)
-    //TODO Gus nanti bikin model dari response api ini ya. lu test aja di postman /api/cekaktiftokenMobile
-    
-    Call<LoginResponse> refreshTokenApi(@Header("Authorization") String authToken);
+    Call<CheckActiveTokenResponse> checkActiveTokenApi(@Header("Authorization") String authToken);
 
     @Headers("Content-Type: application/json")
     @GET(provincePath)
@@ -81,6 +87,10 @@ public interface GrosirMobilApi {
     @Headers("Content-Type: application/json")
     @POST(kecamatanPath)
     Call<KecamatanResponse> kecamatanApi(@Body KecamatanRequest kecamatanRequest);
+
+    @Headers("Content-Type: application/json")
+    @POST(saveDataRegisterPath)
+    Call<GeneralResponse> saveDataRegisterApi(@Body SaveDataRegisterRequest saveDataRegisterRequest);
 
     @Headers("Content-Type: application/json")
     @POST(kelurahanPath)
@@ -121,6 +131,20 @@ public interface GrosirMobilApi {
     @Headers("Content-Type: application/json")
     @GET(wareHousePath)
     Call<WareHouseResponse> wareHouseApi(@Header("Authorization") String authToken);
+
+    @Headers("Content-Type: application/json")
+    @POST(homeLivePath)
+    Call<HomeLiveResponse> homeLiveApi(@Header("Authorization") String authToken,
+                                       @Body HomeLiveRequest homeLiveRequest);
+
+    @Headers("Content-Type: application/json")
+    @POST(liveVehicleDetailPath)
+    Call<VehicleDetailResponse> liveVehicleDetailApi(@Header("Authorization") String authToken,
+                                                     @Body VehicleDetailRequest vehicleDetailRequest);
+
+    @Headers("Content-Type: application/json")
+    @POST(timeServerPath)
+    Call<TimeServerResponse> timeServerApi();
 
 
 }

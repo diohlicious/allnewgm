@@ -143,7 +143,7 @@ public class MainActivity extends GrosirMobilActivity implements GrosirMobilFrag
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.linear_notification)
-    void linearNotificationClick(){
+    public void linearNotificationClick(){
         presenter.replaceFragmentNotification();
         ivHome.setImageResource(R.drawable.ic_home_disable);
         tvHome.setTextColor(getResources().getColor(R.color.colorPrimaryTextInactive));

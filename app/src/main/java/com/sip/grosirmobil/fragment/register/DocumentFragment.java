@@ -2,7 +2,10 @@ package com.sip.grosirmobil.fragment.register;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,7 @@ import com.sip.grosirmobil.activity.RegisterDataActivity;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -82,7 +86,13 @@ public class DocumentFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_next_document)
     void btnEndRegisterDataClick(){
-        ((RegisterDataActivity)getActivity()).replaceFragment(new AddressFragment());
+        if (grosirMobilPreference.getUrlImageKtp()==null||grosirMobilPreference.getUrlImageKtp().equals("")){
+            Toast.makeText(getActivity(), "Mohon Ambil Foto KTP", Toast.LENGTH_SHORT).show();
+        }else if (grosirMobilPreference.getUrlImageSelfieKtp()==null||grosirMobilPreference.getUrlImageSelfieKtp().equals("")){
+            Toast.makeText(getActivity(), "Mohon Ambil Foto Selfie KTP", Toast.LENGTH_SHORT).show();
+        }else {
+            ((RegisterDataActivity)getActivity()).replaceFragment(new AddressFragment());
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -120,7 +130,14 @@ public class DocumentFragment extends Fragment {
                 System.out.println("Path : " + returnValue.get(0));
                 String imageFilePath = returnValue.get(0);
                 Glide.with(this).load(imageFilePath).into(ivPhotoSelfie);
-                grosirMobilPreference.saveUrlImageSelfieKtp(imageFilePath);
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                Bitmap bitmap = BitmapFactory.decodeFile(imageFilePath, bmOptions);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                byte[] imageBytes = byteArrayOutputStream.toByteArray();
+                String imageSelfieBase64String = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+                System.out.println("IMAGE : "+ imageSelfieBase64String);
+                grosirMobilPreference.saveUrlImageSelfieKtp(imageSelfieBase64String);
             }
             catch (Exception e){
                 GrosirMobilLog.printStackTrace(e);
@@ -130,7 +147,14 @@ public class DocumentFragment extends Fragment {
             try {
                 String pathImage = data.getStringExtra(PATH_IMAGE);
                 Glide.with(this).load(pathImage).into(ivPhotoKtp);
-                grosirMobilPreference.saveUrlImageKtp(pathImage);
+                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                Bitmap bitmap = BitmapFactory.decodeFile(pathImage, bmOptions);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                byte[] imageBytes = byteArrayOutputStream.toByteArray();
+                String imageKtpBase64String = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+                System.out.println("IMAGE : "+ imageKtpBase64String);
+                grosirMobilPreference.saveUrlImageKtp(imageKtpBase64String);
             }catch (Exception e){
                 GrosirMobilLog.printStackTrace(e);
             }

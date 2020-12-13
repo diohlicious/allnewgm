@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 
 public class VehicleDetailResponse extends GeneralResponse {
+
     @SerializedName("data")
     @Expose
     private DataVehicleDetailResponse dataVehicleDetailResponse;

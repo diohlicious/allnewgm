@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class DataVehicleDetailResponse {
+
     @SerializedName("kik")
     @Expose
     private String kik;
@@ -78,6 +79,81 @@ public class DataVehicleDetailResponse {
 
     @SerializedName("stts")
     @Expose
-    private String stts;
-    
+    private String status;
+
+    public String getKik() {
+        return kik;
+    }
+
+    public String getOpenHouseId() {
+        return openHouseId;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public String getIsLive() {
+        return isLive;
+    }
+
+    public String getOpenPrice() {
+        return openPrice;
+    }
+
+    public String getHargaAwal() {
+        return hargaAwal;
+    }
+
+    public String getBottomPrice() {
+        return bottomPrice;
+    }
+
+    public String getAgreementNo() {
+        return agreementNo;
+    }
+
+    public List<ImageResponse> getImageResponseList() {
+        return imageResponseList;
+    }
+
+    public String getVehicleSummary() {
+        return vehicleSummary;
+    }
+
+    public String getVehicleData() {
+        return vehicleData;
+    }
+
+    public List<VehicleBodyResponse> getVehicleBodyResponseList() {
+        return vehicleBodyResponseList;
+    }
+
+    public List<VehicleInteriorResponse> getVehicleInteriorResponseList() {
+        return vehicleInteriorResponseList;
+    }
+
+    public List<VehicleMesinResponse> getVehicleMesinResponseList() {
+        return vehicleMesinResponseList;
+    }
+
+    public List<VehicleOtherResponse> getVehicleOtherResponseList() {
+        return vehicleOtherResponseList;
+    }
+
+    public List<ImageBrokenResponse> getImageBrokenResponseList() {
+        return imageBrokenResponseList;
+    }
+
+    public String getIsWinner() {
+        return isWinner;
+    }
+
+    public String getStatus() {
+        return status;
+    }
 }

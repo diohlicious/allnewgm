@@ -1,18 +1,16 @@
-package com.sip.grosirmobil.cloud.config.response.profil;
+package com.sip.grosirmobil.cloud.config.response.timeserver;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 
-import java.util.List;
-
-public class ProfilResponse extends GeneralResponse {
+public class TimeServerResponse extends GeneralResponse {
 
     @SerializedName("data")
     @Expose
-    private List<DataProfilResponse> data;
+    private DataTimeServerResponse data;
 
-    public List<DataProfilResponse> getData() {
+    public DataTimeServerResponse getData() {
         return data;
     }
 }

@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class ImageBrokenResponse {
+
     @SerializedName("FileName")
     @Expose
     private String fileName;
@@ -23,4 +24,24 @@ public class ImageBrokenResponse {
     @SerializedName("description")
     @Expose
     private String description;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    public String getBlobUri() {
+        return blobUri;
+    }
+
+    public String getBlobUriThumb() {
+        return blobUriThumb;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
