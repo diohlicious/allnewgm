@@ -328,8 +328,6 @@
     <string name="btn_tidak_setuju">Tidak Setuju</string>
     <string name="tv_data_diri_mitra">Data Diri Mitra</string>
     <string name="tv_alamat_lengkap">Alamat Lengkap</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tv_daftar_pertanyaan">Daftar Pertanyaan</string>
     <string name="btn_save">Simpan</string>
     <string name="tv_sortir_berdasarkan">Sortir Berdasarkan</string>

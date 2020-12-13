@@ -152,9 +152,6 @@ public class FilterActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.linear_location)
     void linearLocationClick(){
-//        showDialogChoose();
-        //TODO Ini nanti HIT API Warehouse. konsepnya sama seperti type Usaha, provinsi dll,
-        // cuma nnti begitu setelah lu hit jgn lupa simpan di preference, gw udah bikin tadi utk function SaveWareHouse dan GetWareHouse
         if(grosirMobilPreference.getDataWareHouseList()==null||grosirMobilPreference.getDataWareHouseList().isEmpty()){
             showProgressBar();
             showDialogChoose();
