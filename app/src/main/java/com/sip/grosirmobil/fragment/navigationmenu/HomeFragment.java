@@ -45,7 +45,7 @@ import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataModel;
 import com.sip.grosirmobil.cloud.config.request.home.HomeLiveRequest;
 import com.sip.grosirmobil.cloud.config.response.checkactivetoken.CheckActiveTokenResponse;
-import com.sip.grosirmobil.cloud.config.response.home.HomeLiveResponse;
+import com.sip.grosirmobil.cloud.config.response.homelive.HomeLiveResponse;
 import com.sip.grosirmobil.cloud.config.response.timeserver.TimeServerResponse;
 
 import java.io.IOException;

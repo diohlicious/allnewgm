@@ -43,6 +43,7 @@ public class GrosirMobilPreference {
     private static final String KELURAHAN = "kelurahan";
     private static final String KELURAHAN_CODE = "kelurahanCode";
     private static final String KODE_POS = "kodePos";
+    private static final String USER_ID = "userId";
     private static final String URL_IMAGE_KTP = "urlImageKtp";
     private static final String URL_IMAGE_SELFIE_KTP = "urlImageSelfieKtp";
 
@@ -164,6 +165,16 @@ public class GrosirMobilPreference {
 
     public String getKodePos() {
         return sharedpreferences.getString(KODE_POS, null);
+    }
+
+    public void saveUserId(String userId) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(USER_ID, userId);
+        editor.apply();
+    }
+
+    public String getUserId() {
+        return sharedpreferences.getString(USER_ID, null);
     }
 
     public void savePhoneNumber(String phoneNumber) {

@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.VehicleDetailActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehicle;
-import com.sip.grosirmobil.cloud.config.response.home.DataHomeLiveResponse;
+import com.sip.grosirmobil.cloud.config.response.homelive.DataHomeLiveResponse;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;

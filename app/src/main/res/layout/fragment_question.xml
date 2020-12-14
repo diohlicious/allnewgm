@@ -180,7 +180,7 @@
                     android:alpha="0.6"
                     android:fontFamily="@font/nunito_semi_bold"
                     android:scrollbarSize="@dimen/_12sdp"
-                    android:text="4. Tahun kendaraan yang dibutuhkan?"
+                    android:text="4. Perputaran Unit?"
                     android:textColor="@color/colorPrimaryFont"
                     android:textSize="@dimen/text_12" />
                 <com.google.android.material.textfield.TextInputLayout

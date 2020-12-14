@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,8 +24,8 @@ import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.cloud.config.request.savedataregister.SaveDataRegisterRequest;
-import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 import com.sip.grosirmobil.cloud.config.response.question.QuestionResponse;
+import com.sip.grosirmobil.cloud.config.response.savedataregister.SaveDataRegisterResponse;
 
 import java.io.IOException;
 
@@ -125,8 +126,8 @@ public class QuestionFragment extends Fragment {
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
-                            QuestionAdapter questionAdapter = new QuestionAdapter(response.body().getData(), dataQuestionResponse -> {
-                                etQuestion1.setText(dataQuestionResponse.getName());
+                            @SuppressLint("SetTextI18n") QuestionAdapter questionAdapter = new QuestionAdapter(response.body().getData(), dataQuestionResponse -> {
+                                etQuestion1.setText(dataQuestionResponse.getName()+" Kendaraan");
                                 etQuestion1.setTag(dataQuestionResponse.getCode());
                                 relativeDialogClick();
                             });
@@ -169,8 +170,8 @@ public class QuestionFragment extends Fragment {
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
-                            QuestionAdapter questionAdapter = new QuestionAdapter(response.body().getData(), dataQuestionResponse -> {
-                                etQuestion2.setText(dataQuestionResponse.getName());
+                            @SuppressLint("SetTextI18n") QuestionAdapter questionAdapter = new QuestionAdapter(response.body().getData(), dataQuestionResponse -> {
+                                etQuestion2.setText(dataQuestionResponse.getName()+" Kendaraan");
                                 etQuestion2.setTag(dataQuestionResponse.getCode());
                                 relativeDialogClick();
                             });
@@ -341,63 +342,76 @@ public class QuestionFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_save)
     void btnSaveClick(){
-        ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage(getString(R.string.base_tv_please_wait));
-        progressDialog.show();
-        SaveDataRegisterRequest saveDataRegisterRequest = new SaveDataRegisterRequest(
-                grosirMobilPreference.getNoKtp()+"",
-                grosirMobilPreference.getFullName()+"",
-                grosirMobilPreference.getPhoneNumber()+"",
-                grosirMobilPreference.getEmail()+"",
-                grosirMobilPreference.getPassword()+"",
-                "2"+"",
-                grosirMobilPreference.getTypeUsahaCode()+"",
-                grosirMobilPreference.getDealerName()+"",
-                grosirMobilPreference.getDealerPhoneNumber()+"",
-                "1"+"",//Hard Code Sementara //TODO BELUM ADA UI, JADI DARI SISI KAMI HARD_CODE
-                "2"+"",//Hard Code Sementara
-                etQuestion1.getTag().toString()+"",
-                "1"+"",//Hard Code Sementara
-                etQuestion4.getTag().toString()+"",
-                grosirMobilPreference.getUrlImageKtp()+"",
-                grosirMobilPreference.getUrlImageSelfieKtp()+"",
-                grosirMobilPreference.getDealerAddress()+"",
-                grosirMobilPreference.getProvince()+"",
-                grosirMobilPreference.getKabupaten()+"",
-                grosirMobilPreference.getKecamatan()+"",
-                grosirMobilPreference.getKelurahan()+"",
-                grosirMobilPreference.getKodePos()+"",
-                null);
-        final Call<GeneralResponse> saveDataRegisterApi = getApiGrosirMobil().saveDataRegisterApi(saveDataRegisterRequest);
-        saveDataRegisterApi.enqueue(new Callback<GeneralResponse>() {
-            @Override
-            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
-                progressDialog.dismiss();
-                if (response.isSuccessful()) {
-                    try {
-                        if(response.body().getMessage().equals("success")){
-                            ((RegisterDataActivity)getActivity()).replaceFragment(new CodeOtpFragment());
-                        }else {
-                            grosirMobilFunction.showMessage(getActivity(), "GET Simpan Data", response.body().getDescription());
+        if(etQuestion1.getText().toString().isEmpty()){
+            Toast.makeText(getActivity(), "Mohon Pilih Jawaban Question 1", Toast.LENGTH_SHORT).show();
+        }else if(etQuestion2.getText().toString().isEmpty()){
+            Toast.makeText(getActivity(), "Mohon Pilih Jawaban Question 2", Toast.LENGTH_SHORT).show();
+        }else if(etQuestion3.getText().toString().isEmpty()){
+            Toast.makeText(getActivity(), "Mohon Pilih Jawaban Question 3", Toast.LENGTH_SHORT).show();
+        }else if(etQuestion4.getText().toString().isEmpty()){
+            Toast.makeText(getActivity(), "Mohon Pilih Jawaban Question 4", Toast.LENGTH_SHORT).show();
+        }else if(etQuestion5.getText().toString().isEmpty()){
+            Toast.makeText(getActivity(), "Mohon Pilih Jawaban Question 5", Toast.LENGTH_SHORT).show();
+        }else {
+            ProgressDialog progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage(getString(R.string.base_tv_please_wait));
+            progressDialog.show();
+            SaveDataRegisterRequest saveDataRegisterRequest = new SaveDataRegisterRequest(
+                    grosirMobilPreference.getNoKtp()+"",
+                    grosirMobilPreference.getFullName()+"",
+                    grosirMobilPreference.getPhoneNumber()+"",
+                    grosirMobilPreference.getEmail()+"",
+                    grosirMobilPreference.getPassword()+"",
+                    "2"+"",
+                    grosirMobilPreference.getTypeUsahaCode()+"",
+                    grosirMobilPreference.getDealerName()+"",
+                    grosirMobilPreference.getDealerPhoneNumber()+"",
+                    "1"+"",//Hard Code Sementara //TODO BELUM ADA UI, JADI DARI SISI KAMI HARD_CODE
+                    "2"+"",//Hard Code Sementara //TODO BELUM ADA UI, JADI DARI SISI KAMI HARD_CODE
+                    etQuestion1.getTag().toString()+"",
+                    etQuestion2.getTag().toString()+"",
+                    etQuestion3.getTag().toString()+"",
+                    "data:image/jpeg;base64,"+grosirMobilPreference.getUrlImageKtp()+"",
+                    "data:image/jpeg;base64,"+grosirMobilPreference.getUrlImageSelfieKtp()+"",
+                    grosirMobilPreference.getDealerAddress()+"",
+                    grosirMobilPreference.getProvince()+"",
+                    grosirMobilPreference.getKabupaten()+"",
+                    grosirMobilPreference.getKecamatan()+"",
+                    grosirMobilPreference.getKelurahan()+"",
+                    grosirMobilPreference.getKodePos()+"",
+                    "13");
+            final Call<SaveDataRegisterResponse> saveDataRegisterApi = getApiGrosirMobil().saveDataRegisterApi(saveDataRegisterRequest);
+            saveDataRegisterApi.enqueue(new Callback<SaveDataRegisterResponse>() {
+                @Override
+                public void onResponse(Call<SaveDataRegisterResponse> call, Response<SaveDataRegisterResponse> response) {
+                    progressDialog.dismiss();
+                    if (response.isSuccessful()) {
+                        try {
+                            if(response.body().getMessage().equals("success")){
+                                grosirMobilPreference.saveUserId(response.body().getUserId());
+                                ((RegisterDataActivity)getActivity()).replaceFragment(new CodeOtpFragment());
+                            }else {
+                                grosirMobilFunction.showMessage(getActivity(), "GET Simpan Data", response.body().getDescription());
+                            }
+                        }catch (Exception e){
+                            GrosirMobilLog.printStackTrace(e);
                         }
-                    }catch (Exception e){
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }else {
-                    try {
-                        grosirMobilFunction.showMessage(getActivity(), getString(R.string.base_null_error_title), response.errorBody().string());
-                    } catch (IOException e) {
-                        GrosirMobilLog.printStackTrace(e);
+                    }else {
+                        try {
+                            grosirMobilFunction.showMessage(getActivity(), getString(R.string.base_null_error_title), response.errorBody().string());
+                        } catch (IOException e) {
+                            GrosirMobilLog.printStackTrace(e);
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<GeneralResponse> call, Throwable t) {
-                grosirMobilFunction.showMessage(getActivity(), "GET Simpan Data", getString(R.string.base_null_server));
-                GrosirMobilLog.printStackTrace(t);
-            }
-        });
+                @Override
+                public void onFailure(Call<SaveDataRegisterResponse> call, Throwable t) {
+                    grosirMobilFunction.showMessage(getActivity(), "GET Simpan Data", getString(R.string.base_null_server));
+                    GrosirMobilLog.printStackTrace(t);
+                }
+            });
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.sip.grosirmobil.cloud.config.response.home;
+package com.sip.grosirmobil.cloud.config.response.homelive;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -23,7 +23,7 @@ public class DataPageHomeResponse {
     @Expose
     private int maxPage;
 
-    @SerializedName("data_history")
+    @SerializedName("data_live")
     @Expose
     private List<DataHomeLiveResponse> dataHomeLiveResponseList;
 

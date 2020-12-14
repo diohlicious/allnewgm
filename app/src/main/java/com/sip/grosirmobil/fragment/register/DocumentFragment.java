@@ -2,10 +2,7 @@ package com.sip.grosirmobil.fragment.register;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +20,9 @@ import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.EditImageActivity;
 import com.sip.grosirmobil.activity.RegisterDataActivity;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
+import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -36,6 +33,7 @@ import static com.sip.grosirmobil.base.contract.GrosirMobilContract.PATH_IMAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_EDIT_IMAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_KTP;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_SELFIE_KTP;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.bitmapToBase64String;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +61,7 @@ public class DocumentFragment extends Fragment {
     @BindView(R.id.iv_photo_selfie) ImageView ivPhotoSelfie;
 
     private GrosirMobilPreference grosirMobilPreference;
+    private GrosirMobilFunction grosirMobilFunction;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +71,7 @@ public class DocumentFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         grosirMobilPreference = new GrosirMobilPreference(getActivity());
+        grosirMobilFunction = new GrosirMobilFunction(getActivity());
 
         stepView.go(2, true);
         return view;
@@ -115,7 +115,6 @@ public class DocumentFragment extends Fragment {
                 ArrayList<String> returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
                 System.out.println("Path : " + returnValue.get(0));
                 String imageFilePath = returnValue.get(0);
-//                Glide.with(this).load(imageFilePath).into(ivPhotoKtp);
                 Intent intentDisplay = new Intent(getActivity(), EditImageActivity.class);
                 intentDisplay.putExtra(PATH_IMAGE, imageFilePath);
                 startActivityForResult(intentDisplay, REQUEST_EDIT_IMAGE);
@@ -130,13 +129,7 @@ public class DocumentFragment extends Fragment {
                 System.out.println("Path : " + returnValue.get(0));
                 String imageFilePath = returnValue.get(0);
                 Glide.with(this).load(imageFilePath).into(ivPhotoSelfie);
-                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                Bitmap bitmap = BitmapFactory.decodeFile(imageFilePath, bmOptions);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                byte[] imageBytes = byteArrayOutputStream.toByteArray();
-                String imageSelfieBase64String = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-                System.out.println("IMAGE : "+ imageSelfieBase64String);
+                String imageSelfieBase64String = bitmapToBase64String(grosirMobilFunction.getBitmap(returnValue.get(0),ivPhotoSelfie),100);
                 grosirMobilPreference.saveUrlImageSelfieKtp(imageSelfieBase64String);
             }
             catch (Exception e){
@@ -147,13 +140,7 @@ public class DocumentFragment extends Fragment {
             try {
                 String pathImage = data.getStringExtra(PATH_IMAGE);
                 Glide.with(this).load(pathImage).into(ivPhotoKtp);
-                BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                Bitmap bitmap = BitmapFactory.decodeFile(pathImage, bmOptions);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                byte[] imageBytes = byteArrayOutputStream.toByteArray();
-                String imageKtpBase64String = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-                System.out.println("IMAGE : "+ imageKtpBase64String);
+                String imageKtpBase64String = bitmapToBase64String(grosirMobilFunction.getBitmap(pathImage,ivPhotoKtp),100);
                 grosirMobilPreference.saveUrlImageKtp(imageKtpBase64String);
             }catch (Exception e){
                 GrosirMobilLog.printStackTrace(e);

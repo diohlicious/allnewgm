@@ -1,4 +1,4 @@
-package com.sip.grosirmobil.cloud.config.response.home;
+package com.sip.grosirmobil.cloud.config.response.homelive;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

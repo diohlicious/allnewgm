@@ -185,7 +185,14 @@ public class ProfileUsahaFragment extends Fragment {
             grosirMobilPreference.saveTypeUsaha(etTypeUsaha.getText().toString());
             grosirMobilPreference.saveTypeUsahaCode(etTypeUsaha.getTag().toString());
             grosirMobilPreference.saveDealerName(etDealerName.getText().toString());
-            grosirMobilPreference.saveDealerPhoneNumber(etDealerPhone.getText().toString());
+            String prefix = etDealerPhone.getText().toString().substring(0,1);
+            String noHp;
+            if(etDealerPhone.getText().toString().contains("+62")){
+                noHp = etDealerPhone.getText().toString();
+            }else {
+                noHp = etDealerPhone.getText().toString().replace(prefix, "+62");
+            }
+            grosirMobilPreference.saveDealerPhoneNumber(noHp);
             ((RegisterDataActivity)getActivity()).replaceFragment(new DocumentFragment());
         }
     }

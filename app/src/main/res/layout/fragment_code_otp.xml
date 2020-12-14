@@ -110,6 +110,34 @@
                     android:inputType="number"
                     android:importantForAutofill="no"
                     tools:ignore="LabelFor" />
+                <EditText
+                    android:id="@+id/et_new_otp_5"
+                    android:backgroundTint="@color/colorPrimaryTheme"
+                    android:layout_width="@dimen/_35sdp"
+                    android:textSize="@dimen/text_25"
+                    android:gravity="center"
+                    android:maxLength="1"
+                    android:enabled="false"
+                    android:textColor="@color/colorPrimaryFont"
+                    android:fontFamily="@font/nunito_bold"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:importantForAutofill="no"
+                    tools:ignore="LabelFor" />
+                <EditText
+                    android:id="@+id/et_new_otp_6"
+                    android:backgroundTint="@color/colorPrimaryTheme"
+                    android:layout_width="@dimen/_35sdp"
+                    android:textSize="@dimen/text_25"
+                    android:gravity="center"
+                    android:maxLength="1"
+                    android:enabled="false"
+                    android:textColor="@color/colorPrimaryFont"
+                    android:fontFamily="@font/nunito_bold"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:importantForAutofill="no"
+                    tools:ignore="LabelFor" />
             </LinearLayout>
             <TextView
                 android:id="@+id/tv_resend_otp"

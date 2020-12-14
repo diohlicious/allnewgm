@@ -5,17 +5,20 @@ import com.sip.grosirmobil.cloud.config.request.kabupaten.KabupatenRequest;
 import com.sip.grosirmobil.cloud.config.request.kecamatan.KecamatanRequest;
 import com.sip.grosirmobil.cloud.config.request.kelurahan.KelurahanRequest;
 import com.sip.grosirmobil.cloud.config.request.login.LoginRequest;
+import com.sip.grosirmobil.cloud.config.request.resendotp.ResendOtpRequest;
 import com.sip.grosirmobil.cloud.config.request.savedataregister.SaveDataRegisterRequest;
+import com.sip.grosirmobil.cloud.config.request.validationotp.ValidationOtpRequest;
 import com.sip.grosirmobil.cloud.config.request.vehicledetail.VehicleDetailRequest;
 import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 import com.sip.grosirmobil.cloud.config.response.checkactivetoken.CheckActiveTokenResponse;
-import com.sip.grosirmobil.cloud.config.response.home.HomeLiveResponse;
+import com.sip.grosirmobil.cloud.config.response.homelive.HomeLiveResponse;
 import com.sip.grosirmobil.cloud.config.response.kabupaten.KabupatenResponse;
 import com.sip.grosirmobil.cloud.config.response.kecamatan.KecamatanResponse;
 import com.sip.grosirmobil.cloud.config.response.kelurahan.KelurahanResponse;
 import com.sip.grosirmobil.cloud.config.response.login.LoginResponse;
 import com.sip.grosirmobil.cloud.config.response.province.ProvinceResponse;
 import com.sip.grosirmobil.cloud.config.response.question.QuestionResponse;
+import com.sip.grosirmobil.cloud.config.response.savedataregister.SaveDataRegisterResponse;
 import com.sip.grosirmobil.cloud.config.response.timeserver.TimeServerResponse;
 import com.sip.grosirmobil.cloud.config.response.tipeusaha.TipeUsahaResponse;
 import com.sip.grosirmobil.cloud.config.response.vehicledetail.VehicleDetailResponse;
@@ -41,13 +44,15 @@ public interface GrosirMobilApi {
     String loginPath = "/api/auth/loginMobile";
     String tipeUsahaPath = "/api/registrasi/tipeusahamobile";
     String questionOnePath = "/api/registrasi/KebutuhanKendaraanBulanMobile";
-    String questionTwoPath = "/api/registrasi/KebutuhanPembelianMobile";
-    String questionThreePath = "/api/registrasi/JenisMobilMobile";
-    String questionFourPath = "/api/registrasi/Rata2PenjualanMobile";
-    String questionFivePath = "/api/registrasi/SumberInfoMobile";
+    String questionTwoPath = "/api/registrasi/Rata2PenjualanMobile";
+    String questionThreePath = "/api/registrasi/KebutuhanPembelianMobile";
+    String questionFourPath = "/api/registrasi/JenisMobilMobile";//TODO Belum ada API Perputaran Unit
+    String questionFivePath = "/api/registrasi/SumberInfoMobile";//TODO Belum ada API Usia Bisnis
     String tahunKendaraanPath = "/api/registrasi/TahunKendaraanMobile";
     String asalKendaraanPath = "/api/registrasi/AsalKendaraanMobile";
     String saveDataRegisterPath = "/api/registrasi/SimpanMobile";
+    String validationOtpPath = "/api/registrasi/validasiOtpMobile";
+    String resendOtpPath = "/api/registrasi/resendOtp";
     String logoutPath = "/api/auth/logout";
     String provincePath = "/api/registrasi/Propinsi";
     String kabupatenPath = "/api/registrasi/Kabupaten";
@@ -90,7 +95,16 @@ public interface GrosirMobilApi {
 
     @Headers("Content-Type: application/json")
     @POST(saveDataRegisterPath)
-    Call<GeneralResponse> saveDataRegisterApi(@Body SaveDataRegisterRequest saveDataRegisterRequest);
+    Call<SaveDataRegisterResponse> saveDataRegisterApi(@Body SaveDataRegisterRequest saveDataRegisterRequest);
+
+    @Headers("Content-Type: application/json")
+    @POST(validationOtpPath)
+    Call<GeneralResponse> validationOtpApi(@Body ValidationOtpRequest validationOtpRequest);
+
+
+    @Headers("Content-Type: application/json")
+    @POST(resendOtpPath)
+    Call<GeneralResponse> resendOtpApi(@Body ResendOtpRequest resendOtpRequest);
 
     @Headers("Content-Type: application/json")
     @POST(kelurahanPath)
