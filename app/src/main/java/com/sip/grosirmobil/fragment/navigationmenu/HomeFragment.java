@@ -153,6 +153,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @BindView(R.id.progress_horizontal) ProgressBar progressHorizontal;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.progress_bar_data) ProgressBar progressBarData;
+    
 
 
     private GrosirMobilFunction grosirMobilFunction;
@@ -163,6 +164,8 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     private List<HardCodeDataBaruMasukModel> recordHardCodeDataBaruMasukModelList = new ArrayList<>();
     private List<HardCodeDataModel> hardCodeDataModelList = new ArrayList<>();
     private boolean search = false;
+    private  int total;
+    
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -310,6 +313,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
+                            total = response.body().getDataPageHomeResponse().getTotal();
                             RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
                             rvLive.setLayoutManager(layoutManagerLive);
                             rvLive.setNestedScrollingEnabled(false);
@@ -605,7 +609,8 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         rvLive.setVisibility(View.VISIBLE);
         rvLiveSoon.setVisibility(View.GONE);
         rvRecord.setVisibility(View.GONE);
-        tvResultTitleContent.setText("Ada 32 kendaraan Live!");
+//        tvResultTitleContent.setText("Ada 32 kendaraan Live!");
+        tvResultTitleContent.setText("Ada " + total + " Kendaraan Live");
         linearResultTitleContent.setBackgroundResource(R.drawable.design_card_live);
         tvResultTitleContent.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
         tvTitleContent.setText("Baru Masuk");

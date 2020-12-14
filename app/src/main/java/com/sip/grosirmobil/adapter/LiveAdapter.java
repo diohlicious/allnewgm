@@ -49,11 +49,11 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
         DataHomeLiveResponse dataHomeLiveResponse = dataHomeLiveResponseList.get(position);
         holder.tvVehicleName.setText(dataHomeLiveResponse.getVehicleName());
         holder.tvPlatNumber.setText(dataHomeLiveResponse.getKikNumber().substring(0,10)+" - ");
-        holder.tvCity.setText(dataHomeLiveResponse.getWareHouse());
+        holder.tvCity.setText(dataHomeLiveResponse.getWareHouse().replace("WAREHOUSE ",""));
         holder.tvOpenPrice.setText("Rp "+setCurrencyFormat(dataHomeLiveResponse.getOpenPrice()));
         holder.tvBottomPrice.setText("Rp "+setCurrencyFormat(dataHomeLiveResponse.getOpenPrice()));
+        holder.tvInitialName.setText(dataHomeLiveResponse.getGrade());
         startTimer(holder.tvTimer, 20000000);
-
         AtomicBoolean favorite = new AtomicBoolean(false);
 
         holder.ivFavorite.setOnClickListener(view -> {
