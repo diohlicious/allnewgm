@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <RelativeLayout
+            android:id="@+id/relative_notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -59,83 +60,48 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_notification"
                 android:visibility="gone"
-                android:layout_marginBottom="@dimen/_50sdp"
                 android:layout_below="@id/iv_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
             <LinearLayout
-                android:id="@+id/linear_ready_unit_to_bid"
-                android:layout_below="@id/iv_background"
+                android:id="@+id/linear_cart_empty"
+                android:visibility="visible"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:orientation="vertical"
+                android:layout_below="@+id/rv_notification"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/_6sdp">
+                android:layout_height="match_parent">
                 <TextView
-                    android:id="@+id/tv_ready_unit_to_bid"
+                    android:gravity="center"
+                    android:fontFamily="@font/nunito_semi_bold"
+                    android:text="@string/tv_notification_empty_data"
+                    android:textColor="@color/colorPrimaryFont"
+                    android:textSize="@dimen/text_20"
+                    android:layout_marginTop="@dimen/_30sdp"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:layout_marginTop="@dimen/_50sdp"
+                    android:layout_marginBottom="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_notification_empty_data"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_28sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_28sdp"
-                    android:layout_marginBottom="@dimen/_15sdp"
-                    android:drawableEnd="@drawable/ic_angle_right"
-                    android:drawableTint="@color/colorBlack"
-                    android:fontFamily="@font/nunito_regular"
-                    android:gravity="center|left"
-                    android:text="@string/tv_ready_to_bid"
-                    android:textColor="@color/colorFontBlack"
-                    android:textSize="@dimen/text_18"
-                    tools:ignore="RelativeOverlap,RtlHardcoded,UnusedAttribute" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/linear_bid_again"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/linear_ready_unit_to_bid"
-                android:background="@color/colorRedAlpha20"
-                android:orientation="horizontal"
-                android:padding="@dimen/_6sdp">
+                    tools:ignore="ContentDescription" />
                 <TextView
-                    android:id="@+id/tv_bid_again"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_28sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_28sdp"
-                    android:layout_marginBottom="@dimen/_15sdp"
-                    android:drawableEnd="@drawable/ic_angle_right"
-                    android:drawableTint="@color/colorFontBlack"
+                    android:id="@+id/tv_ket_empty_data_notification"
+                    android:alpha="0.6"
+                    android:gravity="center"
                     android:fontFamily="@font/nunito_regular"
-                    android:gravity="center|left"
-                    android:text="@string/tv_bid_again"
-                    android:textColor="@color/colorFontBlack"
-                    android:textSize="@dimen/text_18"
-                    tools:ignore="RelativeOverlap,RtlHardcoded,UnusedAttribute" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/linear_bid_success_to_pay"
-                android:layout_below="@id/linear_bid_again"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorAccentAlpha20"
-                android:orientation="horizontal"
-                android:padding="@dimen/_6sdp">
-                <TextView
-                    android:id="@+id/tv_bid_success_to_pay"
+                    android:text="@string/tv_empty_notification"
+                    android:textColor="@color/colorPrimaryFont"
+                    android:textSize="@dimen/text_14"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_28sdp"
-                    android:layout_marginBottom="@dimen/_15sdp"
-                    android:drawableEnd="@drawable/ic_angle_right"
-                    android:drawableTint="@color/colorAccent"
-                    android:fontFamily="@font/nunito_regular"
-                    android:gravity="center|left"
-                    android:text="@string/tv_bid_success_to_pay"
-                    android:textColor="#000"
-                    android:textSize="@dimen/text_18"
-                    tools:ignore="RelativeOverlap,RtlHardcoded,UnusedAttribute" />
+                    android:layout_height="wrap_content"/>
+
+
             </LinearLayout>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

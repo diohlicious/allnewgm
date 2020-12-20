@@ -31,8 +31,8 @@ import com.sip.grosirmobil.activity.ProfileActivity;
 import com.sip.grosirmobil.activity.SearchActivity;
 import com.sip.grosirmobil.adapter.BannerGalleryAdapter;
 import com.sip.grosirmobil.adapter.LiveAdapter;
+import com.sip.grosirmobil.adapter.LiveHistoryAdapter;
 import com.sip.grosirmobil.adapter.LiveSoonAdapter;
-import com.sip.grosirmobil.adapter.RecordAdapter;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.implement.HomePresenterImp;
@@ -43,8 +43,10 @@ import com.sip.grosirmobil.base.util.GrosirMobilFragment;
 import com.sip.grosirmobil.base.view.HomeView;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataModel;
+import com.sip.grosirmobil.cloud.config.request.home.HomeHistoryRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeLiveRequest;
 import com.sip.grosirmobil.cloud.config.response.checkactivetoken.CheckActiveTokenResponse;
+import com.sip.grosirmobil.cloud.config.response.homehistory.HomeHistoryResponse;
 import com.sip.grosirmobil.cloud.config.response.homelive.HomeLiveResponse;
 import com.sip.grosirmobil.cloud.config.response.timeserver.TimeServerResponse;
 
@@ -170,7 +172,6 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         setStatusBarFragment(getActivity());
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
@@ -181,21 +182,12 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
 
         setDataBanner();
         setDataLiveSoon();
-        setDataRecord();
-
         RecyclerView.LayoutManager layoutManagerLiveSoon = new LinearLayoutManager(getActivity());
         rvLiveSoon.setLayoutManager(layoutManagerLiveSoon);
         rvLiveSoon.setNestedScrollingEnabled(false);
         LiveSoonAdapter liveSoonAdapter = new LiveSoonAdapter(getActivity(), liveSoonHardCodeDataBaruMasukModelList);
         rvLiveSoon.setAdapter(liveSoonAdapter);
         liveSoonAdapter.notifyDataSetChanged();
-
-        RecyclerView.LayoutManager layoutManagerRecord = new LinearLayoutManager(getActivity());
-        rvRecord.setLayoutManager(layoutManagerRecord);
-        rvRecord.setNestedScrollingEnabled(false);
-        RecordAdapter recordAdapter = new RecordAdapter(getActivity(), recordHardCodeDataBaruMasukModelList);
-        rvRecord.setAdapter(recordAdapter);
-        recordAdapter.notifyDataSetChanged();
 
         setUiReset();
 
@@ -279,6 +271,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                         if(response.body().getMessage().equals("success")){
                             getCheckActiveTokenApi();
                             getHomeLive();
+                            getHomeHistory();
                         }else {
                             grosirMobilFunction.showMessage(getActivity(), "GET Time Server", response.body().getMessage());
                         }
@@ -343,6 +336,48 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         });
     }
 
+    private void getHomeHistory(){
+        progressBarData.setVisibility(View.VISIBLE);
+        HomeHistoryRequest homeHistoryRequest = new HomeHistoryRequest(1,20,"");
+        final Call<HomeHistoryResponse> timeServerApi = getApiGrosirMobil().homeHistoryApi(BEARER+" "+grosirMobilPreference.getToken(),homeHistoryRequest);
+        timeServerApi.enqueue(new Callback<HomeHistoryResponse>() {
+            @Override
+            public void onResponse(Call<HomeHistoryResponse> call, Response<HomeHistoryResponse> response) {
+                progressBarData.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    try {
+                        if(response.body().getMessage().equals("success")){
+                            total = response.body().getDataPageHomeHistoryResponse().getTotal();
+                            RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
+                            rvRecord.setLayoutManager(layoutManagerLive);
+                            rvRecord.setNestedScrollingEnabled(false);
+                            LiveHistoryAdapter liveHistoryAdapter = new LiveHistoryAdapter(getActivity(), response.body().getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList());
+                            rvRecord.setAdapter(liveHistoryAdapter);
+                            liveHistoryAdapter.notifyDataSetChanged();
+                        }else {
+                            grosirMobilFunction.showMessage(getActivity(), "GET Home History", response.body().getMessage());
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }else {
+                    try {
+                        grosirMobilFunction.showMessage(getActivity(), getString(R.string.base_null_error_title), response.errorBody().string());
+                    } catch (IOException e) {
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<HomeHistoryResponse> call, Throwable t) {
+                progressBarData.setVisibility(View.GONE);
+                grosirMobilFunction.showMessage(getActivity(), "GET Home History", getString(R.string.base_null_server));
+                GrosirMobilLog.printStackTrace(t);
+            }
+
+        });
+    }
+
 
 
     private void setUiReset(){
@@ -386,29 +421,6 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         liveSoonHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
         hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
         liveSoonHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-    }
-
-    private void setDataRecord(){
-        HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","Penawaran Selesai");
-        recordHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","Penawaran Selesai");
-        recordHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","Penawaran Selesai");
-        recordHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","Penawaran Selesai");
-        recordHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","Penawaran Selesai");
-        recordHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","Penawaran Selesai");
-        recordHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","Penawaran Selesai");
-        recordHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","Penawaran Selesai");
-        recordHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","Penawaran Selesai");
-        recordHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","Penawaran Selesai");
-        recordHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -609,7 +621,6 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         rvLive.setVisibility(View.VISIBLE);
         rvLiveSoon.setVisibility(View.GONE);
         rvRecord.setVisibility(View.GONE);
-//        tvResultTitleContent.setText("Ada 32 kendaraan Live!");
         tvResultTitleContent.setText("Ada " + total + " Kendaraan Live");
         linearResultTitleContent.setBackgroundResource(R.drawable.design_card_live);
         tvResultTitleContent.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));

@@ -434,4 +434,11 @@
     <string name="tv_empty_data_history">Saat ini belum ada kendaraan\nyang tersedia, silahkan tunggu informasi\nberikutnya pada saat Riwayat Grosir</string>
     <string name="btn_lihat_info">Lihat Info</string>
     <string name="tv_kirim_ulang_kode_otp">Kirim ulang kode OTP</string>
+    <string name="tv_cart_empty_data">Keranjang Anda kosong</string>
+    <string name="tv_empty_cart">Anda belum melakukan penawaran.\nTelusuri semua kendaraan yang kami tawarkan \ndan lakukan tawar/buy now</string>
+    <string name="btn_telusuri_kenderaan">Telusuri Kendaraan</string>
+    <string name="tv_notification_empty_data">Belum ada info tersedia</string>
+    <string name="tv_empty_notification">Terus pantau informasi dari kami, serta ikuti \npenawaran untuk mendapat informasi\npenawaran terbaru Anda</string>
+    <string name="tv_win_empty_data">Anda belum menang</string>
+    <string name="tv_empty_win">Anda belum memenangkan penawaran\napapun. Telusuri semua kendaraan yang kami\ntawarkan dan lakukan tawar/buy now</string>
 </resources>

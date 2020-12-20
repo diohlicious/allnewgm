@@ -1,5 +1,6 @@
 package com.sip.grosirmobil.base.function;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -146,9 +147,13 @@ public class GrosirMobilFunction {
         }
     }
 
-    public static String convertDate(String inputDateString, SimpleDateFormat inputDateFormat, SimpleDateFormat outputDateFormat) {
+    public static String convertDate(String inputDateString, String inputDateFormatString, String outputDateFormatString) {
         Date date;
         String outputDateString = null;
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat(inputDateFormatString);
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat(outputDateFormatString);
         try {
             date = inputDateFormat.parse(inputDateString);
             outputDateString = outputDateFormat.format(date);

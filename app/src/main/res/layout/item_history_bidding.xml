@@ -38,19 +38,22 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
+                    android:gravity="center_vertical"
                     android:layout_height="match_parent">
                     <TextView
-                        android:id="@+id/tv_plat_number"
-                        android:text="NI 21231324 - "
+                        android:id="@+id/tv_event_date"
+                        android:text="Event 12 Nov 2020 -"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:includeFontPadding="false"
                         android:layout_marginTop="@dimen/_1sdp"
                         android:fontFamily="@font/nunito_regular"
-                        android:textColor="@color/colorPrimaryHintFont"
+                        android:textColor="@color/colorFontGray"
                         android:textSize="@dimen/text_11" />
                     <TextView
                         android:id="@+id/tv_city"
                         android:text="Jakarta"
+                        android:includeFontPadding="false"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"

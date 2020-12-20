@@ -40,6 +40,8 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MAIN;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.adjustFontScale;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
@@ -377,6 +379,8 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     private List<HardCodeDataModel> hardCodeDataDescriptionModelList = new ArrayList<>();
     private List<HardCodeDataModel> hardCodeDataBrokenImageModelList = new ArrayList<>();
     private Context context;
+    private String openHouseId="";
+    private String kik="";
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -389,6 +393,9 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
         context = this.getApplicationContext();
         grosirMobilPreference = new GrosirMobilPreference(this);
         grosirMobilFunction = new GrosirMobilFunction(this);
+
+        openHouseId = getIntent().getStringExtra(ID_VEHICLE);
+        kik = getIntent().getStringExtra(KIK);
 
         if(getIntent().getStringExtra(FROM_PAGE).equals("LIVE")){
             btnNego.setVisibility(View.VISIBLE);

@@ -146,6 +146,7 @@
                             android:layout_height="match_parent"/>
                     </LinearLayout>
                 </LinearLayout>
+               
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
         <Button
@@ -153,6 +154,7 @@
             android:fontFamily="@font/nunito_bold"
             android:textSize="@dimen/text_18"
             android:text="@string/btn_bayar"
+            android:visibility="gone"
             android:textColor="@color/colorPrimaryWhite"
             android:textAllCaps="false"
             android:layout_marginRight="@dimen/_20sdp"
@@ -162,5 +164,58 @@
             android:background="@drawable/btn_design"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:id="@+id/linear_win_empty"
+            android:visibility="visible"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:orientation="vertical"
+            android:layout_below="@+id/rv_notification"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:gravity="center"
+                android:fontFamily="@font/nunito_semi_bold"
+                android:text="@string/tv_win_empty_data"
+                android:textColor="@color/colorPrimaryFont"
+                android:textSize="@dimen/text_20"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_marginTop="@dimen/_50sdp"
+                android:layout_marginBottom="@dimen/_30sdp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_win_empty_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:ignore="ContentDescription" />
+            <TextView
+                android:id="@+id/tv_ket_empty_data_notification"
+                android:alpha="0.6"
+                android:gravity="center"
+                android:fontFamily="@font/nunito_regular"
+                android:text="@string/tv_empty_win"
+                android:textColor="@color/colorPrimaryFont"
+                android:textSize="@dimen/text_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/btn_telusuri_kenderaan"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:fontFamily="@font/nunito_semi_bold"
+                android:textSize="@dimen/text_18"
+                android:textColor="@color/colorPrimaryWhite"
+                android:textAllCaps="false"
+                android:text="@string/btn_telusuri_kenderaan"
+                android:background="@drawable/btn_design"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+        
     </LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

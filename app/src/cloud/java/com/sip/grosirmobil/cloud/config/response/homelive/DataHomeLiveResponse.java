@@ -53,13 +53,13 @@ public class DataHomeLiveResponse {
     @Expose
     private String createdAt;
 
-//    @SerializedName("is_favorite")
-//    @Expose
-//    private String isFavorite;
-//
-//    @SerializedName("image")
-//    @Expose
-//    private String image;
+    @SerializedName("is_favorite")
+    @Expose
+    private String isFavorite;
+
+    @SerializedName("image")
+    @Expose
+    private String image;
 
     @SerializedName("updated_at")
     @Expose
@@ -115,5 +115,8 @@ public class DataHomeLiveResponse {
 
     public String getUpdatedAt() {
         return updatedAt;
+    }
+
+    public String getImage() {return image;
     }
 }

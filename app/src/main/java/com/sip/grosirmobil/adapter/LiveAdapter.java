@@ -3,6 +3,7 @@ package com.sip.grosirmobil.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
@@ -22,12 +24,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
 
 public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
 
-    private List<DataHomeLiveResponse> dataHomeLiveResponseList;
-    private Context contexts;
+    private final List<DataHomeLiveResponse> dataHomeLiveResponseList;
+    private final Context contexts;
 
 
     public LiveAdapter(Context context, List<DataHomeLiveResponse> dataHomeLiveResponses) {
@@ -43,36 +46,40 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
         return new ViewHolderItemVehicle(itemView);
     }
 
-    @SuppressLint("SetTextI18n")
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @SuppressLint({"SetTextI18n", "RestrictedApi"})
     @Override
     public void onBindViewHolder(@NonNull ViewHolderItemVehicle holder, int position) {
         DataHomeLiveResponse dataHomeLiveResponse = dataHomeLiveResponseList.get(position);
         holder.tvVehicleName.setText(dataHomeLiveResponse.getVehicleName());
-        holder.tvPlatNumber.setText(dataHomeLiveResponse.getKikNumber().substring(0,10)+" - ");
-        holder.tvCity.setText(dataHomeLiveResponse.getWareHouse().replace("WAREHOUSE ",""));
-        holder.tvOpenPrice.setText("Rp "+setCurrencyFormat(dataHomeLiveResponse.getOpenPrice()));
-        holder.tvBottomPrice.setText("Rp "+setCurrencyFormat(dataHomeLiveResponse.getOpenPrice()));
+        holder.tvPlatNumber.setText(dataHomeLiveResponse.getKikNumber().substring(0, 10) + " - ");
+        holder.tvCity.setText(dataHomeLiveResponse.getWareHouse().replace("WAREHOUSE ", ""));
+        holder.tvOpenPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getOpenPrice()));
+        holder.tvBottomPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getOpenPrice()));
         holder.tvInitialName.setText(dataHomeLiveResponse.getGrade());
-        startTimer(holder.tvTimer, 20000000);
-        AtomicBoolean favorite = new AtomicBoolean(false);
+        
+     
+        startTimer(holder.tvTimer, 20201219);
+        AtomicBoolean favorite = new AtomicBoolean(
+                false);
 
         holder.ivFavorite.setOnClickListener(view -> {
-            if(favorite.get()){
+            if (favorite.get()) {
                 favorite.set(false);
                 holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
-            }else {
+            } else {
                 favorite.set(true);
                 holder.ivFavorite.setImageResource(R.drawable.ic_favorite);
             }
         });
         holder.cardVehicle.setOnClickListener(view -> {
             Intent intent = new Intent(contexts, VehicleDetailActivity.class);
-            intent.putExtra(ID_VEHICLE, "");
+            intent.putExtra(ID_VEHICLE, dataHomeLiveResponse.getOpenHouseId());
+            intent.putExtra(KIK, dataHomeLiveResponse.getKik());
             intent.putExtra(FROM_PAGE, "LIVE");
             contexts.startActivity(intent);
         });
     }
-
     @Override
     public int getItemCount() {
         return dataHomeLiveResponseList.size();

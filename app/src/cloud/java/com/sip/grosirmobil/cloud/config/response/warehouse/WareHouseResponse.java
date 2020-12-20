@@ -7,7 +7,6 @@ import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 import java.util.List;
 
 public class WareHouseResponse extends GeneralResponse {
-
     @SerializedName("data")
     @Expose
     private List<DataWareHouseResponse> data;

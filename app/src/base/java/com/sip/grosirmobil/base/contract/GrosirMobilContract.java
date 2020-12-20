@@ -36,6 +36,7 @@ public class GrosirMobilContract {
     public static final String STATUS = "status";
 
     public static final String ID_VEHICLE = "id_vehicle";
+    public static final String KIK = "kik";
     public static final String DESCRIPTION = "description";
     public static final String ID_PRODUCT = "id_product";
     public static final String TITLE = "title";
