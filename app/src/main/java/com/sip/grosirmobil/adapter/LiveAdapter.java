@@ -13,10 +13,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.VehicleDetailActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehicle;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.cloud.config.response.homelive.DataHomeLiveResponse;
 
 import java.util.List;
@@ -50,35 +55,58 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
     @SuppressLint({"SetTextI18n", "RestrictedApi"})
     @Override
     public void onBindViewHolder(@NonNull ViewHolderItemVehicle holder, int position) {
-        DataHomeLiveResponse dataHomeLiveResponse = dataHomeLiveResponseList.get(position);
-        holder.tvVehicleName.setText(dataHomeLiveResponse.getVehicleName());
-        holder.tvPlatNumber.setText(dataHomeLiveResponse.getKikNumber().substring(0, 10) + " - ");
-        holder.tvCity.setText(dataHomeLiveResponse.getWareHouse().replace("WAREHOUSE ", ""));
-        holder.tvOpenPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getOpenPrice()));
-        holder.tvBottomPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getOpenPrice()));
-        holder.tvInitialName.setText(dataHomeLiveResponse.getGrade());
-        
-     
-        startTimer(holder.tvTimer, 20201219);
-        AtomicBoolean favorite = new AtomicBoolean(
-                false);
+        try {
+            DataHomeLiveResponse dataHomeLiveResponse = dataHomeLiveResponseList.get(position);
+            holder.tvVehicleName.setText(dataHomeLiveResponse.getVehicleName());
+            holder.tvPlatNumber.setText(dataHomeLiveResponse.getKikNumber().substring(0, 10) + " - ");
+            holder.tvCity.setText(dataHomeLiveResponse.getWareHouse().replace("WAREHOUSE ", ""));
+            holder.tvOpenPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getOpenPrice()));
+            holder.tvBottomPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getOpenPrice()));
+            holder.tvInitialName.setText(dataHomeLiveResponse.getGrade());
 
-        holder.ivFavorite.setOnClickListener(view -> {
-            if (favorite.get()) {
-                favorite.set(false);
-                holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
-            } else {
-                favorite.set(true);
+            CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
+            circularProgressDrawable.setStrokeWidth(5f);
+            circularProgressDrawable.setCenterRadius(30f);
+            circularProgressDrawable.start();
+            Glide.with(contexts)
+                    .load(dataHomeLiveResponse.getImage())
+                    .apply(new RequestOptions()
+                            .placeholder(circularProgressDrawable)
+                            .error(R.drawable.ic_broken_image)
+                            .dontAnimate()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(false))
+                    .into(holder.ivImage);
+
+            if(dataHomeLiveResponse.getIsFavorite().equals("1")){
                 holder.ivFavorite.setImageResource(R.drawable.ic_favorite);
+            }else {
+                holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
             }
-        });
-        holder.cardVehicle.setOnClickListener(view -> {
-            Intent intent = new Intent(contexts, VehicleDetailActivity.class);
-            intent.putExtra(ID_VEHICLE, dataHomeLiveResponse.getOpenHouseId());
-            intent.putExtra(KIK, dataHomeLiveResponse.getKik());
-            intent.putExtra(FROM_PAGE, "LIVE");
-            contexts.startActivity(intent);
-        });
+
+            startTimer(holder.tvTimer, 20201219);
+
+            AtomicBoolean favorite = new AtomicBoolean(false);
+
+            holder.ivFavorite.setOnClickListener(view -> {
+                if (favorite.get()) {
+                    favorite.set(false);
+                    holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+                } else {
+                    favorite.set(true);
+                    holder.ivFavorite.setImageResource(R.drawable.ic_favorite);
+                }
+            });
+            holder.cardVehicle.setOnClickListener(view -> {
+                Intent intent = new Intent(contexts, VehicleDetailActivity.class);
+                intent.putExtra(ID_VEHICLE, dataHomeLiveResponse.getOpenHouseId());
+                intent.putExtra(KIK, dataHomeLiveResponse.getKik());
+                intent.putExtra(FROM_PAGE, "LIVE");
+                contexts.startActivity(intent);
+            });
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
+        }
     }
     @Override
     public int getItemCount() {

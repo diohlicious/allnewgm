@@ -63,9 +63,8 @@
                 android:layout_below="@id/iv_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
             <LinearLayout
-                android:id="@+id/linear_cart_empty"
+                android:id="@+id/linear_notification_empty"
                 android:visibility="visible"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
@@ -83,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
                 <ImageView
-                    android:layout_marginTop="@dimen/_50sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_30sdp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_notification_empty_data"

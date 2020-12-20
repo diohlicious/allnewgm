@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +33,8 @@ public class NotificationFragment extends GrosirMobilFragment {
     @BindView(R.id.swipe_refresh_notification) SwipeRefreshLayout swipeRefreshNotification;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_notification) RecyclerView rvNotification;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_notification_empty) LinearLayout linearNotificationEmpty;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

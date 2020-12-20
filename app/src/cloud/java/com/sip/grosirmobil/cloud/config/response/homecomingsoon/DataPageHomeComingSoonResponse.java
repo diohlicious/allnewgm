@@ -1,11 +1,11 @@
-package com.sip.grosirmobil.cloud.config.response.homelive;
+package com.sip.grosirmobil.cloud.config.response.homecomingsoon;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class DataPageHomeResponse {
+public class DataPageHomeComingSoonResponse {
 
     @SerializedName("total")
     @Expose
@@ -25,7 +25,7 @@ public class DataPageHomeResponse {
 
     @SerializedName("data_live")
     @Expose
-    private List<DataHomeLiveResponse> dataHomeLiveResponseList;
+    private List<DataHomeComingSoonResponse> dataHomeComingSoonResponseList;
 
     public int getTotal() {
         return total;
@@ -44,7 +44,7 @@ public class DataPageHomeResponse {
     }
     
 
-    public List<DataHomeLiveResponse> getDataHomeLiveResponseList() {
-        return dataHomeLiveResponseList;
+    public List<DataHomeComingSoonResponse> getDataHomeComingSoonResponseList() {
+        return dataHomeComingSoonResponseList;
     }
 }

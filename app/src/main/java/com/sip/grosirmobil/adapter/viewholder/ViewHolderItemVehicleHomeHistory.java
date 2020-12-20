@@ -1,7 +1,6 @@
 package com.sip.grosirmobil.adapter.viewholder;
 
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,7 +15,6 @@ public class ViewHolderItemVehicleHomeHistory extends RecyclerView.ViewHolder {
 
     public TextView tvVehicleNameHistory, tvEventDate, tvCityHistory, tvOpenPriceHistory, tvSoldPriceHistory, tvInitialNameHistory,tvStatusHistory;
     public CardView cardVehicleHistory;
-    public ImageView ivImage, ivFavorite;
     public LinearLayout linearDescription;
     public CircleImageView circleImageViewItem;
 
@@ -32,6 +30,5 @@ public class ViewHolderItemVehicleHomeHistory extends RecyclerView.ViewHolder {
         tvSoldPriceHistory          = view.findViewById(R.id.tv_sold_price_history);
         tvInitialNameHistory        = view.findViewById(R.id.tv_initial_name_history);
         tvStatusHistory             = view.findViewById(R.id.tv_status_history);
-        ivImage             = view.findViewById(R.id.iv_image_home_live);
     }
 }

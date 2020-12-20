@@ -1,9 +1,9 @@
-package com.sip.grosirmobil.cloud.config.response.homelive;
+package com.sip.grosirmobil.cloud.config.response.homecomingsoon;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class DataHomeLiveResponse {
+public class DataHomeComingSoonResponse {
 
     @SerializedName("ohid")
     @Expose

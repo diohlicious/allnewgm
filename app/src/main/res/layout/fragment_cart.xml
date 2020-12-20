@@ -128,53 +128,6 @@
                             android:layout_marginTop="@dimen/_15sdp"
                             android:nestedScrollingEnabled="false" />
                     </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/linear_payment_receive"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_marginStart="@dimen/_5sdp"
-                            android:layout_marginEnd="@dimen/_5sdp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/nunito_semi_bold"
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:textSize="@dimen/text_14"
-                            android:text="@string/tv_pembayaran_diterima"
-                            android:textColor="@color/colorFontBlack"
-                            tools:ignore="HardcodedText" />
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_payment_receive"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:nestedScrollingEnabled="false" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/linear_ready_take_out"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="@dimen/_30sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_marginStart="@dimen/_5sdp"
-                            android:layout_marginEnd="@dimen/_5sdp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/nunito_semi_bold"
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:textSize="@dimen/text_14"
-                            android:text="@string/tv_kendaraan_siap_diambil"
-                            android:textColor="@color/colorFontBlack"
-                            tools:ignore="HardcodedText" />
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_ready_take_out"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:nestedScrollingEnabled="false" />
-                    </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/linear_cart_empty"
@@ -194,7 +147,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                     <ImageView
-                        android:layout_marginTop="@dimen/_50sdp"
+                        android:layout_marginTop="@dimen/_30sdp"
                         android:layout_marginBottom="@dimen/_30sdp"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_cart_empty_data"
@@ -288,33 +241,6 @@
                 android:fontFamily="@font/nunito_regular"
                 android:textSize="@dimen/text_16"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"/>
-            <TextView
-                android:id="@+id/tv_pembayaran_diterima"
-                android:gravity="center|start"
-                android:paddingLeft="@dimen/_20sdp"
-                android:paddingRight="@dimen/_20sdp"
-                android:text="@string/tv_pembayaran_diterima"
-                android:background="@color/colorPrimaryWhite"
-                android:textColor="@color/colorPrimaryFont"
-                android:fontFamily="@font/nunito_regular"
-                android:textSize="@dimen/text_16"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"/>
-            <TextView
-                android:id="@+id/tv_kendaraan_siap_diambil"
-                android:gravity="center|start"
-                android:paddingLeft="@dimen/_20sdp"
-                android:paddingRight="@dimen/_20sdp"
-                android:text="@string/tv_kendaraan_siap_diambil"
-                android:background="@color/colorPrimaryWhite"
-                android:textColor="@color/colorPrimaryFont"
-                android:fontFamily="@font/nunito_regular"
-                android:textSize="@dimen/text_16"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"/>
         </LinearLayout>

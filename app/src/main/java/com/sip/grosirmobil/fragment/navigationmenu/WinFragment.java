@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.activity.MainActivity;
 import com.sip.grosirmobil.activity.PayPaymentActivity;
 import com.sip.grosirmobil.adapter.CartAdapter;
 import com.sip.grosirmobil.base.util.GrosirMobilFragment;
@@ -28,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MAIN;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarFragment;
 
@@ -48,6 +51,12 @@ public class WinFragment extends GrosirMobilFragment {
     @BindView(R.id.tv_biaya_admin) TextView tvBiayaAdmin;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_total) TextView tvTotal;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btn_telusuri_kenderaan) Button btnFindVehicle;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_win_not_empty) LinearLayout linearWinNotEmpty;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_win_empty) LinearLayout linearWinEmpty;
 
     private List<HardCodeDataBaruMasukModel> liveHardCodeDataBaruMasukModelList = new ArrayList<>();
 
@@ -109,5 +118,15 @@ public class WinFragment extends GrosirMobilFragment {
             Intent intent = new Intent(getActivity(), PayPaymentActivity.class);
             startActivity(intent);
         }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.btn_telusuri_kenderaan)
+    void btnFindVehicleClick(){
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.putExtra(REQUEST_MAIN, "");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

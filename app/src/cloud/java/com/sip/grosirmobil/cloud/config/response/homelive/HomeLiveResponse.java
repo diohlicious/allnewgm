@@ -8,10 +8,10 @@ public class HomeLiveResponse extends GeneralResponse {
 
     @SerializedName("data")
     @Expose
-    private DataPageHomeResponse dataPageHomeResponse;
+    private DataPageHomeLiveResponse dataPageHomeLiveResponse;
 
-    public DataPageHomeResponse getDataPageHomeResponse() {
-        return dataPageHomeResponse;
+    public DataPageHomeLiveResponse getDataPageHomeLiveResponse() {
+        return dataPageHomeLiveResponse;
     }
 
 }

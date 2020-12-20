@@ -46,6 +46,7 @@ import com.sip.grosirmobil.cloud.config.model.HardCodeDataModel;
 import com.sip.grosirmobil.cloud.config.request.home.HomeHistoryRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeLiveRequest;
 import com.sip.grosirmobil.cloud.config.response.checkactivetoken.CheckActiveTokenResponse;
+import com.sip.grosirmobil.cloud.config.response.homehistory.DataPageHomeHistoryResponse;
 import com.sip.grosirmobil.cloud.config.response.homehistory.HomeHistoryResponse;
 import com.sip.grosirmobil.cloud.config.response.homelive.HomeLiveResponse;
 import com.sip.grosirmobil.cloud.config.response.timeserver.TimeServerResponse;
@@ -161,12 +162,12 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     private GrosirMobilFunction grosirMobilFunction;
     private GrosirMobilPreference grosirMobilPreference;
     private HomePresenter homePresenter;
-//    private List<HardCodeDataBaruMasukModel> liveHardCodeDataBaruMasukModelList = new ArrayList<>();
     private List<HardCodeDataBaruMasukModel> liveSoonHardCodeDataBaruMasukModelList = new ArrayList<>();
-    private List<HardCodeDataBaruMasukModel> recordHardCodeDataBaruMasukModelList = new ArrayList<>();
     private List<HardCodeDataModel> hardCodeDataModelList = new ArrayList<>();
     private boolean search = false;
-    private  int total;
+
+    private DataPageHomeHistoryResponse dataPageHomeHistoryResponse = null;
+
     
 
     @Override
@@ -300,19 +301,28 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         HomeLiveRequest homeLiveRequest = new HomeLiveRequest(1,20,"",1995,2020, 0,1000000000,"");
         final Call<HomeLiveResponse> timeServerApi = getApiGrosirMobil().homeLiveApi(BEARER+" "+grosirMobilPreference.getToken(),homeLiveRequest);
         timeServerApi.enqueue(new Callback<HomeLiveResponse>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<HomeLiveResponse> call, Response<HomeLiveResponse> response) {
                 progressBarData.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
-                            total = response.body().getDataPageHomeResponse().getTotal();
-                            RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
-                            rvLive.setLayoutManager(layoutManagerLive);
-                            rvLive.setNestedScrollingEnabled(false);
-                            LiveAdapter liveAdapter = new LiveAdapter(getActivity(), response.body().getDataPageHomeResponse().getDataHomeLiveResponseList());
-                            rvLive.setAdapter(liveAdapter);
-                            liveAdapter.notifyDataSetChanged();
+                            if(response.body().getDataPageHomeLiveResponse().getDataHomeLiveResponseList()==null ||response.body().getDataPageHomeLiveResponse().getDataHomeLiveResponseList().isEmpty()){
+                                tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_live));
+                                tvResultTitleContent.setText("Ada 0 Kendaraan Live");
+                                linearEmptyData.setVisibility(View.VISIBLE);
+                            }else {
+                                linearEmptyData.setVisibility(View.GONE);
+                                tvResultTitleContent.setText("Ada " + response.body().getDataPageHomeLiveResponse().getTotal() + " Kendaraan Live");
+                                RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
+                                rvLive.setLayoutManager(layoutManagerLive);
+                                rvLive.setNestedScrollingEnabled(false);
+                                LiveAdapter liveAdapter = new LiveAdapter(getActivity(), response.body().getDataPageHomeLiveResponse().getDataHomeLiveResponseList());
+                                rvLive.setAdapter(liveAdapter);
+                                liveAdapter.notifyDataSetChanged();
+                            }
+
                         }else {
                             grosirMobilFunction.showMessage(getActivity(), "GET Home Live", response.body().getMessage());
                         }
@@ -347,7 +357,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
-                            total = response.body().getDataPageHomeHistoryResponse().getTotal();
+                            dataPageHomeHistoryResponse = response.body().getDataPageHomeHistoryResponse();
                             RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
                             rvRecord.setLayoutManager(layoutManagerLive);
                             rvRecord.setNestedScrollingEnabled(false);
@@ -607,7 +617,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         setUiReset();
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.tv_live)
     void tvLiveClick(){
         if(search){
@@ -617,11 +627,11 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             linearTitleContent.setVisibility(View.VISIBLE);
             linearSearchAndLive.setVisibility(View.VISIBLE);
         }
+        getHomeLive();
         nestedView.setBackgroundResource(R.color.colorPrimaryWhite);
         rvLive.setVisibility(View.VISIBLE);
         rvLiveSoon.setVisibility(View.GONE);
         rvRecord.setVisibility(View.GONE);
-        tvResultTitleContent.setText("Ada " + total + " Kendaraan Live");
         linearResultTitleContent.setBackgroundResource(R.drawable.design_card_live);
         tvResultTitleContent.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
         tvTitleContent.setText("Baru Masuk");
@@ -631,10 +641,6 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         tvLiveSoon.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvRecord.setBackgroundResource(R.drawable.design_line);
         tvRecord.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
-
-//        //LIVE EMPTY
-//        tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_live));
-        linearEmptyData.setVisibility(View.GONE);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -652,7 +658,8 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         rvLiveSoon.setVisibility(View.GONE);
 //        rvLiveSoon.setVisibility(View.VISIBLE);
         rvRecord.setVisibility(View.GONE);
-        tvResultTitleContent.setText("Ada 32 kendaraan yang Akan Tayang!");
+        tvResultTitleContent.setText("Ada " + "0" + " kendaraan yang Akan Tayang!");
+//        tvResultTitleContent.setText("Ada 32 kendaraan yang Akan Tayang!");
         linearResultTitleContent.setBackgroundResource(R.drawable.design_card_soon);
         tvResultTitleContent.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvTitleContent.setText("Segera Tayang");
@@ -684,10 +691,12 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         tvLiveSoon.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvRecord.setBackgroundResource(R.drawable.design_line_selected);
         tvRecord.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
-
-//        //RECORD EMPTY
-//        tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_history));
-//        linearEmptyData.setVisibility(View.VISIBLE);
+        if(dataPageHomeHistoryResponse.getDataHomeHistoryResponseList()==null ||dataPageHomeHistoryResponse.getDataHomeHistoryResponseList().isEmpty()){
+            tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_history));
+            linearEmptyData.setVisibility(View.VISIBLE);
+        }else {
+            linearEmptyData.setVisibility(View.GONE);
+        }
     }
 
     @SuppressLint("NonConstantResourceId")

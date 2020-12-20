@@ -1,5 +1,6 @@
 package com.sip.grosirmobil.cloud.config;
 
+import com.sip.grosirmobil.cloud.config.request.home.HomeComingSoonRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeHistoryRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeLiveRequest;
 import com.sip.grosirmobil.cloud.config.request.kabupaten.KabupatenRequest;
@@ -12,6 +13,7 @@ import com.sip.grosirmobil.cloud.config.request.validationotp.ValidationOtpReque
 import com.sip.grosirmobil.cloud.config.request.vehicledetail.VehicleDetailRequest;
 import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 import com.sip.grosirmobil.cloud.config.response.checkactivetoken.CheckActiveTokenResponse;
+import com.sip.grosirmobil.cloud.config.response.homecomingsoon.HomeComingSoonResponse;
 import com.sip.grosirmobil.cloud.config.response.homehistory.HomeHistoryResponse;
 import com.sip.grosirmobil.cloud.config.response.homelive.HomeLiveResponse;
 import com.sip.grosirmobil.cloud.config.response.kabupaten.KabupatenResponse;
@@ -153,6 +155,11 @@ public interface GrosirMobilApi {
     @POST(homeLivePath)
     Call<HomeLiveResponse> homeLiveApi(@Header("Authorization") String authToken,
                                        @Body HomeLiveRequest homeLiveRequest);
+
+    @Headers("Content-Type: application/json")
+    @POST(homeLivePath)
+    Call<HomeComingSoonResponse> homeComingSoonApi(@Header("Authorization") String authToken,
+                                                   @Body HomeComingSoonRequest homeComingSoonRequest);
 
     @Headers("Content-Type: application/json")
     @POST(homeHistoryPath)
