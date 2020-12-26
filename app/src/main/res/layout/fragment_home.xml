@@ -256,7 +256,7 @@
                             android:textColor="@color/colorPrimaryWhite"
                             android:textSize="@dimen/text_16"
                             android:fontFamily="@font/nunito_bold"
-                            android:text="Ada 32 kendaraan Live!"
+                            android:text="Ada 0 kendaraan Live!"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>

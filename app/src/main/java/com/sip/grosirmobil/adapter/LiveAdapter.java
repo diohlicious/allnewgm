@@ -30,6 +30,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.getSecondTime;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
 
 public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
@@ -84,7 +85,12 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
                 holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
             }
 
-            startTimer(holder.tvTimer, 20201219);
+            long count = getSecondTime(dataHomeLiveResponse.getStartDate(), dataHomeLiveResponse.getEndDate());
+//            long count = getSecondTime("2020-12-12 10:00:00","2020-12-12 11:00:00");
+            long countTime = count;
+
+            System.out.println("Second : : "+ countTime);
+            startTimer(holder.tvTimer, getSecondTime(dataHomeLiveResponse.getStartDate(), dataHomeLiveResponse.getEndDate()));
 
             AtomicBoolean favorite = new AtomicBoolean(false);
 

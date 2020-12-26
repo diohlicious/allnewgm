@@ -19,6 +19,7 @@ public class GrosirMobilPreference {
 
     private static final String PREFERENCE_NAME = BuildConfig.APP_NAME;
     private static final String TOKEN = "token";
+    private static final String TIME_SERVER = "timeServer";
     private static final String PHONE_NUMBER = "phoneNumber";
     private static final String PASSWORD = "password";
     private static final String EMAIL = "email";
@@ -205,6 +206,16 @@ public class GrosirMobilPreference {
 
     public String getNoKtp() {
         return sharedpreferences.getString(NO_KTP, null);
+    }
+
+     public void saveTimeServer(String timeServer) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(TIME_SERVER, timeServer);
+        editor.apply();
+    }
+
+    public String getTimeServer() {
+        return sharedpreferences.getString(TIME_SERVER, null);
     }
 
     public void saveEmail(String email) {

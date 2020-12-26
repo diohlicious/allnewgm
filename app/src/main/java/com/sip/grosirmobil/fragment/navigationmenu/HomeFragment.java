@@ -270,9 +270,10 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
+
+                            grosirMobilPreference.saveTimeServer(response.body().getData().getTimeServer());
                             getCheckActiveTokenApi();
-                            getHomeLive();
-                            getHomeHistory();
+                            tvLiveClick();
                         }else {
                             grosirMobilFunction.showMessage(getActivity(), "GET Time Server", response.body().getMessage());
                         }
@@ -297,7 +298,9 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     }
 
     private void getHomeLive(){
+        linearEmptyData.setVisibility(View.GONE);
         progressBarData.setVisibility(View.VISIBLE);
+        rvLive.setVisibility(View.GONE);
         HomeLiveRequest homeLiveRequest = new HomeLiveRequest(1,20,"",1995,2020, 0,1000000000,"");
         final Call<HomeLiveResponse> timeServerApi = getApiGrosirMobil().homeLiveApi(BEARER+" "+grosirMobilPreference.getToken(),homeLiveRequest);
         timeServerApi.enqueue(new Callback<HomeLiveResponse>() {
@@ -305,6 +308,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             @Override
             public void onResponse(Call<HomeLiveResponse> call, Response<HomeLiveResponse> response) {
                 progressBarData.setVisibility(View.GONE);
+                rvLive.setVisibility(View.VISIBLE);
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
@@ -340,6 +344,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             @Override
             public void onFailure(Call<HomeLiveResponse> call, Throwable t) {
                 progressBarData.setVisibility(View.GONE);
+                rvLive.setVisibility(View.VISIBLE);
                 grosirMobilFunction.showMessage(getActivity(), "GET Home Live", getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);
             }
@@ -347,17 +352,26 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     }
 
     private void getHomeHistory(){
+        linearEmptyData.setVisibility(View.GONE);
         progressBarData.setVisibility(View.VISIBLE);
+        rvRecord.setVisibility(View.GONE);
         HomeHistoryRequest homeHistoryRequest = new HomeHistoryRequest(1,20,"");
         final Call<HomeHistoryResponse> timeServerApi = getApiGrosirMobil().homeHistoryApi(BEARER+" "+grosirMobilPreference.getToken(),homeHistoryRequest);
         timeServerApi.enqueue(new Callback<HomeHistoryResponse>() {
             @Override
             public void onResponse(Call<HomeHistoryResponse> call, Response<HomeHistoryResponse> response) {
                 progressBarData.setVisibility(View.GONE);
+                rvRecord.setVisibility(View.VISIBLE);
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
                             dataPageHomeHistoryResponse = response.body().getDataPageHomeHistoryResponse();
+                            if(response.body().getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList()==null ||response.body().getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList().isEmpty()){
+                                tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_history));
+                                linearEmptyData.setVisibility(View.VISIBLE);
+                            }else {
+                                linearEmptyData.setVisibility(View.GONE);
+                            }
                             RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
                             rvRecord.setLayoutManager(layoutManagerLive);
                             rvRecord.setNestedScrollingEnabled(false);
@@ -381,14 +395,13 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             @Override
             public void onFailure(Call<HomeHistoryResponse> call, Throwable t) {
                 progressBarData.setVisibility(View.GONE);
+                rvRecord.setVisibility(View.VISIBLE);
                 grosirMobilFunction.showMessage(getActivity(), "GET Home History", getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);
             }
 
         });
     }
-
-
 
     private void setUiReset(){
         getTimeServer();
@@ -398,7 +411,6 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         linearSearchAndLive.setVisibility(View.VISIBLE);
         linearTitleContent.setVisibility(View.VISIBLE);
         relativeResultSearch.setVisibility(View.GONE);
-        tvLiveClick();
     }
 
     private void setDataBanner(){
@@ -629,7 +641,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         }
         getHomeLive();
         nestedView.setBackgroundResource(R.color.colorPrimaryWhite);
-        rvLive.setVisibility(View.VISIBLE);
+        rvLive.setVisibility(View.GONE);
         rvLiveSoon.setVisibility(View.GONE);
         rvRecord.setVisibility(View.GONE);
         linearResultTitleContent.setBackgroundResource(R.drawable.design_card_live);
@@ -656,7 +668,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         nestedView.setBackgroundResource(R.color.colorPrimaryWhite);
         rvLive.setVisibility(View.GONE);
         rvLiveSoon.setVisibility(View.GONE);
-//        rvLiveSoon.setVisibility(View.VISIBLE);
+        rvLiveSoon.setVisibility(View.GONE);
         rvRecord.setVisibility(View.GONE);
         tvResultTitleContent.setText("Ada " + "0" + " kendaraan yang Akan Tayang!");
 //        tvResultTitleContent.setText("Ada 32 kendaraan yang Akan Tayang!");
@@ -678,12 +690,12 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_record)
     void tvRecordClick(){
+        getHomeHistory();
         linearSearchAndLive.setVisibility(View.GONE);
         nestedView.setBackgroundResource(R.color.colorBackgroundHome);
         rvLive.setVisibility(View.GONE);
         rvLiveSoon.setVisibility(View.GONE);
-//        rvRecord.setVisibility(View.GONE);
-        rvRecord.setVisibility(View.VISIBLE);
+        rvRecord.setVisibility(View.GONE);
         linearTitleContent.setVisibility(View.GONE);
         tvLive.setBackgroundResource(R.drawable.design_line);
         tvLive.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
@@ -691,12 +703,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         tvLiveSoon.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvRecord.setBackgroundResource(R.drawable.design_line_selected);
         tvRecord.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
-        if(dataPageHomeHistoryResponse.getDataHomeHistoryResponseList()==null ||dataPageHomeHistoryResponse.getDataHomeHistoryResponseList().isEmpty()){
-            tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_history));
-            linearEmptyData.setVisibility(View.VISIBLE);
-        }else {
-            linearEmptyData.setVisibility(View.GONE);
-        }
+
     }
 
     @SuppressLint("NonConstantResourceId")

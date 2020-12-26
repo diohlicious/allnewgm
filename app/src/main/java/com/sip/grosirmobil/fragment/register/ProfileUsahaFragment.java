@@ -181,17 +181,22 @@ public class ProfileUsahaFragment extends Fragment {
             Toast.makeText(getActivity(), "Mohon Isi Nama Dealer", Toast.LENGTH_SHORT).show();
         }else if(etDealerPhone.getText().toString().equals("")){
             Toast.makeText(getActivity(), "Mohon Isi No Telp Dealer", Toast.LENGTH_SHORT).show();
-        } else {
-            grosirMobilPreference.saveTypeUsaha(etTypeUsaha.getText().toString());
-            grosirMobilPreference.saveTypeUsahaCode(etTypeUsaha.getTag().toString());
-            grosirMobilPreference.saveDealerName(etDealerName.getText().toString());
-            String prefix = etDealerPhone.getText().toString().substring(0,1);
+        }else if(etDealerPhone.getText().toString().length()<10){
+            Toast.makeText(getActivity(), "Nomor Telepon Tidak Terdaftar", Toast.LENGTH_SHORT).show();
+        }else {
+            String prefix = etDealerPhone.getText().toString().substring(0,4);
+            String prefixNumber= prefix.substring(2,4);
+            String codeCountry = "+628";
+            String prefixComplete = codeCountry+prefixNumber;
             String noHp;
             if(etDealerPhone.getText().toString().contains("+62")){
                 noHp = etDealerPhone.getText().toString();
             }else {
-                noHp = etDealerPhone.getText().toString().replace(prefix, "+62");
+                noHp = etDealerPhone.getText().toString().replace(prefix, prefixComplete);
             }
+            grosirMobilPreference.saveTypeUsaha(etTypeUsaha.getText().toString());
+            grosirMobilPreference.saveTypeUsahaCode(etTypeUsaha.getTag().toString());
+            grosirMobilPreference.saveDealerName(etDealerName.getText().toString());
             grosirMobilPreference.saveDealerPhoneNumber(noHp);
             ((RegisterDataActivity)getActivity()).replaceFragment(new DocumentFragment());
         }

@@ -141,6 +141,7 @@ dependencies {
 //    api "com.treebo:internetavailabilitychecker:${versions.internetChecker}"
 //    api "ja.burhanrashid52:photoeditor:${versions.photoEditor}"
     api "com.theartofdev.edmodo:android-image-cropper:${versions.cropEditor}"
+    implementation 'joda-time:joda-time:2.10.8'
 //    api "com.github.rtugeek:colorseekbar:${versions.colorSeekBar}"
 //    api "com.github.shrikanth7698:Collapsible-Calendar-View-Android:${versions.calendarView}"
     //Library Feature Finish

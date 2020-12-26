@@ -100,14 +100,19 @@ public class RegisterActivity extends GrosirMobilActivity {
             Toast.makeText(this, "Mohon Isi Nama Lengkap", Toast.LENGTH_SHORT).show();
         }else if(etPhoneNumber.getText().toString().isEmpty()){
             Toast.makeText(this, "Mohon Isi Nomor Telepon", Toast.LENGTH_SHORT).show();
+        }else if(etPhoneNumber.getText().toString().length()<10){
+            Toast.makeText(this, "Nomor Telepon Tidak Terdaftar", Toast.LENGTH_SHORT).show();
         }else {
             if(cbTermAndCondition.isChecked()){
-                String prefix = etPhoneNumber.getText().toString().substring(0,1);
+                String prefix = etPhoneNumber.getText().toString().substring(0,4);
+                String prefixNumber= prefix.substring(2,4);
+                String codeCountry = "+628";
+                String prefixComplete = codeCountry+prefixNumber;
                 String noHp;
                 if(etPhoneNumber.getText().toString().contains("+62")){
                     noHp = etPhoneNumber.getText().toString();
                 }else {
-                    noHp = etPhoneNumber.getText().toString().replace(prefix, "+62");
+                    noHp = etPhoneNumber.getText().toString().replace(prefix, prefixComplete);
                 }
                 grosirMobilPreference.saveFullName(etFullName.getText().toString());
                 grosirMobilPreference.savePhoneNumber(noHp);

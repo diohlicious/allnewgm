@@ -90,7 +90,12 @@ public class CodeOtpFragment extends Fragment {
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
-
+                            etNewOtp1.setText("");
+                            etNewOtp2.setText("");
+                            etNewOtp3.setText("");
+                            etNewOtp4.setText("");
+                            etNewOtp5.setText("");
+                            etNewOtp6.setText("");
                         }else {
                             grosirMobilFunction.showMessage(getActivity(), "GET Resend OTP", response.body().getDescription());
                         }
@@ -409,10 +414,10 @@ public class CodeOtpFragment extends Fragment {
                     if(!etNewOtp1.getText().toString().equals("")){
                         etNewOtp1.setText("");
                     }else {
-                        if(etNewOtp5.getText().toString().equals("")){
+                        if(!etNewOtp5.getText().toString().equals("")){
                             etNewOtp5.setText("");
                         }else {
-                            if(etNewOtp6.getText().toString().equals("")){
+                            if(!etNewOtp6.getText().toString().equals("")){
                                 etNewOtp6.setText("");
                             }
                         }

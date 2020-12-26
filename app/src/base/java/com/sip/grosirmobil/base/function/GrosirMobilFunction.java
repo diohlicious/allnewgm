@@ -163,6 +163,54 @@ public class GrosirMobilFunction {
         return outputDateString;
     }
 
+    public static long getSecondTime(String inputDateString, String outputDateString){
+        long secondsOutput = 0;
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat liveDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        try {
+            Date inputDate = liveDateFormat.parse(inputDateString);
+            Date outputDate = liveDateFormat.parse(outputDateString);
+
+
+            long diff = outputDate.getTime() - inputDate.getTime();
+            long seconds = diff / 1;
+            long minutes = seconds / 60;
+            long hours = minutes / 60;
+            long days = hours / 24;
+
+            secondsOutput = seconds;
+//            if (oldDate.before(currentDate)) {
+//
+//                Log.e("oldDate", "is previous date");
+//                Log.e("Difference: ", " seconds: " + seconds + " minutes: " + minutes
+//                        + " hours: " + hours + " days: " + days);
+//
+//            }
+
+            // Log.e("toyBornTime", "" + toyBornTime);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return secondsOutput;
+    }
+
+    public static String convertDateServer(String inputDateString){
+        Date date;
+        String outPutTimeServer = null;
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSSSS'Z'");
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        try {
+            date = inputDateFormat.parse(inputDateString);
+            outPutTimeServer = outputDateFormat.format(date);
+        }catch (ParseException e){
+            GrosirMobilLog.printStackTrace(e);
+        }
+        return outPutTimeServer;
+    }
+
     public void showMessage(String title, String message) {
         new AlertDialog.Builder(context)
                 .setTitle(title)
