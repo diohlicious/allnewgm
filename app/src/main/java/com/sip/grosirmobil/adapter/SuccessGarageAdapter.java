@@ -20,6 +20,7 @@ import java.util.List;
 
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
 
 public class SuccessGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicleSuccessGarage> {
 
@@ -52,6 +53,7 @@ public class SuccessGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVeh
         holder.cardVehicle.setOnClickListener(view -> {
             Intent intent = new Intent(contexts, VehicleDetailActivity.class);
             intent.putExtra(ID_VEHICLE, "");
+            intent.putExtra(KIK, "");
             intent.putExtra(FROM_PAGE, "");
             contexts.startActivity(intent);
         });

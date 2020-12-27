@@ -7,13 +7,13 @@ public class ValidationOtpRequest {
 
     @SerializedName("kodeOtp")
     @Expose
-    private String kodeOtp;
+    private int kodeOtp;
 
     @SerializedName("userId")
     @Expose
-    private String userId;
+    private int userId;
 
-    public ValidationOtpRequest(String kodeOtp, String userId) {
+    public ValidationOtpRequest(int kodeOtp, int userId) {
         this.kodeOtp = kodeOtp;
         this.userId = userId;
     }

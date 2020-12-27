@@ -481,7 +481,7 @@ public class CodeOtpFragment extends Fragment {
             progressDialog.setCancelable(false);
             progressDialog.setMessage(getString(R.string.base_tv_please_wait));
             progressDialog.show();
-            ValidationOtpRequest validationOtpRequest = new ValidationOtpRequest(otp, grosirMobilPreference.getUserId());
+            ValidationOtpRequest validationOtpRequest = new ValidationOtpRequest(Integer.parseInt(otp), Integer.parseInt(grosirMobilPreference.getUserId()));
             final Call<GeneralResponse> validationOtpApi = getApiGrosirMobil().validationOtpApi(validationOtpRequest);
             validationOtpApi.enqueue(new Callback<GeneralResponse>() {
                 @Override

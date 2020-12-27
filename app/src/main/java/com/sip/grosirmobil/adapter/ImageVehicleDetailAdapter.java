@@ -9,11 +9,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.PreviewImageActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderImageVehicleDetail;
-import com.sip.grosirmobil.cloud.config.model.HardCodeDataModel;
+import com.sip.grosirmobil.cloud.config.response.vehicledetail.ImageResponse;
 
 import java.util.List;
 
@@ -21,13 +25,13 @@ import static com.sip.grosirmobil.base.contract.GrosirMobilContract.DESCRIPTION;
 
 public class ImageVehicleDetailAdapter extends RecyclerView.Adapter<ViewHolderImageVehicleDetail> {
 
-    private List<HardCodeDataModel> hardCodeDataModelList;
+    private List<ImageResponse> imageResponseList;
     private Context contexts;
 
 
-    public ImageVehicleDetailAdapter(Context context, List<HardCodeDataModel> hardCodeDataModels) {
+    public ImageVehicleDetailAdapter(Context context, List<ImageResponse> imageResponses) {
         this.contexts = context;
-        this.hardCodeDataModelList = hardCodeDataModels;
+        this.imageResponseList = imageResponses;
     }
 
     @NonNull
@@ -41,18 +45,30 @@ public class ImageVehicleDetailAdapter extends RecyclerView.Adapter<ViewHolderIm
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderImageVehicleDetail holder, int position) {
-        HardCodeDataModel hardCodeDataBaruMasukModel = hardCodeDataModelList.get(position);
-
+        ImageResponse imageResponse = imageResponseList.get(position);
+        CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+        Glide.with(contexts)
+                .load(imageResponse.getBlobUri())
+                .apply(new RequestOptions()
+                        .placeholder(circularProgressDrawable)
+//                          .error(R.drawable.ic_image_empty)
+                        .dontAnimate()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true))
+                .into(holder.ivImage);
         holder.cardView.setOnClickListener(view -> {
             Intent intent = new Intent(contexts, PreviewImageActivity.class);
-            intent.putExtra(DESCRIPTION, "");
+            intent.putExtra(DESCRIPTION, imageResponse.getBlobUri());
             contexts.startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
-        return hardCodeDataModelList.size();
+        return imageResponseList.size();
     }
 
 }

@@ -1,6 +1,7 @@
 package com.sip.grosirmobil.activity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -27,9 +28,13 @@ import com.sip.grosirmobil.adapter.ImageVehicleDetailAdapter;
 import com.sip.grosirmobil.adapter.VehicleDescriptionAdapter;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataModel;
+import com.sip.grosirmobil.cloud.config.request.vehicledetail.VehicleDetailRequest;
+import com.sip.grosirmobil.cloud.config.response.vehicledetail.VehicleDetailResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +43,11 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.BEARER;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
@@ -365,6 +374,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
 
     private GrosirMobilPreference grosirMobilPreference;
     private GrosirMobilFunction grosirMobilFunction;
+    private ProgressDialog progressDialog;
 
     private boolean carData = false;
     private boolean body = false;
@@ -393,28 +403,19 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
         context = this.getApplicationContext();
         grosirMobilPreference = new GrosirMobilPreference(this);
         grosirMobilFunction = new GrosirMobilFunction(this);
+        progressDialog = new ProgressDialog(this);
 
         openHouseId = getIntent().getStringExtra(ID_VEHICLE);
         kik = getIntent().getStringExtra(KIK);
+        getVehicleDetail(openHouseId, kik);
 
         if(getIntent().getStringExtra(FROM_PAGE).equals("LIVE")){
             btnNego.setVisibility(View.VISIBLE);
         }else {
             btnNego.setVisibility(View.GONE);
         }
-        setDataHardCodeImageVehicleDetail();
-        setDataHardCodeDescription();
-        setDataHardCodeBrokenImage();
 
-        LinearLayoutManager layoutManagerImageCar = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        rvImageCar.setLayoutManager(layoutManagerImageCar);
-        rvImageCar.setItemAnimator(new DefaultItemAnimator());
-        rvImageCar.setNestedScrollingEnabled(false);
-        PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
-        pagerSnapHelper.attachToRecyclerView(rvImageCar);
-        ImageVehicleDetailAdapter imageVehicleDetailAdapter = new ImageVehicleDetailAdapter(this, hardCodeDataImageVehicleDetailModelList);
-        rvImageCar.setAdapter(imageVehicleDetailAdapter);
-        imageVehicleDetailAdapter.notifyDataSetChanged();
+        setDataHardCodeDescription();
 
         RecyclerView.LayoutManager layoutManagerDescription = new LinearLayoutManager(this);
         rvDescription.setLayoutManager(layoutManagerDescription);
@@ -422,20 +423,77 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
         rvDescription.setAdapter(vehicleDescriptionAdapter);
         vehicleDescriptionAdapter.notifyDataSetChanged();
 
-        GridLayoutManager gridLayoutManagerBrokenImage = new GridLayoutManager(this, 2);
-        rvBrokenImage.setLayoutManager(gridLayoutManagerBrokenImage);
-        rvBrokenImage.setItemAnimator(new DefaultItemAnimator());
-        rvBrokenImage.setNestedScrollingEnabled(false);
-        BrokenImageAdapter brokenImageAdapter = new BrokenImageAdapter(this, hardCodeDataBrokenImageModelList);
-        rvBrokenImage.setAdapter(brokenImageAdapter);
-        brokenImageAdapter.notifyDataSetChanged();
+
 
         RecyclerView.LayoutManager layoutManagerBid = new LinearLayoutManager(this);
         rvBid.setLayoutManager(layoutManagerBid);
 
-//        getIntent().getStringExtra(ID_VEHICLE);
-
         loadData();
+    }
+
+    private void showLoadingDialog(){
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(context.getString(R.string.base_tv_please_wait));
+        progressDialog.show();
+    }
+
+    private void hideLoadingDialog(){
+        progressDialog.dismiss();
+    }
+
+    private void getVehicleDetail(String openHouseId, String kik){
+        showLoadingDialog();
+        VehicleDetailRequest vehicleDetailRequest = new VehicleDetailRequest(openHouseId,kik);
+        final Call<VehicleDetailResponse> vehicleDetailApi = getApiGrosirMobil().liveVehicleDetailApi(BEARER+" "+grosirMobilPreference.getToken(),vehicleDetailRequest);
+        vehicleDetailApi.enqueue(new Callback<VehicleDetailResponse>() {
+            @Override
+            public void onResponse(Call<VehicleDetailResponse> call, Response<VehicleDetailResponse> response) {
+                hideLoadingDialog();
+                if (response.isSuccessful()) {
+                    try {
+                        if(response.body().getMessage().equals("success")){
+//                            tvTitleVehicle.setText(response.body().getDataVehicleDetailResponse().getVehicleData());
+
+
+                            LinearLayoutManager layoutManagerImageCar = new LinearLayoutManager(VehicleDetailActivity.this, LinearLayoutManager.HORIZONTAL, false);
+                            rvImageCar.setLayoutManager(layoutManagerImageCar);
+                            rvImageCar.setItemAnimator(new DefaultItemAnimator());
+                            rvImageCar.setNestedScrollingEnabled(false);
+                            PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
+                            pagerSnapHelper.attachToRecyclerView(rvImageCar);
+                            ImageVehicleDetailAdapter imageVehicleDetailAdapter = new ImageVehicleDetailAdapter(VehicleDetailActivity.this, response.body().getDataVehicleDetailResponse().getImageResponseList());
+                            rvImageCar.setAdapter(imageVehicleDetailAdapter);
+                            imageVehicleDetailAdapter.notifyDataSetChanged();
+
+                            GridLayoutManager gridLayoutManagerBrokenImage = new GridLayoutManager(VehicleDetailActivity.this, 2);
+                            rvBrokenImage.setLayoutManager(gridLayoutManagerBrokenImage);
+                            rvBrokenImage.setItemAnimator(new DefaultItemAnimator());
+                            rvBrokenImage.setNestedScrollingEnabled(false);
+                            BrokenImageAdapter brokenImageAdapter = new BrokenImageAdapter(VehicleDetailActivity.this, response.body().getDataVehicleDetailResponse().getImageBrokenResponseList());
+                            rvBrokenImage.setAdapter(brokenImageAdapter);
+                            brokenImageAdapter.notifyDataSetChanged();
+                        }else {
+                            grosirMobilFunction.showMessage(VehicleDetailActivity.this, "GET Vehicle Detail", response.body().getMessage());
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }else {
+                    try {
+                        grosirMobilFunction.showMessage(VehicleDetailActivity.this, getString(R.string.base_null_error_title), response.errorBody().string());
+                    } catch (IOException e) {
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VehicleDetailResponse> call, Throwable t) {
+                hideLoadingDialog();
+                grosirMobilFunction.showMessage(VehicleDetailActivity.this, "GET Vehicle Detail", getString(R.string.base_null_server));
+                GrosirMobilLog.printStackTrace(t);
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -518,19 +576,6 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
         }
     }
 
-    private void setDataHardCodeImageVehicleDetail(){
-        HardCodeDataModel hardCodeDataModel = new HardCodeDataModel("");
-        hardCodeDataImageVehicleDetailModelList.add(hardCodeDataModel);
-        hardCodeDataModel = new HardCodeDataModel("");
-        hardCodeDataImageVehicleDetailModelList.add(hardCodeDataModel);
-        hardCodeDataModel = new HardCodeDataModel("");
-        hardCodeDataImageVehicleDetailModelList.add(hardCodeDataModel);
-        hardCodeDataModel = new HardCodeDataModel("");
-        hardCodeDataImageVehicleDetailModelList.add(hardCodeDataModel);
-        hardCodeDataModel = new HardCodeDataModel("");
-        hardCodeDataImageVehicleDetailModelList.add(hardCodeDataModel);
-    }
-
     private void setDataHardCodeDescription(){
         HardCodeDataModel hardCodeDataModel = new HardCodeDataModel("- Bamper Depan Kiri Baret");
         hardCodeDataDescriptionModelList.add(hardCodeDataModel);
@@ -540,24 +585,6 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
         hardCodeDataDescriptionModelList.add(hardCodeDataModel);
     }
 
-    private void setDataHardCodeBrokenImage(){
-        HardCodeDataModel hardCodeDataModel = new HardCodeDataModel("Kap Penyok","1/8");
-        hardCodeDataBrokenImageModelList.add(hardCodeDataModel);
-        hardCodeDataModel = new HardCodeDataModel("Bumper Baret","2/8");
-        hardCodeDataBrokenImageModelList.add(hardCodeDataModel);
-        hardCodeDataModel = new HardCodeDataModel("Pintu Penyok","3/8");
-        hardCodeDataBrokenImageModelList.add(hardCodeDataModel);
-        hardCodeDataModel = new HardCodeDataModel("Kap Penyok","4/8");
-        hardCodeDataBrokenImageModelList.add(hardCodeDataModel);
-        hardCodeDataModel = new HardCodeDataModel("Kap Penyok","5/8");
-        hardCodeDataBrokenImageModelList.add(hardCodeDataModel);
-        hardCodeDataModel = new HardCodeDataModel("Kap Penyok","6/8");
-        hardCodeDataBrokenImageModelList.add(hardCodeDataModel);
-        hardCodeDataModel = new HardCodeDataModel("Kap Penyok","7/8");
-        hardCodeDataBrokenImageModelList.add(hardCodeDataModel);
-        hardCodeDataModel = new HardCodeDataModel("Kap Penyok","8/8");
-        hardCodeDataBrokenImageModelList.add(hardCodeDataModel);
-    }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_car_data)

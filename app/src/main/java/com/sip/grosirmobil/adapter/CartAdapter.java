@@ -20,6 +20,7 @@ import java.util.List;
 
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
 
 
@@ -94,6 +95,7 @@ public class CartAdapter extends RecyclerView.Adapter<ViewHolderItemCart> {
         holder.cardVehicle.setOnClickListener(view -> {
             Intent intent = new Intent(context, VehicleDetailActivity.class);
             intent.putExtra(ID_VEHICLE, "");
+            intent.putExtra(KIK, "");
             intent.putExtra(FROM_PAGE, "");
             context.startActivity(intent);
         });
