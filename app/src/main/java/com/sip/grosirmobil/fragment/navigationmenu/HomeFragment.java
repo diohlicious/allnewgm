@@ -576,7 +576,6 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
 
     @Override
     public void homeComingSoonSuccess() {
-
     }
 
     @SuppressLint("SetTextI18n")

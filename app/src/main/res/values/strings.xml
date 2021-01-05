@@ -339,7 +339,7 @@
     <string name="tv_bottom_price_tertinggi_ke_terendah">Bottom price: Tertinggi ke Terendah</string>
     <string name="tv_kendaraan_tidak_ditemukan">Kendaraan tidak ditemukan</string>
 
- <string name="tv_term_and_condition_html">
+    <string name="tv_term_and_condition_html">
         <![CDATA[
             <html>
                 <body style="color:black;">

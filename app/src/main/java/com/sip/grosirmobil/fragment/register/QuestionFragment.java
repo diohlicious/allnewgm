@@ -51,7 +51,7 @@ public class QuestionFragment extends Fragment {
     @BindView(R.id.et_question_2) TextInputEditText etQuestion2;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.et_question_3) TextInputEditText etQuestion3;
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint("NonConstantResourcehoId")
     @BindView(R.id.et_question_4) TextInputEditText etQuestion4;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.et_question_5) TextInputEditText etQuestion5;
