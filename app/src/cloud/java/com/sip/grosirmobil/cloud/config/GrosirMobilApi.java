@@ -14,6 +14,7 @@ import com.sip.grosirmobil.cloud.config.request.savedataregister.SaveDataRegiste
 import com.sip.grosirmobil.cloud.config.request.validationotp.ValidationOtpRequest;
 import com.sip.grosirmobil.cloud.config.request.vehicledetail.VehicleDetailRequest;
 import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
+import com.sip.grosirmobil.cloud.config.response.cart.CartResponse;
 import com.sip.grosirmobil.cloud.config.response.checkactivetoken.CheckActiveTokenResponse;
 import com.sip.grosirmobil.cloud.config.response.homecomingsoon.HomeComingSoonResponse;
 import com.sip.grosirmobil.cloud.config.response.homehistory.HomeHistoryResponse;
@@ -72,6 +73,7 @@ public interface GrosirMobilApi {
     String timeServerPath = "/api/jamserverMobile";
     String liveNegoPath = "/api/Live/LiveNego";
     String liveBuyNowPath = "/api/Live/LiveBuyNow";
+    String listCartPath = "/api/Live/datakeranjang";
 
     @Headers("X-Requested-With:XMLHttpRequest")
     @POST(loginPath)
@@ -189,5 +191,9 @@ public interface GrosirMobilApi {
     Call<GeneralResponse> liveBuyNowApi(@Header("Authorization") String authToken,
                                         @Body BuyNowRequest buyNowRequest);
 
+    @Headers("Content-Type: application/json")
+    @POST(listCartPath)
+    Call<CartResponse> lisCartApi(@Header("Authorization") String authToken);
 
+    
 }
