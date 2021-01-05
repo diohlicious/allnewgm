@@ -66,9 +66,25 @@
         android:background="@color/colorPrimaryLine"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
+    <TextView
+        android:id="@+id/tv_clear_search"
+        android:layout_gravity="center|end"
+        android:visibility="gone"
+        android:paddingEnd="@dimen/_20sdp"
+        android:drawableEnd="@drawable/ic_clear_price"
+        android:drawablePadding="@dimen/_5sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:fontFamily="@font/nunito_regular"
+        android:text="Hapus Riwayat Pencarian"
+        android:textColor="@color/colorPrimaryFont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="RtlSymmetry" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_history_search"
         android:visibility="gone"
+        android:paddingTop="@dimen/_10sdp"
         android:background="@color/colorBackgroundHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

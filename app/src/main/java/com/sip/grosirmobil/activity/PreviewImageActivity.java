@@ -6,6 +6,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
@@ -15,6 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.DESCRIPTION;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.URL_IMAGE;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.adjustFontScale;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarOnBoarding;
 
@@ -42,21 +48,24 @@ public class PreviewImageActivity extends GrosirMobilActivity {
             linearDescription.setVisibility(View.VISIBLE);
             tvDescription.setText(getIntent().getStringExtra(DESCRIPTION));
         }
-//        CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(this);
-//        circularProgressDrawable.setStrokeWidth(5f);
-//        circularProgressDrawable.setCenterRadius(30f);
-//        circularProgressDrawable.start();
-//        Glide.with(this)
-//                .load("")
-//                .apply(new RequestOptions()
-//                        .placeholder(circularProgressDrawable)
-////                        .error(R.drawable.ic_image_empty)
-//                        .dontAnimate()
-//                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                        .skipMemoryCache(false))
-//                .into(photoView);
 
+        if(getIntent().getStringExtra(URL_IMAGE)==null){
 
+        }else {
+            CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(this);
+            circularProgressDrawable.setStrokeWidth(5f);
+            circularProgressDrawable.setCenterRadius(30f);
+            circularProgressDrawable.start();
+            Glide.with(this)
+                    .load(getIntent().getStringExtra(URL_IMAGE))
+                    .apply(new RequestOptions()
+                            .placeholder(circularProgressDrawable)
+//                        .error(R.drawable.ic_image_empty)
+                            .dontAnimate()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(false))
+                    .into(photoView);
+        }
 
     }
 

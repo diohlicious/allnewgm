@@ -96,7 +96,7 @@ public class CartAdapter extends RecyclerView.Adapter<ViewHolderItemCart> {
             Intent intent = new Intent(context, VehicleDetailActivity.class);
             intent.putExtra(ID_VEHICLE, "");
             intent.putExtra(KIK, "");
-            intent.putExtra(FROM_PAGE, "");
+            intent.putExtra(FROM_PAGE, "CART");
             context.startActivity(intent);
         });
     }

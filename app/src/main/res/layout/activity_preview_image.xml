@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -26,14 +26,13 @@
     </RelativeLayout>
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/photo_view"
-        android:background="@color/colorBlack"
         android:scaleType="fitCenter"
-        android:src="@drawable/image_car_ex"
+        android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="@dimen/_300sdp"/>
     <LinearLayout
         android:id="@+id/linear_description"
+        android:layout_alignParentBottom="true"
         android:orientation="vertical"
         android:gravity="center"
         android:visibility="gone"
@@ -49,4 +48,4 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

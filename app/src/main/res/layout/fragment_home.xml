@@ -182,7 +182,7 @@
                             tools:ignore="ContentDescription,RelativeOverlap" />
                         <TextView
                             android:id="@+id/tv_filter"
-                            android:text="Lokasi"
+                            android:maxLines="1"
                             android:textSize="@dimen/text_14"
                             android:gravity="center"
                             android:textColor="@color/colorPrimaryFont"
@@ -190,7 +190,8 @@
                             android:layout_centerVertical="true"
                             android:layout_alignParentEnd="true"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent"
+                            tools:ignore="RelativeOverlap" />
                     </RelativeLayout>
                 </LinearLayout>
                 <LinearLayout
@@ -219,6 +220,7 @@
                         android:textSize="@dimen/text_14"
                         tools:ignore="RtlHardcoded" />
                     <RelativeLayout
+                        android:id="@+id/relative_banner"
                         android:visibility="visible"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_width="match_parent"
@@ -361,7 +363,6 @@
                         <TextView
                             android:id="@+id/tv_result_search"
                             android:layout_alignParentEnd="true"
-                            android:text="3 Unit"
                             android:layout_centerVertical="true"
                             android:gravity="center"
                             android:textColor="@color/colorPrimaryFont"

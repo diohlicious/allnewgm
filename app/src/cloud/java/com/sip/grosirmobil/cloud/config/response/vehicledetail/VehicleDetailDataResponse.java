@@ -3,26 +3,26 @@ package com.sip.grosirmobil.cloud.config.response.vehicledetail;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ImageBrokenResponse {
+public class VehicleDetailDataResponse {
 
-    @SerializedName("file_name")
+    @SerializedName("item")
     @Expose
-    private String fileName;
+    private String item;
 
-    @SerializedName("url_image")
+    @SerializedName("status")
     @Expose
-    private String urlImage;
+    private String status;
 
     @SerializedName("description")
     @Expose
     private String description;
 
-    public String getFileName() {
-        return fileName;
+    public String getItem() {
+        return item;
     }
 
-    public String getUrlImage() {
-        return urlImage;
+    public String getStatus() {
+        return status;
     }
 
     public String getDescription() {

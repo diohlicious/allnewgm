@@ -89,12 +89,12 @@
                         tools:ignore="RtlHardcoded" />
                     <TextView
                         android:id="@+id/tv_merek"
-                        android:text="Toyota"
+                        android:text=""
                         android:gravity="center"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:textColor="@color/colorPrimaryHintFont"
                         android:fontFamily="@font/nunito_regular"
-                        android:textSize="@dimen/text_20"
+                        android:textSize="@dimen/text_18"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"/>
                     <ImageView
@@ -124,12 +124,12 @@
                         tools:ignore="RtlHardcoded" />
                     <TextView
                         android:id="@+id/tv_location"
-                        android:text="Banda Aceh"
+                        android:text=""
                         android:gravity="center"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:textColor="@color/colorPrimaryHintFont"
                         android:fontFamily="@font/nunito_regular"
-                        android:textSize="@dimen/text_20"
+                        android:textSize="@dimen/text_18"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"/>
                     <ImageView
@@ -166,7 +166,7 @@
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:gravity="center|start"
-                            android:hint="Rp "
+                            android:text="Rp 0"
                             android:fontFamily="@font/nunito_regular"
                             android:textColorHint="@color/colorPrimaryHintFont"
                             android:textColor="@color/colorPrimaryFont"
@@ -181,7 +181,7 @@
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:gravity="center|start"
-                            android:hint="Rp "
+                            android:text="Rp 1.000.000.000"
                             android:fontFamily="@font/nunito_regular"
                             android:textColorHint="@color/colorPrimaryHintFont"
                             android:textColor="@color/colorPrimaryFont"
@@ -199,7 +199,7 @@
                         app:showActiveTicks="false"
                         app:showTicks="false"
                         app:movable="true"
-                        app:count="10"
+                        app:count="11"
                         app:start="0"
                         app:end="10"
                         app:minDistance="1"
@@ -249,12 +249,11 @@
                         tools:ignore="RtlHardcoded" />
                     <TextView
                         android:id="@+id/tv_year"
-                        android:text="2020-2015"
                         android:gravity="center"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:textColor="@color/colorPrimaryHintFont"
                         android:fontFamily="@font/nunito_regular"
-                        android:textSize="@dimen/text_20"
+                        android:textSize="@dimen/text_18"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"/>
                     <ImageView
@@ -289,7 +288,7 @@
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:textColor="@color/colorPrimaryHintFont"
                         android:fontFamily="@font/nunito_regular"
-                        android:textSize="@dimen/text_20"
+                        android:textSize="@dimen/text_18"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"/>
                     <ImageView

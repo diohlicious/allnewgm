@@ -13,6 +13,22 @@ public class DataVehicleDetailResponse {
     @Expose
     private String openHouseId;
 
+    @SerializedName("grade")
+    @Expose
+    private String grade;
+
+    @SerializedName("is_favorite")
+    @Expose
+    private String isFavorite;
+
+     @SerializedName("warehouse")
+    @Expose
+    private String warehouse;
+
+    @SerializedName("vehicle_name")
+    @Expose
+    private String vehicleName;
+
     @SerializedName("start_date")
     @Expose
     private String startDate;
@@ -55,19 +71,19 @@ public class DataVehicleDetailResponse {
     
     @SerializedName("vehicle_body")
     @Expose
-    private List<VehicleBodyResponse> vehicleBodyResponseList;
+    private List<VehicleDetailDataResponse> vehicleBodyResponseList;
 
     @SerializedName("vehicle_interior")
     @Expose
-    private List<VehicleInteriorResponse> vehicleInteriorResponseList;
+    private List<VehicleDetailDataResponse> vehicleInteriorResponseList;
 
     @SerializedName("vehicle_mesin")
     @Expose
-    private List<VehicleMesinResponse> vehicleMesinResponseList;
+    private List<VehicleDetailDataResponse> vehicleMesinResponseList;
 
     @SerializedName("vehicle_other")
     @Expose
-    private List<VehicleOtherResponse> vehicleOtherResponseList;
+    private List<VehicleDetailDataResponse> vehicleOtherResponseList;
 
     @SerializedName("image_broken")
     @Expose
@@ -129,19 +145,19 @@ public class DataVehicleDetailResponse {
         return vehicleData;
     }
 
-    public List<VehicleBodyResponse> getVehicleBodyResponseList() {
+    public List<VehicleDetailDataResponse> getVehicleBodyResponseList() {
         return vehicleBodyResponseList;
     }
 
-    public List<VehicleInteriorResponse> getVehicleInteriorResponseList() {
+    public List<VehicleDetailDataResponse> getVehicleInteriorResponseList() {
         return vehicleInteriorResponseList;
     }
 
-    public List<VehicleMesinResponse> getVehicleMesinResponseList() {
+    public List<VehicleDetailDataResponse> getVehicleMesinResponseList() {
         return vehicleMesinResponseList;
     }
 
-    public List<VehicleOtherResponse> getVehicleOtherResponseList() {
+    public List<VehicleDetailDataResponse> getVehicleOtherResponseList() {
         return vehicleOtherResponseList;
     }
 
@@ -155,5 +171,21 @@ public class DataVehicleDetailResponse {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public String getIsFavorite() {
+        return isFavorite;
+    }
+
+    public String getVehicleName() {
+        return vehicleName;
+    }
+
+    public String getWarehouse() {
+        return warehouse;
     }
 }

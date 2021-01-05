@@ -22,6 +22,7 @@ import com.sip.grosirmobil.cloud.config.response.vehicledetail.ImageBrokenRespon
 import java.util.List;
 
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.DESCRIPTION;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.URL_IMAGE;
 
 public class BrokenImageAdapter extends RecyclerView.Adapter<ViewHolderBrokenImage> {
 
@@ -53,7 +54,7 @@ public class BrokenImageAdapter extends RecyclerView.Adapter<ViewHolderBrokenIma
         circularProgressDrawable.setCenterRadius(30f);
         circularProgressDrawable.start();
         Glide.with(contexts)
-                .load(imageBrokenResponse.getBlobUri())
+                .load(imageBrokenResponse.getUrlImage())
                 .apply(new RequestOptions()
                         .placeholder(circularProgressDrawable)
 //                          .error(R.drawable.ic_image_empty)
@@ -62,11 +63,12 @@ public class BrokenImageAdapter extends RecyclerView.Adapter<ViewHolderBrokenIma
                         .skipMemoryCache(true))
                 .into(holder.ivImage);
 
-        holder.tvImageNumber.setText(position+1);
+        holder.tvImageNumber.setText(String.valueOf(position+1));
 
         holder.cardView.setOnClickListener(view -> {
             Intent intent = new Intent(contexts, PreviewImageActivity.class);
-            intent.putExtra(DESCRIPTION, imageBrokenResponse.getBlobUri());
+            intent.putExtra(URL_IMAGE, imageBrokenResponse.getUrlImage());
+            intent.putExtra(DESCRIPTION, imageBrokenResponse.getDescription());
             contexts.startActivity(intent);
         });
     }

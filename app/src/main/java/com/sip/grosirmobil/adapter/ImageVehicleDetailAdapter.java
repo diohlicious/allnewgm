@@ -22,6 +22,7 @@ import com.sip.grosirmobil.cloud.config.response.vehicledetail.ImageResponse;
 import java.util.List;
 
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.DESCRIPTION;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.URL_IMAGE;
 
 public class ImageVehicleDetailAdapter extends RecyclerView.Adapter<ViewHolderImageVehicleDetail> {
 
@@ -51,17 +52,17 @@ public class ImageVehicleDetailAdapter extends RecyclerView.Adapter<ViewHolderIm
         circularProgressDrawable.setCenterRadius(30f);
         circularProgressDrawable.start();
         Glide.with(contexts)
-                .load(imageResponse.getBlobUri())
+                .load(imageResponse.getUrlImage())
                 .apply(new RequestOptions()
                         .placeholder(circularProgressDrawable)
-//                          .error(R.drawable.ic_image_empty)
                         .dontAnimate()
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true))
                 .into(holder.ivImage);
         holder.cardView.setOnClickListener(view -> {
             Intent intent = new Intent(contexts, PreviewImageActivity.class);
-            intent.putExtra(DESCRIPTION, imageResponse.getBlobUri());
+            intent.putExtra(URL_IMAGE, imageResponse.getUrlImage());
+            intent.putExtra(DESCRIPTION, imageResponse.getDescription());
             contexts.startActivity(intent);
         });
     }

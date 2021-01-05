@@ -38,6 +38,7 @@ public class GrosirMobilContract {
     public static final String ID_VEHICLE = "id_vehicle";
     public static final String KIK = "kik";
     public static final String DESCRIPTION = "description";
+    public static final String URL_IMAGE = "urlImage";
     public static final String ID_PRODUCT = "id_product";
     public static final String TITLE = "title";
     public static final String PRICE = "price";
@@ -46,5 +47,12 @@ public class GrosirMobilContract {
     public static final String PRODUCT = "product";
     public static final String DATE = "date";
     public static final String FROM_PAGE = "from_page";
+    public static final String MEREK = "merek";
+    public static final String START_PRICE = "startPrice";
+    public static final String END_PRICE = "endPrice";
+    public static final String LOCATION = "location";
+    public static final String START_YEAR = "startYear";
+    public static final String END_YEAR = "endYear";
+    public static final String GRADE = "grade";
 
 }

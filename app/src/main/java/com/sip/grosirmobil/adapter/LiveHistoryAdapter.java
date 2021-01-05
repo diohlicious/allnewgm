@@ -47,11 +47,11 @@ public class LiveHistoryAdapter extends RecyclerView.Adapter<ViewHolderItemVehic
     public void onBindViewHolder(@NonNull ViewHolderItemVehicleHomeHistory holder, int position) {
         DataHomeHistoryResponse dataHomeHistoryResponse = dataHomeHistoryResponseList.get(position);
         holder.tvVehicleNameHistory.setText(dataHomeHistoryResponse.getVehicleName());
-        holder.tvCityHistory.setText(dataHomeHistoryResponse.getWareHouse().replace("WAREHOUSE ","").toLowerCase());
+        holder.tvCityHistory.setText(dataHomeHistoryResponse.getWareHouse().replace("WAREHOUSE ",""));
         holder.tvOpenPriceHistory.setText("Rp "+setCurrencyFormat(dataHomeHistoryResponse.getHargaPembukaan()));
         holder.tvInitialNameHistory.setText(dataHomeHistoryResponse.getVehicleName().substring(0,1));
         
-        holder.tvEventDate.setText("Event "+convertDate(dataHomeHistoryResponse.getEventDate(),"yyyy-MM-dd hh:mm:ss","dd MMM yyyy")+"-");
+        holder.tvEventDate.setText("Event "+convertDate(dataHomeHistoryResponse.getEventDate(),"yyyy-MM-dd hh:mm:ss","dd MMM yyyy")+" - ");
         
         if(dataHomeHistoryResponse.getSoldPrice()==null){
             holder.tvSoldPriceHistory.setText("Rp 0");
@@ -60,7 +60,7 @@ public class LiveHistoryAdapter extends RecyclerView.Adapter<ViewHolderItemVehic
         }
         holder.cardVehicleHistory.setOnClickListener(view -> {
             Intent intent = new Intent(contexts, VehicleDetailActivity.class);
-            intent.putExtra(ID_VEHICLE, dataHomeHistoryResponse.getOpenHouseId());
+            intent.putExtra(ID_VEHICLE, String.valueOf(dataHomeHistoryResponse.getOpenHouseId()));
             intent.putExtra(KIK, dataHomeHistoryResponse.getKik());
             intent.putExtra(FROM_PAGE, "HISTORY");
             contexts.startActivity(intent);

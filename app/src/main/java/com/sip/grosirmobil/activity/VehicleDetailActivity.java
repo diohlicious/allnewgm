@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,29 +26,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.adapter.BrokenImageAdapter;
 import com.sip.grosirmobil.adapter.ImageVehicleDetailAdapter;
-import com.sip.grosirmobil.adapter.VehicleDescriptionAdapter;
+import com.sip.grosirmobil.adapter.VehicleDetailDataAdapter;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
-import com.sip.grosirmobil.base.log.GrosirMobilLog;
+import com.sip.grosirmobil.base.implement.VehicleDetailImp;
+import com.sip.grosirmobil.base.presenter.VehicleDetailPresenter;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
-import com.sip.grosirmobil.cloud.config.model.HardCodeDataModel;
-import com.sip.grosirmobil.cloud.config.request.vehicledetail.VehicleDetailRequest;
+import com.sip.grosirmobil.base.view.VehicleDetailView;
 import com.sip.grosirmobil.cloud.config.response.vehicledetail.VehicleDetailResponse;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-import static com.sip.grosirmobil.base.contract.GrosirMobilContract.BEARER;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
@@ -56,7 +49,7 @@ import static com.sip.grosirmobil.base.function.GrosirMobilFunction.adjustFontSc
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarOnBoarding;
 
-public class VehicleDetailActivity extends GrosirMobilActivity {
+public class VehicleDetailActivity extends GrosirMobilActivity implements VehicleDetailView {
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_favorite) ImageView ivFavorite;
@@ -79,232 +72,67 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_timer) ImageView ivTimer;
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_timer) TextView tvTimer;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_description) TextView tvDescription;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_image_car) RecyclerView rvImageCar;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.rv_description) RecyclerView rvDescription;
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_car_data) TextView tvCarData;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.linear_car_data) LinearLayout linearCarData;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_id_number) TextView tvIdNumber;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_score) TextView tvScore;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_plat_number_car_data) TextView tvPlatNumberCarData;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_year) TextView tvYear;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_transmition) TextView tvTransmition;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_color) TextView tvColor;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_km) TextView tvKM;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_kepemilikan) TextView tvKepemilikan;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_location) TextView tvLocation;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_stnk) TextView tvSTNK;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_masa_berlaku_pajak) TextView tvMasaBerlakuPajak;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_masa_berlaku_stnk) TextView tvMasaBerlakuSTNK;
+    @BindView(R.id.rv_car_data) RecyclerView rvCarData;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.linear_car_data) LinearLayout linearCarData;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_id_number) TextView tvIdNumber;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_score) TextView tvScore;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_plat_number_car_data) TextView tvPlatNumberCarData;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_year) TextView tvYear;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_transmition) TextView tvTransmition;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_color) TextView tvColor;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_km) TextView tvKM;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_kepemilikan) TextView tvKepemilikan;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_location) TextView tvLocation;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_stnk) TextView tvSTNK;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_masa_berlaku_pajak) TextView tvMasaBerlakuPajak;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_masa_berlaku_stnk) TextView tvMasaBerlakuSTNK;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_body) TextView tvBody;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.linear_body) LinearLayout linearBody;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_power_window) TextView tvPowerWindow;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_electric_mirror) TextView tvElectricMirror;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_cat_body) TextView tvCatBody;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_panel_pintu) TextView tvPanelPintu;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_pilar_pintu) TextView tvPilarPintu;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_handle_pintu_body) TextView tvHandlePintuBody;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_lisplang) TextView tvLisplang;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_fender_belakang) TextView tvFenderBelakang;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_bemper_belakang) TextView tvBemperBelakang;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_pintu_bagasi) TextView tvPintuBagasi;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_fender_depan) TextView tvFenderDepan;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_bember_depan) TextView tvBemperDepan;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_grill) TextView tvGrill;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_kap_mesin) TextView tvKapMesin;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_panel_atap) TextView tvPanelAtap;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_kaca_depan) TextView tvKacaDepan;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_kaca_jendela) TextView tvKacaJendela;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_spion) TextView tvSpion;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_kaca_belakang) TextView tvKacaBelakang;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_lampu_depan) TextView tvLampuDepan;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_lampu_belakang) TextView tvLampuBelakang;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_ban) TextView tvBan;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_velg) TextView tvVelg;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_disc_brake) TextView tvDiscBrake;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_brake_pad) TextView tvBrakePad;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_master_rem) TextView tvMasterRem;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_shockbreaker) TextView tvShockbreaker;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_link_stabilizier) TextView tvLinkStabilizier;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_rack_setir) TextView tvRackSetir;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_knalpot) TextView tvKnalpot;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_upper_lower_arm) TextView tvUpperLowerArm;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_faktur_asli) TextView tvFakturAsli;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_nik_asli) TextView tvNikAsli;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_bebas_tabrakan_besar) TextView tvBebasTabrakanBesar;
+    @BindView(R.id.rv_body) RecyclerView rvBody;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_interior) TextView tvInterior;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.linear_interior) LinearLayout linearInterior;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_airbag) TextView tvAirbag;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_central_lock) TextView tvCentralLock;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_sistem_audio) TextView tvSistemAudio;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_panel_indikator) TextView tvPanelIndikator;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_setir) TextView tvSetir;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_panel_dashboard) TextView tvPanelDashboard;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_rem_tangan) TextView tvRemTangan;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_pembuka_kap_mesin) TextView tvPembukaKapMesin;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_switch_lampu) TextView tvSwitchLampu;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_switch_wiper) TextView tvSwitchWiper;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_klakson) TextView tvKlakson;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_jok) TextView tvJok;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_console_box) TextView tvConsoleBox;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_door_trim) TextView tvDoorTrim;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_kaca_film) TextView tvKacaFilm;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_handle_pintu_interior) TextView tvHandlePintuInterior;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_plafon) TextView tvPlafon;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_karpet_dasar) TextView tvKarpetDasar;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_buku_service) TextView tvBukuService;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_buku_manual) TextView tvBukuManual;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_dongkrak_dan_kunci) TextView tvDongkrakDanKunci;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_tidak_ada_indikasi_banjir) TextView tvTidakAdaIndikasiBanjir;
+    @BindView(R.id.rv_interior) RecyclerView rvInterior;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_engine) TextView tvEngine;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.linear_engine) LinearLayout linearEngine;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_asap_knalpot) TextView tvAsapKnalpot;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_sistem_ac_engine) TextView tvSistemAcEngine;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_rem_abs_engine) TextView tvRemAbsEngine;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_power_steering) TextView tvPowerSteering;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_oli_mesin) TextView tvOliMesin;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_oli_transmisi_at) TextView tvOliTransmisiAT;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_oli_rem) TextView tvOliRem;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_oli_power_steering) TextView tvOliPowerSteering;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_air_radiator) TextView tvAirRadiator;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_mesin_bebas_rembes) TextView tvMesinBebasRembes;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_pengisian_aki) TextView tvPengisianAki;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_dinamo_ampere) TextView tvDinamoAmpere;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_pompa_power_steering) TextView tvPompaPowerSteering;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_kompresor_ac) TextView tvKompresorAC;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_water_pump) TextView tvWaterPump;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_belt) TextView tvBelt;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_fan) TextView tvFan;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_radiator) TextView tvRadiator;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_suara_mesin_normal) TextView tvSuaraMesinNormal;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_getaran_mesin_normal) TextView tvGetaranMesinNormal;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_starter_mesin_normal) TextView tvStarterMesinNormal;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_rpm_stabil) TextView tvRpmStabil;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_setir_tidak_baret_bunyi) TextView tvSetirTidakBaretBunyi;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_ketebalan_kampas_kopling) TextView tvKetebalanKampasKopling;
+    @BindView(R.id.rv_engine) RecyclerView rvEngine;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_other) TextView tvOther;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.linear_other) LinearLayout linearOther;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_gesekan_no_rangka) TextView tvGesekanNoRangka;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_sistem_ac_other) TextView tvSistemAcOther;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_rem_abs_other) TextView tvRemAbsOther;
+    @BindView(R.id.rv_other) RecyclerView rvOther;
+
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_broken_image) TextView tvBrokenImage;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.linear_broken_image) LinearLayout linearBrokenImage;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.rv_broker_image) RecyclerView rvBrokenImage;
+    @BindView(R.id.rv_broken_image) RecyclerView rvBrokenImage;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_nego) Button btnNego;
@@ -375,6 +203,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     private GrosirMobilPreference grosirMobilPreference;
     private GrosirMobilFunction grosirMobilFunction;
     private ProgressDialog progressDialog;
+    private VehicleDetailPresenter vehicleDetailPresenter;
 
     private boolean carData = false;
     private boolean body = false;
@@ -385,9 +214,6 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     private boolean favorite = false;
     private long negoPrice, lastPrice, bidNego;
 
-    private List<HardCodeDataModel> hardCodeDataImageVehicleDetailModelList = new ArrayList<>();
-    private List<HardCodeDataModel> hardCodeDataDescriptionModelList = new ArrayList<>();
-    private List<HardCodeDataModel> hardCodeDataBrokenImageModelList = new ArrayList<>();
     private Context context;
     private String openHouseId="";
     private String kik="";
@@ -405,95 +231,25 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
         grosirMobilFunction = new GrosirMobilFunction(this);
         progressDialog = new ProgressDialog(this);
 
+        vehicleDetailPresenter = new VehicleDetailImp(this, this);
+
         openHouseId = getIntent().getStringExtra(ID_VEHICLE);
         kik = getIntent().getStringExtra(KIK);
-        getVehicleDetail(openHouseId, kik);
+
+        vehicleDetailPresenter.vehicleDetailApi(kik,openHouseId);
 
         if(getIntent().getStringExtra(FROM_PAGE).equals("LIVE")){
             btnNego.setVisibility(View.VISIBLE);
-        }else {
-            btnNego.setVisibility(View.GONE);
+            linearDescription.setVisibility(View.VISIBLE);
+        }else if(getIntent().getStringExtra(FROM_PAGE).equals("HISTORY")){
+            linearDescription.setVisibility(View.GONE);
+            btnNego.setVisibility(View.INVISIBLE);
         }
-
-        setDataHardCodeDescription();
-
-        RecyclerView.LayoutManager layoutManagerDescription = new LinearLayoutManager(this);
-        rvDescription.setLayoutManager(layoutManagerDescription);
-        VehicleDescriptionAdapter vehicleDescriptionAdapter = new VehicleDescriptionAdapter(this, hardCodeDataDescriptionModelList);
-        rvDescription.setAdapter(vehicleDescriptionAdapter);
-        vehicleDescriptionAdapter.notifyDataSetChanged();
-
-
 
         RecyclerView.LayoutManager layoutManagerBid = new LinearLayoutManager(this);
         rvBid.setLayoutManager(layoutManagerBid);
 
         loadData();
-    }
-
-    private void showLoadingDialog(){
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage(context.getString(R.string.base_tv_please_wait));
-        progressDialog.show();
-    }
-
-    private void hideLoadingDialog(){
-        progressDialog.dismiss();
-    }
-
-    private void getVehicleDetail(String openHouseId, String kik){
-        showLoadingDialog();
-        VehicleDetailRequest vehicleDetailRequest = new VehicleDetailRequest(openHouseId,kik);
-        final Call<VehicleDetailResponse> vehicleDetailApi = getApiGrosirMobil().liveVehicleDetailApi(BEARER+" "+grosirMobilPreference.getToken(),vehicleDetailRequest);
-        vehicleDetailApi.enqueue(new Callback<VehicleDetailResponse>() {
-            @Override
-            public void onResponse(Call<VehicleDetailResponse> call, Response<VehicleDetailResponse> response) {
-                hideLoadingDialog();
-                if (response.isSuccessful()) {
-                    try {
-                        if(response.body().getMessage().equals("success")){
-//                            tvTitleVehicle.setText(response.body().getDataVehicleDetailResponse().getVehicleData());
-
-
-                            LinearLayoutManager layoutManagerImageCar = new LinearLayoutManager(VehicleDetailActivity.this, LinearLayoutManager.HORIZONTAL, false);
-                            rvImageCar.setLayoutManager(layoutManagerImageCar);
-                            rvImageCar.setItemAnimator(new DefaultItemAnimator());
-                            rvImageCar.setNestedScrollingEnabled(false);
-                            PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
-                            pagerSnapHelper.attachToRecyclerView(rvImageCar);
-                            ImageVehicleDetailAdapter imageVehicleDetailAdapter = new ImageVehicleDetailAdapter(VehicleDetailActivity.this, response.body().getDataVehicleDetailResponse().getImageResponseList());
-                            rvImageCar.setAdapter(imageVehicleDetailAdapter);
-                            imageVehicleDetailAdapter.notifyDataSetChanged();
-
-                            GridLayoutManager gridLayoutManagerBrokenImage = new GridLayoutManager(VehicleDetailActivity.this, 2);
-                            rvBrokenImage.setLayoutManager(gridLayoutManagerBrokenImage);
-                            rvBrokenImage.setItemAnimator(new DefaultItemAnimator());
-                            rvBrokenImage.setNestedScrollingEnabled(false);
-                            BrokenImageAdapter brokenImageAdapter = new BrokenImageAdapter(VehicleDetailActivity.this, response.body().getDataVehicleDetailResponse().getImageBrokenResponseList());
-                            rvBrokenImage.setAdapter(brokenImageAdapter);
-                            brokenImageAdapter.notifyDataSetChanged();
-                        }else {
-                            grosirMobilFunction.showMessage(VehicleDetailActivity.this, "GET Vehicle Detail", response.body().getMessage());
-                        }
-                    }catch (Exception e){
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }else {
-                    try {
-                        grosirMobilFunction.showMessage(VehicleDetailActivity.this, getString(R.string.base_null_error_title), response.errorBody().string());
-                    } catch (IOException e) {
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<VehicleDetailResponse> call, Throwable t) {
-                hideLoadingDialog();
-                grosirMobilFunction.showMessage(VehicleDetailActivity.this, "GET Vehicle Detail", getString(R.string.base_null_server));
-                GrosirMobilLog.printStackTrace(t);
-            }
-        });
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -514,7 +270,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
         rb2Jt.setChecked(false);
 
         startTimerDialog(1000000000);
-        startTimer(tvDescription, 1000000000);
+        startTimer(tvTimer, 1000000000);
         lastPrice = Long.parseLong("120000000");
         negoPrice = Long.parseLong("120000000");
 
@@ -526,10 +282,6 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     void rb500RibuClick(){
         if(rb500Ribu.isChecked()){
             bidNego = 500000;
-//            ColorStateList myColorStateList = new ColorStateList(
-//                    new int[][]{new int[]{getResources().getColor(R.color.colorPrimaryBlue)}},
-//                    new int[]{getResources().getColor(R.color.colorPrimaryBlue)}
-//            );
             rb500Ribu.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryBlue)));
             rb500Ribu.setTextColor(getResources().getColor(R.color.colorPrimaryBlue));
             rb1Jt.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorGray)));
@@ -544,10 +296,6 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     void rb1JtClick(){
         if(rb1Jt.isChecked()){
             bidNego = 1000000;
-//            ColorStateList myColorStateList = new ColorStateList(
-//                    new int[][]{new int[]{getResources().getColor(R.color.colorPrimaryBlue)}},
-//                    new int[]{getResources().getColor(R.color.colorPrimaryBlue)}
-//            );
             rb1Jt.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryBlue)));
             rb1Jt.setTextColor(getResources().getColor(R.color.colorPrimaryBlue));
             rb500Ribu.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorGray)));
@@ -576,14 +324,6 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
         }
     }
 
-    private void setDataHardCodeDescription(){
-        HardCodeDataModel hardCodeDataModel = new HardCodeDataModel("- Bamper Depan Kiri Baret");
-        hardCodeDataDescriptionModelList.add(hardCodeDataModel);
-        hardCodeDataModel = new HardCodeDataModel("- Bodykit Belakang Baret");
-        hardCodeDataDescriptionModelList.add(hardCodeDataModel);
-        hardCodeDataModel = new HardCodeDataModel("- Kaca Bolong");
-        hardCodeDataDescriptionModelList.add(hardCodeDataModel);
-    }
 
 
     @SuppressLint("NonConstantResourceId")
@@ -591,10 +331,12 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     void tvCarDataClick(){
         if(carData){
             carData = false;
-            linearCarData.setVisibility(View.GONE);
+            tvCarData.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_down), null);
+            rvCarData.setVisibility(View.GONE);
         }else {
             carData = true;
-            linearCarData.setVisibility(View.VISIBLE);
+            tvCarData.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_up), null);
+            rvCarData.setVisibility(View.VISIBLE);
         }
     }
 
@@ -603,10 +345,12 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     void tvBodyClick(){
         if(body){
             body = false;
-            linearBody.setVisibility(View.GONE);
+            tvBody.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_down), null);
+            rvBody.setVisibility(View.GONE);
         }else {
             body = true;
-            linearBody.setVisibility(View.VISIBLE);
+            tvBody.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_up), null);
+            rvBody.setVisibility(View.VISIBLE);
         }
     }
 
@@ -615,10 +359,12 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     void tvInteriorClick(){
         if(interior){
             interior = false;
-            linearInterior.setVisibility(View.GONE);
+            tvInterior.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_down), null);
+            rvInterior.setVisibility(View.GONE);
         }else {
             interior = true;
-            linearInterior.setVisibility(View.VISIBLE);
+            tvInterior.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_up), null);
+            rvInterior.setVisibility(View.VISIBLE);
         }
     }
 
@@ -627,10 +373,12 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     void tvEngineClick(){
         if(engine){
             engine = false;
-            linearEngine.setVisibility(View.GONE);
+            tvEngine.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_down), null);
+            rvEngine.setVisibility(View.GONE);
         }else {
             engine = true;
-            linearEngine.setVisibility(View.VISIBLE);
+            tvEngine.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_up), null);
+            rvEngine.setVisibility(View.VISIBLE);
         }
     }
 
@@ -639,10 +387,12 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     void tvOtherClick(){
         if(other){
             other = false;
-            linearOther.setVisibility(View.GONE);
+            tvOther.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_down), null);
+            rvOther.setVisibility(View.GONE);
         }else {
             other = true;
-            linearOther.setVisibility(View.VISIBLE);
+            tvOther.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_up), null);
+            rvOther.setVisibility(View.VISIBLE);
         }
     }
 
@@ -651,10 +401,12 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
     void tvBrokenImageClick(){
         if(brokenImage){
             brokenImage = false;
-            linearBrokenImage.setVisibility(View.GONE);
+            tvBrokenImage.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_down), null);
+            rvBrokenImage.setVisibility(View.GONE);
         }else {
             brokenImage = true;
-            linearBrokenImage.setVisibility(View.VISIBLE);
+            tvBrokenImage.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_up), null);
+            rvBrokenImage.setVisibility(View.VISIBLE);
         }
     }
 
@@ -864,6 +616,130 @@ public class VehicleDetailActivity extends GrosirMobilActivity {
                 tvTimer.setText("00h 00m 00s");
             }
         }.start();
+    }
+
+    @Override
+    public void showDialogLoading() {
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(context.getString(R.string.base_tv_please_wait));
+        progressDialog.show();
+    }
+
+    @Override
+    public void hideDialogLoading() {
+        progressDialog.dismiss();
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void vehicleDetailSuccess(VehicleDetailResponse vehicleDetailResponse) {
+        String vehicleName = vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleName();
+        System.out.println("SIZE NAME : "+ vehicleName.length());
+        if(vehicleName.length()>17){
+            tvTitleVehicle.setText(vehicleName+"...");
+        }else {
+            tvTitleVehicle.setText(vehicleName);
+        }
+        tvInitialName.setText(vehicleDetailResponse.getDataVehicleDetailResponse().getGrade());
+        tvHargaAwal.setText("Rp "+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getHargaAwal()));
+        tvHargaSekarang.setText("Rp "+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice()));
+
+        favorite = vehicleDetailResponse.getDataVehicleDetailResponse().getIsFavorite() != null || vehicleDetailResponse.getDataVehicleDetailResponse().getIsFavorite().equals("1");
+
+        if(favorite){
+            ivFavorite.setImageResource(R.drawable.ic_favorite);
+        }else {
+            ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+        }
+        tvPlatNumber.setText(vehicleDetailResponse.getDataVehicleDetailResponse().getKik().substring(0, 10) + " - ");
+        tvCity.setText(vehicleDetailResponse.getDataVehicleDetailResponse().getWarehouse().replace("WAREHOUSE ", ""));
+        if(vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleSummary()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleSummary().equals("")){
+            tvDescription.setText("-");
+        }else {
+            String description = vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleSummary();
+            String newDescription = description.replace(",","\n-");
+            tvDescription.setText("-"+newDescription);
+        }
+
+        LinearLayoutManager layoutManagerImageCar = new LinearLayoutManager(VehicleDetailActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        rvImageCar.setLayoutManager(layoutManagerImageCar);
+        rvImageCar.setItemAnimator(new DefaultItemAnimator());
+        rvImageCar.setNestedScrollingEnabled(false);
+        PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
+        pagerSnapHelper.attachToRecyclerView(rvImageCar);
+        if(vehicleDetailResponse.getDataVehicleDetailResponse().getImageResponseList()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getImageResponseList().isEmpty()){
+            rvImageCar.setVisibility(View.GONE);
+        }else {
+            rvImageCar.setVisibility(View.VISIBLE);
+            ImageVehicleDetailAdapter imageVehicleDetailAdapter = new ImageVehicleDetailAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getImageResponseList());
+            rvImageCar.setAdapter(imageVehicleDetailAdapter);
+            imageVehicleDetailAdapter.notifyDataSetChanged();
+        }
+
+        if(vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleBodyResponseList()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleBodyResponseList().isEmpty()){
+            rvBody.setVisibility(View.GONE);
+            tvBody.setVisibility(View.GONE);
+        }else {
+            LinearLayoutManager linearLayoutManagerBody = new LinearLayoutManager(VehicleDetailActivity.this);
+            rvBody.setLayoutManager(linearLayoutManagerBody);
+            rvBody.setItemAnimator(new DefaultItemAnimator());
+            rvBody.setNestedScrollingEnabled(false);
+            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleBodyResponseList());
+            rvBody.setAdapter(vehicleDetailDataAdapter);
+            vehicleDetailDataAdapter.notifyDataSetChanged();
+        }
+
+        if(vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleInteriorResponseList()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleInteriorResponseList().isEmpty()){
+            rvInterior.setVisibility(View.GONE);
+            tvInterior.setVisibility(View.GONE);
+        }else {
+            LinearLayoutManager linearLayoutManagerInterior = new LinearLayoutManager(VehicleDetailActivity.this);
+            rvInterior.setLayoutManager(linearLayoutManagerInterior);
+            rvInterior.setItemAnimator(new DefaultItemAnimator());
+            rvInterior.setNestedScrollingEnabled(false);
+            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleInteriorResponseList());
+            rvInterior.setAdapter(vehicleDetailDataAdapter);
+            vehicleDetailDataAdapter.notifyDataSetChanged();
+        }
+
+        if(vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleMesinResponseList()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleMesinResponseList().isEmpty()){
+            rvEngine.setVisibility(View.GONE);
+            tvEngine.setVisibility(View.GONE);
+        }else {
+            LinearLayoutManager linearLayoutManagerEngine = new LinearLayoutManager(VehicleDetailActivity.this);
+            rvEngine.setLayoutManager(linearLayoutManagerEngine);
+            rvEngine.setItemAnimator(new DefaultItemAnimator());
+            rvEngine.setNestedScrollingEnabled(false);
+            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleMesinResponseList());
+            rvEngine.setAdapter(vehicleDetailDataAdapter);
+            vehicleDetailDataAdapter.notifyDataSetChanged();
+        }
+
+        if(vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleOtherResponseList()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleOtherResponseList().isEmpty()){
+            rvOther.setVisibility(View.GONE);
+            tvOther.setVisibility(View.GONE);
+        }else {
+            LinearLayoutManager linearLayoutManagerOther = new LinearLayoutManager(VehicleDetailActivity.this);
+            rvOther.setLayoutManager(linearLayoutManagerOther);
+            rvOther.setItemAnimator(new DefaultItemAnimator());
+            rvOther.setNestedScrollingEnabled(false);
+            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleOtherResponseList());
+            rvOther.setAdapter(vehicleDetailDataAdapter);
+            vehicleDetailDataAdapter.notifyDataSetChanged();
+        }
+
+        if(vehicleDetailResponse.getDataVehicleDetailResponse().getImageBrokenResponseList()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getImageBrokenResponseList().isEmpty()){
+            rvBrokenImage.setVisibility(View.GONE);
+            tvBrokenImage.setVisibility(View.GONE);
+        }else {
+            GridLayoutManager gridLayoutManagerBrokenImage = new GridLayoutManager(VehicleDetailActivity.this, 2);
+            rvBrokenImage.setLayoutManager(gridLayoutManagerBrokenImage);
+            rvBrokenImage.setItemAnimator(new DefaultItemAnimator());
+            rvBrokenImage.setNestedScrollingEnabled(false);
+            BrokenImageAdapter brokenImageAdapter = new BrokenImageAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getImageBrokenResponseList());
+            rvBrokenImage.setAdapter(brokenImageAdapter);
+            brokenImageAdapter.notifyDataSetChanged();
+        }
     }
 
 }

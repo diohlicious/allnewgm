@@ -5,21 +5,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class ImageResponse {
 
-    @SerializedName("FileName")
+    @SerializedName("file_name")
     @Expose
     private String fileName;
     
-    @SerializedName("MimeType")
+    @SerializedName("url_image")
     @Expose
-    private String mimeType;
-
-    @SerializedName("BlobUri")
-    @Expose
-    private String blobUri;
-
-    @SerializedName("BlobUrithumb")
-    @Expose
-    private String blobUriThumb;
+    private String urlImage;
 
     @SerializedName("description")
     @Expose
@@ -29,16 +21,8 @@ public class ImageResponse {
         return fileName;
     }
 
-    public String getMimeType() {
-        return mimeType;
-    }
-
-    public String getBlobUri() {
-        return blobUri;
-    }
-
-    public String getBlobUriThumb() {
-        return blobUriThumb;
+    public String getUrlImage() {
+        return urlImage;
     }
 
     public String getDescription() {

@@ -29,12 +29,10 @@ import com.sip.grosirmobil.activity.FilterActivity;
 import com.sip.grosirmobil.activity.MainActivity;
 import com.sip.grosirmobil.activity.ProfileActivity;
 import com.sip.grosirmobil.activity.SearchActivity;
-import com.sip.grosirmobil.adapter.BannerGalleryAdapter;
 import com.sip.grosirmobil.adapter.LiveAdapter;
 import com.sip.grosirmobil.adapter.LiveHistoryAdapter;
 import com.sip.grosirmobil.adapter.LiveSoonAdapter;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
-import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.implement.HomePresenterImp;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.presenter.HomePresenter;
@@ -42,16 +40,9 @@ import com.sip.grosirmobil.base.util.AutoScrollViewPager;
 import com.sip.grosirmobil.base.util.GrosirMobilFragment;
 import com.sip.grosirmobil.base.view.HomeView;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
-import com.sip.grosirmobil.cloud.config.model.HardCodeDataModel;
-import com.sip.grosirmobil.cloud.config.request.home.HomeHistoryRequest;
-import com.sip.grosirmobil.cloud.config.request.home.HomeLiveRequest;
-import com.sip.grosirmobil.cloud.config.response.checkactivetoken.CheckActiveTokenResponse;
-import com.sip.grosirmobil.cloud.config.response.homehistory.DataPageHomeHistoryResponse;
 import com.sip.grosirmobil.cloud.config.response.homehistory.HomeHistoryResponse;
 import com.sip.grosirmobil.cloud.config.response.homelive.HomeLiveResponse;
-import com.sip.grosirmobil.cloud.config.response.timeserver.TimeServerResponse;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,16 +51,18 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.relex.circleindicator.CircleIndicator;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
-import static com.sip.grosirmobil.base.GrosirMobilApp.getApiGrosirMobil;
-import static com.sip.grosirmobil.base.contract.GrosirMobilContract.BEARER;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.END_PRICE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.END_YEAR;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FILTER_REQUEST;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.GRADE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.LOCATION;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.MEREK;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.SEARCH_REQUEST;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.START_PRICE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.START_YEAR;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarFragment;
 
 /**
@@ -87,6 +80,8 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_profile) CircleImageView ivProfile;
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.relative_banner) RelativeLayout relativeBanner;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.view_pager_home) AutoScrollViewPager viewPagerHome;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.circle_indicator) CircleIndicator circleIndicator;
@@ -96,6 +91,8 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @BindView(R.id.linear_search_and_live) LinearLayout linearSearchAndLive;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_search) TextView tvSearch;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_filter) TextView tvFilter;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.linear_result_title_content) LinearLayout linearResultTitleContent;
     @SuppressLint("NonConstantResourceId")
@@ -156,19 +153,21 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @BindView(R.id.progress_horizontal) ProgressBar progressHorizontal;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.progress_bar_data) ProgressBar progressBarData;
-    
 
-
-    private GrosirMobilFunction grosirMobilFunction;
     private GrosirMobilPreference grosirMobilPreference;
     private HomePresenter homePresenter;
     private List<HardCodeDataBaruMasukModel> liveSoonHardCodeDataBaruMasukModelList = new ArrayList<>();
-    private List<HardCodeDataModel> hardCodeDataModelList = new ArrayList<>();
     private boolean search = false;
-
-    private DataPageHomeHistoryResponse dataPageHomeHistoryResponse = null;
-
-    
+//    getHomeLiveApi(1,20,"",1995,2020, 0,1000000000,"");
+    private int page = 1;
+    private int max = 20;
+    private String lokasi = "";
+    private int tahunStart = 1995;
+    private int tahunEnd = 2021;
+    private long hargaStart = 0;
+    private long hargaEnd = 1000000000;
+    private String merek = "";
+    private String grade = "";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -177,12 +176,14 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
 
-        grosirMobilFunction = new GrosirMobilFunction(getActivity());
         grosirMobilPreference = new GrosirMobilPreference(getActivity());
-        homePresenter = new HomePresenterImp(getActivity(), this);
 
-        setDataBanner();
-        setDataLiveSoon();
+        homePresenter = new HomePresenterImp(this, getActivity(), search, linearTitleContent,linearSearchAndLive,
+                linearEmptyData,rvLive,nestedView,rvLiveSoon,rvRecord, linearResultTitleContent,tvResultTitleContent,
+                tvTitleContent,tvLive,tvLiveSoon,tvRecord, tvKetEmptyDataHome, page,max,lokasi,tahunStart,
+                tahunEnd,hargaStart,hargaEnd,merek,grade);
+
+
         RecyclerView.LayoutManager layoutManagerLiveSoon = new LinearLayoutManager(getActivity());
         rvLiveSoon.setLayoutManager(layoutManagerLiveSoon);
         rvLiveSoon.setNestedScrollingEnabled(false);
@@ -192,13 +193,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
 
         setUiReset();
 
-        viewPagerHome.startAutoScroll();
-        viewPagerHome.setInterval(3000);
-        viewPagerHome.setCycle(true);
-        viewPagerHome.setStopScrollWhenTouch(true);
-        BannerGalleryAdapter viewPagerAdapter = new BannerGalleryAdapter(getActivity(), hardCodeDataModelList);
-        viewPagerHome.setAdapter(viewPagerAdapter);
-        circleIndicator.setViewPager(viewPagerHome);
+        homePresenter.setDataBannerHome(viewPagerHome, circleIndicator);
 
         try {
             CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(getActivity());
@@ -209,7 +204,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                     .load(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getProfilePhotoUrl())
                     .apply(new RequestOptions()
                             .placeholder(circularProgressDrawable)
-//                        .error(R.drawable.ic_image_empty)
+                            .error(R.drawable.ic_image_empty_user)
                             .dontAnimate()
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
                             .skipMemoryCache(true))
@@ -222,228 +217,26 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             swipeRefreshHome.setRefreshing(false);
             setUiReset();
         });
+
         return view;
     }
 
-    private void getCheckActiveTokenApi(){
-        progressHorizontal.setVisibility(View.VISIBLE);
-        final Call<CheckActiveTokenResponse> checkActiveTokenApi = getApiGrosirMobil().checkActiveTokenApi(BEARER+" "+grosirMobilPreference.getToken());
-        checkActiveTokenApi.enqueue(new Callback<CheckActiveTokenResponse>() {
-            @Override
-            public void onResponse(Call<CheckActiveTokenResponse> call, Response<CheckActiveTokenResponse> response) {
-                progressHorizontal.setVisibility(View.GONE);
-                if (response.isSuccessful()) {
-                    try {
-                        if(response.body().getMessage().equals("success")){
-                            grosirMobilPreference.saveDataCheckActiveToken(response.body().getData());
-
-                        }else {
-                            grosirMobilFunction.showMessage(getActivity(), "GET Check Active Token", response.body().getMessage());
-                        }
-                    }catch (Exception e){
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }else {
-                    try {
-                        grosirMobilFunction.showMessage(getActivity(), getString(R.string.base_null_error_title), response.errorBody().string());
-                    } catch (IOException e) {
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }
-            }
-            @Override
-            public void onFailure(Call<CheckActiveTokenResponse> call, Throwable t) {
-                progressHorizontal.setVisibility(View.GONE);
-                grosirMobilFunction.showMessage(getActivity(), "GET Check Active Token", getString(R.string.base_null_server));
-                GrosirMobilLog.printStackTrace(t);
-            }
-        });
-    }
-
-    private void getTimeServer(){
-        progressHorizontal.setVisibility(View.VISIBLE);
-        final Call<TimeServerResponse> timeServerApi = getApiGrosirMobil().timeServerApi();
-        timeServerApi.enqueue(new Callback<TimeServerResponse>() {
-            @Override
-            public void onResponse(Call<TimeServerResponse> call, Response<TimeServerResponse> response) {
-                progressHorizontal.setVisibility(View.GONE);
-                if (response.isSuccessful()) {
-                    try {
-                        if(response.body().getMessage().equals("success")){
-
-                            grosirMobilPreference.saveTimeServer(response.body().getData().getTimeServer());
-                            getCheckActiveTokenApi();
-                            tvLiveClick();
-                        }else {
-                            grosirMobilFunction.showMessage(getActivity(), "GET Time Server", response.body().getMessage());
-                        }
-                    }catch (Exception e){
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }else {
-                    try {
-                        grosirMobilFunction.showMessage(getActivity(), getString(R.string.base_null_error_title), response.errorBody().string());
-                    } catch (IOException e) {
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }
-            }
-            @Override
-            public void onFailure(Call<TimeServerResponse> call, Throwable t) {
-                progressHorizontal.setVisibility(View.GONE);
-                grosirMobilFunction.showMessage(getActivity(), "GET Time Server", getString(R.string.base_null_server));
-                GrosirMobilLog.printStackTrace(t);
-            }
-        });
-    }
-
-    private void getHomeLive(){
-        linearEmptyData.setVisibility(View.GONE);
-        progressBarData.setVisibility(View.VISIBLE);
-        rvLive.setVisibility(View.GONE);
-        HomeLiveRequest homeLiveRequest = new HomeLiveRequest(1,20,"",1995,2020, 0,1000000000,"");
-        final Call<HomeLiveResponse> timeServerApi = getApiGrosirMobil().homeLiveApi(BEARER+" "+grosirMobilPreference.getToken(),homeLiveRequest);
-        timeServerApi.enqueue(new Callback<HomeLiveResponse>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onResponse(Call<HomeLiveResponse> call, Response<HomeLiveResponse> response) {
-                progressBarData.setVisibility(View.GONE);
-                rvLive.setVisibility(View.VISIBLE);
-                if (response.isSuccessful()) {
-                    try {
-                        if(response.body().getMessage().equals("success")){
-                            if(response.body().getDataPageHomeLiveResponse().getDataHomeLiveResponseList()==null ||response.body().getDataPageHomeLiveResponse().getDataHomeLiveResponseList().isEmpty()){
-                                tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_live));
-                                tvResultTitleContent.setText("Ada 0 Kendaraan Live");
-                                linearEmptyData.setVisibility(View.VISIBLE);
-                            }else {
-                                linearEmptyData.setVisibility(View.GONE);
-                                tvResultTitleContent.setText("Ada " + response.body().getDataPageHomeLiveResponse().getTotal() + " Kendaraan Live");
-                                RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
-                                rvLive.setLayoutManager(layoutManagerLive);
-                                rvLive.setNestedScrollingEnabled(false);
-                                LiveAdapter liveAdapter = new LiveAdapter(getActivity(), response.body().getDataPageHomeLiveResponse().getDataHomeLiveResponseList());
-                                rvLive.setAdapter(liveAdapter);
-                                liveAdapter.notifyDataSetChanged();
-                            }
-
-                        }else {
-                            grosirMobilFunction.showMessage(getActivity(), "GET Home Live", response.body().getMessage());
-                        }
-                    }catch (Exception e){
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }else {
-                    try {
-                        grosirMobilFunction.showMessage(getActivity(), getString(R.string.base_null_error_title), response.errorBody().string());
-                    } catch (IOException e) {
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }
-            }
-            @Override
-            public void onFailure(Call<HomeLiveResponse> call, Throwable t) {
-                progressBarData.setVisibility(View.GONE);
-                rvLive.setVisibility(View.VISIBLE);
-                grosirMobilFunction.showMessage(getActivity(), "GET Home Live", getString(R.string.base_null_server));
-                GrosirMobilLog.printStackTrace(t);
-            }
-        });
-    }
-
-    private void getHomeHistory(){
-        linearEmptyData.setVisibility(View.GONE);
-        progressBarData.setVisibility(View.VISIBLE);
-        rvRecord.setVisibility(View.GONE);
-        HomeHistoryRequest homeHistoryRequest = new HomeHistoryRequest(1,20,"");
-        final Call<HomeHistoryResponse> timeServerApi = getApiGrosirMobil().homeHistoryApi(BEARER+" "+grosirMobilPreference.getToken(),homeHistoryRequest);
-        timeServerApi.enqueue(new Callback<HomeHistoryResponse>() {
-            @Override
-            public void onResponse(Call<HomeHistoryResponse> call, Response<HomeHistoryResponse> response) {
-                progressBarData.setVisibility(View.GONE);
-                rvRecord.setVisibility(View.VISIBLE);
-                if (response.isSuccessful()) {
-                    try {
-                        if(response.body().getMessage().equals("success")){
-                            dataPageHomeHistoryResponse = response.body().getDataPageHomeHistoryResponse();
-                            if(response.body().getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList()==null ||response.body().getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList().isEmpty()){
-                                tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_history));
-                                linearEmptyData.setVisibility(View.VISIBLE);
-                            }else {
-                                linearEmptyData.setVisibility(View.GONE);
-                            }
-                            RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
-                            rvRecord.setLayoutManager(layoutManagerLive);
-                            rvRecord.setNestedScrollingEnabled(false);
-                            LiveHistoryAdapter liveHistoryAdapter = new LiveHistoryAdapter(getActivity(), response.body().getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList());
-                            rvRecord.setAdapter(liveHistoryAdapter);
-                            liveHistoryAdapter.notifyDataSetChanged();
-                        }else {
-                            grosirMobilFunction.showMessage(getActivity(), "GET Home History", response.body().getMessage());
-                        }
-                    }catch (Exception e){
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }else {
-                    try {
-                        grosirMobilFunction.showMessage(getActivity(), getString(R.string.base_null_error_title), response.errorBody().string());
-                    } catch (IOException e) {
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }
-            }
-            @Override
-            public void onFailure(Call<HomeHistoryResponse> call, Throwable t) {
-                progressBarData.setVisibility(View.GONE);
-                rvRecord.setVisibility(View.VISIBLE);
-                grosirMobilFunction.showMessage(getActivity(), "GET Home History", getString(R.string.base_null_server));
-                GrosirMobilLog.printStackTrace(t);
-            }
-
-        });
-    }
-
     private void setUiReset(){
-        getTimeServer();
+        homePresenter.getTimeServerApi();
         search = false;
         relativeHome.setVisibility(View.VISIBLE);
         linearSearchAndFilterShow.setVisibility(View.GONE);
         linearSearchAndLive.setVisibility(View.VISIBLE);
         linearTitleContent.setVisibility(View.VISIBLE);
         relativeResultSearch.setVisibility(View.GONE);
+        lokasi = "";
+        tahunStart = 1995;
+        tahunEnd = 2021;
+        hargaStart = 0;
+        hargaEnd = 1000000000;
+        merek = "";
     }
 
-    private void setDataBanner(){
-        HardCodeDataModel hardCodeDataModel = new HardCodeDataModel("Dapatkan promo akhir tahun dengan berbagai\nmacam unit yang ada!","Promo\nAkhir 2020");
-        hardCodeDataModelList.add(hardCodeDataModel);
-        hardCodeDataModel = new HardCodeDataModel("Dapatkan promo akhir tahun dengan berbagai\nmacam unit yang ada!","Promo\nAkhir 2020");
-        hardCodeDataModelList.add(hardCodeDataModel);
-        hardCodeDataModel = new HardCodeDataModel("Dapatkan promo akhir tahun dengan berbagai\nmacam unit yang ada!","Promo\nAkhir 2020");
-        hardCodeDataModelList.add(hardCodeDataModel);
-    }
-
-    private void setDataLiveSoon(){
-        HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
-        liveSoonHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
-        liveSoonHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
-        liveSoonHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
-        liveSoonHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
-        liveSoonHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
-        liveSoonHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
-        liveSoonHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
-        liveSoonHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
-        liveSoonHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
-        liveSoonHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-    }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_search)
@@ -614,11 +407,44 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                     cardSearchResult.setVisibility(View.GONE);
                     linearAllUnit.setVisibility(View.VISIBLE);
                 }
+                merek = data.getStringExtra(MEREK);
+                hargaStart = Long.parseLong(data.getStringExtra(START_PRICE));
+                hargaEnd = Long.parseLong(data.getStringExtra(END_PRICE));
+                lokasi = data.getStringExtra(LOCATION);
+                tahunStart = Integer.parseInt(data.getStringExtra(START_YEAR));
+                tahunEnd = Integer.parseInt(data.getStringExtra(END_YEAR));
+                grade = data.getStringExtra(GRADE);
+                String filter = "";
+                if(!merek.equals("")){
+                    if(filter.equals("")){
+                        filter = "Merek";
+                    }else {
+                        filter = filter+", Merek";
+                    }
+                }
+                if(!lokasi.equals("")){
+                    if(filter.equals("")){
+                        filter = "Lokasi";
+                    }else {
+                        filter = filter+", Lokasi";
+                    }
+                }
+                if(!grade.equals("")){
+                    if(filter.equals("")){
+                        filter = "Grade";
+                    }else {
+                        filter = filter+", Grade";
+                    }
+                }
+                tvFilter.setText(filter);
                 relativeHome.setVisibility(View.GONE);
                 linearSearchAndFilterShow.setVisibility(View.VISIBLE);
                 linearSearchAndLive.setVisibility(View.GONE);
                 linearTitleContent.setVisibility(View.GONE);
                 relativeResultSearch.setVisibility(View.VISIBLE);
+                page = 1;
+                max = 20;
+                homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd,hargaStart,hargaEnd,merek);
             }
         }
     }
@@ -632,6 +458,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.tv_live)
     void tvLiveClick(){
+//        homePresenter.tvLiveClick();
         if(search){
             linearTitleContent.setVisibility(View.GONE);
             linearSearchAndLive.setVisibility(View.GONE);
@@ -639,7 +466,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             linearTitleContent.setVisibility(View.VISIBLE);
             linearSearchAndLive.setVisibility(View.VISIBLE);
         }
-        getHomeLive();
+        homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
         nestedView.setBackgroundResource(R.color.colorPrimaryWhite);
         rvLive.setVisibility(View.GONE);
         rvLiveSoon.setVisibility(View.GONE);
@@ -658,6 +485,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_live_soon)
     void tvLiveSoonClick(){
+//        homePresenter.tvLiveSoonClick();
         if(search){
             linearTitleContent.setVisibility(View.GONE);
             linearSearchAndLive.setVisibility(View.GONE);
@@ -690,7 +518,8 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_record)
     void tvRecordClick(){
-        getHomeHistory();
+//        homePresenter.tvRecordClick();
+        homePresenter.getHomeHistoryApi(page,max,"");
         linearSearchAndLive.setVisibility(View.GONE);
         nestedView.setBackgroundResource(R.color.colorBackgroundHome);
         rvLive.setVisibility(View.GONE);
@@ -703,7 +532,6 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         tvLiveSoon.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvRecord.setBackgroundResource(R.drawable.design_line_selected);
         tvRecord.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
-
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -717,12 +545,56 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
 
     @Override
     public void showDialogLoading() {
-
+        progressBarData.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideDialogLoading() {
+        progressBarData.setVisibility(View.GONE);
+    }
 
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void homeLiveSuccess(HomeLiveResponse homeLiveResponse) {
+        if(homeLiveResponse.getDataPageHomeLiveResponse().getDataHomeLiveResponseList()==null ||homeLiveResponse.getDataPageHomeLiveResponse().getDataHomeLiveResponseList().isEmpty()){
+            tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_live));
+            tvResultTitleContent.setText("Ada 0 Kendaraan Live");
+            tvResultSearch.setText(homeLiveResponse.getDataPageHomeLiveResponse().getTotal()+" Unit");
+            linearEmptyData.setVisibility(View.VISIBLE);
+        }else {
+            linearEmptyData.setVisibility(View.GONE);
+            tvResultTitleContent.setText("Ada " + homeLiveResponse.getDataPageHomeLiveResponse().getTotal() + " Kendaraan Live");
+            tvResultSearch.setText(homeLiveResponse.getDataPageHomeLiveResponse().getTotal()+" Unit");
+            RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
+            rvLive.setLayoutManager(layoutManagerLive);
+            rvLive.setNestedScrollingEnabled(false);
+            LiveAdapter liveAdapter = new LiveAdapter(getActivity(), homeLiveResponse.getDataPageHomeLiveResponse().getDataHomeLiveResponseList());
+            rvLive.setAdapter(liveAdapter);
+            liveAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void homeComingSoonSuccess() {
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void homeHistorySuccess(HomeHistoryResponse homeHistoryResponse) {
+        if(homeHistoryResponse.getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList()==null ||homeHistoryResponse.getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList().isEmpty()){
+            tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_history));
+            linearEmptyData.setVisibility(View.VISIBLE);
+        }else {
+            linearEmptyData.setVisibility(View.GONE);
+        }
+        RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
+        rvRecord.setLayoutManager(layoutManagerLive);
+        rvRecord.setNestedScrollingEnabled(false);
+        tvResultSearch.setText(homeHistoryResponse.getDataPageHomeHistoryResponse().getTotal()+" Unit");
+        LiveHistoryAdapter liveHistoryAdapter = new LiveHistoryAdapter(getActivity(), homeHistoryResponse.getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList());
+        rvRecord.setAdapter(liveHistoryAdapter);
+        liveHistoryAdapter.notifyDataSetChanged();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -731,7 +603,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         ((MainActivity)getActivity()).linearNotificationClick();
     }
 
-//Edit Profile
+    //Edit Profile
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.iv_profile)
     void ivProfileClick(){

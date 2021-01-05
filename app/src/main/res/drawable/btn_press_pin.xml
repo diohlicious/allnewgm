@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" >
+        <shape
+            android:shape="rectangle">
+            <corners android:radius="@dimen/_5sdp"/>
+            <solid android:color="@color/colorPrimaryPressButton"/>
+        </shape>
+    </item>
     <item android:state_selected="false" >
         <shape
             android:shape="rectangle">
             <corners android:radius="@dimen/_5sdp"/>
             <solid android:color="@color/colorPrimaryWhite"/>
-        </shape>
-    </item>
-    <item android:state_pressed="true" >
-        <shape
-            android:shape="rectangle">
-            <corners android:radius="@dimen/_5sdp"/>
-            <solid android:color="@color/colorPrimaryTheme"/>
         </shape>
     </item>
 </selector>

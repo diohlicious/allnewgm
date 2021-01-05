@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     android:id="@+id/linear_car_data"
-    android:visibility="gone"
+    android:visibility="visible"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:paddingBottom="@dimen/_10sdp"
     android:paddingTop="@dimen/_10sdp"

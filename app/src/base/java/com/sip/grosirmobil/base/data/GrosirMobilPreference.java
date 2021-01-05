@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.sip.grosirmobil.BuildConfig;
+import com.sip.grosirmobil.cloud.config.model.SearchDataModel;
 import com.sip.grosirmobil.cloud.config.response.checkactivetoken.DataCheckActiveTokenResponse;
 import com.sip.grosirmobil.cloud.config.response.login.DataLoginResponse;
 import com.sip.grosirmobil.cloud.config.response.province.DataProvinceResponse;
@@ -51,6 +52,7 @@ public class GrosirMobilPreference {
     private static final String DATA_LOGIN = "dataLogin";
     private static final String DATA_WARE_HOUSE = "dataWareHouse";
     private static final String DATA_CHECK_ACTIVE_TOKEN = "dataCheckActiveToken";
+    private static final String DATA_SEARCH = "dataSearch";
 
     private final SharedPreferences sharedpreferences;
 
@@ -346,6 +348,30 @@ public class GrosirMobilPreference {
         return (ArrayList<DataTipeUsahaResponse>) dataTipeUsahaResponseList;
     }
 
+    public void saveDataSearch(List<SearchDataModel> searchDataModelList){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        Gson gson = new Gson();
+        String dataSearchModelJson = gson.toJson(searchDataModelList);
+        editor.putString(DATA_SEARCH, dataSearchModelJson);
+        editor.apply();
+    }
+
+    public ArrayList<SearchDataModel> getDataSearch(){
+        List<SearchDataModel> searchDataModelList;
+        if (sharedpreferences.contains(DATA_SEARCH)) {
+            String dataSearchModelJson = sharedpreferences.getString(DATA_SEARCH, null);
+            Gson gson = new Gson();
+            SearchDataModel[] searchDataModels = gson.fromJson(dataSearchModelJson,
+                    SearchDataModel[].class);
+
+            searchDataModelList = Arrays.asList(searchDataModels);
+            searchDataModelList = new ArrayList<>(searchDataModelList);
+        } else
+            return null;
+
+        return (ArrayList<SearchDataModel>) searchDataModelList;
+    }
+
     public void saveDataLogin(DataLoginResponse dataLoginResponse){
         SharedPreferences.Editor editor = sharedpreferences.edit();
         Gson gSonDataProfile = new Gson();
@@ -431,6 +457,12 @@ public class GrosirMobilPreference {
         editor.remove(DATA_LOGIN);
         editor.remove(DATA_WARE_HOUSE);
         editor.remove(DATA_CHECK_ACTIVE_TOKEN);
+        editor.apply();
+    }
+
+    public void clearDataSearch() {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.remove(DATA_SEARCH);
         editor.apply();
     }
 }

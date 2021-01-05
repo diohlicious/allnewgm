@@ -18,6 +18,7 @@
     <color name="colorBackgroundPopup">#99000000</color>
     <color name="colorPrimaryLine">#F5F5F5</color>
     <color name="colorPrimaryLightGrey">#9E9FAD</color>
+    <color name="colorPrimaryPressButton">#1A9E9FAD</color>
     <color name="colorPrimaryDarkGrey">#494B60</color>
     <color name="colorPrimaryGreyLine">#DFE0E7</color>
     <color name="colorPrimaryWhite">#FFFFFF</color>

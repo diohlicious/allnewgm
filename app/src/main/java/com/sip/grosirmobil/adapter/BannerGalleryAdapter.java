@@ -12,17 +12,17 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.sip.grosirmobil.R;
-import com.sip.grosirmobil.cloud.config.model.HardCodeDataModel;
+import com.sip.grosirmobil.cloud.config.model.BannerDataModel;
 
 import java.util.List;
 
 public class BannerGalleryAdapter extends PagerAdapter {
 
-    private List<HardCodeDataModel> dataObjectList;
+    private List<BannerDataModel> dataObjectList;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public BannerGalleryAdapter(Context context, List<HardCodeDataModel> dataObjectList) {
+    public BannerGalleryAdapter(Context context, List<BannerDataModel> dataObjectList) {
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.dataObjectList = dataObjectList;
         this.context = context;

@@ -14,12 +14,19 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.adapter.SearchDataAdapter;
+import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
+import com.sip.grosirmobil.cloud.config.model.SearchDataModel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -32,14 +39,39 @@ public class SearchActivity extends GrosirMobilActivity {
     @BindView(R.id.et_search_result) EditText etSearchResult;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_clear) ImageView ivClear;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_clear_search) TextView tvClearSearch;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_history_search) RecyclerView rvHistorySearch;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.linear_not_found) LinearLayout linearNotFound;
+
+    private GrosirMobilPreference grosirMobilPreference;
+    private List<SearchDataModel> searchDataModelList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
+
+        grosirMobilPreference = new GrosirMobilPreference(this);
+
+        RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(this);
+        rvHistorySearch.setLayoutManager(layoutManagerLive);
+        rvHistorySearch.setNestedScrollingEnabled(false);
+
+        if(grosirMobilPreference.getDataSearch()==null||grosirMobilPreference.getDataSearch().isEmpty()){
+            rvHistorySearch.setVisibility(View.GONE);
+            tvClearSearch.setVisibility(View.GONE);
+        }else {
+            tvClearSearch.setVisibility(View.VISIBLE);
+            searchDataModelList.addAll(grosirMobilPreference.getDataSearch());
+            rvHistorySearch.setVisibility(View.VISIBLE);
+        }
+        SearchDataAdapter searchDataAdapter = new SearchDataAdapter(this,this, grosirMobilPreference.getDataSearch());
+        rvHistorySearch.setAdapter(searchDataAdapter);
+        searchDataAdapter.notifyDataSetChanged();
 
         etSearchResult.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH
@@ -48,6 +80,11 @@ public class SearchActivity extends GrosirMobilActivity {
                     && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                 InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                if(!etSearchResult.getText().toString().equals("")){
+                    SearchDataModel searchDataModel = new SearchDataModel(etSearchResult.getText().toString());
+                    searchDataModelList.add(searchDataModel);
+                    grosirMobilPreference.saveDataSearch(searchDataModelList);
+                }
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("keySearch", etSearchResult.getText().toString());
                 setResult(RESULT_OK, resultIntent);
@@ -73,6 +110,15 @@ public class SearchActivity extends GrosirMobilActivity {
             @Override
             public void afterTextChanged(Editable editable) {}
         });
+
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_clear_search)
+    void tvClearSearchClick(){
+        rvHistorySearch.setVisibility(View.GONE);
+        tvClearSearch.setVisibility(View.GONE);
+        grosirMobilPreference.clearDataSearch();
     }
 
     @SuppressLint("NonConstantResourceId")
