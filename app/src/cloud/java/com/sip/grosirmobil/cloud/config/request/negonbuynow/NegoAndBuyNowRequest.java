@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class NegoAndBuyNowRequest {
 
-    @SerializedName("ohid")
+    @SerializedName("open_house_id")
     @Expose
-    private String ohid;
+    private String openHouseId;
     
     @SerializedName("kik")
     @Expose
@@ -21,8 +21,8 @@ public class NegoAndBuyNowRequest {
     @Expose
     private String bidPrice;
 
-    public NegoAndBuyNowRequest(String ohid, String kik, String agreementNo, String bidPrice) {
-        this.ohid = ohid;
+    public NegoAndBuyNowRequest(String openHouseId, String kik, String agreementNo, String bidPrice) {
+        this.openHouseId = openHouseId;
         this.kik = kik;
         this.agreementNo = agreementNo;
         this.bidPrice = bidPrice;

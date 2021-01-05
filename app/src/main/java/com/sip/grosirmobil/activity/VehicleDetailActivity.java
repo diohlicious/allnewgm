@@ -33,6 +33,8 @@ import com.sip.grosirmobil.base.implement.VehicleDetailImp;
 import com.sip.grosirmobil.base.presenter.VehicleDetailPresenter;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
 import com.sip.grosirmobil.base.view.VehicleDetailView;
+import com.sip.grosirmobil.cloud.config.request.negonbuynow.NegoAndBuyNowRequest;
+import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 import com.sip.grosirmobil.cloud.config.response.vehicledetail.VehicleDetailResponse;
 
 import butterknife.BindView;
@@ -81,32 +83,6 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @BindView(R.id.tv_car_data) TextView tvCarData;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_car_data) RecyclerView rvCarData;
-//    @SuppressLint("NonConstantResourceId")
-//    @BindView(R.id.linear_car_data) LinearLayout linearCarData;
-//    @SuppressLint("NonConstantResourceId")
-//    @BindView(R.id.tv_id_number) TextView tvIdNumber;
-//    @SuppressLint("NonConstantResourceId")
-//    @BindView(R.id.tv_score) TextView tvScore;
-//    @SuppressLint("NonConstantResourceId")
-//    @BindView(R.id.tv_plat_number_car_data) TextView tvPlatNumberCarData;
-//    @SuppressLint("NonConstantResourceId")
-//    @BindView(R.id.tv_year) TextView tvYear;
-//    @SuppressLint("NonConstantResourceId")
-//    @BindView(R.id.tv_transmition) TextView tvTransmition;
-//    @SuppressLint("NonConstantResourceId")
-//    @BindView(R.id.tv_color) TextView tvColor;
-//    @SuppressLint("NonConstantResourceId")
-//    @BindView(R.id.tv_km) TextView tvKM;
-//    @SuppressLint("NonConstantResourceId")
-//    @BindView(R.id.tv_kepemilikan) TextView tvKepemilikan;
-//    @SuppressLint("NonConstantResourceId")
-//    @BindView(R.id.tv_location) TextView tvLocation;
-//    @SuppressLint("NonConstantResourceId")
-//    @BindView(R.id.tv_stnk) TextView tvSTNK;
-//    @SuppressLint("NonConstantResourceId")
-//    @BindView(R.id.tv_masa_berlaku_pajak) TextView tvMasaBerlakuPajak;
-//    @SuppressLint("NonConstantResourceId")
-//    @BindView(R.id.tv_masa_berlaku_stnk) TextView tvMasaBerlakuSTNK;
 
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_body) TextView tvBody;
@@ -217,6 +193,9 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     private Context context;
     private String openHouseId="";
     private String kik="";
+    private String lastPriceFirst="";
+    private String negoPriceFirst="";
+    private VehicleDetailResponse vehicleDetailResponse = null;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -271,10 +250,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
 
         startTimerDialog(1000000000);
         startTimer(tvTimer, 1000000000);
-        lastPrice = Long.parseLong("120000000");
-        negoPrice = Long.parseLong("120000000");
 
-        tvInputPriceNego.setText("Rp "+setCurrencyFormat("120000000"));
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -440,15 +416,20 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         relativeBackgroundDialogSuccessBuyNow.setVisibility(View.GONE);
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.btn_nego_dialog)
     void btnNegoDialogClick(){
+        String vehicleName = vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleName();
+        tvMessageNego.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(String.valueOf(negoPrice)));
         linearDialogNegoClick();
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.btn_buy_now_dialog)
     void btnBuyNowDialogClick(){
+        //TODO Masih Pakai Open Price, Harusnya pake Harga Buy Now
+        String vehicleName = vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleName();
+        tvMessageBuyNow.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice()));
         linearDialogBuyNowClick();
     }
 
@@ -467,29 +448,37 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_nego_confirm_dialog)
     void btnNegoConfirmDialogClick(){
-        linearDialogSuccessNegoClick();
+        NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenHouseId(),vehicleDetailResponse.getDataVehicleDetailResponse().getKik(),vehicleDetailResponse.getDataVehicleDetailResponse().getAgreementNo(),String.valueOf(negoPrice));
+        vehicleDetailPresenter.liveNegoApi(negoAndBuyNowRequest);
     }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_confirm_buy_now_dialog)
     void btnConfirmBuyNowDialogClick(){
-        linearDialogSuccessBuyNowClick();
+        //TODO Masih Pakai Open Price, Harusnya pake Harga Buy Now
+        NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenHouseId(),vehicleDetailResponse.getDataVehicleDetailResponse().getKik(),vehicleDetailResponse.getDataVehicleDetailResponse().getAgreementNo(),vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice());
+        vehicleDetailPresenter.liveBuyNowApi(negoAndBuyNowRequest);
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.linear_dialog_success_nego)
     void linearDialogSuccessNegoClick(){
         relativeBackgroundDialog.setVisibility(View.GONE);
         relativeBackgroundDialogConfirmNego.setVisibility(View.GONE);
         relativeBackgroundDialogSuccessNego.setVisibility(View.VISIBLE);
+        String vehicleName = vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleName();
+        tvMessageSuccessNego.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(String.valueOf(negoPrice)));
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.linear_dialog_success_buy_now)
     void linearDialogSuccessBuyNowClick(){
+        //TODO Masih Pakai Open Price, Harusnya pake Harga Buy Now
         relativeBackgroundDialog.setVisibility(View.GONE);
         relativeBackgroundDialogConfirmBuyNow.setVisibility(View.GONE);
         relativeBackgroundDialogSuccessBuyNow.setVisibility(View.VISIBLE);
+        String vehicleName = vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleName();
+        tvMessageSuccessBuyNow.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice()));
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -557,9 +546,9 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.iv_clear_price)
     void ivClearPriceClick(){
-        lastPrice = Long.parseLong("120000000");
-        negoPrice = Long.parseLong("120000000");
-        tvInputPriceNego.setText("Rp "+setCurrencyFormat("120000000"));
+        lastPrice = Long.parseLong(lastPriceFirst);
+        negoPrice = Long.parseLong(negoPriceFirst);
+        tvInputPriceNego.setText("Rp "+setCurrencyFormat(lastPriceFirst));
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -633,12 +622,17 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @SuppressLint("SetTextI18n")
     @Override
     public void vehicleDetailSuccess(VehicleDetailResponse vehicleDetailResponse) {
+        this.vehicleDetailResponse = vehicleDetailResponse;
         String vehicleName = vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleName();
         System.out.println("SIZE NAME : "+ vehicleName.length());
         if(vehicleName.length()>17){
             tvTitleVehicle.setText(vehicleName+"...");
+            tvMessageNego.setText(vehicleName+"...");
+            tvMessageBuyNow.setText(vehicleName+"...");
         }else {
             tvTitleVehicle.setText(vehicleName);
+            tvMessageNego.setText(vehicleName);
+            tvMessageBuyNow.setText(vehicleName);
         }
         tvInitialName.setText(vehicleDetailResponse.getDataVehicleDetailResponse().getGrade());
         tvHargaAwal.setText("Rp "+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getHargaAwal()));
@@ -674,6 +668,19 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             ImageVehicleDetailAdapter imageVehicleDetailAdapter = new ImageVehicleDetailAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getImageResponseList());
             rvImageCar.setAdapter(imageVehicleDetailAdapter);
             imageVehicleDetailAdapter.notifyDataSetChanged();
+        }
+
+        if(vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleDataResponseList()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleDataResponseList().isEmpty()){
+            rvCarData.setVisibility(View.GONE);
+            tvCarData.setVisibility(View.GONE);
+        }else {
+            LinearLayoutManager linearLayoutManagerBody = new LinearLayoutManager(VehicleDetailActivity.this);
+            rvCarData.setLayoutManager(linearLayoutManagerBody);
+            rvCarData.setItemAnimator(new DefaultItemAnimator());
+            rvCarData.setNestedScrollingEnabled(false);
+            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleDataResponseList());
+            rvCarData.setAdapter(vehicleDetailDataAdapter);
+            vehicleDetailDataAdapter.notifyDataSetChanged();
         }
 
         if(vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleBodyResponseList()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleBodyResponseList().isEmpty()){
@@ -739,6 +746,25 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             BrokenImageAdapter brokenImageAdapter = new BrokenImageAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getImageBrokenResponseList());
             rvBrokenImage.setAdapter(brokenImageAdapter);
             brokenImageAdapter.notifyDataSetChanged();
+        }
+        //TODO List Bid Belum ada Response utk rvBid
+//        rvBid
+        //TODO Masih Pakai Open Price, Harusnya pake Harga Buy Now
+        btnBuyNowDialog.setText("Buy Now Rp "+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice()));
+        lastPriceFirst = vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice();
+        negoPriceFirst = vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice();
+        lastPrice = Long.parseLong(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice());
+        negoPrice = Long.parseLong(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice());
+
+        tvInputPriceNego.setText("Rp "+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice()));
+    }
+
+    @Override
+    public void vehicleDetailNegoAndBuyNow(String type, GeneralResponse generalResponse) {
+        if(type.equals("Nego")){
+            linearDialogSuccessNegoClick();
+        }else {
+            linearDialogSuccessBuyNowClick();
         }
     }
 

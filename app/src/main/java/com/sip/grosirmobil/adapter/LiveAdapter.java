@@ -105,7 +105,7 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
             });
             holder.cardVehicle.setOnClickListener(view -> {
                 Intent intent = new Intent(contexts, VehicleDetailActivity.class);
-                intent.putExtra(ID_VEHICLE, dataHomeLiveResponse.getOpenHouseId());
+                intent.putExtra(ID_VEHICLE, String.valueOf(dataHomeLiveResponse.getOpenHouseId()));
                 intent.putExtra(KIK, dataHomeLiveResponse.getKik());
                 intent.putExtra(FROM_PAGE, "LIVE");
                 contexts.startActivity(intent);
