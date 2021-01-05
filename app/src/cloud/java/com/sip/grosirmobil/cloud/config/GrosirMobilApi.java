@@ -1,6 +1,5 @@
 package com.sip.grosirmobil.cloud.config;
 
-import com.sip.grosirmobil.cloud.config.request.buynow.BuyNowRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeComingSoonRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeHistoryRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeLiveRequest;
@@ -8,7 +7,7 @@ import com.sip.grosirmobil.cloud.config.request.kabupaten.KabupatenRequest;
 import com.sip.grosirmobil.cloud.config.request.kecamatan.KecamatanRequest;
 import com.sip.grosirmobil.cloud.config.request.kelurahan.KelurahanRequest;
 import com.sip.grosirmobil.cloud.config.request.login.LoginRequest;
-import com.sip.grosirmobil.cloud.config.request.nego.NegoRequest;
+import com.sip.grosirmobil.cloud.config.request.negonbuynow.NegoAndBuyNowRequest;
 import com.sip.grosirmobil.cloud.config.request.resendotp.ResendOtpRequest;
 import com.sip.grosirmobil.cloud.config.request.savedataregister.SaveDataRegisterRequest;
 import com.sip.grosirmobil.cloud.config.request.validationotp.ValidationOtpRequest;
@@ -184,12 +183,12 @@ public interface GrosirMobilApi {
     @Headers("Content-Type: application/json")
     @POST(liveNegoPath)
     Call<GeneralResponse> liveNegoApi(@Header("Authorization") String authToken,
-                                     @Body NegoRequest negoRequest);
+                                      @Body NegoAndBuyNowRequest negoAndBuyNowRequest);
 
     @Headers("Content-Type: application/json")
     @POST(liveBuyNowPath)
     Call<GeneralResponse> liveBuyNowApi(@Header("Authorization") String authToken,
-                                        @Body BuyNowRequest buyNowRequest);
+                                        @Body NegoAndBuyNowRequest negoAndBuyNowRequest);
 
     @Headers("Content-Type: application/json")
     @POST(listCartPath)
