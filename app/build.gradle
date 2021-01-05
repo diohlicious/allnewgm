@@ -6,8 +6,8 @@ android {
         signingproject {
             keyAlias 'password'
             keyPassword 'password'
-           // storeFile file('/Users/syahrulhajji/AndroidStudioProjects/Grosir Mobil/Template.jks')
-            storeFile file('F:\\PROJECT\\Freelance\\Template.jks')
+            storeFile file('/Users/syahrulhajji/AndroidStudioProjects/Grosir Mobil/Template.jks')
+//            storeFile file('F:\\PROJECT\\Freelance\\Template.jks')
             storePassword 'password'
         }
     }
