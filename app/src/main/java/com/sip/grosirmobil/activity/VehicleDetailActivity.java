@@ -225,6 +225,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             btnNego.setVisibility(View.INVISIBLE);
         }
 
+        //TODO List Bid Belum ada Response utk rvBid
         RecyclerView.LayoutManager layoutManagerBid = new LinearLayoutManager(this);
         rvBid.setLayoutManager(layoutManagerBid);
 
@@ -427,7 +428,6 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.btn_buy_now_dialog)
     void btnBuyNowDialogClick(){
-        //TODO Masih Pakai Open Price, Harusnya pake Harga Buy Now
         String vehicleName = vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleName();
         tvMessageBuyNow.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice()));
         linearDialogBuyNowClick();
@@ -455,7 +455,6 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_confirm_buy_now_dialog)
     void btnConfirmBuyNowDialogClick(){
-        //TODO Masih Pakai Open Price, Harusnya pake Harga Buy Now
         NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenHouseId(),vehicleDetailResponse.getDataVehicleDetailResponse().getKik(),vehicleDetailResponse.getDataVehicleDetailResponse().getAgreementNo(),vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice());
         vehicleDetailPresenter.liveBuyNowApi(negoAndBuyNowRequest);
     }
@@ -636,7 +635,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         }
         tvInitialName.setText(vehicleDetailResponse.getDataVehicleDetailResponse().getGrade());
         tvHargaAwal.setText("Rp "+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getHargaAwal()));
-        tvHargaSekarang.setText("Rp "+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice()));
+        tvHargaSekarang.setText("Rp "+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getBottomPrice()));
 
         favorite = vehicleDetailResponse.getDataVehicleDetailResponse().getIsFavorite() != null || vehicleDetailResponse.getDataVehicleDetailResponse().getIsFavorite().equals("1");
 
@@ -747,16 +746,13 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             rvBrokenImage.setAdapter(brokenImageAdapter);
             brokenImageAdapter.notifyDataSetChanged();
         }
-        //TODO List Bid Belum ada Response utk rvBid
-//        rvBid
-        //TODO Masih Pakai Open Price, Harusnya pake Harga Buy Now
         btnBuyNowDialog.setText("Buy Now Rp "+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice()));
-        lastPriceFirst = vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice();
-        negoPriceFirst = vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice();
-        lastPrice = Long.parseLong(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice());
-        negoPrice = Long.parseLong(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice());
+        lastPriceFirst = vehicleDetailResponse.getDataVehicleDetailResponse().getBottomPrice();
+        negoPriceFirst = vehicleDetailResponse.getDataVehicleDetailResponse().getBottomPrice();
+        lastPrice = Long.parseLong(vehicleDetailResponse.getDataVehicleDetailResponse().getBottomPrice());
+        negoPrice = Long.parseLong(vehicleDetailResponse.getDataVehicleDetailResponse().getBottomPrice());
 
-        tvInputPriceNego.setText("Rp "+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice()));
+        tvInputPriceNego.setText("Rp "+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getBottomPrice()));
     }
 
     @Override

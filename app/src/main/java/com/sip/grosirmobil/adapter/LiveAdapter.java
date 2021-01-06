@@ -61,8 +61,8 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
             holder.tvVehicleName.setText(dataHomeLiveResponse.getVehicleName());
             holder.tvPlatNumber.setText(dataHomeLiveResponse.getKikNumber().substring(0, 10) + " - ");
             holder.tvCity.setText(dataHomeLiveResponse.getWareHouse().replace("WAREHOUSE ", ""));
-            holder.tvOpenPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getOpenPrice()));
-            holder.tvBottomPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getOpenPrice()));
+            holder.tvOpenPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getBottomPrice()));
+            holder.tvBottomPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getBottomPrice()));
             holder.tvInitialName.setText(dataHomeLiveResponse.getGrade());
 
             CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);

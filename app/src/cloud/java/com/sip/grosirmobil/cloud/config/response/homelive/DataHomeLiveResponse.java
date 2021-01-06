@@ -41,6 +41,10 @@ public class DataHomeLiveResponse {
     @Expose
     private String openPrice;
 
+    @SerializedName("bottom_price")
+    @Expose
+    private String bottomPrice;
+
     @SerializedName("grade")
     @Expose
     private String grade;
@@ -113,6 +117,10 @@ public class DataHomeLiveResponse {
 
     public String getOpenPrice() {
         return openPrice;
+    }
+
+    public String getBottomPrice() {
+        return bottomPrice;
     }
 
     public String getGrade() {
