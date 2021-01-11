@@ -47,6 +47,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import static android.content.Context.WINDOW_SERVICE;
 
@@ -199,9 +200,9 @@ public class GrosirMobilFunction {
         Date date;
         String outPutTimeServer = null;
         @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSSSSS'Z'");
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ssZ");
         @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             date = inputDateFormat.parse(inputDateString);
             outPutTimeServer = outputDateFormat.format(date);
@@ -210,6 +211,137 @@ public class GrosirMobilFunction {
         }
         return outPutTimeServer;
     }
+
+    public static long calculateDate(String start_date,
+                                      String end_date) {
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        long timeToLong = 0;
+        try {
+            Date d1 = sdf.parse(start_date);
+            Date d2 = sdf.parse(end_date);
+            long difference_In_Time
+                    = d2.getTime() - d1.getTime();
+
+            long difference_In_Seconds
+                    = TimeUnit.MILLISECONDS
+                    .toSeconds(difference_In_Time)
+                    % 60;
+
+            long difference_In_Minutes
+                    = TimeUnit
+                    .MILLISECONDS
+                    .toMinutes(difference_In_Time)
+                    % 60;
+
+            long difference_In_Hours
+                    = TimeUnit
+                    .MILLISECONDS
+                    .toHours(difference_In_Time)
+                    % 24;
+
+            long difference_In_Days
+                    = TimeUnit
+                    .MILLISECONDS
+                    .toDays(difference_In_Time)
+                    % 365;
+
+            long difference_In_Years
+                    = TimeUnit
+                    .MILLISECONDS
+                    .toDays(difference_In_Time)
+                    / 365l;
+            
+            timeToLong = difference_In_Time;
+
+            System.out.print(
+                    "Difference"
+                            + " between two dates is: ");
+
+            
+            // Print result
+            System.out.println(
+                    difference_In_Years
+                            + " years, "
+                            + difference_In_Days
+                            + " days, "
+                            + difference_In_Hours
+                            + " hours, "
+                            + difference_In_Minutes
+                            + " minutes, "
+                            + difference_In_Seconds
+                            + " seconds");
+            
+        }
+
+        catch (ParseException e) {
+            GrosirMobilLog.printStackTrace(e);
+        }
+        return timeToLong;
+    }
+//    public static void calculateDate(String start_date,
+//                                      String end_date) {
+//        @SuppressLint("SimpleDateFormat")
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//
+//        try {
+//            Date d1 = sdf.parse(start_date);
+//            Date d2 = sdf.parse(end_date);
+//            long difference_In_Time
+//                    = d2.getTime() - d1.getTime();
+//
+//            long difference_In_Seconds
+//                    = TimeUnit.MILLISECONDS
+//                    .toSeconds(difference_In_Time)
+//                    % 60;
+//
+//            long difference_In_Minutes
+//                    = TimeUnit
+//                    .MILLISECONDS
+//                    .toMinutes(difference_In_Time)
+//                    % 60;
+//
+//            long difference_In_Hours
+//                    = TimeUnit
+//                    .MILLISECONDS
+//                    .toHours(difference_In_Time)
+//                    % 24;
+//
+//            long difference_In_Days
+//                    = TimeUnit
+//                    .MILLISECONDS
+//                    .toDays(difference_In_Time)
+//                    % 365;
+//
+//            long difference_In_Years
+//                    = TimeUnit
+//                    .MILLISECONDS
+//                    .toDays(difference_In_Time)
+//                    / 365l;
+//
+//            System.out.print(
+//                    "Difference"
+//                            + " between two dates is: ");
+//
+//            // Print result
+//            System.out.println(
+//                    difference_In_Years
+//                            + " years, "
+//                            + difference_In_Days
+//                            + " days, "
+//                            + difference_In_Hours
+//                            + " hours, "
+//                            + difference_In_Minutes
+//                            + " minutes, "
+//                            + difference_In_Seconds
+//                            + " seconds");
+//        }
+//        catch (ParseException e) {
+//            GrosirMobilLog.printStackTrace(e);
+//        }
+//    }
+
+
 
     public void showMessage(String title, String message) {
         new AlertDialog.Builder(context)

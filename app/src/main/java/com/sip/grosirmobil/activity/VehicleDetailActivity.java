@@ -30,24 +30,34 @@ import com.sip.grosirmobil.adapter.VehicleDetailDataAdapter;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.implement.VehicleDetailImp;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.presenter.VehicleDetailPresenter;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
 import com.sip.grosirmobil.base.view.VehicleDetailView;
+import com.sip.grosirmobil.cloud.config.request.favorite.FavoriteRequest;
 import com.sip.grosirmobil.cloud.config.request.negonbuynow.NegoAndBuyNowRequest;
 import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
-import com.sip.grosirmobil.cloud.config.response.vehicledetail.VehicleDetailResponse;
+import com.sip.grosirmobil.cloud.config.response.vehicledetail.DataVehicleDetailResponse;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.BEARER;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MAIN;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.adjustFontScale;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.calculateDate;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.convertDateServer;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarOnBoarding;
 
@@ -188,14 +198,14 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     private boolean other = false;
     private boolean brokenImage = false;
     private boolean favorite = false;
-    private long negoPrice, lastPrice, bidNego;
+    private long negoPrice, lastPrice, bidNego, buyNow;
 
     private Context context;
     private String openHouseId="";
     private String kik="";
     private String lastPriceFirst="";
     private String negoPriceFirst="";
-    private VehicleDetailResponse vehicleDetailResponse = null;
+    private DataVehicleDetailResponse dataVehicleDetailResponse = null;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -225,9 +235,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             btnNego.setVisibility(View.INVISIBLE);
         }
 
-        //TODO List Bid Belum ada Response utk rvBid
-        RecyclerView.LayoutManager layoutManagerBid = new LinearLayoutManager(this);
-        rvBid.setLayoutManager(layoutManagerBid);
+
 
         loadData();
     }
@@ -238,20 +246,19 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         if(favorite){
             favorite = false;
             ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+            unFavorite(kik);
         }else {
             favorite = true;
             ivFavorite.setImageResource(R.drawable.ic_favorite);
+            setFavorite(kik);
         }
     }
 
     @SuppressLint("SetTextI18n")
     private void loadData(){
+        rb500Ribu.setChecked(true);
         rb1Jt.setChecked(false);
         rb2Jt.setChecked(false);
-
-        startTimerDialog(1000000000);
-        startTimer(tvTimer, 1000000000);
-
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -288,10 +295,6 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     void rb2JtClick(){
         if(rb2Jt.isChecked()){
             bidNego = 2000000;
-//            ColorStateList myColorStateList = new ColorStateList(
-//                    new int[][]{new int[]{getResources().getColor(R.color.colorPrimaryBlue)}},
-//                    new int[]{getResources().getColor(R.color.colorPrimaryBlue)}
-//            );
             rb2Jt.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimaryBlue)));
             rb2Jt.setTextColor(getResources().getColor(R.color.colorPrimaryBlue));
             rb500Ribu.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorGray)));
@@ -300,8 +303,6 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             rb1Jt.setTextColor(getResources().getColor(R.color.colorGray));
         }
     }
-
-
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_car_data)
@@ -420,7 +421,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.btn_nego_dialog)
     void btnNegoDialogClick(){
-        String vehicleName = vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleName();
+        String vehicleName = dataVehicleDetailResponse.getVehicleName();
         tvMessageNego.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(String.valueOf(negoPrice)));
         linearDialogNegoClick();
     }
@@ -428,8 +429,8 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.btn_buy_now_dialog)
     void btnBuyNowDialogClick(){
-        String vehicleName = vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleName();
-        tvMessageBuyNow.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice()));
+        String vehicleName = dataVehicleDetailResponse.getVehicleName();
+        tvMessageBuyNow.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(dataVehicleDetailResponse.getOpenPrice()));
         linearDialogBuyNowClick();
     }
 
@@ -448,14 +449,14 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_nego_confirm_dialog)
     void btnNegoConfirmDialogClick(){
-        NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenHouseId(),vehicleDetailResponse.getDataVehicleDetailResponse().getKik(),vehicleDetailResponse.getDataVehicleDetailResponse().getAgreementNo(),String.valueOf(negoPrice));
+        NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(dataVehicleDetailResponse.getOpenHouseId(), dataVehicleDetailResponse.getKik(), dataVehicleDetailResponse.getAgreementNo(),String.valueOf(negoPrice));
         vehicleDetailPresenter.liveNegoApi(negoAndBuyNowRequest);
     }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_confirm_buy_now_dialog)
     void btnConfirmBuyNowDialogClick(){
-        NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenHouseId(),vehicleDetailResponse.getDataVehicleDetailResponse().getKik(),vehicleDetailResponse.getDataVehicleDetailResponse().getAgreementNo(),vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice());
+        NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(dataVehicleDetailResponse.getOpenHouseId(), dataVehicleDetailResponse.getKik(), dataVehicleDetailResponse.getAgreementNo(), dataVehicleDetailResponse.getOpenPrice());
         vehicleDetailPresenter.liveBuyNowApi(negoAndBuyNowRequest);
     }
 
@@ -465,19 +466,18 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         relativeBackgroundDialog.setVisibility(View.GONE);
         relativeBackgroundDialogConfirmNego.setVisibility(View.GONE);
         relativeBackgroundDialogSuccessNego.setVisibility(View.VISIBLE);
-        String vehicleName = vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleName();
+        String vehicleName = dataVehicleDetailResponse.getVehicleName();
         tvMessageSuccessNego.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(String.valueOf(negoPrice)));
     }
 
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.linear_dialog_success_buy_now)
     void linearDialogSuccessBuyNowClick(){
-        //TODO Masih Pakai Open Price, Harusnya pake Harga Buy Now
         relativeBackgroundDialog.setVisibility(View.GONE);
         relativeBackgroundDialogConfirmBuyNow.setVisibility(View.GONE);
         relativeBackgroundDialogSuccessBuyNow.setVisibility(View.VISIBLE);
-        String vehicleName = vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleName();
-        tvMessageSuccessBuyNow.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice()));
+        String vehicleName = dataVehicleDetailResponse.getVehicleName();
+        tvMessageSuccessBuyNow.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(dataVehicleDetailResponse.getOpenPrice()));
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -529,7 +529,11 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     void ivMinClick(){
         if(negoPrice==lastPrice){
             Toast.makeText(this, "Minimum Tawar Harus Lebih Besar dari Penawaran Terakhir", Toast.LENGTH_SHORT).show();
-        }else {
+        }else if(negoPrice<Long.parseLong(lastPriceFirst)){
+            Toast.makeText(this, "Harga Error Kembali Ke Harga Awal", Toast.LENGTH_SHORT).show();
+            tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(lastPriceFirst)));
+        }
+        else {
             negoPrice = negoPrice-bidNego;
             tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
         }
@@ -538,8 +542,14 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.iv_plus)
     void ivPlusClick(){
-        negoPrice = negoPrice+bidNego;
-        tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
+        if(negoPrice>buyNow){
+            btnNegoDialog.setVisibility(View.GONE);
+            tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(buyNow)));
+        }else {
+            btnNegoDialog.setVisibility(View.VISIBLE);
+            negoPrice = negoPrice+bidNego;
+            tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
+        }
     }
 
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
@@ -576,6 +586,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             }
             @SuppressLint("SetTextI18n")
             public void onFinish() {
+                btnNego.setVisibility(View.INVISIBLE);
                 tvHourFirst.setText("0");
                 tvHourSecond.setText("0");
                 tvMinuteFirst.setText("0");
@@ -602,6 +613,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             @SuppressLint("SetTextI18n")
             public void onFinish() {
                 tvTimer.setText("00h 00m 00s");
+                btnNego.setVisibility(View.INVISIBLE);
             }
         }.start();
     }
@@ -620,9 +632,11 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void vehicleDetailSuccess(VehicleDetailResponse vehicleDetailResponse) {
-        this.vehicleDetailResponse = vehicleDetailResponse;
-        String vehicleName = vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleName();
+    public void vehicleDetailSuccess(DataVehicleDetailResponse dataVehicleDetailResponse, String timeServer) {
+        this.dataVehicleDetailResponse = dataVehicleDetailResponse;
+        startTimerDialog(calculateDate(convertDateServer(timeServer),dataVehicleDetailResponse.getEndDate()));
+        startTimer(tvTimer, calculateDate(convertDateServer(timeServer),dataVehicleDetailResponse.getEndDate()));
+        String vehicleName = dataVehicleDetailResponse.getVehicleName();
         System.out.println("SIZE NAME : "+ vehicleName.length());
         if(vehicleName.length()>17){
             tvTitleVehicle.setText(vehicleName+"...");
@@ -633,23 +647,23 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             tvMessageNego.setText(vehicleName);
             tvMessageBuyNow.setText(vehicleName);
         }
-        tvInitialName.setText(vehicleDetailResponse.getDataVehicleDetailResponse().getGrade());
-        tvHargaAwal.setText("Rp "+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getHargaAwal()));
-        tvHargaSekarang.setText("Rp "+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getBottomPrice()));
+        tvInitialName.setText(dataVehicleDetailResponse.getGrade());
+        tvHargaAwal.setText("Rp "+setCurrencyFormat(dataVehicleDetailResponse.getHargaAwal()));
+        tvHargaSekarang.setText("Rp "+setCurrencyFormat(dataVehicleDetailResponse.getBottomPrice()));
 
-        favorite = vehicleDetailResponse.getDataVehicleDetailResponse().getIsFavorite() != null || vehicleDetailResponse.getDataVehicleDetailResponse().getIsFavorite().equals("1");
+        favorite = dataVehicleDetailResponse.getIsFavorite() != null || dataVehicleDetailResponse.getIsFavorite().equals("1");
 
         if(favorite){
             ivFavorite.setImageResource(R.drawable.ic_favorite);
         }else {
             ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
         }
-        tvPlatNumber.setText(vehicleDetailResponse.getDataVehicleDetailResponse().getKik().substring(0, 10) + " - ");
-        tvCity.setText(vehicleDetailResponse.getDataVehicleDetailResponse().getWarehouse().replace("WAREHOUSE ", ""));
-        if(vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleSummary()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleSummary().equals("")){
+        tvPlatNumber.setText(dataVehicleDetailResponse.getKik().substring(0, 10) + " - ");
+        tvCity.setText(dataVehicleDetailResponse.getWarehouse().replace("WAREHOUSE ", ""));
+        if(dataVehicleDetailResponse.getVehicleSummary()==null||dataVehicleDetailResponse.getVehicleSummary().equals("")){
             tvDescription.setText("-");
         }else {
-            String description = vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleSummary();
+            String description = dataVehicleDetailResponse.getVehicleSummary();
             String newDescription = description.replace(",","\n-");
             tvDescription.setText("-"+newDescription);
         }
@@ -660,16 +674,16 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         rvImageCar.setNestedScrollingEnabled(false);
         PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(rvImageCar);
-        if(vehicleDetailResponse.getDataVehicleDetailResponse().getImageResponseList()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getImageResponseList().isEmpty()){
+        if(dataVehicleDetailResponse.getImageResponseList()==null||dataVehicleDetailResponse.getImageResponseList().isEmpty()){
             rvImageCar.setVisibility(View.GONE);
         }else {
             rvImageCar.setVisibility(View.VISIBLE);
-            ImageVehicleDetailAdapter imageVehicleDetailAdapter = new ImageVehicleDetailAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getImageResponseList());
+            ImageVehicleDetailAdapter imageVehicleDetailAdapter = new ImageVehicleDetailAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getImageResponseList());
             rvImageCar.setAdapter(imageVehicleDetailAdapter);
             imageVehicleDetailAdapter.notifyDataSetChanged();
         }
 
-        if(vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleDataResponseList()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleDataResponseList().isEmpty()){
+        if(dataVehicleDetailResponse.getVehicleDataResponseList()==null||dataVehicleDetailResponse.getVehicleDataResponseList().isEmpty()){
             rvCarData.setVisibility(View.GONE);
             tvCarData.setVisibility(View.GONE);
         }else {
@@ -677,12 +691,12 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             rvCarData.setLayoutManager(linearLayoutManagerBody);
             rvCarData.setItemAnimator(new DefaultItemAnimator());
             rvCarData.setNestedScrollingEnabled(false);
-            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleDataResponseList());
+            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getVehicleDataResponseList());
             rvCarData.setAdapter(vehicleDetailDataAdapter);
             vehicleDetailDataAdapter.notifyDataSetChanged();
         }
 
-        if(vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleBodyResponseList()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleBodyResponseList().isEmpty()){
+        if(dataVehicleDetailResponse.getVehicleBodyResponseList()==null||dataVehicleDetailResponse.getVehicleBodyResponseList().isEmpty()){
             rvBody.setVisibility(View.GONE);
             tvBody.setVisibility(View.GONE);
         }else {
@@ -690,12 +704,12 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             rvBody.setLayoutManager(linearLayoutManagerBody);
             rvBody.setItemAnimator(new DefaultItemAnimator());
             rvBody.setNestedScrollingEnabled(false);
-            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleBodyResponseList());
+            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getVehicleBodyResponseList());
             rvBody.setAdapter(vehicleDetailDataAdapter);
             vehicleDetailDataAdapter.notifyDataSetChanged();
         }
 
-        if(vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleInteriorResponseList()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleInteriorResponseList().isEmpty()){
+        if(dataVehicleDetailResponse.getVehicleInteriorResponseList()==null||dataVehicleDetailResponse.getVehicleInteriorResponseList().isEmpty()){
             rvInterior.setVisibility(View.GONE);
             tvInterior.setVisibility(View.GONE);
         }else {
@@ -703,12 +717,12 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             rvInterior.setLayoutManager(linearLayoutManagerInterior);
             rvInterior.setItemAnimator(new DefaultItemAnimator());
             rvInterior.setNestedScrollingEnabled(false);
-            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleInteriorResponseList());
+            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getVehicleInteriorResponseList());
             rvInterior.setAdapter(vehicleDetailDataAdapter);
             vehicleDetailDataAdapter.notifyDataSetChanged();
         }
 
-        if(vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleMesinResponseList()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleMesinResponseList().isEmpty()){
+        if(dataVehicleDetailResponse.getVehicleMesinResponseList()==null||dataVehicleDetailResponse.getVehicleMesinResponseList().isEmpty()){
             rvEngine.setVisibility(View.GONE);
             tvEngine.setVisibility(View.GONE);
         }else {
@@ -716,12 +730,12 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             rvEngine.setLayoutManager(linearLayoutManagerEngine);
             rvEngine.setItemAnimator(new DefaultItemAnimator());
             rvEngine.setNestedScrollingEnabled(false);
-            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleMesinResponseList());
+            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getVehicleMesinResponseList());
             rvEngine.setAdapter(vehicleDetailDataAdapter);
             vehicleDetailDataAdapter.notifyDataSetChanged();
         }
 
-        if(vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleOtherResponseList()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleOtherResponseList().isEmpty()){
+        if(dataVehicleDetailResponse.getVehicleOtherResponseList()==null||dataVehicleDetailResponse.getVehicleOtherResponseList().isEmpty()){
             rvOther.setVisibility(View.GONE);
             tvOther.setVisibility(View.GONE);
         }else {
@@ -729,12 +743,12 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             rvOther.setLayoutManager(linearLayoutManagerOther);
             rvOther.setItemAnimator(new DefaultItemAnimator());
             rvOther.setNestedScrollingEnabled(false);
-            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getVehicleOtherResponseList());
+            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getVehicleOtherResponseList());
             rvOther.setAdapter(vehicleDetailDataAdapter);
             vehicleDetailDataAdapter.notifyDataSetChanged();
         }
 
-        if(vehicleDetailResponse.getDataVehicleDetailResponse().getImageBrokenResponseList()==null||vehicleDetailResponse.getDataVehicleDetailResponse().getImageBrokenResponseList().isEmpty()){
+        if(dataVehicleDetailResponse.getImageBrokenResponseList()==null||dataVehicleDetailResponse.getImageBrokenResponseList().isEmpty()){
             rvBrokenImage.setVisibility(View.GONE);
             tvBrokenImage.setVisibility(View.GONE);
         }else {
@@ -742,17 +756,23 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             rvBrokenImage.setLayoutManager(gridLayoutManagerBrokenImage);
             rvBrokenImage.setItemAnimator(new DefaultItemAnimator());
             rvBrokenImage.setNestedScrollingEnabled(false);
-            BrokenImageAdapter brokenImageAdapter = new BrokenImageAdapter(VehicleDetailActivity.this, vehicleDetailResponse.getDataVehicleDetailResponse().getImageBrokenResponseList());
+            BrokenImageAdapter brokenImageAdapter = new BrokenImageAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getImageBrokenResponseList());
             rvBrokenImage.setAdapter(brokenImageAdapter);
             brokenImageAdapter.notifyDataSetChanged();
         }
-        btnBuyNowDialog.setText("Buy Now Rp "+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getOpenPrice()));
-        lastPriceFirst = vehicleDetailResponse.getDataVehicleDetailResponse().getBottomPrice();
-        negoPriceFirst = vehicleDetailResponse.getDataVehicleDetailResponse().getBottomPrice();
-        lastPrice = Long.parseLong(vehicleDetailResponse.getDataVehicleDetailResponse().getBottomPrice());
-        negoPrice = Long.parseLong(vehicleDetailResponse.getDataVehicleDetailResponse().getBottomPrice());
+        btnBuyNowDialog.setText("Buy Now Rp "+setCurrencyFormat(dataVehicleDetailResponse.getOpenPrice()));
+        lastPriceFirst  = dataVehicleDetailResponse.getBottomPrice();
+        negoPriceFirst  = dataVehicleDetailResponse.getBottomPrice();
+        buyNow          = Long.parseLong(dataVehicleDetailResponse.getOpenPrice());
+        lastPrice       = Long.parseLong(dataVehicleDetailResponse.getBottomPrice());
+        negoPrice       = Long.parseLong(dataVehicleDetailResponse.getBottomPrice());
 
-        tvInputPriceNego.setText("Rp "+setCurrencyFormat(vehicleDetailResponse.getDataVehicleDetailResponse().getBottomPrice()));
+        tvInputPriceNego.setText("Rp "+setCurrencyFormat(dataVehicleDetailResponse.getBottomPrice()));
+
+        LinearLayoutManager layoutManagerBid = new LinearLayoutManager(this);
+        rvBid.setLayoutManager(layoutManagerBid);
+        rvBid.setNestedScrollingEnabled(false);
+
     }
 
     @Override
@@ -764,4 +784,67 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         }
     }
 
+    public void setFavorite(String kik){
+        FavoriteRequest favoriteRequest = new FavoriteRequest(kik);
+        final Call<GeneralResponse> timeServerApi = getApiGrosirMobil().setFavoriteApi(BEARER+" "+grosirMobilPreference.getToken(),favoriteRequest);
+        timeServerApi.enqueue(new Callback<GeneralResponse>() {
+            @Override
+            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        if(response.body().getMessage().equals("success")){
+                            ivFavorite.setImageResource(R.drawable.ic_favorite);
+                        }else {
+                            grosirMobilFunction.showMessage(VehicleDetailActivity.this, "POST Favorite", response.body().getMessage());
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }else {
+                    try {
+                        grosirMobilFunction.showMessage(VehicleDetailActivity.this, getString(R.string.base_null_error_title), response.errorBody().string());
+                    } catch (IOException e) {
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<GeneralResponse> call, Throwable t) {
+                grosirMobilFunction.showMessage(VehicleDetailActivity.this, "POST Favorite", getString(R.string.base_null_server));
+                GrosirMobilLog.printStackTrace(t);
+            }
+        });
+    }
+
+    public void unFavorite(String kik){
+        FavoriteRequest favoriteRequest = new FavoriteRequest(kik);
+        final Call<GeneralResponse> timeServerApi = getApiGrosirMobil().unFavoriteApi(BEARER+" "+grosirMobilPreference.getToken(),favoriteRequest);
+        timeServerApi.enqueue(new Callback<GeneralResponse>() {
+            @Override
+            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        if(response.body().getMessage().equals("success")){
+                            ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+                        }else {
+                            grosirMobilFunction.showMessage(VehicleDetailActivity.this, "POST Favorite", response.body().getMessage());
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }else {
+                    try {
+                        grosirMobilFunction.showMessage(VehicleDetailActivity.this, getString(R.string.base_null_error_title), response.errorBody().string());
+                    } catch (IOException e) {
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<GeneralResponse> call, Throwable t) {
+                grosirMobilFunction.showMessage(VehicleDetailActivity.this, "POST Favorite", getString(R.string.base_null_server));
+                GrosirMobilLog.printStackTrace(t);
+            }
+        });
+    }
 }

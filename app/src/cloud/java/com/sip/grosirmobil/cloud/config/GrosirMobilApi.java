@@ -1,5 +1,6 @@
 package com.sip.grosirmobil.cloud.config;
 
+import com.sip.grosirmobil.cloud.config.request.favorite.FavoriteRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeComingSoonRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeHistoryRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeLiveRequest;
@@ -73,6 +74,8 @@ public interface GrosirMobilApi {
     String liveNegoPath = "/api/Live/LiveNego";
     String liveBuyNowPath = "/api/Live/LiveBuyNow";
     String listCartPath = "/api/Live/datakeranjang";
+    String setFavoritePath = "/api/favorite/setFavorite";
+    String unFavoritePath = "/api/favorite/unFavorite";
 
     @Headers("X-Requested-With:XMLHttpRequest")
     @POST(loginPath)
@@ -189,6 +192,16 @@ public interface GrosirMobilApi {
     @POST(liveBuyNowPath)
     Call<GeneralResponse> liveBuyNowApi(@Header("Authorization") String authToken,
                                         @Body NegoAndBuyNowRequest negoAndBuyNowRequest);
+
+    @Headers("Content-Type: application/json")
+    @POST(setFavoritePath)
+    Call<GeneralResponse> setFavoriteApi(@Header("Authorization") String authToken,
+                                         @Body FavoriteRequest favoriteRequest);
+
+    @Headers("Content-Type: application/json")
+    @POST(unFavoritePath)
+    Call<GeneralResponse> unFavoriteApi(@Header("Authorization") String authToken,
+                                        @Body FavoriteRequest favoriteRequest);
 
     @Headers("Content-Type: application/json")
     @POST(listCartPath)

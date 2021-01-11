@@ -1,7 +1,7 @@
 package com.sip.grosirmobil.base.view;
 
 import com.sip.grosirmobil.cloud.config.response.homehistory.HomeHistoryResponse;
-import com.sip.grosirmobil.cloud.config.response.homelive.HomeLiveResponse;
+import com.sip.grosirmobil.cloud.config.response.homelive.DataPageHomeLiveResponse;
 
 public interface HomeView {
 
@@ -9,7 +9,7 @@ public interface HomeView {
 
     void hideDialogLoading();
 
-    void homeLiveSuccess(HomeLiveResponse homeLiveResponse);
+    void homeLiveSuccess(DataPageHomeLiveResponse dataPageHomeLiveResponse, String timeServer);
 
     void homeComingSoonSuccess();
 

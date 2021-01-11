@@ -12,6 +12,8 @@ import com.sip.grosirmobil.base.view.VehicleDetailView;
 import com.sip.grosirmobil.cloud.config.request.negonbuynow.NegoAndBuyNowRequest;
 import com.sip.grosirmobil.cloud.config.request.vehicledetail.VehicleDetailRequest;
 import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
+import com.sip.grosirmobil.cloud.config.response.timeserver.TimeServerResponse;
+import com.sip.grosirmobil.cloud.config.response.vehicledetail.DataVehicleDetailResponse;
 import com.sip.grosirmobil.cloud.config.response.vehicledetail.VehicleDetailResponse;
 
 import java.io.IOException;
@@ -50,7 +52,8 @@ public class VehicleDetailImp implements VehicleDetailPresenter {
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
-                            vehicleDetailView.vehicleDetailSuccess(response.body());
+                            grosirMobilPreference.saveDataVehicleDetail(response.body().getDataVehicleDetailResponse());
+                            getTimeServerApi(response.body().getDataVehicleDetailResponse());
                         }else {
                             grosirMobilFunction.showMessage(context, "GET Vehicle Detail", response.body().getMessage());
                         }
@@ -144,6 +147,42 @@ public class VehicleDetailImp implements VehicleDetailPresenter {
             public void onFailure(Call<GeneralResponse> call, Throwable t) {
                 vehicleDetailView.hideDialogLoading();
                 grosirMobilFunction.showMessage(context, "POST Live Buy Now", context.getString(R.string.base_null_server));
+                GrosirMobilLog.printStackTrace(t);
+            }
+        });
+    }
+
+    @Override
+    public void getTimeServerApi(DataVehicleDetailResponse dataVehicleDetailResponse) {
+        vehicleDetailView.showDialogLoading();
+        final Call<TimeServerResponse> timeServerApi = getApiGrosirMobil().timeServerApi();
+        timeServerApi.enqueue(new Callback<TimeServerResponse>() {
+            @Override
+            public void onResponse(Call<TimeServerResponse> call, Response<TimeServerResponse> response) {
+                vehicleDetailView.hideDialogLoading();
+                if (response.isSuccessful()) {
+                    try {
+                        if(response.body().getMessage().equals("success")){
+                            grosirMobilPreference.saveTimeServer(response.body().getData().getTimeServer());
+                            vehicleDetailView.vehicleDetailSuccess(dataVehicleDetailResponse, response.body().getData().getTimeServer());
+                        }else {
+                            grosirMobilFunction.showMessage(context, "GET Time Server", response.body().getMessage());
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }else {
+                    try {
+                        grosirMobilFunction.showMessage(context, context.getString(R.string.base_null_error_title), response.errorBody().string());
+                    } catch (IOException e) {
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<TimeServerResponse> call, Throwable t) {
+                vehicleDetailView.hideDialogLoading();
+                grosirMobilFunction.showMessage(context, "GET Time Server", context.getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);
             }
         });

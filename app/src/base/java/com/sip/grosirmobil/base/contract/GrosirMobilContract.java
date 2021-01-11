@@ -47,6 +47,7 @@ public class GrosirMobilContract {
     public static final String PRODUCT = "product";
     public static final String DATE = "date";
     public static final String FROM_PAGE = "from_page";
+    public static final String TIME_TO_LONG = "timeToLong";
     public static final String MEREK = "merek";
     public static final String START_PRICE = "startPrice";
     public static final String END_PRICE = "endPrice";

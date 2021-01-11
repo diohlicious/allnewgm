@@ -7,9 +7,11 @@ import com.google.gson.Gson;
 import com.sip.grosirmobil.BuildConfig;
 import com.sip.grosirmobil.cloud.config.model.SearchDataModel;
 import com.sip.grosirmobil.cloud.config.response.checkactivetoken.DataCheckActiveTokenResponse;
+import com.sip.grosirmobil.cloud.config.response.homelive.DataPageHomeLiveResponse;
 import com.sip.grosirmobil.cloud.config.response.login.DataLoginResponse;
 import com.sip.grosirmobil.cloud.config.response.province.DataProvinceResponse;
 import com.sip.grosirmobil.cloud.config.response.tipeusaha.DataTipeUsahaResponse;
+import com.sip.grosirmobil.cloud.config.response.vehicledetail.DataVehicleDetailResponse;
 import com.sip.grosirmobil.cloud.config.response.warehouse.DataWareHouseResponse;
 
 import java.util.ArrayList;
@@ -53,6 +55,9 @@ public class GrosirMobilPreference {
     private static final String DATA_WARE_HOUSE = "dataWareHouse";
     private static final String DATA_CHECK_ACTIVE_TOKEN = "dataCheckActiveToken";
     private static final String DATA_SEARCH = "dataSearch";
+    private static final String DATA_HOME_LIVE = "dataHomeLive";
+    private static final String DATA_HOME_COMING_SOON = "dataHomeComingSoon";
+    private static final String DATA_VEHICLE_DETAIL = "dataVehicleDetail";
 
     private final SharedPreferences sharedpreferences;
 
@@ -386,6 +391,34 @@ public class GrosirMobilPreference {
         return gson.fromJson(json, DataLoginResponse.class);
     }
 
+    public void saveDataHomeLive(DataPageHomeLiveResponse dataPageHomeLiveResponse){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        Gson gSonDataHomeLive = new Gson();
+        String jsonDataHomeLive = gSonDataHomeLive.toJson(dataPageHomeLiveResponse);
+        editor.putString(DATA_HOME_LIVE, jsonDataHomeLive);
+        editor.apply();
+    }
+
+    public DataPageHomeLiveResponse getDataHomeLive(){
+        String json = sharedpreferences.getString(DATA_HOME_LIVE, "");
+        Gson gson=new Gson();
+        return gson.fromJson(json, DataPageHomeLiveResponse.class);
+    }
+
+    public void saveDataVehicleDetail(DataVehicleDetailResponse dataVehicleDetailResponse){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        Gson gSonDataVehicleDetail = new Gson();
+        String jsonDataVehicleDetail = gSonDataVehicleDetail.toJson(dataVehicleDetailResponse);
+        editor.putString(DATA_VEHICLE_DETAIL, jsonDataVehicleDetail);
+        editor.apply();
+    }
+
+    public DataVehicleDetailResponse getDataVehicleDetail(){
+        String json = sharedpreferences.getString(DATA_VEHICLE_DETAIL, "");
+        Gson gson=new Gson();
+        return gson.fromJson(json, DataVehicleDetailResponse.class);
+    }
+
     public void saveDataCheckActiveToken(DataCheckActiveTokenResponse dataCheckActiveTokenResponse){
         SharedPreferences.Editor editor = sharedpreferences.edit();
         Gson gSonCheckActiveToken = new Gson();
@@ -457,6 +490,9 @@ public class GrosirMobilPreference {
         editor.remove(DATA_LOGIN);
         editor.remove(DATA_WARE_HOUSE);
         editor.remove(DATA_CHECK_ACTIVE_TOKEN);
+        editor.remove(DATA_HOME_LIVE);
+        editor.remove(DATA_HOME_COMING_SOON);
+        editor.remove(DATA_VEHICLE_DETAIL);
         editor.apply();
     }
 

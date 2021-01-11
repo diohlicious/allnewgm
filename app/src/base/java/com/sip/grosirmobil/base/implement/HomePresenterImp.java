@@ -116,7 +116,8 @@ public class HomePresenterImp implements HomePresenter {
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
-                            homeView.homeLiveSuccess(response.body());
+                            grosirMobilPreference.saveDataHomeLive(response.body().getDataPageHomeLiveResponse());
+                            getTimeServerApi();
                         }else {
                             grosirMobilFunction.showMessage(context, "GET Home Live", response.body().getMessage());
                         }
@@ -203,7 +204,6 @@ public class HomePresenterImp implements HomePresenter {
                 grosirMobilFunction.showMessage(context, "GET Home History", context.getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);
             }
-
         });
     }
 
@@ -219,9 +219,7 @@ public class HomePresenterImp implements HomePresenter {
                     try {
                         if(response.body().getMessage().equals("success")){
                             grosirMobilPreference.saveTimeServer(response.body().getData().getTimeServer());
-                            getCheckActiveTokenApi();
-//                            tvLiveClick();
-                            getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+                            homeView.homeLiveSuccess(grosirMobilPreference.getDataHomeLive(), response.body().getData().getTimeServer());
                         }else {
                             grosirMobilFunction.showMessage(context, "GET Time Server", response.body().getMessage());
                         }
@@ -257,6 +255,7 @@ public class HomePresenterImp implements HomePresenter {
                     try {
                         if(response.body().getMessage().equals("success")){
                             grosirMobilPreference.saveDataCheckActiveToken(response.body().getData());
+
                         }else {
                             grosirMobilFunction.showMessage(context, "GET Check Active Token", response.body().getMessage());
                         }

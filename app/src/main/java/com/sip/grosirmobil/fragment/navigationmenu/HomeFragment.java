@@ -41,7 +41,7 @@ import com.sip.grosirmobil.base.util.GrosirMobilFragment;
 import com.sip.grosirmobil.base.view.HomeView;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
 import com.sip.grosirmobil.cloud.config.response.homehistory.HomeHistoryResponse;
-import com.sip.grosirmobil.cloud.config.response.homelive.HomeLiveResponse;
+import com.sip.grosirmobil.cloud.config.response.homelive.DataPageHomeLiveResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +63,7 @@ import static com.sip.grosirmobil.base.contract.GrosirMobilContract.MEREK;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.SEARCH_REQUEST;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.START_PRICE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.START_YEAR;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.convertDateServer;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarFragment;
 
 /**
@@ -222,7 +223,8 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     }
 
     private void setUiReset(){
-        homePresenter.getTimeServerApi();
+        homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+//        homePresenter.getTimeServerApi();
         search = false;
         relativeHome.setVisibility(View.VISIBLE);
         linearSearchAndFilterShow.setVisibility(View.GONE);
@@ -555,20 +557,20 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void homeLiveSuccess(HomeLiveResponse homeLiveResponse) {
-        if(homeLiveResponse.getDataPageHomeLiveResponse().getDataHomeLiveResponseList()==null ||homeLiveResponse.getDataPageHomeLiveResponse().getDataHomeLiveResponseList().isEmpty()){
+    public void homeLiveSuccess(DataPageHomeLiveResponse dataPageHomeLiveResponse, String timeServer) {
+        if(dataPageHomeLiveResponse.getDataHomeLiveResponseList()==null ||dataPageHomeLiveResponse.getDataHomeLiveResponseList().isEmpty()){
             tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_live));
             tvResultTitleContent.setText("Ada 0 Kendaraan Live");
-            tvResultSearch.setText(homeLiveResponse.getDataPageHomeLiveResponse().getTotal()+" Unit");
+            tvResultSearch.setText(dataPageHomeLiveResponse.getTotal()+" Unit");
             linearEmptyData.setVisibility(View.VISIBLE);
         }else {
             linearEmptyData.setVisibility(View.GONE);
-            tvResultTitleContent.setText("Ada " + homeLiveResponse.getDataPageHomeLiveResponse().getTotal() + " Kendaraan Live");
-            tvResultSearch.setText(homeLiveResponse.getDataPageHomeLiveResponse().getTotal()+" Unit");
+            tvResultTitleContent.setText("Ada " + dataPageHomeLiveResponse.getTotal() + " Kendaraan Live");
+            tvResultSearch.setText(dataPageHomeLiveResponse.getTotal()+" Unit");
             RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
             rvLive.setLayoutManager(layoutManagerLive);
             rvLive.setNestedScrollingEnabled(false);
-            LiveAdapter liveAdapter = new LiveAdapter(getActivity(), homeLiveResponse.getDataPageHomeLiveResponse().getDataHomeLiveResponseList());
+            LiveAdapter liveAdapter = new LiveAdapter(getActivity(), convertDateServer(timeServer), dataPageHomeLiveResponse.getDataHomeLiveResponseList());
             rvLive.setAdapter(liveAdapter);
             liveAdapter.notifyDataSetChanged();
         }
