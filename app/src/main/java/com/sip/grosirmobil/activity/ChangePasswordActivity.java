@@ -14,11 +14,13 @@ import android.widget.Toast;
 
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
+import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
 import com.sip.grosirmobil.cloud.config.request.changepassword.ChangePasswordRequest;
 import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 
+import java.io.IOException;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -42,6 +44,7 @@ public class ChangePasswordActivity extends GrosirMobilActivity {
     @BindView(R.id.btn_change_password) Button btnChangePassword;
     ProgressDialog progressDialog;
     private GrosirMobilPreference grosirMobilPreference;
+    private GrosirMobilFunction grosirMobilFunction;
     private String password = "";
     
     @Override
@@ -78,6 +81,9 @@ public class ChangePasswordActivity extends GrosirMobilActivity {
         else if(!oldPassword.equals(grosirMobilPreference.getPassword())){
             Toast.makeText(this, "Password lama tidak sesuai", Toast.LENGTH_SHORT).show();
         }
+        else if(newPassword.length() < 6 && confirmPassword.length() < 6 ){
+            Toast.makeText(this, "Password minimal 6 karakter acak", Toast.LENGTH_SHORT).show();
+        }
             else{
                 ProgressDialog progressDialog = new ProgressDialog(ChangePasswordActivity.this);
                 progressDialog.setCancelable(true);
@@ -97,9 +103,14 @@ public class ChangePasswordActivity extends GrosirMobilActivity {
                                 grosirMobilPreference.clearSharePreference();
                                 Intent intent = new Intent(ChangePasswordActivity.this, LoginActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                             else{
-                                Toast.makeText(ChangePasswordActivity.this, response.body().getDescription(), Toast.LENGTH_SHORT).show();
+                                try {
+                                    grosirMobilFunction.showMessage(ChangePasswordActivity.this, getString(R.string.base_null_error_title), response.errorBody().string());
+                                } catch (IOException e) {
+                                    GrosirMobilLog.printStackTrace(e);
+                                }
                             }
                         }
                         catch (Exception e){
@@ -110,15 +121,20 @@ public class ChangePasswordActivity extends GrosirMobilActivity {
 
                 @Override
                 public void onFailure(Call<GeneralResponse> call, Throwable t) {
-
+                    grosirMobilFunction.showMessage(ChangePasswordActivity.this, "GET Change Password", getString(R.string.base_null_server));
+                    GrosirMobilLog.printStackTrace(t);
                 }
             });
             
                 
             }
         }
-        
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+    
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View view = getCurrentFocus();
