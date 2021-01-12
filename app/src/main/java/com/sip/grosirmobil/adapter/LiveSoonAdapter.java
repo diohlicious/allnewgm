@@ -12,16 +12,20 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.VehicleDetailActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehicle;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
-import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
 import com.sip.grosirmobil.cloud.config.request.favorite.FavoriteRequest;
 import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
+import com.sip.grosirmobil.cloud.config.response.homecomingsoon.DataHomeComingSoonResponse;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,16 +40,19 @@ import static com.sip.grosirmobil.base.contract.GrosirMobilContract.BEARER;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.calculateDate;
 
 public class LiveSoonAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
 
-    private List<HardCodeDataBaruMasukModel> hardCodeDataBaruMasukModelList;
-    private Context contexts;
+    private final List<DataHomeComingSoonResponse> dataHomeComingSoonResponseList;
+    private final Context contexts;
+    private final String timeServer;
 
 
-    public LiveSoonAdapter(Context context, List<HardCodeDataBaruMasukModel> hardCodeDataBaruMasukModels) {
+    public LiveSoonAdapter(Context context, String timeServer, List<DataHomeComingSoonResponse> dataHomeComingSoonResponses) {
         this.contexts = context;
-        this.hardCodeDataBaruMasukModelList = hardCodeDataBaruMasukModels;
+        this.timeServer = timeServer;
+        this.dataHomeComingSoonResponseList = dataHomeComingSoonResponses;
     }
 
     @NonNull
@@ -59,40 +66,63 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle>
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderItemVehicle holder, int position) {
-        HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = hardCodeDataBaruMasukModelList.get(position);
-        holder.tvVehicleName.setText(hardCodeDataBaruMasukModel.getVehicleName());
-        holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber()+" - ");
-        holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());
-        holder.tvOpenPrice.setText(hardCodeDataBaruMasukModel.getPrice());
-        holder.tvBottomPrice.setText(hardCodeDataBaruMasukModel.getPrice());
-        startTimer(holder.tvTimer, 20000000);
+        DataHomeComingSoonResponse dataHomeComingSoonResponse = dataHomeComingSoonResponseList.get(position);
+        holder.tvVehicleName.setText(dataHomeComingSoonResponse.getVehicleName());
+        holder.tvPlatNumber.setText(dataHomeComingSoonResponse.getKikNumber().substring(0, 10) + " - ");
+        holder.tvCity.setText(dataHomeComingSoonResponse.getWareHouse().replace("WAREHOUSE ", ""));
+        holder.tvOpenPrice.setText(dataHomeComingSoonResponse.getBottomPrice());
+        holder.tvBottomPrice.setText(dataHomeComingSoonResponse.getBottomPrice());
+        holder.tvInitialName.setText(dataHomeComingSoonResponse.getGrade());
+
+        CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
+        Glide.with(contexts)
+                .load(dataHomeComingSoonResponse.getImage())
+                .apply(new RequestOptions()
+                        .placeholder(circularProgressDrawable)
+                        .error(R.drawable.ic_broken_image)
+                        .dontAnimate()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(false))
+                .into(holder.ivImage);
+
+        if(dataHomeComingSoonResponse.getIsFavorite().equals("1")){
+            holder.ivFavorite.setImageResource(R.drawable.ic_favorite);
+        }else {
+            holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+        }
+
+        startTimer(holder.tvTimer, calculateDate(timeServer,dataHomeComingSoonResponse.getStartDate()));
+//        startTimer(holder.tvTimer, 20000000);
 
         AtomicBoolean favorite = new AtomicBoolean(false);
 
         holder.ivFavorite.setOnClickListener(view -> {
             if (favorite.get()) {
                 favorite.set(false);
-//                unFavorite(contexts, holder.ivFavorite, .getKik());
+                unFavorite(contexts, holder.ivFavorite, dataHomeComingSoonResponse.getKik());
                 holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
             } else {
                 favorite.set(true);
                 holder.ivFavorite.setImageResource(R.drawable.ic_favorite);
-//                setFavorite(contexts, holder.ivFavorite, dataHomeLiveResponse.getKik());
+                setFavorite(contexts, holder.ivFavorite, dataHomeComingSoonResponse.getKik());
             }
         });
-
         holder.cardVehicle.setOnClickListener(view -> {
             Intent intent = new Intent(contexts, VehicleDetailActivity.class);
-            intent.putExtra(ID_VEHICLE, "");
-            intent.putExtra(KIK, "");
-            intent.putExtra(FROM_PAGE, "");
+            intent.putExtra(ID_VEHICLE, String.valueOf(dataHomeComingSoonResponse.getOpenHouseId()));
+            intent.putExtra(KIK, dataHomeComingSoonResponse.getKik());
+            intent.putExtra(FROM_PAGE, "COMING SOON");
             contexts.startActivity(intent);
         });
+
     }
 
     @Override
     public int getItemCount() {
-        return hardCodeDataBaruMasukModelList.size();
+        return dataHomeComingSoonResponseList.size();
     }
 
     public void startTimer(TextView tvTimer, long noOfMinutes) {

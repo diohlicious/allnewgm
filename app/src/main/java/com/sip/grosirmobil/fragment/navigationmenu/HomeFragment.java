@@ -40,6 +40,7 @@ import com.sip.grosirmobil.base.util.AutoScrollViewPager;
 import com.sip.grosirmobil.base.util.GrosirMobilFragment;
 import com.sip.grosirmobil.base.view.HomeView;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
+import com.sip.grosirmobil.cloud.config.response.homecomingsoon.DataPageHomeComingSoonResponse;
 import com.sip.grosirmobil.cloud.config.response.homehistory.HomeHistoryResponse;
 import com.sip.grosirmobil.cloud.config.response.homelive.DataPageHomeLiveResponse;
 
@@ -184,13 +185,6 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                 tvTitleContent,tvLive,tvLiveSoon,tvRecord, tvKetEmptyDataHome, page,max,lokasi,tahunStart,
                 tahunEnd,hargaStart,hargaEnd,merek,grade);
 
-
-        RecyclerView.LayoutManager layoutManagerLiveSoon = new LinearLayoutManager(getActivity());
-        rvLiveSoon.setLayoutManager(layoutManagerLiveSoon);
-        rvLiveSoon.setNestedScrollingEnabled(false);
-        LiveSoonAdapter liveSoonAdapter = new LiveSoonAdapter(getActivity(), liveSoonHardCodeDataBaruMasukModelList);
-        rvLiveSoon.setAdapter(liveSoonAdapter);
-        liveSoonAdapter.notifyDataSetChanged();
 
         setUiReset();
 
@@ -484,10 +478,9 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         tvRecord.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.tv_live_soon)
     void tvLiveSoonClick(){
-//        homePresenter.tvLiveSoonClick();
         if(search){
             linearTitleContent.setVisibility(View.GONE);
             linearSearchAndLive.setVisibility(View.GONE);
@@ -495,13 +488,12 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             linearTitleContent.setVisibility(View.VISIBLE);
             linearSearchAndLive.setVisibility(View.VISIBLE);
         }
+        homePresenter.getHomeComingSoonApi(page,max);
         nestedView.setBackgroundResource(R.color.colorPrimaryWhite);
         rvLive.setVisibility(View.GONE);
         rvLiveSoon.setVisibility(View.GONE);
         rvLiveSoon.setVisibility(View.GONE);
         rvRecord.setVisibility(View.GONE);
-        tvResultTitleContent.setText("Ada " + "0" + " kendaraan yang Akan Tayang!");
-//        tvResultTitleContent.setText("Ada 32 kendaraan yang Akan Tayang!");
         linearResultTitleContent.setBackgroundResource(R.drawable.design_card_soon);
         tvResultTitleContent.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvTitleContent.setText("Segera Tayang");
@@ -513,8 +505,8 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         tvRecord.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
 
         //LIVE SOON EMPTY
-        tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_coming_soon));
-        linearEmptyData.setVisibility(View.VISIBLE);
+//        tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_coming_soon));
+//        linearEmptyData.setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -576,8 +568,25 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public void homeComingSoonSuccess() {
+    public void homeComingSoonSuccess(DataPageHomeComingSoonResponse dataPageHomeComingSoonResponse, String timeServer) {
+        if(dataPageHomeComingSoonResponse.getDataHomeComingSoonResponseList()==null ||dataPageHomeComingSoonResponse.getDataHomeComingSoonResponseList().isEmpty()){
+            tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_live));
+            tvResultTitleContent.setText("Ada 0 Kendaraan Live");
+            tvResultSearch.setText(dataPageHomeComingSoonResponse.getTotal()+" Unit");
+            linearEmptyData.setVisibility(View.VISIBLE);
+        }else {
+            linearEmptyData.setVisibility(View.GONE);
+            tvResultTitleContent.setText("Ada " + dataPageHomeComingSoonResponse.getTotal() + " Kendaraan Akan Tayang");
+            tvResultSearch.setText(dataPageHomeComingSoonResponse.getTotal()+" Unit");
+            RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
+            rvLiveSoon.setLayoutManager(layoutManagerLive);
+            rvLiveSoon.setNestedScrollingEnabled(false);
+            LiveSoonAdapter liveSoonAdapter = new LiveSoonAdapter(getActivity(), convertDateServer(timeServer), dataPageHomeComingSoonResponse.getDataHomeComingSoonResponseList());
+            rvLiveSoon.setAdapter(liveSoonAdapter);
+            liveSoonAdapter.notifyDataSetChanged();
+        }
     }
 
     @SuppressLint("SetTextI18n")

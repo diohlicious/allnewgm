@@ -233,6 +233,9 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         }else if(getIntent().getStringExtra(FROM_PAGE).equals("HISTORY")){
             linearDescription.setVisibility(View.GONE);
             btnNego.setVisibility(View.INVISIBLE);
+        }else if(getIntent().getStringExtra(FROM_PAGE).equals("COMING SOON")){
+            linearDescription.setVisibility(View.GONE);
+            btnNego.setVisibility(View.INVISIBLE);
         }
 
 
@@ -674,6 +677,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         rvImageCar.setNestedScrollingEnabled(false);
         PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(rvImageCar);
+        System.out.println("DATA GAMBAR : "+ dataVehicleDetailResponse.getImageResponseList().size());
         if(dataVehicleDetailResponse.getImageResponseList()==null||dataVehicleDetailResponse.getImageResponseList().isEmpty()){
             rvImageCar.setVisibility(View.GONE);
         }else {

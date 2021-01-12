@@ -8,13 +8,13 @@ public interface HomePresenter {
 
     void getHomeLiveApi(int page, int max, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek);
 
-    void getHomeComingSoonApi();
+    void getHomeComingSoonApi(int page, int max);
 
     void setDataBannerHome(AutoScrollViewPager viewPagerHome, CircleIndicator circleIndicator);
 
     void getHomeHistoryApi(int page, int max, String isMenang);
 
-    void getTimeServerApi();
+    void getTimeServerApi(String type);
 
     void getCheckActiveTokenApi();
 

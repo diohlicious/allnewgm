@@ -57,7 +57,7 @@ public class DataVehicleDetailResponse {
     @Expose
     private String agreementNo;
     
-    @SerializedName("image")
+    @SerializedName("images")
     @Expose
     private List<ImageResponse> imageResponseList;
 

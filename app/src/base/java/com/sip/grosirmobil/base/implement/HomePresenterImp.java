@@ -18,9 +18,11 @@ import com.sip.grosirmobil.base.presenter.HomePresenter;
 import com.sip.grosirmobil.base.util.AutoScrollViewPager;
 import com.sip.grosirmobil.base.view.HomeView;
 import com.sip.grosirmobil.cloud.config.model.BannerDataModel;
+import com.sip.grosirmobil.cloud.config.request.home.HomeComingSoonRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeHistoryRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeLiveRequest;
 import com.sip.grosirmobil.cloud.config.response.checkactivetoken.CheckActiveTokenResponse;
+import com.sip.grosirmobil.cloud.config.response.homecomingsoon.HomeComingSoonResponse;
 import com.sip.grosirmobil.cloud.config.response.homehistory.HomeHistoryResponse;
 import com.sip.grosirmobil.cloud.config.response.homelive.HomeLiveResponse;
 import com.sip.grosirmobil.cloud.config.response.timeserver.TimeServerResponse;
@@ -117,7 +119,7 @@ public class HomePresenterImp implements HomePresenter {
                     try {
                         if(response.body().getMessage().equals("success")){
                             grosirMobilPreference.saveDataHomeLive(response.body().getDataPageHomeLiveResponse());
-                            getTimeServerApi();
+                            getTimeServerApi("Live");
                         }else {
                             grosirMobilFunction.showMessage(context, "GET Home Live", response.body().getMessage());
                         }
@@ -143,8 +145,45 @@ public class HomePresenterImp implements HomePresenter {
     }
 
     @Override
-    public void getHomeComingSoonApi() {
-
+    public void getHomeComingSoonApi(int page, int max) {
+        linearEmptyData.setVisibility(View.GONE);
+        homeView.showDialogLoading();
+        rvLive.setVisibility(View.GONE);
+        HomeComingSoonRequest homeComingSoonRequest = new HomeComingSoonRequest(page,max);
+        final Call<HomeComingSoonResponse> timeServerApi = getApiGrosirMobil().homeComingSoonApi(BEARER+" "+grosirMobilPreference.getToken(),homeComingSoonRequest);
+        timeServerApi.enqueue(new Callback<HomeComingSoonResponse>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(Call<HomeComingSoonResponse> call, Response<HomeComingSoonResponse> response) {
+                homeView.hideDialogLoading();
+                rvLive.setVisibility(View.VISIBLE);
+                if (response.isSuccessful()) {
+                    try {
+                        if(response.body().getMessage().equals("success")){
+                            grosirMobilPreference.saveDataHomeComingSoon(response.body().getDataPageHomeComingSoonResponse());
+                            getTimeServerApi("Coming Soon");
+                        }else {
+                            grosirMobilFunction.showMessage(context, "GET Home Coming Soon", response.body().getMessage());
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }else {
+                    try {
+                        grosirMobilFunction.showMessage(context, context.getString(R.string.base_null_error_title), response.errorBody().string());
+                    } catch (IOException e) {
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<HomeComingSoonResponse> call, Throwable t) {
+                homeView.hideDialogLoading();
+                rvLive.setVisibility(View.VISIBLE);
+                grosirMobilFunction.showMessage(context, "GET Home  Coming Soon", context.getString(R.string.base_null_server));
+                GrosirMobilLog.printStackTrace(t);
+            }
+        });
     }
 
     @Override
@@ -208,7 +247,7 @@ public class HomePresenterImp implements HomePresenter {
     }
 
     @Override
-    public void getTimeServerApi() {
+    public void getTimeServerApi(String type) {
         homeView.showDialogLoading();
         final Call<TimeServerResponse> timeServerApi = getApiGrosirMobil().timeServerApi();
         timeServerApi.enqueue(new Callback<TimeServerResponse>() {
@@ -219,7 +258,11 @@ public class HomePresenterImp implements HomePresenter {
                     try {
                         if(response.body().getMessage().equals("success")){
                             grosirMobilPreference.saveTimeServer(response.body().getData().getTimeServer());
-                            homeView.homeLiveSuccess(grosirMobilPreference.getDataHomeLive(), response.body().getData().getTimeServer());
+                            if(type.equals("Live")){
+                                homeView.homeLiveSuccess(grosirMobilPreference.getDataHomeLive(), response.body().getData().getTimeServer());
+                            }else {
+                                homeView.homeComingSoonSuccess(grosirMobilPreference.getDataComingSoon(), response.body().getData().getTimeServer());
+                            }
                         }else {
                             grosirMobilFunction.showMessage(context, "GET Time Server", response.body().getMessage());
                         }

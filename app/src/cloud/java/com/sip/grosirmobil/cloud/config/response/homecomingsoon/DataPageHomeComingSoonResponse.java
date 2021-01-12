@@ -23,7 +23,7 @@ public class DataPageHomeComingSoonResponse {
     @Expose
     private int maxPage;
 
-    @SerializedName("data_live")
+    @SerializedName("data_list_event")
     @Expose
     private List<DataHomeComingSoonResponse> dataHomeComingSoonResponseList;
 

@@ -41,6 +41,10 @@ public class DataHomeComingSoonResponse {
     @Expose
     private String openPrice;
 
+    @SerializedName("bottom_price")
+    @Expose
+    private String bottomPrice;
+
     @SerializedName("grade")
     @Expose
     private String grade;
@@ -115,6 +119,10 @@ public class DataHomeComingSoonResponse {
         return openPrice;
     }
 
+    public String getBottomPrice() {
+        return bottomPrice;
+    }
+
     public String getGrade() {
         return grade;
     }
@@ -139,8 +147,5 @@ public class DataHomeComingSoonResponse {
         return endDate;
     }
 
-    public String getImage() {return image;
-
-
-    }
+    public String getImage() {return image;}
 }

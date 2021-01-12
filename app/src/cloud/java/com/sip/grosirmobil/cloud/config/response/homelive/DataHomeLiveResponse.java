@@ -149,6 +149,5 @@ public class DataHomeLiveResponse {
 
     public String getImage() {return image;
 
-
     }
 }

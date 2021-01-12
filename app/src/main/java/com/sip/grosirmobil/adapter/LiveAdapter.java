@@ -49,7 +49,7 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
 
     private final List<DataHomeLiveResponse> dataHomeLiveResponseList;
     private final Context contexts;
-    private String timeServer;
+    private final String timeServer;
 
     public LiveAdapter(Context context, String timeServer, List<DataHomeLiveResponse> dataHomeLiveResponses) {
         this.contexts = context;
@@ -121,7 +121,8 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
                 intent.putExtra(FROM_PAGE, "LIVE");
                 contexts.startActivity(intent);
             });
-        }catch (Exception e){
+        }
+        catch (Exception e){
             GrosirMobilLog.printStackTrace(e);
         }
     }

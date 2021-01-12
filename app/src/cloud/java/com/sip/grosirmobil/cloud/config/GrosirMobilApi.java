@@ -68,6 +68,7 @@ public interface GrosirMobilApi {
     String checkActiveTokenPath = "/api/cekaktiftokenMobile";
     String wareHousePath = "/api/lokasi/warehouseMobile";
     String homeLivePath = "/api/Live/HomeMobile";
+    String homeComingSoonPath = "/api/home/listeventMobile";
     String homeHistoryPath = "/api/Live/Riwayat";
     String liveVehicleDetailPath = "/api/Live/detailMobile";
     String timeServerPath = "/api/jamserverMobile";
@@ -165,7 +166,7 @@ public interface GrosirMobilApi {
                                        @Body HomeLiveRequest homeLiveRequest);
 
     @Headers("Content-Type: application/json")
-    @POST(homeLivePath)
+    @POST(homeComingSoonPath)
     Call<HomeComingSoonResponse> homeComingSoonApi(@Header("Authorization") String authToken,
                                                    @Body HomeComingSoonRequest homeComingSoonRequest);
 
