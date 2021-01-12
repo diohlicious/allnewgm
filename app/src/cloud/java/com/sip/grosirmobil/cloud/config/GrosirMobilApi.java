@@ -1,5 +1,6 @@
 package com.sip.grosirmobil.cloud.config;
 
+import com.sip.grosirmobil.cloud.config.request.changepassword.ChangePasswordRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeComingSoonRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeHistoryRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeLiveRequest;
@@ -73,6 +74,7 @@ public interface GrosirMobilApi {
     String liveNegoPath = "/api/Live/LiveNego";
     String liveBuyNowPath = "/api/Live/LiveBuyNow";
     String listCartPath = "/api/Live/datakeranjang";
+    String changePassword = "/api/auth/changePasswordForgot";
 
     @Headers("X-Requested-With:XMLHttpRequest")
     @POST(loginPath)
@@ -194,5 +196,8 @@ public interface GrosirMobilApi {
     @POST(listCartPath)
     Call<CartResponse> lisCartApi(@Header("Authorization") String authToken);
 
+    @Headers("Content-Type: application/json")
+    @POST(changePassword)
+    Call<GeneralResponse> changePassword(@Body ChangePasswordRequest changePasswordRequest);
     
 }

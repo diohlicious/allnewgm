@@ -54,5 +54,6 @@ public class GrosirMobilContract {
     public static final String START_YEAR = "startYear";
     public static final String END_YEAR = "endYear";
     public static final String GRADE = "grade";
+    public static final String PASSWORD = "password";
 
 }
