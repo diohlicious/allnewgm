@@ -238,8 +238,6 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             btnNego.setVisibility(View.INVISIBLE);
         }
 
-
-
         loadData();
     }
 

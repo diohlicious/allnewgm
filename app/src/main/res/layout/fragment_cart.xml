@@ -205,16 +205,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
-                android:id="@+id/tv_penawaran_sedang_berlangsung"
+                android:id="@+id/tv_all"
                 android:gravity="center|start"
                 android:paddingLeft="@dimen/_20sdp"
                 android:paddingRight="@dimen/_20sdp"
-                android:text="@string/tv_penawaran_sedang_berlangsung"
+                android:text="@string/tv_all"
                 android:background="@color/colorPrimaryWhite"
                 android:textColor="@color/colorPrimaryFont"
                 android:fontFamily="@font/nunito_regular"
                 android:textSize="@dimen/text_16"
                 android:layout_marginTop="@dimen/_20sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"/>
+            <TextView
+                android:id="@+id/tv_penawaran_sedang_berlangsung"
+                android:gravity="center|start"
+                android:paddingLeft="@dimen/_20sdp"
+                android:paddingRight="@dimen/_20sdp"
+                android:text="@string/tv_penawaran_diterima"
+                android:background="@color/colorPrimaryWhite"
+                android:textColor="@color/colorPrimaryFont"
+                android:fontFamily="@font/nunito_regular"
+                android:textSize="@dimen/text_16"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"/>
             <TextView
@@ -245,4 +258,10 @@
                 android:layout_height="@dimen/_40sdp"/>
         </LinearLayout>
     </RelativeLayout>
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

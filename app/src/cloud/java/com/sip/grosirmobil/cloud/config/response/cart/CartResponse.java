@@ -2,16 +2,24 @@ package com.sip.grosirmobil.cloud.config.response.cart;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 
-public class CartResponse extends GeneralResponse {
+import java.util.List;
+
+public class CartResponse {
+
+    @SerializedName("message")
+    @Expose
+    private String message;
 
     @SerializedName("data")
     @Expose
-    private DataOtoJsonResponse dataOtoJsonResponse;
+    private List<DataCartResponse> dataCartResponseList;
 
-    public DataOtoJsonResponse getDataOtoJsonResponse() {
-        return dataOtoJsonResponse;
+    public String getMessage() {
+        return message;
     }
 
+    public List<DataCartResponse> getDataCartResponseList() {
+        return dataCartResponseList;
+    }
 }

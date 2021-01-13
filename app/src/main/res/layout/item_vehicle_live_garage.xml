@@ -10,7 +10,7 @@
         app:cardCornerRadius="@dimen/_10sdp"
         android:layout_margin="@dimen/_5sdp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_155sdp">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -20,7 +20,7 @@
                 android:id="@+id/iv_image"
                 android:layout_width="@dimen/_90sdp"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@drawable/image_car_ex2"
                 tools:ignore="ContentDescription" />
             <LinearLayout
@@ -58,7 +58,6 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Masserati DSE AT 2015"
                     android:fontFamily="@font/nunito_semi_bold"
                     android:maxLines="2"
                     android:textColor="@color/colorPrimaryFont"
@@ -69,7 +68,6 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/tv_plat_number"
-                        android:text="NI 21231324 - "
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_1sdp"
@@ -78,7 +76,6 @@
                         android:textSize="@dimen/text_11" />
                     <TextView
                         android:id="@+id/tv_city"
-                        android:text="Jakarta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
@@ -109,7 +106,6 @@
                             android:textSize="@dimen/text_14"
                             android:textColor="@color/colorPrimaryFont"
                             android:fontFamily="@font/nunito_bold"
-                            android:text="Rp 111.000.000"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
@@ -124,7 +120,6 @@
                             android:layout_height="match_parent"/>
                         <TextView
                             android:id="@+id/tv_initial_name"
-                            android:text="B"
                             android:textColor="@color/colorPrimaryWhite"
                             android:textSize="@dimen/text_24"
                             android:fontFamily="@font/nunito_semi_bold"
@@ -223,17 +218,18 @@
                 android:src="@drawable/ic_favorite"
                 android:scaleType="centerInside"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_success_bidding"
-        app:cardCornerRadius="@dimen/_10sdp"
         android:elevation="0dp"
         android:visibility="gone"
+        app:cardCornerRadius="@dimen/_10sdp"
         android:layout_margin="@dimen/_5sdp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_155sdp">
+        android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">

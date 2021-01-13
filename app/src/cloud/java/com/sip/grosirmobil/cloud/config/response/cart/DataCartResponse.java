@@ -3,8 +3,6 @@ package com.sip.grosirmobil.cloud.config.response.cart;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 public class DataCartResponse {
 
     @SerializedName("user_id_grosir")
@@ -89,12 +87,97 @@ public class DataCartResponse {
     
     @SerializedName("stts")
     @Expose
-    private String stts;
+    private String status;
 
     @SerializedName("Oto_json")
     @Expose
-    private List<DataOtoJsonResponse> dataOtoJsonResponseList;
+    private DataOtoJsonResponse dataOtoJsonResponse;
 
+    public int getUserIdGrosir() {
+        return userIdGrosir;
+    }
 
+    public int getUserIdWin() {
+        return userIdWin;
+    }
 
+    public int getOhid() {
+        return ohid;
+    }
+
+    public String getAgreementNo() {
+        return agreementNo;
+    }
+
+    public String getStart_Date() {
+        return start_Date;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public String getKik() {
+        return kik;
+    }
+
+    public String getVehicleName() {
+        return vehicleName;
+    }
+
+    public String getTertinggi() {
+        return tertinggi;
+    }
+
+    public String getUserTertinggi() {
+        return userTertinggi;
+    }
+
+    public String getIsKeranjang() {
+        return isKeranjang;
+    }
+
+    public int getIsWinner() {
+        return isWinner;
+    }
+
+    public int getUserWin() {
+        return userWin;
+    }
+
+    public String getBottomPrice() {
+        return bottomPrice;
+    }
+
+    public int getOpenPrice() {
+        return openPrice;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public int getIsLive() {
+        return isLive;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public int getIsBlock() {
+        return isBlock;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public DataOtoJsonResponse getDataOtoJsonResponse() {
+        return dataOtoJsonResponse;
+    }
 }

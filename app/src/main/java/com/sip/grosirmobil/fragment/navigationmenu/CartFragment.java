@@ -3,11 +3,13 @@ package com.sip.grosirmobil.fragment.navigationmenu;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,17 +24,26 @@ import com.sip.grosirmobil.activity.MainActivity;
 import com.sip.grosirmobil.adapter.LiveGarageAdapter;
 import com.sip.grosirmobil.adapter.LostGarageAdapter;
 import com.sip.grosirmobil.adapter.SuccessGarageAdapter;
+import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilFragment;
-import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
+import com.sip.grosirmobil.cloud.config.response.cart.CartResponse;
+import com.sip.grosirmobil.cloud.config.response.cart.DataCartResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
+import static com.sip.grosirmobil.base.GrosirMobilApp.getApiGrosirMobil;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.BEARER;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MAIN;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarFragment;
 
@@ -63,6 +74,8 @@ public class CartFragment extends GrosirMobilFragment {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.linear_cart_not_empty) LinearLayout linearCartNotEmpty;
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_all) TextView tvAll;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_penawaran_sedang_berlangsung) TextView tvPenawaranSedangBerlangsung;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_penawaran_diterima) TextView tvPenawaranDiterima;
@@ -76,12 +89,19 @@ public class CartFragment extends GrosirMobilFragment {
     @BindView(R.id.linear_lost_garage) LinearLayout linearLostGarage;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_telusuri_kenderaan) Button btnFindVehicle;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.progress_bar) ProgressBar progressBar;
+
+    Handler handler = new Handler();
+    Runnable runnable;
+    int delay = 1000;
 
     private GrosirMobilFunction grosirMobilFunction;
-    private List<HardCodeDataBaruMasukModel> liveHardCodeDataBaruMasukModelList = new ArrayList<>();
-    private List<HardCodeDataBaruMasukModel> successHardCodeDataBaruMasukModelList = new ArrayList<>();
-    private List<HardCodeDataBaruMasukModel> lostHardCodeDataBaruMasukModelList = new ArrayList<>();
+    private GrosirMobilPreference grosirMobilPreference;
 
+    private final List<DataCartResponse> dataCartLiveResponseList = new ArrayList<>();
+    private final List<DataCartResponse> dataCartSuccessResponseList = new ArrayList<>();
+    private final List<DataCartResponse> dataCartLostResponseList = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -92,15 +112,12 @@ public class CartFragment extends GrosirMobilFragment {
         ButterKnife.bind(this, view);
 
         grosirMobilFunction = new GrosirMobilFunction(getActivity());
+        grosirMobilPreference = new GrosirMobilPreference(getActivity());
 
-        setDataLive();
-        setDataSuccess();
-        setDataLost();
-
-        setDataAdapter();
+        getDataCartApi();
 
         swipeRefreshGarage.setOnRefreshListener(() -> {
-            setDataAdapter();
+            getDataCartApi();
             swipeRefreshGarage.setRefreshing(false);
             linearLiveGarage.setVisibility(View.VISIBLE);
             linearSuccessGarage.setVisibility(View.VISIBLE);
@@ -110,51 +127,127 @@ public class CartFragment extends GrosirMobilFragment {
         return view;
     }
 
-    private void setDataAdapter(){
-        RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
-        rvLiveGarage.setLayoutManager(layoutManagerLive);
-        rvLiveGarage.setNestedScrollingEnabled(false);
-        LiveGarageAdapter liveGarageAdapter = new LiveGarageAdapter(getActivity(), liveHardCodeDataBaruMasukModelList);
-        rvLiveGarage.setAdapter(liveGarageAdapter);
-        liveGarageAdapter.notifyDataSetChanged();
-
-        RecyclerView.LayoutManager layoutManagerSuccess = new LinearLayoutManager(getActivity());
-        rvSuccessGarage.setLayoutManager(layoutManagerSuccess);
-        rvSuccessGarage.setNestedScrollingEnabled(false);
-        SuccessGarageAdapter successGarageAdapter = new SuccessGarageAdapter(getActivity(), successHardCodeDataBaruMasukModelList);
-        rvSuccessGarage.setAdapter(successGarageAdapter);
-        successGarageAdapter.notifyDataSetChanged();
-
-        RecyclerView.LayoutManager layoutManagerLost = new LinearLayoutManager(getActivity());
-        rvLostGarage.setLayoutManager(layoutManagerLost);
-        rvLostGarage.setNestedScrollingEnabled(false);
-        LostGarageAdapter lostGarageAdapter = new LostGarageAdapter(getActivity(), lostHardCodeDataBaruMasukModelList);
-        rvLostGarage.setAdapter(lostGarageAdapter);
-        lostGarageAdapter.notifyDataSetChanged();
-
-        tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
-        tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
-        tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
-        tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
-        tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
-        tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
     }
 
-    private void setDataLive(){
-        HardCodeDataBaruMasukModel 
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","111000000","04h 27m 03s");
-        liveHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
-    }
-    private void setDataSuccess(){
-        HardCodeDataBaruMasukModel 
-        hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
-        successHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
+    @Override
+    public void onResume() {
+        handler.postDelayed(runnable = () -> {
+            handler.postDelayed(runnable, delay);
+            getDataCartApi();
+        }, delay);
+        super.onResume();
     }
 
-    private void setDataLost(){
-        HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = new HardCodeDataBaruMasukModel("Masserati DSE AT 2015","NI 21231324","Jakarta","Rp 111.000.000","04h 27m 03s");
-        lostHardCodeDataBaruMasukModelList.add(hardCodeDataBaruMasukModel);
+    private void showProgressBar(){
+        progressBar.setVisibility(View.VISIBLE);
     }
+
+    private void hideProgressBar(){
+        progressBar.setVisibility(View.GONE);
+    }
+
+    private void getDataCartApi(){
+        showProgressBar();
+        final Call<CartResponse> questionOneApi = getApiGrosirMobil().lisCartApi(BEARER+" "+grosirMobilPreference.getToken());
+        questionOneApi.enqueue(new Callback<CartResponse>() {
+            @Override
+            public void onResponse(Call<CartResponse> call, Response<CartResponse> response) {
+                hideProgressBar();
+                if (response.isSuccessful()) {
+                    try {
+                        if(response.body().getMessage().equals("success")){
+                            if(response.body().getDataCartResponseList()==null||response.body().getDataCartResponseList().isEmpty()){
+                                linearCartNotEmpty.setVisibility(View.GONE);
+                                linearCartEmpty.setVisibility(View.VISIBLE);
+                            }
+                            else {
+                                dataCartLiveResponseList.clear();
+                                dataCartSuccessResponseList.clear();
+                                dataCartLostResponseList.clear();
+                                tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
+                                tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+                                tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+                                tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+                                tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
+                                tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+
+                                linearCartNotEmpty.setVisibility(View.VISIBLE);
+                                linearCartEmpty.setVisibility(View.GONE);
+                                for(int i=0;i<response.body().getDataCartResponseList().size();i++){
+                                    if(response.body().getDataCartResponseList().get(i).getIsLive()==1){
+                                        dataCartLiveResponseList.add(response.body().getDataCartResponseList().get(i));
+                                    }
+                                    if(response.body().getDataCartResponseList().get(i).getIsWinner()==1 &&
+                                       response.body().getDataCartResponseList().get(i).getUserWin()==1) {
+                                        dataCartSuccessResponseList.add(response.body().getDataCartResponseList().get(i));
+                                    }
+                                    if(response.body().getDataCartResponseList().get(i).getIsWinner()==0 &&
+                                       response.body().getDataCartResponseList().get(i).getIsWinner()==1 ){
+                                        dataCartLostResponseList.add(response.body().getDataCartResponseList().get(i));
+                                    }
+                                }
+                                if(dataCartLiveResponseList.isEmpty()||dataCartLiveResponseList==null){
+                                    linearLiveGarage.setVisibility(View.GONE);
+                                }else {
+                                    linearLiveGarage.setVisibility(View.VISIBLE);
+                                    LinearLayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
+                                    rvLiveGarage.setLayoutManager(layoutManagerLive);
+                                    rvLiveGarage.setNestedScrollingEnabled(false);
+                                    LiveGarageAdapter liveGarageAdapter = new LiveGarageAdapter(getActivity(), dataCartLiveResponseList);
+                                    rvLiveGarage.setAdapter(liveGarageAdapter);
+                                    liveGarageAdapter.notifyDataSetChanged();
+                                }
+                                if(dataCartSuccessResponseList.isEmpty()||dataCartSuccessResponseList==null){
+                                    linearSuccessGarage.setVisibility(View.GONE);
+                                }else {
+                                    linearSuccessGarage.setVisibility(View.VISIBLE);
+                                    LinearLayoutManager layoutManagerSuccess = new LinearLayoutManager(getActivity());
+                                    rvSuccessGarage.setLayoutManager(layoutManagerSuccess);
+                                    rvSuccessGarage.setNestedScrollingEnabled(false);
+                                    SuccessGarageAdapter successGarageAdapter = new SuccessGarageAdapter(getActivity(), dataCartSuccessResponseList);
+                                    rvSuccessGarage.setAdapter(successGarageAdapter);
+                                    successGarageAdapter.notifyDataSetChanged();
+                                }
+                                if(dataCartLostResponseList.isEmpty()||dataCartLostResponseList==null){
+                                    linearLostGarage.setVisibility(View.GONE);
+                                }else {
+                                    linearLostGarage.setVisibility(View.VISIBLE);
+                                    LinearLayoutManager layoutManagerLost = new LinearLayoutManager(getActivity());
+                                    rvLostGarage.setLayoutManager(layoutManagerLost);
+                                    rvLostGarage.setNestedScrollingEnabled(false);
+                                    LostGarageAdapter lostGarageAdapter = new LostGarageAdapter(getActivity(), dataCartLostResponseList);
+                                    rvLostGarage.setAdapter(lostGarageAdapter);
+                                    lostGarageAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        }else {
+                            grosirMobilFunction.showMessage(getActivity(), "GET Cart Data", response.body().getMessage());
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }else {
+                    try {
+                        grosirMobilFunction.showMessage(getActivity(), getString(R.string.base_null_error_title), response.errorBody().string());
+                    } catch (IOException e) {
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CartResponse> call, Throwable t) {
+                hideProgressBar();
+                grosirMobilFunction.showMessage(getActivity(), "GET Cart Data", getString(R.string.base_null_server));
+                GrosirMobilLog.printStackTrace(t);
+            }
+        });
+    }
+
 
     @SuppressLint("NonConstantResourceId")
     @OnClick({R.id.tv_filter, R.id.linear_dialog_filter})
@@ -169,8 +262,27 @@ public class CartFragment extends GrosirMobilFragment {
     }
 
     @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_all)
+    void tvAllClick(){
+        tvAll.setBackgroundResource(R.color.colorPrimaryTheme);
+        tvAll.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        relativeBackgroundDialogFilterClick();
+        linearLiveGarage.setVisibility(View.VISIBLE);
+        linearSuccessGarage.setVisibility(View.VISIBLE);
+        linearLostGarage.setVisibility(View.VISIBLE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_penawaran_sedang_berlangsung)
     void tvPenawaranSedangBerlangsungClick(){
+        tvAll.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvAll.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryTheme);
         tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
         tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
@@ -186,6 +298,8 @@ public class CartFragment extends GrosirMobilFragment {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_penawaran_diterima)
     void tvPenawaranDiterimaClick(){
+        tvAll.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvAll.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryTheme);
         tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
         tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
@@ -201,6 +315,8 @@ public class CartFragment extends GrosirMobilFragment {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_penawaran_ditolak)
     void tvPenawaranDitolakClick(){
+        tvAll.setBackgroundResource(R.color.colorPrimaryWhite);
+        tvAll.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
         tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryTheme);

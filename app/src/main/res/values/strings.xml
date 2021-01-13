@@ -441,4 +441,5 @@
     <string name="tv_empty_notification">Terus pantau informasi dari kami, serta ikuti \npenawaran untuk mendapat informasi\npenawaran terbaru Anda</string>
     <string name="tv_win_empty_data">Anda belum menang</string>
     <string name="tv_empty_win">Anda belum memenangkan penawaran\napapun. Telusuri semua kendaraan yang kami\ntawarkan dan lakukan tawar/buy now</string>
+    <string name="tv_all">Semua</string>
 </resources>

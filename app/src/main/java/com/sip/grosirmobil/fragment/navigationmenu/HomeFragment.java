@@ -3,6 +3,7 @@ package com.sip.grosirmobil.fragment.navigationmenu;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -171,6 +172,10 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     private String merek = "";
     private String grade = "";
 
+    Handler handler = new Handler();
+    Runnable runnable;
+    int delay = 1000;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -214,6 +219,21 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         });
 
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    public void onResume() {
+        handler.postDelayed(runnable = () -> {
+            handler.postDelayed(runnable, delay);
+//            homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+        }, delay);
+        super.onResume();
     }
 
     private void setUiReset(){
