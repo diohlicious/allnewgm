@@ -49,6 +49,10 @@ public class DataHomeLiveResponse {
     @Expose
     private String grade;
 
+    @SerializedName("agreement_no")
+    @Expose
+    private String agreementNo;
+
     @SerializedName("is_create_open_house")
     @Expose
     private String isCreateOpenHouse;
@@ -147,7 +151,9 @@ public class DataHomeLiveResponse {
         return endDate;
     }
 
-    public String getImage() {return image;
+    public String getImage() {return image;}
 
+    public String getAgreementNo() {
+        return agreementNo;
     }
 }

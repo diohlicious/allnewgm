@@ -76,8 +76,7 @@ public interface GrosirMobilApi {
     String liveNegoPath = "/api/Live/LiveNego";
     String liveBuyNowPath = "/api/Live/LiveBuyNow";
     String listCartPath = "/api/Live/datakeranjang";
-    String setFavoritePath = "/api/favorite/setFavorite";
-    String unFavoritePath = "/api/favorite/unFavorite";
+    String setAndUnsetFavoritePath = "/api/favorite/setAndUnsetFavorite";
     String changePassword = "/api/auth/changePasswordForgot";
 
     @Headers("X-Requested-With:XMLHttpRequest")
@@ -197,14 +196,9 @@ public interface GrosirMobilApi {
                                         @Body NegoAndBuyNowRequest negoAndBuyNowRequest);
 
     @Headers("Content-Type: application/json")
-    @POST(setFavoritePath)
-    Call<GeneralResponse> setFavoriteApi(@Header("Authorization") String authToken,
-                                         @Body FavoriteRequest favoriteRequest);
-
-    @Headers("Content-Type: application/json")
-    @POST(unFavoritePath)
-    Call<GeneralResponse> unFavoriteApi(@Header("Authorization") String authToken,
-                                        @Body FavoriteRequest favoriteRequest);
+    @POST(setAndUnsetFavoritePath)
+    Call<GeneralResponse> setAndUnsetFavoriteApi(@Header("Authorization") String authToken,
+                                                 @Body FavoriteRequest favoriteRequest);
 
     @Headers("Content-Type: application/json")
     @POST(listCartPath)

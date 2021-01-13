@@ -49,6 +49,10 @@ public class DataHomeComingSoonResponse {
     @Expose
     private String grade;
 
+    @SerializedName("agreement_no")
+    @Expose
+    private String agreementNo;
+
     @SerializedName("is_create_open_house")
     @Expose
     private String isCreateOpenHouse;
@@ -76,8 +80,6 @@ public class DataHomeComingSoonResponse {
     @SerializedName("end_date")
     @Expose
     private String endDate;
-
-
 
     public int getOpenHouseId() {
         return openHouseId;
@@ -148,4 +150,8 @@ public class DataHomeComingSoonResponse {
     }
 
     public String getImage() {return image;}
+
+    public String getAgreementNo() {
+        return agreementNo;
+    }
 }

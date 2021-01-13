@@ -67,7 +67,7 @@ public class DataVehicleDetailResponse {
 
     @SerializedName("vehicle_data")
     @Expose
-    private List<VehicleDetailDataResponse> vehicleDataResponseList;
+    private VehicleDataResponse vehicleDataResponse;
     
     @SerializedName("vehicle_body")
     @Expose
@@ -141,8 +141,8 @@ public class DataVehicleDetailResponse {
         return vehicleSummary;
     }
 
-    public List<VehicleDetailDataResponse> getVehicleDataResponseList() {
-        return vehicleDataResponseList;
+    public VehicleDataResponse getVehicleDataResponse() {
+        return vehicleDataResponse;
     }
 
     public List<VehicleDetailDataResponse> getVehicleBodyResponseList() {

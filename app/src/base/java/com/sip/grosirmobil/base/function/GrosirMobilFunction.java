@@ -213,13 +213,15 @@ public class GrosirMobilFunction {
     }
 
     public static long calculateDate(String start_date,
-                                      String end_date) {
+                                     String end_date) {
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         long timeToLong = 0;
         try {
             Date d1 = sdf.parse(start_date);
             Date d2 = sdf.parse(end_date);
+
+            System.out.println("DATE T T T : "+ d1.getTime());
             long difference_In_Time
                     = d2.getTime() - d1.getTime();
 
@@ -256,7 +258,7 @@ public class GrosirMobilFunction {
 
             System.out.print(
                     "Difference"
-                            + " between two dates is: ");
+                            + " between two dates is: "+timeToLong);
 
             
             // Print result

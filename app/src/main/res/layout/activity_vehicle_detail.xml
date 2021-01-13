@@ -169,7 +169,6 @@
                         android:textColor="@color/colorPrimaryWhite"
                         android:textSize="@dimen/text_11"
                         android:fontFamily="@font/nunito_regular"
-                        android:text="04h 27m 03s"
                         android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"/>
@@ -230,13 +229,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
                     tools:ignore="RtlHardcoded" />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_car_data"
-                    android:visibility="gone"
-                    android:background="@drawable/design_line_rectangle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-<!--                <include layout="@layout/include_vehicle_detail_car_data"/>-->
+<!--                <androidx.recyclerview.widget.RecyclerView-->
+<!--                    android:id="@+id/rv_car_data"-->
+<!--                    android:visibility="gone"-->
+<!--                    android:background="@drawable/design_line_rectangle"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"/>-->
+                <include layout="@layout/include_vehicle_detail_car_data"/>
                 <TextView
                     android:id="@+id/tv_body"
                     android:gravity="center|left"

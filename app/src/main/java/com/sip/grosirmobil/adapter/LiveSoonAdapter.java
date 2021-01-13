@@ -41,18 +41,20 @@ import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.calculateDate;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.convertDate;
 
 public class LiveSoonAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
 
     private final List<DataHomeComingSoonResponse> dataHomeComingSoonResponseList;
     private final Context contexts;
     private final String timeServer;
-
+    private final GrosirMobilPreference grosirMobilPreference;
 
     public LiveSoonAdapter(Context context, String timeServer, List<DataHomeComingSoonResponse> dataHomeComingSoonResponses) {
         this.contexts = context;
         this.timeServer = timeServer;
         this.dataHomeComingSoonResponseList = dataHomeComingSoonResponses;
+        grosirMobilPreference = new GrosirMobilPreference(context);
     }
 
     @NonNull
@@ -94,20 +96,31 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle>
             holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
         }
 
-        startTimer(holder.tvTimer, calculateDate(timeServer,dataHomeComingSoonResponse.getStartDate()));
-//        startTimer(holder.tvTimer, 20000000);
+        String startDate = convertDate(timeServer,"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
+        String endDate   = convertDate(dataHomeComingSoonResponse.getEndDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
+
+//        String startDate = convertDate(convertDateServer(timeServer),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
+//        String endDate   = convertDate(dataHomeComingSoonResponse.getStartDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
+//        System.out.println("-- END DATE VEHICLE     : "+ convertDate(dataHomeComingSoonResponse.getStartDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss"));
+//        System.out.println("-- TIME SERVER BEFORE   : "+ timeServer);
+//        System.out.println("-- TIME SERVER AFTER    : "+ convertDate(convertDateServer(timeServer),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss"));
+//        System.out.println("Start DATE : "+ startDate);
+//        System.out.println("End DATE   : "+ endDate);
+        startTimer(holder.tvTimer, calculateDate(startDate,endDate));
+
+//        startTimer(holder.tvTimer, calculateDate(timeServer,dataHomeComingSoonResponse.getStartDate()));
 
         AtomicBoolean favorite = new AtomicBoolean(false);
 
         holder.ivFavorite.setOnClickListener(view -> {
             if (favorite.get()) {
                 favorite.set(false);
-                unFavorite(contexts, holder.ivFavorite, dataHomeComingSoonResponse.getKik());
+                setAndUnsetFavorite(contexts, holder.ivFavorite, grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getUserId(), dataHomeComingSoonResponse.getKik(), dataHomeComingSoonResponse.getAgreementNo(), String.valueOf(dataHomeComingSoonResponse.getOpenHouseId()),"1");
                 holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
             } else {
                 favorite.set(true);
                 holder.ivFavorite.setImageResource(R.drawable.ic_favorite);
-                setFavorite(contexts, holder.ivFavorite, dataHomeComingSoonResponse.getKik());
+                setAndUnsetFavorite(contexts, holder.ivFavorite, grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getUserId(), dataHomeComingSoonResponse.getKik(), dataHomeComingSoonResponse.getAgreementNo(), String.valueOf(dataHomeComingSoonResponse.getOpenHouseId()),"1");
             }
         });
         holder.cardVehicle.setOnClickListener(view -> {
@@ -145,11 +158,11 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle>
         }.start();
     }
 
-    public void setFavorite(Context contexts, ImageView ivFavorite, String kik){
+    public void setAndUnsetFavorite(Context contexts, ImageView ivFavorite, String userId, String kik, String agreementNo, String openHouseId, String isFavorit){
         GrosirMobilPreference grosirMobilPreference = new GrosirMobilPreference(contexts);
         GrosirMobilFunction grosirMobilFunction = new GrosirMobilFunction(contexts);
-        FavoriteRequest favoriteRequest = new FavoriteRequest(kik);
-        final Call<GeneralResponse> timeServerApi = getApiGrosirMobil().setFavoriteApi(BEARER+" "+grosirMobilPreference.getToken(),favoriteRequest);
+        FavoriteRequest favoriteRequest = new FavoriteRequest(userId, kik, agreementNo, openHouseId, Integer.parseInt(isFavorit));
+        final Call<GeneralResponse> timeServerApi = getApiGrosirMobil().setAndUnsetFavoriteApi(BEARER+" "+grosirMobilPreference.getToken(),favoriteRequest);
         timeServerApi.enqueue(new Callback<GeneralResponse>() {
             @Override
             public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
@@ -179,37 +192,4 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle>
         });
     }
 
-    public void unFavorite(Context contexts, ImageView ivFavorite, String kik){
-        GrosirMobilPreference grosirMobilPreference = new GrosirMobilPreference(contexts);
-        GrosirMobilFunction grosirMobilFunction = new GrosirMobilFunction(contexts);
-        FavoriteRequest favoriteRequest = new FavoriteRequest(kik);
-        final Call<GeneralResponse> timeServerApi = getApiGrosirMobil().unFavoriteApi(BEARER+" "+grosirMobilPreference.getToken(),favoriteRequest);
-        timeServerApi.enqueue(new Callback<GeneralResponse>() {
-            @Override
-            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        if(response.body().getMessage().equals("success")){
-                            ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
-                        }else {
-                            grosirMobilFunction.showMessage(contexts, "POST Favorite", response.body().getMessage());
-                        }
-                    }catch (Exception e){
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }else {
-                    try {
-                        grosirMobilFunction.showMessage(contexts, contexts.getString(R.string.base_null_error_title), response.errorBody().string());
-                    } catch (IOException e) {
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }
-            }
-            @Override
-            public void onFailure(Call<GeneralResponse> call, Throwable t) {
-                grosirMobilFunction.showMessage(contexts, "POST Favorite", contexts.getString(R.string.base_null_server));
-                GrosirMobilLog.printStackTrace(t);
-            }
-        });
-    }
 }
