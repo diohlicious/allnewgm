@@ -52,7 +52,6 @@ public class JoinSuccessFragment extends Fragment implements LoginView {
 
         grosirMobilPreference = new GrosirMobilPreference(getActivity());
         grosirMobilFunction = new GrosirMobilFunction(getActivity());
-
         loginPresenter = new LoginPresenterImp(getActivity(), this);
 
         return view;
