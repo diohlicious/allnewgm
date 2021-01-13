@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import com.sip.grosirmobil.BuildConfig;
 import com.sip.grosirmobil.cloud.config.model.SearchDataModel;
 import com.sip.grosirmobil.cloud.config.response.checkactivetoken.DataCheckActiveTokenResponse;
-import com.sip.grosirmobil.cloud.config.response.homecomingsoon.DataPageHomeComingSoonResponse;
+import com.sip.grosirmobil.cloud.config.response.homecomingsoon.HomeComingSoonResponse;
 import com.sip.grosirmobil.cloud.config.response.homelive.DataPageHomeLiveResponse;
 import com.sip.grosirmobil.cloud.config.response.login.DataLoginResponse;
 import com.sip.grosirmobil.cloud.config.response.province.DataProvinceResponse;
@@ -406,18 +406,18 @@ public class GrosirMobilPreference {
         return gson.fromJson(json, DataPageHomeLiveResponse.class);
     }
 
-    public void saveDataHomeComingSoon(DataPageHomeComingSoonResponse dataPageHomeComingSoonResponse){
+    public void saveDataHomeComingSoon(HomeComingSoonResponse homeComingSoonResponse){
         SharedPreferences.Editor editor = sharedpreferences.edit();
         Gson gSonDataHomeComingSoon = new Gson();
-        String jsonDataHomeComingSoon = gSonDataHomeComingSoon.toJson(dataPageHomeComingSoonResponse);
+        String jsonDataHomeComingSoon = gSonDataHomeComingSoon.toJson(homeComingSoonResponse);
         editor.putString(DATA_HOME_COMING_SOON, jsonDataHomeComingSoon);
         editor.apply();
     }
 
-    public DataPageHomeComingSoonResponse getDataComingSoon(){
+    public HomeComingSoonResponse getDataComingSoon(){
         String json = sharedpreferences.getString(DATA_HOME_COMING_SOON, "");
         Gson gson=new Gson();
-        return gson.fromJson(json, DataPageHomeComingSoonResponse.class);
+        return gson.fromJson(json, HomeComingSoonResponse.class);
     }
 
     public void saveDataVehicleDetail(DataVehicleDetailResponse dataVehicleDetailResponse){

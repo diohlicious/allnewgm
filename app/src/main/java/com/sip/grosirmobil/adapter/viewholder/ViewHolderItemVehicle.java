@@ -23,7 +23,7 @@ public class ViewHolderItemVehicle extends RecyclerView.ViewHolder {
     public ViewHolderItemVehicle(View view) {
         super(view);
         cardVehicle         = view.findViewById(R.id.card_vehicle);
-        ivImage             = view.findViewById(R.id.iv_image_home_live);
+        ivImage             = view.findViewById(R.id.iv_image);
         tvVehicleName       = view.findViewById(R.id.tv_vehicle_name);
         tvPlatNumber        = view.findViewById(R.id.tv_plat_number);
         tvCity              = view.findViewById(R.id.tv_city);

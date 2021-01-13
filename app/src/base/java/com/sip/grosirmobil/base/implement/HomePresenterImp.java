@@ -148,7 +148,7 @@ public class HomePresenterImp implements HomePresenter {
     public void getHomeComingSoonApi(int page, int max) {
         linearEmptyData.setVisibility(View.GONE);
         homeView.showDialogLoading();
-        rvLive.setVisibility(View.GONE);
+        rvLiveSoon.setVisibility(View.GONE);
         HomeComingSoonRequest homeComingSoonRequest = new HomeComingSoonRequest(page,max);
         final Call<HomeComingSoonResponse> timeServerApi = getApiGrosirMobil().homeComingSoonApi(BEARER+" "+grosirMobilPreference.getToken(),homeComingSoonRequest);
         timeServerApi.enqueue(new Callback<HomeComingSoonResponse>() {
@@ -156,11 +156,11 @@ public class HomePresenterImp implements HomePresenter {
             @Override
             public void onResponse(Call<HomeComingSoonResponse> call, Response<HomeComingSoonResponse> response) {
                 homeView.hideDialogLoading();
-                rvLive.setVisibility(View.VISIBLE);
+                rvLiveSoon.setVisibility(View.VISIBLE);
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
-                            grosirMobilPreference.saveDataHomeComingSoon(response.body().getDataPageHomeComingSoonResponse());
+                            grosirMobilPreference.saveDataHomeComingSoon(response.body());
                             getTimeServerApi("Coming Soon");
                         }else {
                             grosirMobilFunction.showMessage(context, "GET Home Coming Soon", response.body().getMessage());
@@ -179,7 +179,7 @@ public class HomePresenterImp implements HomePresenter {
             @Override
             public void onFailure(Call<HomeComingSoonResponse> call, Throwable t) {
                 homeView.hideDialogLoading();
-                rvLive.setVisibility(View.VISIBLE);
+                rvLiveSoon.setVisibility(View.VISIBLE);
                 grosirMobilFunction.showMessage(context, "GET Home  Coming Soon", context.getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);
             }

@@ -41,7 +41,7 @@ import com.sip.grosirmobil.base.util.AutoScrollViewPager;
 import com.sip.grosirmobil.base.util.GrosirMobilFragment;
 import com.sip.grosirmobil.base.view.HomeView;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
-import com.sip.grosirmobil.cloud.config.response.homecomingsoon.DataPageHomeComingSoonResponse;
+import com.sip.grosirmobil.cloud.config.response.homecomingsoon.HomeComingSoonResponse;
 import com.sip.grosirmobil.cloud.config.response.homehistory.HomeHistoryResponse;
 import com.sip.grosirmobil.cloud.config.response.homelive.DataPageHomeLiveResponse;
 
@@ -489,6 +489,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         rvRecord.setVisibility(View.GONE);
         linearResultTitleContent.setBackgroundResource(R.drawable.design_card_live);
         tvResultTitleContent.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvResultTitleContent.setText("");
         tvTitleContent.setText("Baru Masuk");
         tvLive.setBackgroundResource(R.drawable.design_line_selected_live);
         tvLive.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
@@ -512,10 +513,10 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         nestedView.setBackgroundResource(R.color.colorPrimaryWhite);
         rvLive.setVisibility(View.GONE);
         rvLiveSoon.setVisibility(View.GONE);
-        rvLiveSoon.setVisibility(View.GONE);
         rvRecord.setVisibility(View.GONE);
         linearResultTitleContent.setBackgroundResource(R.drawable.design_card_soon);
         tvResultTitleContent.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvResultTitleContent.setText("");
         tvTitleContent.setText("Segera Tayang");
         tvLive.setBackgroundResource(R.drawable.design_line);
         tvLive.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
@@ -523,10 +524,6 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         tvLiveSoon.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvRecord.setBackgroundResource(R.drawable.design_line);
         tvRecord.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
-
-        //LIVE SOON EMPTY
-//        tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_coming_soon));
-//        linearEmptyData.setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -590,10 +587,11 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void homeComingSoonSuccess(DataPageHomeComingSoonResponse dataPageHomeComingSoonResponse, String timeServer) {
-        if(dataPageHomeComingSoonResponse.getDataHomeComingSoonResponseList()==null ||dataPageHomeComingSoonResponse.getDataHomeComingSoonResponseList().isEmpty()){
+    public void homeComingSoonSuccess(HomeComingSoonResponse dataPageHomeComingSoonResponse, String timeServer) {
+        System.out.println("DATA TOTAL COMING SOON : "+ dataPageHomeComingSoonResponse.getTotal());
+        if(dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getDataHomeComingSoonResponseList()==null ||dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getDataHomeComingSoonResponseList().isEmpty()){
             tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_live));
-            tvResultTitleContent.setText("Ada 0 Kendaraan Live");
+            tvResultTitleContent.setText("Ada 0 Kendaraan Akan Tayang");
             tvResultSearch.setText(dataPageHomeComingSoonResponse.getTotal()+" Unit");
             linearEmptyData.setVisibility(View.VISIBLE);
         }else {
@@ -603,7 +601,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
             rvLiveSoon.setLayoutManager(layoutManagerLive);
             rvLiveSoon.setNestedScrollingEnabled(false);
-            LiveSoonAdapter liveSoonAdapter = new LiveSoonAdapter(getActivity(), convertDateServer(timeServer), dataPageHomeComingSoonResponse.getDataHomeComingSoonResponseList());
+            LiveSoonAdapter liveSoonAdapter = new LiveSoonAdapter(getActivity(), convertDateServer(timeServer), dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getDataHomeComingSoonResponseList());
             rvLiveSoon.setAdapter(liveSoonAdapter);
             liveSoonAdapter.notifyDataSetChanged();
         }
