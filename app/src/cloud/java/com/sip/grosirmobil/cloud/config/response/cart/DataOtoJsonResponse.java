@@ -20,9 +20,21 @@ public class DataOtoJsonResponse {
     @SerializedName("gradeoto")
     @Expose
     private String gradeOto;
-    
-    
-    
-  
 
+
+    public String getAssetDescription() {
+        return assetDescription;
+    }
+
+    public String getKM() {
+        return KM;
+    }
+
+    public String getLokasi() {
+        return Lokasi;
+    }
+
+    public String getGradeOto() {
+        return gradeOto;
+    }
 }

@@ -180,4 +180,28 @@ public class DataCartResponse {
     public DataOtoJsonResponse getDataOtoJsonResponse() {
         return dataOtoJsonResponse;
     }
+
+    public DataCartResponse(int userIdGrosir, int userIdWin, int ohid, String agreementNo, String start_Date, String endDate, String kik, String vehicleName, String tertinggi, String userTertinggi, String isKeranjang, int isWinner, int userWin, String bottomPrice, int openPrice, String grade, int isLive, String categoryName, int isBlock, String foto, String status) {
+        this.userIdGrosir = userIdGrosir;
+        this.userIdWin = userIdWin;
+        this.ohid = ohid;
+        this.agreementNo = agreementNo;
+        this.start_Date = start_Date;
+        this.endDate = endDate;
+        this.kik = kik;
+        this.vehicleName = vehicleName;
+        this.tertinggi = tertinggi;
+        this.userTertinggi = userTertinggi;
+        this.isKeranjang = isKeranjang;
+        this.isWinner = isWinner;
+        this.userWin = userWin;
+        this.bottomPrice = bottomPrice;
+        this.openPrice = openPrice;
+        this.grade = grade;
+        this.isLive = isLive;
+        this.categoryName = categoryName;
+        this.isBlock = isBlock;
+        this.foto = foto;
+        this.status = status;
+    }
 }

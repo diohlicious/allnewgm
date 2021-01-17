@@ -13,8 +13,43 @@ public class HomeComingSoonRequest {
     @Expose
     private int max;
 
-    public HomeComingSoonRequest(int page, int max) {
+    @SerializedName("lokasi")
+    @Expose
+    private String lokasi;
+
+    @SerializedName("tahunstart")
+    @Expose
+    private int tahunStart;
+
+    @SerializedName("tahunend")
+    @Expose
+    private int tahunEnd;
+
+    @SerializedName("hargastart")
+    @Expose
+    private long hargaStart;
+
+    @SerializedName("hargaend")
+    @Expose
+    private long hargaEnd;
+
+    @SerializedName("merek")
+    @Expose
+    private String merek;
+
+    @SerializedName("category")
+    @Expose
+    private String category;
+
+    public HomeComingSoonRequest(int page, int max, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek, String category) {
         this.page = page;
         this.max = max;
+        this.lokasi = lokasi;
+        this.tahunStart = tahunStart;
+        this.tahunEnd = tahunEnd;
+        this.hargaStart = hargaStart;
+        this.hargaEnd = hargaEnd;
+        this.merek = merek;
+        this.category = category;
     }
 }

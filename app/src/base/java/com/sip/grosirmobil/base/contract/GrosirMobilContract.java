@@ -27,6 +27,7 @@ public class GrosirMobilContract {
 
     public static final String BEARER = "Bearer";
     public static final String REQUEST_MAIN = "main";
+    public static final String REF_NUMBER = "refNumber";
     public static final String EMAIL = "email";
     public static final String PATH_IMAGE = "pathImage";
     public static final String TRANSACTION_ID = "transactionid";
@@ -56,5 +57,6 @@ public class GrosirMobilContract {
     public static final String END_YEAR = "endYear";
     public static final String GRADE = "grade";
     public static final String PASSWORD = "password";
+    public static final String VEHICLE_SELECTED_TO_PAY = "vehicleSelectedToPay";
 
 }

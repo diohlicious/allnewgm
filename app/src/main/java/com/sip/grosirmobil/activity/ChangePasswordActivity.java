@@ -91,7 +91,7 @@ public class ChangePasswordActivity extends GrosirMobilActivity {
                 progressDialog.show();
 
             ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getUserResponse().getEmail(),newPassword+"");
-            final Call<GeneralResponse> changePasswordApi = getApiGrosirMobil().changePassword(changePasswordRequest);
+            final Call<GeneralResponse> changePasswordApi = getApiGrosirMobil().changePasswordApi(changePasswordRequest);
             changePasswordApi.enqueue(new Callback<GeneralResponse>() {
                 @Override
                 public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {

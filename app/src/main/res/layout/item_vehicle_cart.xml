@@ -17,7 +17,7 @@
             android:id="@+id/iv_image"
             android:layout_width="@dimen/_105sdp"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:src="@drawable/image_car_ex2"
             tools:ignore="ContentDescription" />
         <LinearLayout
@@ -32,7 +32,6 @@
                 android:id="@+id/tv_vehicle_name"
                 android:fontFamily="@font/nunito_semi_bold"
                 android:textColor="@color/colorPrimaryFont"
-                android:text="Masserati DSE AT 2015"
                 android:maxLines="2"
                 android:textSize="@dimen/text_16"
                 android:layout_width="match_parent"
@@ -57,7 +56,6 @@
                         android:layout_height="wrap_content">
                         <TextView
                             android:id="@+id/tv_plat_number"
-                            android:text="NI 21231324 - "
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito_regular"
@@ -65,7 +63,6 @@
                             android:textSize="@dimen/text_11" />
                         <TextView
                             android:id="@+id/tv_city"
-                            android:text="Jakarta"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito_regular"
@@ -84,7 +81,6 @@
                         android:textSize="@dimen/text_14"
                         android:textColor="@color/colorPrimaryFont"
                         android:fontFamily="@font/nunito_bold"
-                        android:text="Rp 111.000.000"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>

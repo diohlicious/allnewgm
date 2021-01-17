@@ -9,28 +9,28 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.LocationUnitActivity;
-import com.sip.grosirmobil.activity.VehicleDetailActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehicleReadyTakeOut;
-import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
+import com.sip.grosirmobil.cloud.config.response.cart.DataCartResponse;
 
 import java.util.List;
 
-import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
-import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
-import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
-
 public class ReadyTakeOutAdapter extends RecyclerView.Adapter<ViewHolderItemVehicleReadyTakeOut> {
 
-    private List<HardCodeDataBaruMasukModel> hardCodeDataBaruMasukModelList;
-    private Context contexts;
+    private final List<DataCartResponse> dataCartResponseList;
+    private final Context contexts;
 
 
-    public ReadyTakeOutAdapter(Context context, List<HardCodeDataBaruMasukModel> hardCodeDataBaruMasukModels) {
+    public ReadyTakeOutAdapter(Context context, List<DataCartResponse> dataCartResponses) {
         this.contexts = context;
-        this.hardCodeDataBaruMasukModelList = hardCodeDataBaruMasukModels;
+        this.dataCartResponseList = dataCartResponses;
     }
 
     @NonNull
@@ -44,27 +44,46 @@ public class ReadyTakeOutAdapter extends RecyclerView.Adapter<ViewHolderItemVehi
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderItemVehicleReadyTakeOut holder, int position) {
-        HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = hardCodeDataBaruMasukModelList.get(position);
-        holder.tvVehicleName.setText(hardCodeDataBaruMasukModel.getVehicleName());
-        holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber()+" - ");
-        holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());
-        holder.tvPrice.setText(hardCodeDataBaruMasukModel.getPrice());
-        holder.cardVehicle.setOnClickListener(view -> {
-            Intent intent = new Intent(contexts, VehicleDetailActivity.class);
-            intent.putExtra(ID_VEHICLE, "");
-            intent.putExtra(KIK, "");
-            intent.putExtra(FROM_PAGE, "");
-            contexts.startActivity(intent);
-        });
-        holder.btnTakeOutLocation.setOnClickListener(view -> {
-            Intent intent = new Intent(contexts, LocationUnitActivity.class);
-            contexts.startActivity(intent);
-        });
+        DataCartResponse dataCartResponse = dataCartResponseList.get(position);
+        try {
+            holder.tvVehicleName.setText(dataCartResponse.getVehicleName());
+            holder.tvPlatNumber.setText(dataCartResponse.getKik().substring(0, 10) + " - ");
+            holder.tvCity.setText(dataCartResponse.getDataOtoJsonResponse().getLokasi().replace("WAREHOUSE ", ""));
+            holder.tvPrice.setText(dataCartResponse.getBottomPrice());
+            holder.cardVehicle.setOnClickListener(view -> {
+//                Intent intent = new Intent(contexts, VehicleDetailActivity.class);
+//                intent.putExtra(ID_VEHICLE, "");
+//                intent.putExtra(KIK, "");
+//                intent.putExtra(FROM_PAGE, "");
+//                contexts.startActivity(intent);
+            });
+            CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
+            circularProgressDrawable.setStrokeWidth(5f);
+            circularProgressDrawable.setCenterRadius(30f);
+            circularProgressDrawable.start();
+            Glide.with(contexts)
+                    .load(dataCartResponse.getFoto())
+                    .apply(new RequestOptions()
+                            .placeholder(circularProgressDrawable)
+                            .error(R.drawable.ic_broken_image)
+                            .dontAnimate()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(false))
+                    .into(holder.ivImage);
+
+            holder.btnTakeOutLocation.setOnClickListener(view -> {
+                Intent intent = new Intent(contexts, LocationUnitActivity.class);
+                contexts.startActivity(intent);
+            });
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return hardCodeDataBaruMasukModelList.size();
+        return dataCartResponseList.size();
     }
 
 }

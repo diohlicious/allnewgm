@@ -42,6 +42,7 @@ import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.calculateDate;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.convertDate;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
 
 public class LiveSoonAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
 
@@ -72,8 +73,8 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle>
         holder.tvVehicleName.setText(dataHomeComingSoonResponse.getVehicleName());
         holder.tvPlatNumber.setText(dataHomeComingSoonResponse.getKikNumber().substring(0, 10) + " - ");
         holder.tvCity.setText(dataHomeComingSoonResponse.getWareHouse().replace("WAREHOUSE ", ""));
-        holder.tvOpenPrice.setText(dataHomeComingSoonResponse.getBottomPrice());
-        holder.tvBottomPrice.setText(dataHomeComingSoonResponse.getBottomPrice());
+        holder.tvOpenPrice.setText("Rp "+setCurrencyFormat(dataHomeComingSoonResponse.getBottomPrice()));
+        holder.tvBottomPrice.setText("Rp "+ setCurrencyFormat(dataHomeComingSoonResponse.getBottomPrice()));
         holder.tvInitialName.setText(dataHomeComingSoonResponse.getGrade());
 
         CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
@@ -90,10 +91,14 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle>
                         .skipMemoryCache(false))
                 .into(holder.ivImage);
 
-        if(dataHomeComingSoonResponse.getIsFavorite().equals("1")){
-            holder.ivFavorite.setImageResource(R.drawable.ic_favorite);
-        }else {
+        if(dataHomeComingSoonResponse.getIsFavorite()==null){
             holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+        }else {
+            if(dataHomeComingSoonResponse.getIsFavorite().equals("1")){
+                holder.ivFavorite.setImageResource(R.drawable.ic_favorite);
+            }else {
+                holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+            }
         }
 
         String startDate = convertDate(timeServer,"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
@@ -115,12 +120,12 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle>
         holder.ivFavorite.setOnClickListener(view -> {
             if (favorite.get()) {
                 favorite.set(false);
-                setAndUnsetFavorite(contexts, holder.ivFavorite, grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getUserId(), dataHomeComingSoonResponse.getKik(), dataHomeComingSoonResponse.getAgreementNo(), String.valueOf(dataHomeComingSoonResponse.getOpenHouseId()),"1");
+                setAndUnsetFavorite(contexts, holder.ivFavorite, grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getId(), dataHomeComingSoonResponse.getKik(), dataHomeComingSoonResponse.getAgreementNo(), String.valueOf(dataHomeComingSoonResponse.getOpenHouseId()),"1");
                 holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
             } else {
                 favorite.set(true);
                 holder.ivFavorite.setImageResource(R.drawable.ic_favorite);
-                setAndUnsetFavorite(contexts, holder.ivFavorite, grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getUserId(), dataHomeComingSoonResponse.getKik(), dataHomeComingSoonResponse.getAgreementNo(), String.valueOf(dataHomeComingSoonResponse.getOpenHouseId()),"1");
+                setAndUnsetFavorite(contexts, holder.ivFavorite, grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getId(), dataHomeComingSoonResponse.getKik(), dataHomeComingSoonResponse.getAgreementNo(), String.valueOf(dataHomeComingSoonResponse.getOpenHouseId()),"1");
             }
         });
         holder.cardVehicle.setOnClickListener(view -> {

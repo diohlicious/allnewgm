@@ -161,14 +161,10 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/tv_unit_yang_dibeli"
-                    android:text="2013 Toyota Avanza Veloz AT 1.8"
-                    android:textColor="@color/colorPrimaryFont"
-                    android:fontFamily="@font/nunito_regular"
-                    android:textSize="@dimen/text_14"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_unit_to_buy"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
@@ -189,13 +185,12 @@
                     android:id="@+id/tv_pembayaran_dash"
                     android:drawablePadding="@dimen/_5sdp"
                     android:drawableEnd="@drawable/ic_copy_board"
-                    android:text="1190 4520 0200"
                     android:textIsSelectable="true"
                     android:textColor="@color/colorPrimaryFont"
                     android:fontFamily="@font/nunito_regular"
                     android:textSize="@dimen/text_14"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
@@ -215,7 +210,7 @@
                 <LinearLayout
                     android:gravity="center|start"
                     android:orientation="horizontal"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content">
                     <ImageView
@@ -250,12 +245,11 @@
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/tv_total_pembayaran"
-                    android:text="Rp 125.000.000"
                     android:textColor="@color/colorPrimaryFont"
                     android:fontFamily="@font/nunito_regular"
                     android:textSize="@dimen/text_14"
+                    android:layout_weight="1.5"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             <TextView
@@ -323,7 +317,7 @@
                 android:id="@+id/btn_check_status"
                 android:fontFamily="@font/nunito_regular"
                 android:textSize="@dimen/text_18"
-                android:text="@string/btn_cek_status_di_keranjang"
+                android:text="@string/btn_kembali_ke_menang"
                 android:textColor="@color/colorPrimaryWhite"
                 android:textAllCaps="false"
                 android:layout_marginTop="@dimen/_30sdp"

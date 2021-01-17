@@ -2,9 +2,11 @@ package com.sip.grosirmobil.cloud.config;
 
 import com.sip.grosirmobil.cloud.config.request.favorite.FavoriteRequest;
 import com.sip.grosirmobil.cloud.config.request.changepassword.ChangePasswordRequest;
+import com.sip.grosirmobil.cloud.config.request.generateva.GenerateVaRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeComingSoonRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeHistoryRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeLiveRequest;
+import com.sip.grosirmobil.cloud.config.request.invoice.InvoiceVaRequest;
 import com.sip.grosirmobil.cloud.config.request.kabupaten.KabupatenRequest;
 import com.sip.grosirmobil.cloud.config.request.kecamatan.KecamatanRequest;
 import com.sip.grosirmobil.cloud.config.request.kelurahan.KelurahanRequest;
@@ -17,9 +19,11 @@ import com.sip.grosirmobil.cloud.config.request.vehicledetail.VehicleDetailReque
 import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 import com.sip.grosirmobil.cloud.config.response.cart.CartResponse;
 import com.sip.grosirmobil.cloud.config.response.checkactivetoken.CheckActiveTokenResponse;
+import com.sip.grosirmobil.cloud.config.response.generateva.GenerateVaResponse;
 import com.sip.grosirmobil.cloud.config.response.homecomingsoon.HomeComingSoonResponse;
 import com.sip.grosirmobil.cloud.config.response.homehistory.HomeHistoryResponse;
 import com.sip.grosirmobil.cloud.config.response.homelive.HomeLiveResponse;
+import com.sip.grosirmobil.cloud.config.response.invoiceva.InvoiceVaResponse;
 import com.sip.grosirmobil.cloud.config.response.kabupaten.KabupatenResponse;
 import com.sip.grosirmobil.cloud.config.response.kecamatan.KecamatanResponse;
 import com.sip.grosirmobil.cloud.config.response.kelurahan.KelurahanResponse;
@@ -69,7 +73,7 @@ public interface GrosirMobilApi {
     String checkActiveTokenPath = "/api/cekaktiftokenMobile";
     String wareHousePath = "/api/lokasi/warehouseMobile";
     String homeLivePath = "/api/Live/HomeMobile";
-    String homeComingSoonPath = "/api/home/listeventMobile";
+    String homeComingSoonPath = "/api/comingsoon/listeventMobile";
     String homeHistoryPath = "/api/Live/Riwayat";
     String liveVehicleDetailPath = "/api/Live/detailMobile";
     String timeServerPath = "/api/jamserverMobile";
@@ -77,7 +81,9 @@ public interface GrosirMobilApi {
     String liveBuyNowPath = "/api/Live/LiveBuyNow";
     String listCartPath = "/api/Live/datakeranjang";
     String setAndUnsetFavoritePath = "/api/favorite/setAndUnsetFavorite";
-    String changePassword = "/api/auth/changePasswordForgot";
+    String changePasswordPath = "/api/auth/changePasswordForgot";
+    String generateVaPath = "/api/Pembayaran/GenerateVA";
+    String invoiceVaPath = "/api/Pembayaran/InvoiceVA";
 
     @Headers("X-Requested-With:XMLHttpRequest")
     @POST(loginPath)
@@ -205,7 +211,18 @@ public interface GrosirMobilApi {
     Call<CartResponse> lisCartApi(@Header("Authorization") String authToken);
 
     @Headers("Content-Type: application/json")
-    @POST(changePassword)
-    Call<GeneralResponse> changePassword(@Body ChangePasswordRequest changePasswordRequest);
+    @POST(changePasswordPath)
+    Call<GeneralResponse> changePasswordApi(@Body ChangePasswordRequest changePasswordRequest);
+
+    @Headers("Content-Type: application/json")
+    @POST(generateVaPath)
+    Call<GenerateVaResponse> generateVaApi(@Header("Authorization") String authToken,
+                                           @Body GenerateVaRequest favoriteRequest);
+
+    @Headers("Content-Type: application/json")
+    @POST(invoiceVaPath)
+    Call<InvoiceVaResponse> invoiceVaApi(@Header("Authorization") String authToken,
+                                         @Body InvoiceVaRequest invoiceVaRequest);
+
 
 }

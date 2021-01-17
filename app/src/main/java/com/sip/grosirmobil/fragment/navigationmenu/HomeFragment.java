@@ -251,6 +251,16 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         hargaStart = 0;
         hargaEnd = 1000000000;
         merek = "";
+        linearResultTitleContent.setBackgroundResource(R.drawable.design_card_live);
+        tvResultTitleContent.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvResultTitleContent.setText("");
+        tvTitleContent.setText("Baru Masuk");
+        tvLive.setBackgroundResource(R.drawable.design_line_selected_live);
+        tvLive.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+        tvLiveSoon.setBackgroundResource(R.drawable.design_line);
+        tvLiveSoon.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        tvRecord.setBackgroundResource(R.drawable.design_line);
+        tvRecord.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
     }
 
 
@@ -509,7 +519,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             linearTitleContent.setVisibility(View.VISIBLE);
             linearSearchAndLive.setVisibility(View.VISIBLE);
         }
-        homePresenter.getHomeComingSoonApi(page,max);
+        homePresenter.getHomeComingSoonApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
         nestedView.setBackgroundResource(R.color.colorPrimaryWhite);
         rvLive.setVisibility(View.GONE);
         rvLiveSoon.setVisibility(View.GONE);
@@ -553,7 +563,6 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         startActivityForResult(intent, FILTER_REQUEST);
     }
 
-
     @Override
     public void showDialogLoading() {
         progressBarData.setVisibility(View.VISIBLE);
@@ -567,6 +576,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @SuppressLint("SetTextI18n")
     @Override
     public void homeLiveSuccess(DataPageHomeLiveResponse dataPageHomeLiveResponse, String timeServer) {
+        System.out.println("DATA LOGIN : "+ grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getId());
         if(dataPageHomeLiveResponse.getDataHomeLiveResponseList()==null ||dataPageHomeLiveResponse.getDataHomeLiveResponseList().isEmpty()){
             tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_live));
             tvResultTitleContent.setText("Ada 0 Kendaraan Live");
@@ -588,16 +598,16 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @SuppressLint("SetTextI18n")
     @Override
     public void homeComingSoonSuccess(HomeComingSoonResponse dataPageHomeComingSoonResponse, String timeServer) {
-        System.out.println("DATA TOTAL COMING SOON : "+ dataPageHomeComingSoonResponse.getTotal());
+        System.out.println("DATA TOTAL COMING SOON : "+ dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal());
         if(dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getDataHomeComingSoonResponseList()==null ||dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getDataHomeComingSoonResponseList().isEmpty()){
             tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_live));
             tvResultTitleContent.setText("Ada 0 Kendaraan Akan Tayang");
-            tvResultSearch.setText(dataPageHomeComingSoonResponse.getTotal()+" Unit");
+            tvResultSearch.setText(dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal()+" Unit");
             linearEmptyData.setVisibility(View.VISIBLE);
         }else {
             linearEmptyData.setVisibility(View.GONE);
-            tvResultTitleContent.setText("Ada " + dataPageHomeComingSoonResponse.getTotal() + " Kendaraan Akan Tayang");
-            tvResultSearch.setText(dataPageHomeComingSoonResponse.getTotal()+" Unit");
+            tvResultTitleContent.setText("Ada " + dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal() + " Kendaraan Akan Tayang");
+            tvResultSearch.setText(dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal()+" Unit");
             RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
             rvLiveSoon.setLayoutManager(layoutManagerLive);
             rvLiveSoon.setNestedScrollingEnabled(false);

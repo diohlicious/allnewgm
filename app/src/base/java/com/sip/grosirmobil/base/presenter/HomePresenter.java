@@ -8,7 +8,7 @@ public interface HomePresenter {
 
     void getHomeLiveApi(int page, int max, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek);
 
-    void getHomeComingSoonApi(int page, int max);
+    void getHomeComingSoonApi(int page, int max, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek);
 
     void setDataBannerHome(AutoScrollViewPager viewPagerHome, CircleIndicator circleIndicator);
 

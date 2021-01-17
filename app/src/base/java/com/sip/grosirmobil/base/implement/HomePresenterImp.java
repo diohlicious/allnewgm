@@ -107,7 +107,7 @@ public class HomePresenterImp implements HomePresenter {
         linearEmptyData.setVisibility(View.GONE);
         homeView.showDialogLoading();
         rvLive.setVisibility(View.GONE);
-        HomeLiveRequest homeLiveRequest = new HomeLiveRequest(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+        HomeLiveRequest homeLiveRequest = new HomeLiveRequest(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek,"live");
         final Call<HomeLiveResponse> timeServerApi = getApiGrosirMobil().homeLiveApi(BEARER+" "+grosirMobilPreference.getToken(),homeLiveRequest);
         timeServerApi.enqueue(new Callback<HomeLiveResponse>() {
             @SuppressLint("SetTextI18n")
@@ -145,11 +145,11 @@ public class HomePresenterImp implements HomePresenter {
     }
 
     @Override
-    public void getHomeComingSoonApi(int page, int max) {
+    public void getHomeComingSoonApi(int page, int max, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek) {
         linearEmptyData.setVisibility(View.GONE);
         homeView.showDialogLoading();
         rvLiveSoon.setVisibility(View.GONE);
-        HomeComingSoonRequest homeComingSoonRequest = new HomeComingSoonRequest(page,max);
+        HomeComingSoonRequest homeComingSoonRequest = new HomeComingSoonRequest(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek, "akan tayang");
         final Call<HomeComingSoonResponse> timeServerApi = getApiGrosirMobil().homeComingSoonApi(BEARER+" "+grosirMobilPreference.getToken(),homeComingSoonRequest);
         timeServerApi.enqueue(new Callback<HomeComingSoonResponse>() {
             @SuppressLint("SetTextI18n")

@@ -17,7 +17,7 @@ public class FavoriteRequest {
     @Expose
     private String agreementNo;
 
-    @SerializedName("open_house_id")
+    @SerializedName("gm_openhouse_id")
     @Expose
     private String openHouseId;
 

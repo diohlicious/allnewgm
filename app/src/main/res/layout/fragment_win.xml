@@ -7,16 +7,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.sip.grosirmobil.fragment.navigationmenu.WinFragment">
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
             android:id="@+id/linear_win_not_empty"
             android:orientation="vertical"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/nested_view"
                 android:layout_width="match_parent"
@@ -38,121 +38,80 @@
                         android:layout_height="wrap_content"
                         tools:ignore="RelativeOverlap" />
                     <LinearLayout
-                        android:id="@+id/linear_cart"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_cart"
-                            android:paddingLeft="@dimen/_5sdp"
-                            android:paddingRight="@dimen/_5sdp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_35sdp"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:id="@+id/linear_waiting_payment"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/nunito_semi_bold"
+                                android:textSize="@dimen/text_14"
+                                android:textColor="@color/colorFontBlack"
+                                tools:ignore="HardcodedText" />
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_waiting_payment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:nestedScrollingEnabled="false" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/linear_invoice_waiting_payment"
+                            android:orientation="vertical"
                             android:layout_marginTop="@dimen/_20sdp"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
-                        <TextView
-                            android:paddingLeft="@dimen/_15sdp"
-                            android:paddingRight="@dimen/_15sdp"
-                            android:textColor="@color/colorPrimaryFont"
-                            android:fontFamily="@font/nunito_semi_bold"
-                            android:textSize="@dimen/text_16"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:text="@string/tv_pembayaran"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:ignore="RelativeOverlap" />
-                        <LinearLayout
-                            android:paddingLeft="@dimen/_15sdp"
-                            android:paddingRight="@dimen/_15sdp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_35sdp"
-                            tools:ignore="UselessLeaf">
+                            android:layout_height="wrap_content">
                             <TextView
-                                android:textColor="@color/colorPrimaryHintFont"
-                                android:textSize="@dimen/text_16"
-                                android:fontFamily="@font/nunito_regular"
-                                android:gravity="center|start"
-                                android:text="@string/tv_harga_kendaraan"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"/>
-                            <TextView
-                                android:id="@+id/tv_harga_kendaraan"
-                                android:textColor="@color/colorPrimaryFont"
-                                android:textSize="@dimen/text_16"
-                                android:fontFamily="@font/nunito_regular"
-                                android:gravity="center|end"
-                                android:textColorHint="@color/colorPrimaryFont"
-                                android:hint="Rp 0"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"/>
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/nunito_semi_bold"
+                                android:textSize="@dimen/text_14"
+                                android:text="@string/tv_menunggu_pembayaran"
+                                android:textColor="@color/colorFontBlack"
+                                tools:ignore="HardcodedText" />
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_invoice_waiting_payment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:nestedScrollingEnabled="false" />
                         </LinearLayout>
                         <LinearLayout
-                            android:paddingLeft="@dimen/_15sdp"
-                            android:paddingRight="@dimen/_15sdp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:orientation="horizontal"
+                            android:id="@+id/linear_ready_take_vehicle"
+                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_35sdp"
-                            tools:ignore="UselessLeaf">
+                            android:layout_height="wrap_content">
                             <TextView
-                                android:textColor="@color/colorPrimaryHintFont"
-                                android:textSize="@dimen/text_16"
-                                android:fontFamily="@font/nunito_regular"
-                                android:gravity="center|start"
-                                android:text="@string/tv_biaya_admin"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"/>
-                            <TextView
-                                android:id="@+id/tv_biaya_admin"
-                                android:textColor="@color/colorPrimaryFont"
-                                android:textSize="@dimen/text_16"
-                                android:fontFamily="@font/nunito_regular"
-                                android:gravity="center|end"
-                                android:textColorHint="@color/colorPrimaryFont"
-                                android:text="Rp 500.000"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:paddingLeft="@dimen/_15sdp"
-                            android:paddingRight="@dimen/_15sdp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_35sdp"
-                            tools:ignore="UselessLeaf">
-                            <TextView
-                                android:textColor="@color/colorPrimaryHintFont"
-                                android:textSize="@dimen/text_16"
-                                android:fontFamily="@font/nunito_regular"
-                                android:gravity="center|start"
-                                android:text="@string/tv_total"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"/>
-                            <TextView
-                                android:id="@+id/tv_total"
-                                android:textColor="@color/colorPrimaryFont"
-                                android:textSize="@dimen/text_16"
-                                android:fontFamily="@font/nunito_regular"
-                                android:gravity="center|end"
-                                android:textColorHint="@color/colorPrimaryFont"
-                                android:hint="Rp 0"
-                                android:layout_weight="1"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"/>
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_marginEnd="@dimen/_5sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/nunito_semi_bold"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:textSize="@dimen/text_14"
+                                android:text="@string/tv_kendaraan_siap_diambil"
+                                android:textColor="@color/colorFontBlack"
+                                tools:ignore="HardcodedText" />
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_ready_take_vehicle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:nestedScrollingEnabled="false" />
                         </LinearLayout>
                     </LinearLayout>
-
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
             <Button
@@ -160,7 +119,7 @@
                 android:fontFamily="@font/nunito_bold"
                 android:textSize="@dimen/text_18"
                 android:text="@string/btn_bayar"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:textColor="@color/colorPrimaryWhite"
                 android:textAllCaps="false"
                 android:layout_marginRight="@dimen/_20sdp"
@@ -173,7 +132,7 @@
         </LinearLayout>
         <LinearLayout
             android:id="@+id/linear_win_empty"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_5sdp"
             android:orientation="vertical"
@@ -232,5 +191,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

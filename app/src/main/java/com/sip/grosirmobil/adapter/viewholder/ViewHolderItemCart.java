@@ -10,8 +10,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
-import com.sip.grosirmobil.adapter.CartAdapter;
-import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
 
 public class ViewHolderItemCart extends RecyclerView.ViewHolder {
 
@@ -33,11 +31,7 @@ public class ViewHolderItemCart extends RecyclerView.ViewHolder {
         linearCart          = view.findViewById(R.id.linear_cart);
     }
 
-    public void bind(HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel, final CartAdapter.OnItemClickListener listener) {
-//        tvVehicleName.setText(hardCodeDataBaruMasukModel.getVehicleName());
-//        tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber());
-//        tvPrice.setText(hardCodeDataBaruMasukModel.getPrice());
-
-        cbCart.setOnClickListener(view -> listener.onItemClick(hardCodeDataBaruMasukModel));
-    }
+//    public void bind(DataCartResponse dataCartResponse, final WinAdapterAdapter.OnCheckedChangeListener listener) {
+//        cbCart.setOnCheckedChangeListener(listener);
+//    }
 }

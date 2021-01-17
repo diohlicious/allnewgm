@@ -442,4 +442,7 @@
     <string name="tv_win_empty_data">Anda belum menang</string>
     <string name="tv_empty_win">Anda belum memenangkan penawaran\napapun. Telusuri semua kendaraan yang kami\ntawarkan dan lakukan tawar/buy now</string>
     <string name="tv_all">Semua</string>
+    <string name="tv_rincian_pembayaran">Rincian Pembayaran</string>
+    <string name="tv_menunggu_pembayaran">Menunggu Pembayaran</string>
+    <string name="btn_kembali_ke_menang">Kembali ke menang</string>
 </resources>

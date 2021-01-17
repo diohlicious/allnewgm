@@ -95,6 +95,7 @@ public class CartFragment extends GrosirMobilFragment {
     Handler handler = new Handler();
     Runnable runnable;
     int delay = 1000;
+    private boolean checkAuto = false;
 
     private GrosirMobilFunction grosirMobilFunction;
     private GrosirMobilPreference grosirMobilPreference;
@@ -137,7 +138,9 @@ public class CartFragment extends GrosirMobilFragment {
     public void onResume() {
         handler.postDelayed(runnable = () -> {
             handler.postDelayed(runnable, delay);
-            getDataCartApi();
+            if(checkAuto){
+                getDataCartApi();
+            }
         }, delay);
         super.onResume();
     }
@@ -168,6 +171,7 @@ public class CartFragment extends GrosirMobilFragment {
                                 dataCartLiveResponseList.clear();
                                 dataCartSuccessResponseList.clear();
                                 dataCartLostResponseList.clear();
+
                                 tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
                                 tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
                                 tvPenawaranDiterima.setBackgroundResource(R.color.colorPrimaryWhite);
@@ -175,8 +179,6 @@ public class CartFragment extends GrosirMobilFragment {
                                 tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
                                 tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
 
-                                linearCartNotEmpty.setVisibility(View.VISIBLE);
-                                linearCartEmpty.setVisibility(View.GONE);
                                 for(int i=0;i<response.body().getDataCartResponseList().size();i++){
                                     if(response.body().getDataCartResponseList().get(i).getIsLive()==1){
                                         dataCartLiveResponseList.add(response.body().getDataCartResponseList().get(i));
@@ -222,6 +224,18 @@ public class CartFragment extends GrosirMobilFragment {
                                     LostGarageAdapter lostGarageAdapter = new LostGarageAdapter(getActivity(), dataCartLostResponseList);
                                     rvLostGarage.setAdapter(lostGarageAdapter);
                                     lostGarageAdapter.notifyDataSetChanged();
+                                }
+
+                                if(dataCartSuccessResponseList.isEmpty()||dataCartSuccessResponseList==null &&
+                                   dataCartLiveResponseList.isEmpty()||dataCartLiveResponseList==null &&
+                                   dataCartLostResponseList.isEmpty()||dataCartLostResponseList==null){
+                                    linearCartEmpty.setVisibility(View.VISIBLE);
+                                    linearCartNotEmpty.setVisibility(View.GONE);
+                                    checkAuto=false;
+                                }else {
+                                    checkAuto=true;
+                                    linearCartEmpty.setVisibility(View.GONE);
+                                    linearCartNotEmpty.setVisibility(View.VISIBLE);
                                 }
                             }
                         }else {

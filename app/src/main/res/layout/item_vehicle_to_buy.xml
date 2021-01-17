@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_vehicle_name"
+    android:fontFamily="@font/nunito_regular"
+    android:textSize="@dimen/text_14"
+    android:text="- Ma"
+    android:gravity="center|start"
+    android:textColor="@color/colorPrimaryFont"
+    android:paddingBottom="@dimen/_5sdp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>

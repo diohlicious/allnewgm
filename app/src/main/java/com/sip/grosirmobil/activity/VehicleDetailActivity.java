@@ -272,11 +272,11 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         if(favorite){
             favorite = false;
             ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
-            setAndUnsetFavorite(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getUserId(),kik,dataVehicleDetailResponse.getAgreementNo(),openHouseId,"0");
+            setAndUnsetFavorite(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getId(),kik,dataVehicleDetailResponse.getAgreementNo(),openHouseId,"0");
         }else {
             favorite = true;
             ivFavorite.setImageResource(R.drawable.ic_favorite);
-            setAndUnsetFavorite(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getUserId(),kik,dataVehicleDetailResponse.getAgreementNo(),openHouseId,"1");
+            setAndUnsetFavorite(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getId(),kik,dataVehicleDetailResponse.getAgreementNo(),openHouseId,"1");
         }
     }
 

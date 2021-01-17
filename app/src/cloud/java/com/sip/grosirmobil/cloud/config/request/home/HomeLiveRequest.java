@@ -37,7 +37,11 @@ public class HomeLiveRequest {
     @Expose
     private String merek;
 
-    public HomeLiveRequest(int page, int max, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek) {
+    @SerializedName("category")
+    @Expose
+    private String category;
+
+    public HomeLiveRequest(int page, int max, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek, String category) {
         this.page = page;
         this.max = max;
         this.lokasi = lokasi;
@@ -46,5 +50,6 @@ public class HomeLiveRequest {
         this.hargaStart = hargaStart;
         this.hargaEnd = hargaEnd;
         this.merek = merek;
+        this.category = category;
     }
 }

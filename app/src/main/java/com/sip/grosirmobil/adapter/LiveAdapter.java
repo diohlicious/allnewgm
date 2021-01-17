@@ -95,10 +95,14 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
                             .skipMemoryCache(false))
                     .into(holder.ivImage);
 
-            if(dataHomeLiveResponse.getIsFavorite().equals("1")){
-                holder.ivFavorite.setImageResource(R.drawable.ic_favorite);
-            }else {
+            if(dataHomeLiveResponse.getIsFavorite()==null){
                 holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+            }else {
+                if(dataHomeLiveResponse.getIsFavorite().equals("1")){
+                    holder.ivFavorite.setImageResource(R.drawable.ic_favorite);
+                }else {
+                    holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+                }
             }
 
             String startDate = convertDate(timeServer,"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
@@ -122,12 +126,12 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
             holder.ivFavorite.setOnClickListener(view -> {
                 if (favorite.get()) {
                     favorite.set(false);
-                    setAndUnsetFavorite(contexts, holder.ivFavorite, grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getUserId(), dataHomeLiveResponse.getKik(), dataHomeLiveResponse.getAgreementNo(), String.valueOf(dataHomeLiveResponse.getOpenHouseId()),"0");
+                    setAndUnsetFavorite(contexts, holder.ivFavorite, grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getId(), dataHomeLiveResponse.getKik(), dataHomeLiveResponse.getAgreementNo(), String.valueOf(dataHomeLiveResponse.getOpenHouseId()),"0");
                     holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
                 } else {
                     favorite.set(true);
                     holder.ivFavorite.setImageResource(R.drawable.ic_favorite);
-                    setAndUnsetFavorite(contexts, holder.ivFavorite, grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getProfilResponse().getUserId(), dataHomeLiveResponse.getKik(), dataHomeLiveResponse.getAgreementNo(), String.valueOf(dataHomeLiveResponse.getOpenHouseId()),"1");
+                    setAndUnsetFavorite(contexts, holder.ivFavorite, grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getId(), dataHomeLiveResponse.getKik(), dataHomeLiveResponse.getAgreementNo(), String.valueOf(dataHomeLiveResponse.getOpenHouseId()),"1");
                 }
             });
             holder.cardVehicle.setOnClickListener(view -> {
