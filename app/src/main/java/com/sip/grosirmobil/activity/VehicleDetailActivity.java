@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.adapter.BrokenImageAdapter;
 import com.sip.grosirmobil.adapter.ImageVehicleDetailAdapter;
+import com.sip.grosirmobil.adapter.UserBidAdapter;
 import com.sip.grosirmobil.adapter.VehicleDetailDataAdapter;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
@@ -180,6 +181,8 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @BindView(R.id.btn_nego_dialog) Button btnNegoDialog;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.btn_buy_now_dialog) Button btnBuyNowDialog;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_penawaran) LinearLayout linearPenawaran;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.rv_bid) RecyclerView rvBid;
 
@@ -819,9 +822,17 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
 
         tvInputPriceNego.setText("Rp "+setCurrencyFormat(dataVehicleDetailResponse.getBottomPrice()));
 
-        LinearLayoutManager layoutManagerBid = new LinearLayoutManager(this);
-        rvBid.setLayoutManager(layoutManagerBid);
-        rvBid.setNestedScrollingEnabled(false);
+        if(dataVehicleDetailResponse.getUserBidResponseList()==null||dataVehicleDetailResponse.getUserBidResponseList().isEmpty()){
+            linearPenawaran.setVisibility(View.GONE);
+        }else {
+            linearPenawaran.setVisibility(View.VISIBLE);
+            LinearLayoutManager layoutManagerBid = new LinearLayoutManager(this);
+            rvBid.setLayoutManager(layoutManagerBid);
+            rvBid.setNestedScrollingEnabled(false);
+            UserBidAdapter userBidAdapter = new UserBidAdapter(dataVehicleDetailResponse.getUserBidResponseList());
+            rvBid.setAdapter(userBidAdapter);
+            userBidAdapter.notifyDataSetChanged();
+        }
 
     }
 

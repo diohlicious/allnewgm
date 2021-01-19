@@ -223,17 +223,25 @@
             android:layout_marginBottom="@dimen/_15sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-        <TextView
-            android:text="@string/tv_penawar"
-            android:textColor="@color/colorPrimaryFont"
-            android:fontFamily="@font/nunito_regular"
-            android:textSize="@dimen/text_16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_bid"
-            android:layout_marginTop="@dimen/_10sdp"
+        <LinearLayout
+            android:id="@+id/linear_penawaran"
+            android:orientation="vertical"
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_100sdp"/>
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_gravity="center"
+                android:text="@string/tv_riwayat_penawaran"
+                android:textColor="@color/colorPrimaryFont"
+                android:fontFamily="@font/nunito_regular"
+                android:textSize="@dimen/text_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_bid"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100sdp"/>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

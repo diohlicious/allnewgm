@@ -168,6 +168,8 @@ public class CartFragment extends GrosirMobilFragment {
                                 linearCartEmpty.setVisibility(View.VISIBLE);
                             }
                             else {
+                                linearCartNotEmpty.setVisibility(View.VISIBLE);
+                                linearCartEmpty.setVisibility(View.GONE);
                                 dataCartLiveResponseList.clear();
                                 dataCartSuccessResponseList.clear();
                                 dataCartLostResponseList.clear();
@@ -188,10 +190,12 @@ public class CartFragment extends GrosirMobilFragment {
                                         dataCartSuccessResponseList.add(response.body().getDataCartResponseList().get(i));
                                     }
                                     if(response.body().getDataCartResponseList().get(i).getIsWinner()==0 &&
-                                       response.body().getDataCartResponseList().get(i).getIsWinner()==1 ){
+                                       response.body().getDataCartResponseList().get(i).getUserWin()==1 ){
                                         dataCartLostResponseList.add(response.body().getDataCartResponseList().get(i));
                                     }
                                 }
+                                System.out.println("Data Live : " + dataCartLiveResponseList.size());
+                                System.out.println("Data Live : " + dataCartLiveResponseList.size());
                                 if(dataCartLiveResponseList.isEmpty()||dataCartLiveResponseList==null){
                                     linearLiveGarage.setVisibility(View.GONE);
                                 }else {
@@ -226,17 +230,17 @@ public class CartFragment extends GrosirMobilFragment {
                                     lostGarageAdapter.notifyDataSetChanged();
                                 }
 
-                                if(dataCartSuccessResponseList.isEmpty()||dataCartSuccessResponseList==null &&
-                                   dataCartLiveResponseList.isEmpty()||dataCartLiveResponseList==null &&
-                                   dataCartLostResponseList.isEmpty()||dataCartLostResponseList==null){
-                                    linearCartEmpty.setVisibility(View.VISIBLE);
-                                    linearCartNotEmpty.setVisibility(View.GONE);
-                                    checkAuto=false;
-                                }else {
+//                                if(dataCartSuccessResponseList.isEmpty()||dataCartSuccessResponseList==null &&
+//                                   dataCartLiveResponseList.isEmpty()||dataCartLiveResponseList==null &&
+//                                   dataCartLostResponseList.isEmpty()||dataCartLostResponseList==null){
+//                                    linearCartEmpty.setVisibility(View.VISIBLE);
+//                                    linearCartNotEmpty.setVisibility(View.GONE);
+//                                    checkAuto=false;
+//                                }else {
                                     checkAuto=true;
-                                    linearCartEmpty.setVisibility(View.GONE);
-                                    linearCartNotEmpty.setVisibility(View.VISIBLE);
-                                }
+//                                    linearCartEmpty.setVisibility(View.GONE);
+//                                    linearCartNotEmpty.setVisibility(View.VISIBLE);
+//                                }
                             }
                         }else {
                             grosirMobilFunction.showMessage(getActivity(), "GET Cart Data", response.body().getMessage());

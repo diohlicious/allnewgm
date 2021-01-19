@@ -55,8 +55,9 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
         holder.tvVehicleName.setText(dataCartResponse.getVehicleName());
         holder.tvPlatNumber.setText(dataCartResponse.getKik().substring(0, 10) + " - ");
 //        holder.tvCity.setText(dataCartResponse.getWareHouse().replace("WAREHOUSE ", ""));
-        holder.tvPenawaranTerakhir.setText("Rp "+setCurrencyFormat(dataCartResponse.getUserTertinggi()));
-        holder.tvPrice.setText("Rp "+setCurrencyFormat(dataCartResponse.getUserTertinggi()));
+        holder.tvPenawaranAnda.setText("Rp "+setCurrencyFormat(dataCartResponse.getUserTertinggi()));
+        holder.tvPenawaranTerakhir.setText("Rp "+setCurrencyFormat(dataCartResponse.getTertinggi()));
+        holder.tvPrice.setText("Rp "+setCurrencyFormat(dataCartResponse.getTertinggi()));
         holder.tvInitialName.setText(dataCartResponse.getGrade());
         long lastPrice = Long.parseLong(dataCartResponse.getUserTertinggi());
         negoPrice = Long.parseLong(dataCartResponse.getUserTertinggi());

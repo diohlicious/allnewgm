@@ -161,10 +161,10 @@ public class PayPaymentActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_pay)
     void btnPayClick(){
-        Intent intent = new Intent(PayPaymentActivity.this, PayDetailActivity.class);
-        intent.putExtra(REF_NUMBER, "cVJWSaz85Ds");
-        startActivity(intent);
-        finish();
-//        generateVa();
+//        Intent intent = new Intent(PayPaymentActivity.this, PayDetailActivity.class);
+//        intent.putExtra(REF_NUMBER, "cVJWSaz85Ds");
+//        startActivity(intent);
+//        finish();
+        generateVa();
     }
 }

@@ -89,6 +89,10 @@ public class DataVehicleDetailResponse {
     @Expose
     private List<ImageBrokenResponse> imageBrokenResponseList;
 
+    @SerializedName("user_bid")
+    @Expose
+    private List<UserBidResponse> userBidResponseList;
+
     @SerializedName("is_winner")
     @Expose
     private String isWinner;
@@ -163,6 +167,10 @@ public class DataVehicleDetailResponse {
 
     public List<ImageBrokenResponse> getImageBrokenResponseList() {
         return imageBrokenResponseList;
+    }
+
+    public List<UserBidResponse> getUserBidResponseList() {
+        return userBidResponseList;
     }
 
     public String getIsWinner() {

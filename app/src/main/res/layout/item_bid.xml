@@ -1,7 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_marginBottom="@dimen/_5sdp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_name_bid"
+            android:text="Syahrul Hajji"
+            android:textSize="@dimen/text_14"
+            android:fontFamily="@font/nunito_regular"
+            android:textColor="@color/colorPrimaryFont"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_date_bid"
+            android:text="01-2020 20:34"
+            android:textSize="@dimen/text_14"
+            android:fontFamily="@font/nunito_regular"
+            android:textColor="@color/colorPrimaryFont"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_price_bid"
+        android:gravity="end|center"
+        android:text="RP 116.500.000"
+        android:textSize="@dimen/text_16"
+        android:fontFamily="@font/nunito_semi_bold"
+        android:textColor="@color/colorPrimaryFont"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"/>
 </LinearLayout>

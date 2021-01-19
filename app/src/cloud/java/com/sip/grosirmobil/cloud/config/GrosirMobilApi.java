@@ -58,8 +58,8 @@ public interface GrosirMobilApi {
     String questionOnePath = "/api/registrasi/KebutuhanKendaraanBulanMobile";
     String questionTwoPath = "/api/registrasi/Rata2PenjualanMobile";
     String questionThreePath = "/api/registrasi/KebutuhanPembelianMobile";
-    String questionFourPath = "/api/registrasi/JenisMobilMobile";//TODO Belum ada API Perputaran Unit
-    String questionFivePath = "/api/registrasi/SumberInfoMobile";//TODO Belum ada API Usia Bisnis
+    String questionFourPath = "/api/registrasi/JenisMobilMobile";
+    String questionFivePath = "/api/registrasi/SumberInfoMobile";
     String tahunKendaraanPath = "/api/registrasi/TahunKendaraanMobile";
     String asalKendaraanPath = "/api/registrasi/AsalKendaraanMobile";
     String saveDataRegisterPath = "/api/registrasi/SimpanMobile";

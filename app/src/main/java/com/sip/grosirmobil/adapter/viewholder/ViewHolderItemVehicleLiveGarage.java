@@ -15,7 +15,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ViewHolderItemVehicleLiveGarage extends RecyclerView.ViewHolder {
 
-    public TextView tvVehicleName, tvPlatNumber, tvCity, tvPrice, tvPenawaranTerakhir, tvInitialName;
+    public TextView tvVehicleName, tvPlatNumber, tvCity, tvPrice, tvPenawaranTerakhir, tvInitialName, tvPenawaranAnda;
     public CardView cardViewSuccessBidding;
     public ImageView ivImage, ivMin, ivPlus, ivClearPrice;
     public Button btnNego;
@@ -30,6 +30,7 @@ public class ViewHolderItemVehicleLiveGarage extends RecyclerView.ViewHolder {
         tvPlatNumber            = view.findViewById(R.id.tv_plat_number);
         tvCity                  = view.findViewById(R.id.tv_city);
         tvPenawaranTerakhir     = view.findViewById(R.id.tv_penawaran_terakhir);
+        tvPenawaranAnda         = view.findViewById(R.id.tv_penawaran_anda);
         tvPrice                 = view.findViewById(R.id.tv_price);
         ivMin                   = view.findViewById(R.id.iv_min);
         ivPlus                  = view.findViewById(R.id.iv_plus);

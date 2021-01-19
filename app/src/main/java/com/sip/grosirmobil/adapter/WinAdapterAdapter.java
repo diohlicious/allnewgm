@@ -84,8 +84,8 @@ public class WinAdapterAdapter extends RecyclerView.Adapter<ViewHolderItemCart> 
 
             holder.cbCart.setOnCheckedChangeListener((compoundButton, checked) -> {
                 if(checked){
-                    if(dataWaitingPaymentSelectedList.size()==5){
-                        Toast.makeText(context, "Limit VA cuma 5 Kendaraan", Toast.LENGTH_SHORT).show();
+                    if(dataWaitingPaymentSelectedList.size()==3){
+                        Toast.makeText(context, "Limit VA cuma 3 Kendaraan", Toast.LENGTH_SHORT).show();
                     }else {
                         dataWaitingPaymentSelectedList.add(dataCartResponse);
                     }

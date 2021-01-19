@@ -191,6 +191,7 @@
     <string name="tv_tidak_ada_indikasi_banjir">Tidak Ada Indikasi Banjir</string>
     <string name="tv_waktu_penawaran">Waktu Penawaran</string>
     <string name="tv_penawar">Penawar</string>
+    <string name="tv_riwayat_penawaran">Riwayat Penawaran</string>
     <string name="tv_penawaran_anda">Penawaran Anda</string>
     <string name="tv_apakah_anda_ingin_menawar">Apakah Anda ingin\nmenawar?</string>
     <string name="btn_buy_now">Buy Now</string>
@@ -445,4 +446,5 @@
     <string name="tv_rincian_pembayaran">Rincian Pembayaran</string>
     <string name="tv_menunggu_pembayaran">Menunggu Pembayaran</string>
     <string name="btn_kembali_ke_menang">Kembali ke menang</string>
+    <string name="tv_penawaran_tertinggi">Penawaran Tertinggi</string>
 </resources>
