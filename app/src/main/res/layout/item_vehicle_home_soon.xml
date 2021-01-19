@@ -129,29 +129,29 @@
                                 android:layout_width="@dimen/_35sdp"
                                 android:layout_height="@dimen/_35sdp"/>
                         </RelativeLayout>
-                        <LinearLayout
-                            android:id="@+id/linear_description"
-                            android:background="@drawable/design_card_expired_date"
-                            android:orientation="horizontal"
-                            android:paddingLeft="@dimen/_7sdp"
-                            android:paddingRight="@dimen/_7sdp"
-                            android:gravity="center"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/_20sdp">
-                            <TextView
-                                android:id="@+id/tv_timer"
-                                android:drawableStart="@drawable/ic_timer"
-                                android:textColor="@color/colorPrimaryFont"
-                                android:textSize="@dimen/text_11"
-                                android:drawablePadding="@dimen/_5sdp"
-                                android:fontFamily="@font/nunito_regular"
-                                android:gravity="center"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"/>
-                        </LinearLayout>
+
                     </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/linear_description"
+                    android:background="@drawable/design_card_expired_date"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_7sdp"
+                    android:paddingRight="@dimen/_7sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_20sdp">
+                    <TextView
+                        android:id="@+id/tv_timer"
+                        android:drawableStart="@drawable/ic_timer"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_11"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:fontFamily="@font/nunito_regular"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
             </LinearLayout>
             <ImageView

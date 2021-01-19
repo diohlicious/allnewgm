@@ -132,7 +132,6 @@
             <TextView
                 android:id="@+id/tv_pay_expired"
                 android:layout_gravity="center"
-                android:text="Sebelum Senin, 20 Agustus 2020"
                 android:textColor="@color/colorPrimaryFont"
                 android:fontFamily="@font/nunito_regular"
                 android:textSize="@dimen/text_14"

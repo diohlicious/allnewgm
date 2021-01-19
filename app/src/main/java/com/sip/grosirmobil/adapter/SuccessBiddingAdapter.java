@@ -2,6 +2,7 @@ package com.sip.grosirmobil.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +11,29 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.activity.PayDetailActivity;
+import com.sip.grosirmobil.activity.VehicleDetailActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemHistoryBidding;
-import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
+import com.sip.grosirmobil.cloud.config.response.historytransaction.DataHistoryTransactionResponse;
 
 import java.util.List;
 
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REF_NUMBER;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.convertDate;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
+
 public class SuccessBiddingAdapter extends RecyclerView.Adapter<ViewHolderItemHistoryBidding> {
 
-    private List<HardCodeDataBaruMasukModel> hardCodeDataBaruMasukModelList;
-    private Context contexts;
+    private final List<DataHistoryTransactionResponse> dataHistoryTransactionResponseList;
+    private final Context contexts;
 
 
-    public SuccessBiddingAdapter(Context context, List<HardCodeDataBaruMasukModel> hardCodeDataBaruMasukModels) {
+    public SuccessBiddingAdapter(Context context, List<DataHistoryTransactionResponse> dataHistoryTransactionResponses) {
         this.contexts = context;
-        this.hardCodeDataBaruMasukModelList = hardCodeDataBaruMasukModels;
+        this.dataHistoryTransactionResponseList = dataHistoryTransactionResponses;
     }
 
     @NonNull
@@ -37,17 +47,35 @@ public class SuccessBiddingAdapter extends RecyclerView.Adapter<ViewHolderItemHi
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderItemHistoryBidding holder, int position) {
-        HardCodeDataBaruMasukModel hardCodeDataBaruMasukModel = hardCodeDataBaruMasukModelList.get(position);
-        holder.tvVehicleName.setText(hardCodeDataBaruMasukModel.getVehicleName());
-        holder.tvPlatNumber.setText(hardCodeDataBaruMasukModel.getPlatNumber()+" - ");
-        holder.tvCity.setText(hardCodeDataBaruMasukModel.getCity());
-        holder.tvPriceWin.setText(hardCodeDataBaruMasukModel.getPrice());
-        holder.tvOpenPrice.setText(hardCodeDataBaruMasukModel.getPrice());
+        DataHistoryTransactionResponse dataHistoryTransactionResponse = dataHistoryTransactionResponseList.get(position);
+        holder.tvVehicleName.setText(dataHistoryTransactionResponse.getVehicleName());
+        String eventDate = convertDate(dataHistoryTransactionResponse.getEventDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
+        holder.tvEventDate.setText(eventDate+" - ");
+        holder.tvCity.setText(dataHistoryTransactionResponse.getWarehouse());
+        holder.tvPriceWin.setText("Rp "+setCurrencyFormat(dataHistoryTransactionResponse.getSoldPrice()));
+        holder.tvHargaTertinggi.setText("Rp "+setCurrencyFormat(dataHistoryTransactionResponse.getUserPrice()));
+        holder.tvStatus.setText(dataHistoryTransactionResponse.getStatus());
+        holder.tvNoVa.setText(dataHistoryTransactionResponse.getVaNumber());
+        if(dataHistoryTransactionResponse.getStatus().equals("Menunggu Pembayaran")){
+            holder.cardVehicle.setOnClickListener(view -> {
+                Intent intent = new Intent(contexts, PayDetailActivity.class);
+                intent.putExtra(REF_NUMBER, dataHistoryTransactionResponse.getOrderNumber());
+                contexts.startActivity(intent);
+            });
+        }else{
+            holder.cardVehicle.setOnClickListener(view -> {
+                Intent intent = new Intent(contexts, VehicleDetailActivity.class);
+                intent.putExtra(ID_VEHICLE, String.valueOf(dataHistoryTransactionResponse.getOhId()));
+                intent.putExtra(KIK, dataHistoryTransactionResponse.getKik());
+                intent.putExtra(FROM_PAGE, "HISTORY");
+                contexts.startActivity(intent);
+            });
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        return hardCodeDataBaruMasukModelList.size();
+        return dataHistoryTransactionResponseList.size();
     }
 }

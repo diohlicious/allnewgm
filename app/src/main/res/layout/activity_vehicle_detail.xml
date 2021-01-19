@@ -146,33 +146,34 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/linear_description"
-                    android:background="@drawable/design_card_expired_date_live"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/_7sdp"
-                    android:paddingRight="@dimen/_7sdp"
-                    android:layout_marginBottom="@dimen/_3sdp"
-                    android:gravity="center"
-                    android:layout_gravity="bottom"
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linear_description"
+                android:background="@drawable/design_card_expired_date_live"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_3sdp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_20sdp">
+                <ImageView
+                    android:id="@+id/iv_timer"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:src="@drawable/ic_timer_white"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_20sdp">
-                    <ImageView
-                        android:id="@+id/iv_timer"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:src="@drawable/ic_timer_white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:ignore="ContentDescription" />
-                    <TextView
-                        android:id="@+id/tv_timer"
-                        android:textColor="@color/colorPrimaryWhite"
-                        android:textSize="@dimen/text_11"
-                        android:fontFamily="@font/nunito_regular"
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    tools:ignore="ContentDescription" />
+                <TextView
+                    android:id="@+id/tv_timer"
+                    android:textColor="@color/colorPrimaryWhite"
+                    android:textSize="@dimen/text_11"
+                    android:fontFamily="@font/nunito_regular"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_image_car"

@@ -31,6 +31,7 @@ import com.sip.grosirmobil.cloud.config.response.homelive.DataHomeLiveResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import retrofit2.Call;
@@ -155,18 +156,29 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
         new CountDownTimer(noOfMinutes,  1000) {
             @SuppressLint({"SetTextI18n", "DefaultLocale"})
             public void onTick(long millisUntilFinished) {
-                int seconds = (int) (millisUntilFinished / 1000);
-                int hours = seconds / (60 * 60);
-                int tempMint = (seconds - (hours * 60 * 60));
-                int minutes = tempMint / 60;
-                seconds = tempMint - (minutes * 60);
-                tvTimer.setText(String.format("%02d", hours) + "h " +
-                                String.format("%02d", minutes) + "m " +
-                                String.format("%02d", seconds) + "s");
+//                int seconds = (int) (millisUntilFinished / 1000);
+//                int hours = seconds / (60 * 60);
+//                int tempMint = (seconds - (hours * 60 * 60));
+//                int minutes = tempMint / 60;
+//                seconds = tempMint - (minutes * 60);
+//                tvTimer.setText(String.format("%02d", hours) + "h " +
+//                                String.format("%02d", minutes) + "m " +
+//                                String.format("%02d", seconds) + "s");
+                long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
+                millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
+
+                long hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
+                millisUntilFinished -= TimeUnit.HOURS.toMillis(hours);
+
+                long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+                millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
+
+                long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+                tvTimer.setText(days + " Hari " + hours + " Jam " + minutes + " Menit " + seconds+" Detik");
             }
             @SuppressLint("SetTextI18n")
             public void onFinish() {
-                tvTimer.setText("00h 00m 00s");
+                tvTimer.setText("Waktu Penawaran Habis");
 
             }
         }.start();

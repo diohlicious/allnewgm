@@ -3,9 +3,11 @@ package com.sip.grosirmobil.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,10 +23,13 @@ import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehicleLiveGarage;
 import com.sip.grosirmobil.cloud.config.response.cart.DataCartResponse;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.calculateDate;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.convertDate;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
 
 
@@ -33,10 +38,14 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
     private final List<DataCartResponse> dataCartResponseList;
     private final Context contexts;
     private long negoPrice = 0;
+    private final String timeServer;
+    private String loadingShow;
 
 
-    public LiveGarageAdapter(Context context, List<DataCartResponse> dataCartResponses) {
+    public LiveGarageAdapter(Context context, String timeServer, String loadingShow, List<DataCartResponse> dataCartResponses) {
         this.contexts = context;
+        this.timeServer = timeServer;
+        this.loadingShow = loadingShow;
         this.dataCartResponseList = dataCartResponses;
     }
 
@@ -54,11 +63,14 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
         DataCartResponse dataCartResponse = dataCartResponseList.get(position);
         holder.tvVehicleName.setText(dataCartResponse.getVehicleName());
         holder.tvPlatNumber.setText(dataCartResponse.getKik().substring(0, 10) + " - ");
-//        holder.tvCity.setText(dataCartResponse.getWareHouse().replace("WAREHOUSE ", ""));
+//        holder.tvCity.setText(dataCartResponse.get().replace("WAREHOUSE ", ""));
         holder.tvPenawaranAnda.setText("Rp "+setCurrencyFormat(dataCartResponse.getUserTertinggi()));
         holder.tvPenawaranTerakhir.setText("Rp "+setCurrencyFormat(dataCartResponse.getTertinggi()));
         holder.tvPrice.setText("Rp "+setCurrencyFormat(dataCartResponse.getTertinggi()));
         holder.tvInitialName.setText(dataCartResponse.getGrade());
+        String startDate = convertDate(timeServer,"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
+        String endDate   = convertDate(dataCartResponse.getEndDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
+        startTimer(holder.tvTimer, calculateDate(startDate,endDate));
         long lastPrice = Long.parseLong(dataCartResponse.getUserTertinggi());
         negoPrice = Long.parseLong(dataCartResponse.getUserTertinggi());
         holder.ivMin.setOnClickListener(view -> {
@@ -105,6 +117,30 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
             intent.putExtra(FROM_PAGE, "LIVE");
             contexts.startActivity(intent);
         });
+    }
+
+    public void startTimer(TextView tvTimer, long noOfMinutes) {
+        new CountDownTimer(noOfMinutes,  1000) {
+            @SuppressLint({"SetTextI18n", "DefaultLocale"})
+            public void onTick(long millisUntilFinished) {
+                long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
+                millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
+
+                long hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
+                millisUntilFinished -= TimeUnit.HOURS.toMillis(hours);
+
+                long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+                millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
+
+                long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+                tvTimer.setText(days + " Hari " + hours + " Jam " + minutes + " Menit " + seconds+" Detik");
+            }
+            @SuppressLint("SetTextI18n")
+            public void onFinish() {
+                tvTimer.setText("Waktu Penawaran Habis");
+
+            }
+        }.start();
     }
 
     @Override

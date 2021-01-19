@@ -9,8 +9,17 @@ public class HistoryTransactionRequest {
     @Expose
     private int page;
 
-    public HistoryTransactionRequest(int page) {
-        this.page = page;
-    }
+    @SerializedName("max")
+    @Expose
+    private int max;
 
+    @SerializedName("Ismenang")
+    @Expose
+    private String isMenang;
+
+    public HistoryTransactionRequest(int page, int max, String isMenang) {
+        this.page = page;
+        this.max = max;
+        this.isMenang = isMenang;
+    }
 }

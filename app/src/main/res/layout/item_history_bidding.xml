@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="UselessLeaf">
+        tools:ignore="DisableBaselineAlignment,UselessLeaf">
         <LinearLayout
             android:layout_marginStart="@dimen/_10sdp"
             android:orientation="vertical"
@@ -30,7 +30,6 @@
                     android:id="@+id/tv_vehicle_name"
                     android:fontFamily="@font/nunito_semi_bold"
                     android:textColor="@color/colorPrimaryFont"
-                    android:text="Masserati DSE AT 2015"
                     android:maxLines="2"
                     android:textSize="@dimen/text_16"
                     android:layout_width="match_parent"
@@ -42,7 +41,6 @@
                     android:layout_height="match_parent">
                     <TextView
                         android:id="@+id/tv_event_date"
-                        android:text="Event 12 Nov 2020 -"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:includeFontPadding="false"
@@ -52,7 +50,6 @@
                         android:textSize="@dimen/text_11" />
                     <TextView
                         android:id="@+id/tv_city"
-                        android:text="Jakarta"
                         android:includeFontPadding="false"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -70,15 +67,34 @@
                     android:textSize="@dimen/text_12"
                     android:textColor="@color/colorPrimaryFont"
                     android:fontFamily="@font/nunito_regular"
-                    android:text="@string/tv_open_price"
+                    android:text="@string/tv_harga_tertinggi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:id="@+id/tv_open_price"
+                    android:id="@+id/tv_harga_tertinggi"
                     android:textSize="@dimen/text_14"
                     android:textColor="@color/colorPrimaryFont"
                     android:fontFamily="@font/nunito_bold"
-                    android:text="Rp 111.000.000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/text_12"
+                    android:textColor="@color/colorPrimaryFont"
+                    android:fontFamily="@font/nunito_regular"
+                    android:text="@string/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:textSize="@dimen/text_14"
+                    android:textColor="@color/colorPrimaryFont"
+                    android:fontFamily="@font/nunito_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -90,6 +106,7 @@
             android:layout_weight="0.8"
             android:layout_height="match_parent">
             <RelativeLayout
+                android:visibility="invisible"
                 android:layout_gravity="end"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="@dimen/_35sdp">
@@ -100,7 +117,6 @@
                     android:layout_height="match_parent"/>
                 <TextView
                     android:id="@+id/tv_initial_name"
-                    android:text="B"
                     android:textColor="@color/colorPrimaryWhite"
                     android:textSize="@dimen/text_24"
                     android:fontFamily="@font/nunito_semi_bold"
@@ -125,7 +141,26 @@
                     android:textSize="@dimen/text_14"
                     android:textColor="@color/colorPrimaryFont"
                     android:fontFamily="@font/nunito_bold"
-                    android:text="Rp 111.000.000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="@dimen/text_12"
+                    android:textColor="@color/colorPrimaryFont"
+                    android:fontFamily="@font/nunito_regular"
+                    android:text="@string/tv_va_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tv_no_va"
+                    android:textSize="@dimen/text_14"
+                    android:textColor="@color/colorPrimaryFont"
+                    android:fontFamily="@font/nunito_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>

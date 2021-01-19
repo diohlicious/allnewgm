@@ -30,6 +30,7 @@ import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilFragment;
 import com.sip.grosirmobil.cloud.config.response.cart.CartResponse;
 import com.sip.grosirmobil.cloud.config.response.cart.DataCartResponse;
+import com.sip.grosirmobil.cloud.config.response.timeserver.TimeServerResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ import retrofit2.Response;
 import static com.sip.grosirmobil.base.GrosirMobilApp.getApiGrosirMobil;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.BEARER;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MAIN;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.convertDateServer;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarFragment;
 
 /**
@@ -96,6 +98,7 @@ public class CartFragment extends GrosirMobilFragment {
     Runnable runnable;
     int delay = 1000;
     private boolean checkAuto = false;
+    private LiveGarageAdapter liveGarageAdapter;
 
     private GrosirMobilFunction grosirMobilFunction;
     private GrosirMobilPreference grosirMobilPreference;
@@ -115,10 +118,14 @@ public class CartFragment extends GrosirMobilFragment {
         grosirMobilFunction = new GrosirMobilFunction(getActivity());
         grosirMobilPreference = new GrosirMobilPreference(getActivity());
 
-        getDataCartApi();
+        getTimeServerApi("1");
+
+        LinearLayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
+        rvLiveGarage.setLayoutManager(layoutManagerLive);
+        rvLiveGarage.setNestedScrollingEnabled(false);
 
         swipeRefreshGarage.setOnRefreshListener(() -> {
-            getDataCartApi();
+            getTimeServerApi("1");
             swipeRefreshGarage.setRefreshing(false);
             linearLiveGarage.setVisibility(View.VISIBLE);
             linearSuccessGarage.setVisibility(View.VISIBLE);
@@ -139,7 +146,7 @@ public class CartFragment extends GrosirMobilFragment {
         handler.postDelayed(runnable = () -> {
             handler.postDelayed(runnable, delay);
             if(checkAuto){
-                getDataCartApi();
+                getTimeServerApi("0");
             }
         }, delay);
         super.onResume();
@@ -153,8 +160,42 @@ public class CartFragment extends GrosirMobilFragment {
         progressBar.setVisibility(View.GONE);
     }
 
-    private void getDataCartApi(){
-        showProgressBar();
+    public void getTimeServerApi(String loadingShow) {
+        final Call<TimeServerResponse> timeServerApi = getApiGrosirMobil().timeServerApi();
+        timeServerApi.enqueue(new Callback<TimeServerResponse>() {
+            @Override
+            public void onResponse(Call<TimeServerResponse> call, Response<TimeServerResponse> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        if(response.body().getMessage().equals("success")){
+                            grosirMobilPreference.saveTimeServer(response.body().getData().getTimeServer());
+                            getDataCartApi(response.body().getData().getTimeServer(), loadingShow);
+                        }else {
+                            grosirMobilFunction.showMessage(getActivity(), "GET Time Server", response.body().getMessage());
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }else {
+                    try {
+                        grosirMobilFunction.showMessage(getContext(), getString(R.string.base_null_error_title), response.errorBody().string());
+                    } catch (IOException e) {
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<TimeServerResponse> call, Throwable t) {
+                grosirMobilFunction.showMessage(getActivity(), "GET Time Server", getString(R.string.base_null_server));
+                GrosirMobilLog.printStackTrace(t);
+            }
+        });
+    }
+
+    private void getDataCartApi(String timeServer, String loadingShow){
+        if(loadingShow.equals("1")){
+            showProgressBar();
+        }
         final Call<CartResponse> questionOneApi = getApiGrosirMobil().lisCartApi(BEARER+" "+grosirMobilPreference.getToken());
         questionOneApi.enqueue(new Callback<CartResponse>() {
             @Override
@@ -200,12 +241,9 @@ public class CartFragment extends GrosirMobilFragment {
                                     linearLiveGarage.setVisibility(View.GONE);
                                 }else {
                                     linearLiveGarage.setVisibility(View.VISIBLE);
-                                    LinearLayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
-                                    rvLiveGarage.setLayoutManager(layoutManagerLive);
-                                    rvLiveGarage.setNestedScrollingEnabled(false);
-                                    LiveGarageAdapter liveGarageAdapter = new LiveGarageAdapter(getActivity(), dataCartLiveResponseList);
+                                    liveGarageAdapter = new LiveGarageAdapter(getActivity(), convertDateServer(timeServer), loadingShow, dataCartLiveResponseList);
                                     rvLiveGarage.setAdapter(liveGarageAdapter);
-                                    liveGarageAdapter.notifyDataSetChanged();
+//                                    liveGarageAdapter.notifyDataSetChanged();
                                 }
                                 if(dataCartSuccessResponseList.isEmpty()||dataCartSuccessResponseList==null){
                                     linearSuccessGarage.setVisibility(View.GONE);

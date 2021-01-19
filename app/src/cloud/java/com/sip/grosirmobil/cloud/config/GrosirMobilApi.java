@@ -3,6 +3,7 @@ package com.sip.grosirmobil.cloud.config;
 import com.sip.grosirmobil.cloud.config.request.favorite.FavoriteRequest;
 import com.sip.grosirmobil.cloud.config.request.changepassword.ChangePasswordRequest;
 import com.sip.grosirmobil.cloud.config.request.generateva.GenerateVaRequest;
+import com.sip.grosirmobil.cloud.config.request.history.HistoryTransactionRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeComingSoonRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeHistoryRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeLiveRequest;
@@ -20,6 +21,7 @@ import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 import com.sip.grosirmobil.cloud.config.response.cart.CartResponse;
 import com.sip.grosirmobil.cloud.config.response.checkactivetoken.CheckActiveTokenResponse;
 import com.sip.grosirmobil.cloud.config.response.generateva.GenerateVaResponse;
+import com.sip.grosirmobil.cloud.config.response.historytransaction.HistoryTransactionResponse;
 import com.sip.grosirmobil.cloud.config.response.homecomingsoon.HomeComingSoonResponse;
 import com.sip.grosirmobil.cloud.config.response.homehistory.HomeHistoryResponse;
 import com.sip.grosirmobil.cloud.config.response.homelive.HomeLiveResponse;
@@ -84,6 +86,7 @@ public interface GrosirMobilApi {
     String changePasswordPath = "/api/auth/changePasswordForgot";
     String generateVaPath = "/api/Pembayaran/GenerateVA";
     String invoiceVaPath = "/api/Pembayaran/InvoiceVA";
+    String historyTransactionPath = "/api/Live/RiwayatMobile";
 
     @Headers("X-Requested-With:XMLHttpRequest")
     @POST(loginPath)
@@ -223,6 +226,11 @@ public interface GrosirMobilApi {
     @POST(invoiceVaPath)
     Call<InvoiceVaResponse> invoiceVaApi(@Header("Authorization") String authToken,
                                          @Body InvoiceVaRequest invoiceVaRequest);
+
+    @Headers("Content-Type: application/json")
+    @POST(historyTransactionPath)
+    Call<HistoryTransactionResponse> historyTransactionApi(@Header("Authorization") String authToken,
+                                                           @Body HistoryTransactionRequest historyTransactionRequest);
 
 
 }

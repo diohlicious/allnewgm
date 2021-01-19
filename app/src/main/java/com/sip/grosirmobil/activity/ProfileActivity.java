@@ -22,8 +22,10 @@ import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
+import com.sip.grosirmobil.cloud.config.request.history.HistoryTransactionRequest;
 import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 import com.sip.grosirmobil.cloud.config.response.checkactivetoken.CheckActiveTokenResponse;
+import com.sip.grosirmobil.cloud.config.response.historytransaction.HistoryTransactionResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -129,6 +131,8 @@ public class ProfileActivity extends GrosirMobilActivity {
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
+                            getHistoryTransaction("1");
+                            getHistoryTransaction("0");
                             grosirMobilPreference.saveDataCheckActiveToken(response.body().getData());
                             tvFullName.setText(response.body().getData().getLoggedInUserResponse().getUserResponse().getNamaLengkap());
                             tvFullNameDataDiri.setText(response.body().getData().getLoggedInUserResponse().getUserResponse().getNamaLengkap());
@@ -160,7 +164,8 @@ public class ProfileActivity extends GrosirMobilActivity {
                     }catch (Exception e){
                         GrosirMobilLog.printStackTrace(e);
                     }
-                }else {
+                }
+                else {
                     try {
                         grosirMobilFunction.showMessage(ProfileActivity.this, getString(R.string.base_null_error_title), response.errorBody().string());
                     } catch (IOException e) {
@@ -172,6 +177,48 @@ public class ProfileActivity extends GrosirMobilActivity {
             public void onFailure(Call<CheckActiveTokenResponse> call, Throwable t) {
                 progressHorizontal.setVisibility(View.GONE);
                 grosirMobilFunction.showMessage(ProfileActivity.this, "GET Check Active Token", getString(R.string.base_null_server));
+                GrosirMobilLog.printStackTrace(t);
+            }
+        });
+    }
+
+    private void getHistoryTransaction(String status){
+        progressHorizontal.setVisibility(View.VISIBLE);
+        HistoryTransactionRequest historyTransactionRequest = new HistoryTransactionRequest(1, 20, status);
+        final Call<HistoryTransactionResponse> historyTransactionApi = getApiGrosirMobil().historyTransactionApi(BEARER+" "+grosirMobilPreference.getToken(), historyTransactionRequest);
+        historyTransactionApi.enqueue(new Callback<HistoryTransactionResponse>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(Call<HistoryTransactionResponse> call, Response<HistoryTransactionResponse> response) {
+                progressHorizontal.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    try {
+                        if(response.body().getMessage().equals("success")){
+                            if(status.equals("1")){
+                                tvSuccessBidding.setText(response.body().getDataPageHistoryTransactionResponse().getTotal() +" Unit");
+                            }else {
+                                tvLossBidding.setText(response.body().getDataPageHistoryTransactionResponse().getTotal() +" Unit");
+                            }
+                        }else {
+                            grosirMobilFunction.showMessage(ProfileActivity.this, "History Transaction", response.body().getMessage());
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }
+                else {
+                    try {
+                        grosirMobilFunction.showMessage(ProfileActivity.this, getString(R.string.base_null_error_title), response.errorBody().string());
+                    } catch (IOException e) {
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HistoryTransactionResponse> call, Throwable t) {
+                progressHorizontal.setVisibility(View.GONE);
+                grosirMobilFunction.showMessage(ProfileActivity.this, "History Transaction", getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);
             }
         });

@@ -447,4 +447,7 @@
     <string name="tv_menunggu_pembayaran">Menunggu Pembayaran</string>
     <string name="btn_kembali_ke_menang">Kembali ke menang</string>
     <string name="tv_penawaran_tertinggi">Penawaran Tertinggi</string>
+    <string name="tv_harga_tertinggi">Harga Tertinggi</string>
+    <string name="tv_status">Status</string>
+    <string name="tv_va_number">VA Number</string>
 </resources>

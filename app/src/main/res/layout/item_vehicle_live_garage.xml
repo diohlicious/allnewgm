@@ -30,28 +30,6 @@
                 android:gravity="center|start"
                 android:orientation="vertical"
                 tools:ignore="RtlHardcoded">
-                <LinearLayout
-                    android:visibility="gone"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_20sdp"
-                    android:background="@drawable/design_card_expired_date"
-                    tools:ignore="UselessParent">
-                    <TextView
-                        android:id="@+id/tv_timer"
-                        android:paddingLeft="@dimen/_5sdp"
-                        android:paddingRight="@dimen/_5sdp"
-                        android:drawableStart="@drawable/ic_timer"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="@font/nunito_regular"
-                        android:gravity="center"
-                        android:textColor="@color/colorPrimaryFont"
-                        android:textSize="@dimen/text_11"
-                        tools:ignore="HardcodedText" />
-                </LinearLayout>
                 <TextView
                     android:id="@+id/tv_vehicle_name"
                     android:layout_marginTop="@dimen/_5sdp"
@@ -145,6 +123,26 @@
                         android:fontFamily="@font/nunito_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:background="@drawable/design_card_expired_date_live"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_7sdp"
+                    android:paddingRight="@dimen/_7sdp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_20sdp">
+                    <TextView
+                        android:id="@+id/tv_timer"
+                        android:drawableStart="@drawable/ic_timer_white"
+                        android:textColor="@color/colorPrimaryWhite"
+                        android:textSize="@dimen/text_11"
+                        android:text=""
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:fontFamily="@font/nunito_regular"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_marginTop="@dimen/_8sdp"
