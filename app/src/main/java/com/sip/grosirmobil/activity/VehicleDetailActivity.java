@@ -717,7 +717,14 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         tvHargaAwal.setText("Rp "+setCurrencyFormat(dataVehicleDetailResponse.getHargaAwal()));
         tvHargaSekarang.setText("Rp "+setCurrencyFormat(dataVehicleDetailResponse.getBottomPrice()));
 
-        favorite = dataVehicleDetailResponse.getIsFavorite() != null || dataVehicleDetailResponse.getIsFavorite().equals("1");
+        if(dataVehicleDetailResponse.getIsFavorite()==null){
+            favorite = false;
+        }else if(dataVehicleDetailResponse.getIsFavorite().equals("1")){
+            favorite = true;
+        }else {
+            favorite = false;
+        }
+
 
         if(favorite){
             ivFavorite.setImageResource(R.drawable.ic_favorite);
@@ -873,7 +880,11 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
-                            ivFavorite.setImageResource(R.drawable.ic_favorite);
+                             if(isFavorit.equals("0")){
+                                ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+                            }else {
+                                ivFavorite.setImageResource(R.drawable.ic_favorite);
+                            }
                         }else {
                             grosirMobilFunction.showMessage(VehicleDetailActivity.this, "POST Favorite", response.body().getMessage());
                         }

@@ -59,7 +59,7 @@ public class DataHomeLiveResponse {
 
     @SerializedName("is_favorite")
     @Expose
-    private String isFavorite;
+    private int isFavorite;
 
     @SerializedName("is_create_open_house")
     @Expose
@@ -97,7 +97,7 @@ public class DataHomeLiveResponse {
         return vehicleName;
     }
 
-    public String getIsFavorite() {
+    public int getIsFavorite() {
         return isFavorite;
     }
 

@@ -82,6 +82,19 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
             holder.tvBottomPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getBottomPrice()));
             holder.tvInitialName.setText(dataHomeLiveResponse.getGrade());
 
+            AtomicBoolean favorite = new AtomicBoolean(false);
+
+            if(dataHomeLiveResponse.getIsFavorite()==1){
+                favorite.set(true);
+                holder.ivFavorite.setImageResource(R.drawable.ic_favorite);
+            }else if(dataHomeLiveResponse.getIsFavorite()==0){
+                favorite.set(false);
+                holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+            }else {
+                favorite.set(false);
+                holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+            }
+
             CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
             circularProgressDrawable.setStrokeWidth(5f);
             circularProgressDrawable.setCenterRadius(30f);
@@ -96,15 +109,12 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
                             .skipMemoryCache(false))
                     .into(holder.ivImage);
 
-            if(dataHomeLiveResponse.getIsFavorite()==null){
-                holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
-            }else {
-                if(dataHomeLiveResponse.getIsFavorite().equals("1")){
-                    holder.ivFavorite.setImageResource(R.drawable.ic_favorite);
-                }else {
-                    holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
-                }
-            }
+//            if(dataHomeLiveResponse.getIsFavorite()){
+//                holder.ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+//            }else {
+
+//            }
+            System.out.println("Data Favorite : "+ dataHomeLiveResponse.getIsFavorite());
 
             String startDate = convertDate(timeServer,"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
             String endDate   = convertDate(dataHomeLiveResponse.getEndDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
@@ -122,7 +132,6 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
 //            System.out.println("TIME SERVER BEFORE : "+timeServer);
 //            startTimer(holder.tvTimer, calculateDate(timeServer,dataHomeLiveResponse.getEndDate()));
 
-            AtomicBoolean favorite = new AtomicBoolean(false);
 
             holder.ivFavorite.setOnClickListener(view -> {
                 if (favorite.get()) {
@@ -195,7 +204,11 @@ public class LiveAdapter extends RecyclerView.Adapter<ViewHolderItemVehicle> {
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
-                            ivFavorite.setImageResource(R.drawable.ic_favorite);
+                            if(isFavorit.equals("0")){
+                                ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+                            }else {
+                                ivFavorite.setImageResource(R.drawable.ic_favorite);
+                            }
                         }else {
                             grosirMobilFunction.showMessage(contexts, "POST Favorite", response.body().getMessage());
                         }

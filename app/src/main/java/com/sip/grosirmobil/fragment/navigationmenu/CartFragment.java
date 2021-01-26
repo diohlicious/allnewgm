@@ -161,6 +161,7 @@ public class CartFragment extends GrosirMobilFragment {
     }
 
     public void getTimeServerApi(String loadingShow) {
+
         final Call<TimeServerResponse> timeServerApi = getApiGrosirMobil().timeServerApi();
         timeServerApi.enqueue(new Callback<TimeServerResponse>() {
             @Override
