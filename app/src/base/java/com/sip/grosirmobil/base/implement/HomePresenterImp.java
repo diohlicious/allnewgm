@@ -105,15 +105,24 @@ public class HomePresenterImp implements HomePresenter {
     @Override
     public void getHomeLiveApi(int page, int max, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek) {
         linearEmptyData.setVisibility(View.GONE);
-        homeView.showDialogLoading();
-        rvLive.setVisibility(View.GONE);
+        if(page==1){
+            rvLive.setVisibility(View.GONE);
+            homeView.showDialogLoading();
+        }else {
+            rvLive.setVisibility(View.VISIBLE);
+            homeView.showDialogLoadMoreLoading();
+        }
         HomeLiveRequest homeLiveRequest = new HomeLiveRequest(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek,"live");
         final Call<HomeLiveResponse> timeServerApi = getApiGrosirMobil().homeLiveApi(BEARER+" "+grosirMobilPreference.getToken(),homeLiveRequest);
         timeServerApi.enqueue(new Callback<HomeLiveResponse>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<HomeLiveResponse> call, Response<HomeLiveResponse> response) {
-                homeView.hideDialogLoading();
+                if(page==1){
+                    homeView.hideDialogLoading();
+                }else {
+                    homeView.hideDialogLoadMoreLoading();
+                }
                 rvLive.setVisibility(View.VISIBLE);
                 if (response.isSuccessful()) {
                     try {
@@ -136,7 +145,11 @@ public class HomePresenterImp implements HomePresenter {
             }
             @Override
             public void onFailure(Call<HomeLiveResponse> call, Throwable t) {
-                homeView.hideDialogLoading();
+                if(page==1){
+                    homeView.hideDialogLoading();
+                }else {
+                    homeView.hideDialogLoadMoreLoading();
+                }
                 rvLive.setVisibility(View.VISIBLE);
                 grosirMobilFunction.showMessage(context, "GET Home Live", context.getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);
@@ -147,15 +160,24 @@ public class HomePresenterImp implements HomePresenter {
     @Override
     public void getHomeComingSoonApi(int page, int max, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek) {
         linearEmptyData.setVisibility(View.GONE);
-        homeView.showDialogLoading();
-        rvLiveSoon.setVisibility(View.GONE);
+        if(page==1){
+            rvLiveSoon.setVisibility(View.GONE);
+            homeView.showDialogLoading();
+        }else {
+            rvLiveSoon.setVisibility(View.VISIBLE);
+            homeView.showDialogLoadMoreLoading();
+        }
         HomeComingSoonRequest homeComingSoonRequest = new HomeComingSoonRequest(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek, "akan tayang");
         final Call<HomeComingSoonResponse> timeServerApi = getApiGrosirMobil().homeComingSoonApi(BEARER+" "+grosirMobilPreference.getToken(),homeComingSoonRequest);
         timeServerApi.enqueue(new Callback<HomeComingSoonResponse>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<HomeComingSoonResponse> call, Response<HomeComingSoonResponse> response) {
-                homeView.hideDialogLoading();
+                if(page==1){
+                    homeView.hideDialogLoading();
+                }else {
+                    homeView.hideDialogLoadMoreLoading();
+                }
                 rvLiveSoon.setVisibility(View.VISIBLE);
                 if (response.isSuccessful()) {
                     try {
@@ -178,7 +200,11 @@ public class HomePresenterImp implements HomePresenter {
             }
             @Override
             public void onFailure(Call<HomeComingSoonResponse> call, Throwable t) {
-                homeView.hideDialogLoading();
+                if(page==1){
+                    homeView.hideDialogLoading();
+                }else {
+                    homeView.hideDialogLoadMoreLoading();
+                }
                 rvLiveSoon.setVisibility(View.VISIBLE);
                 grosirMobilFunction.showMessage(context, "GET Home  Coming Soon", context.getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);
@@ -209,14 +235,25 @@ public class HomePresenterImp implements HomePresenter {
     @Override
     public void getHomeHistoryApi(int page, int max, String isMenang) {
         linearEmptyData.setVisibility(View.GONE);
-        homeView.showDialogLoading();
-        rvRecord.setVisibility(View.GONE);
+        if(page==1){
+            rvRecord.setVisibility(View.GONE);
+            homeView.showDialogLoading();
+        }else {
+            rvRecord.setVisibility(View.VISIBLE);
+            homeView.showDialogLoadMoreLoading();
+        }
+
         HomeHistoryRequest homeHistoryRequest = new HomeHistoryRequest(page,max,isMenang);
         final Call<HomeHistoryResponse> timeServerApi = getApiGrosirMobil().homeHistoryApi(BEARER+" "+grosirMobilPreference.getToken(),homeHistoryRequest);
         timeServerApi.enqueue(new Callback<HomeHistoryResponse>() {
             @Override
             public void onResponse(Call<HomeHistoryResponse> call, Response<HomeHistoryResponse> response) {
-                homeView.hideDialogLoading();
+                if(page==1){
+                    homeView.hideDialogLoading();
+                }else {
+                    homeView.hideDialogLoadMoreLoading();
+                }
+//                homeView.hideDialogLoading();
                 rvRecord.setVisibility(View.VISIBLE);
                 if (response.isSuccessful()) {
                     try {
@@ -238,7 +275,11 @@ public class HomePresenterImp implements HomePresenter {
             }
             @Override
             public void onFailure(Call<HomeHistoryResponse> call, Throwable t) {
-                homeView.hideDialogLoading();
+                if(page==1){
+                    homeView.hideDialogLoading();
+                }else {
+                    homeView.hideDialogLoadMoreLoading();
+                }
                 rvRecord.setVisibility(View.VISIBLE);
                 grosirMobilFunction.showMessage(context, "GET Home History", context.getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);

@@ -2,7 +2,6 @@ package com.sip.grosirmobil.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,38 +14,40 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.sip.grosirmobil.R;
-import com.sip.grosirmobil.activity.PreviewImageActivity;
-import com.sip.grosirmobil.adapter.viewholder.ViewHolderBrokenImage;
+import com.sip.grosirmobil.adapter.viewholder.ViewHolderPreviewImage;
 import com.sip.grosirmobil.cloud.config.response.vehicledetail.ImageBrokenResponse;
 
 import java.util.List;
 
-import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
-
-public class BrokenImageAdapter extends RecyclerView.Adapter<ViewHolderBrokenImage> {
+public class PreviewImageBrokenAdapter extends RecyclerView.Adapter<ViewHolderPreviewImage> {
 
     private final List<ImageBrokenResponse> imageBrokenResponseList;
     private final Context contexts;
 
 
-    public BrokenImageAdapter(Context context, List<ImageBrokenResponse> imageBrokenResponses) {
+    public PreviewImageBrokenAdapter(Context context, List<ImageBrokenResponse> imageBrokenResponses) {
         this.contexts = context;
         this.imageBrokenResponseList = imageBrokenResponses;
     }
 
     @NonNull
     @Override
-    public ViewHolderBrokenImage onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolderPreviewImage onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_broken_image, viewGroup, false);
-        return new ViewHolderBrokenImage(itemView);
+                .inflate(R.layout.item_preview_image, viewGroup, false);
+        return new ViewHolderPreviewImage(itemView);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderBrokenImage holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolderPreviewImage holder, int position) {
         ImageBrokenResponse imageBrokenResponse = imageBrokenResponseList.get(position);
-        holder.tvDescription.setText(imageBrokenResponse.getDescription());
+        if(imageBrokenResponse.getDescription().equals("")){
+            holder.linearDescription.setVisibility(View.GONE);
+        }else {
+            holder.linearDescription.setVisibility(View.VISIBLE);
+            holder.tvDescription.setText(imageBrokenResponse.getDescription());
+        }
 
         CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
         circularProgressDrawable.setStrokeWidth(5f);
@@ -60,17 +61,8 @@ public class BrokenImageAdapter extends RecyclerView.Adapter<ViewHolderBrokenIma
                         .dontAnimate()
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true))
-                .into(holder.ivImage);
+                .into(holder.photoView);
 
-        holder.tvImageNumber.setText(String.valueOf(position+1));
-
-        holder.cardView.setOnClickListener(view -> {
-            Intent intent = new Intent(contexts, PreviewImageActivity.class);
-            intent.putExtra(FROM_PAGE, "brokenImage");
-//            intent.putExtra(URL_IMAGE, imageBrokenResponse.getUrlImage());
-//            intent.putExtra(DESCRIPTION, imageBrokenResponse.getDescription());
-            contexts.startActivity(intent);
-        });
     }
 
     @Override

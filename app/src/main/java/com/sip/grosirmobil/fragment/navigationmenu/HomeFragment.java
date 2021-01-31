@@ -30,6 +30,7 @@ import com.sip.grosirmobil.activity.FilterActivity;
 import com.sip.grosirmobil.activity.MainActivity;
 import com.sip.grosirmobil.activity.ProfileActivity;
 import com.sip.grosirmobil.activity.SearchActivity;
+import com.sip.grosirmobil.activity.VehicleDetailActivity;
 import com.sip.grosirmobil.adapter.LiveAdapter;
 import com.sip.grosirmobil.adapter.LiveHistoryAdapter;
 import com.sip.grosirmobil.adapter.LiveSoonAdapter;
@@ -41,7 +42,9 @@ import com.sip.grosirmobil.base.util.AutoScrollViewPager;
 import com.sip.grosirmobil.base.util.GrosirMobilFragment;
 import com.sip.grosirmobil.base.view.HomeView;
 import com.sip.grosirmobil.cloud.config.model.HardCodeDataBaruMasukModel;
+import com.sip.grosirmobil.cloud.config.response.homecomingsoon.DataPageHomeComingSoonResponse;
 import com.sip.grosirmobil.cloud.config.response.homecomingsoon.HomeComingSoonResponse;
+import com.sip.grosirmobil.cloud.config.response.homehistory.DataPageHomeHistoryResponse;
 import com.sip.grosirmobil.cloud.config.response.homehistory.HomeHistoryResponse;
 import com.sip.grosirmobil.cloud.config.response.homelive.DataPageHomeLiveResponse;
 
@@ -60,6 +63,8 @@ import static com.sip.grosirmobil.base.contract.GrosirMobilContract.END_YEAR;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FILTER_REQUEST;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.GRADE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.LOCATION;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.MEREK;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.SEARCH_REQUEST;
@@ -156,6 +161,8 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @BindView(R.id.progress_horizontal) ProgressBar progressHorizontal;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.progress_bar_data) ProgressBar progressBarData;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.progress_bar_load_more) ProgressBar progressBarLoadMore;
 
     private GrosirMobilPreference grosirMobilPreference;
     private HomePresenter homePresenter;
@@ -163,6 +170,8 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     private boolean search = false;
 //    getHomeLiveApi(1,20,"",1995,2020, 0,1000000000,"");
     private int page = 1;
+    private int pageComingSoon = 1;
+    private int pageRecord = 1;
     private int max = 20;
     private String lokasi = "";
     private int tahunStart = 1995;
@@ -171,6 +180,13 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     private long hargaEnd = 1000000000;
     private String merek = "";
     private String grade = "";
+
+    private LiveHistoryAdapter liveHistoryAdapter;
+    private LiveSoonAdapter liveSoonAdapter;
+    private LiveAdapter liveAdapter;
+    private DataPageHomeComingSoonResponse dataPageHomeComingSoonResponse = null;
+    private DataPageHomeHistoryResponse dataPageHomeHistoryResponse = null;
+    private DataPageHomeLiveResponse dataPageHomeLiveResponseVariable = null;
 
     Handler handler = new Handler();
     Runnable runnable;
@@ -237,7 +253,11 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     }
 
     private void setUiReset(){
-        homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+        pageComingSoon = 1;
+        pageRecord = 1;
+        page = 1;
+        tvLiveClick();
+//        homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
 //        homePresenter.getTimeServerApi();
         search = false;
         relativeHome.setVisibility(View.VISIBLE);
@@ -484,6 +504,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.tv_live)
     void tvLiveClick(){
+        page = 1;
 //        homePresenter.tvLiveClick();
         if(search){
             linearTitleContent.setVisibility(View.GONE);
@@ -492,7 +513,6 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             linearTitleContent.setVisibility(View.VISIBLE);
             linearSearchAndLive.setVisibility(View.VISIBLE);
         }
-        homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
         nestedView.setBackgroundResource(R.color.colorPrimaryWhite);
         rvLive.setVisibility(View.GONE);
         rvLiveSoon.setVisibility(View.GONE);
@@ -507,11 +527,53 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         tvLiveSoon.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvRecord.setBackgroundResource(R.drawable.design_line);
         tvRecord.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        rvLive.setLayoutManager(linearLayoutManager);
+        rvLive.setNestedScrollingEnabled(false);
+        rvLive.setHasFixedSize(true);
+
+        liveAdapter = new LiveAdapter(new ArrayList<>(), getActivity(),convertDateServer(grosirMobilPreference.getTimeServer()));
+        rvLive.setAdapter(liveAdapter);
+//        liveAdapter.notifyDataSetChanged();
+
+        homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+
+        if (nestedView != null) {
+            nestedView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                String TAG = "nested_sync";
+                if (scrollY > oldScrollY) {
+                    GrosirMobilLog.i(TAG, "Scroll DOWN");
+                }
+                if (scrollY < oldScrollY) {
+                    GrosirMobilLog.i(TAG, "Scroll UP");
+                }
+                if (scrollY == 0) {
+                    GrosirMobilLog.i(TAG, "TOP SCROLL");
+                }
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
+                    if (dataPageHomeLiveResponseVariable.getCurrentPage() == dataPageHomeLiveResponseVariable.getMaxPage()) {
+                        System.out.println("NESTED Current END Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
+                        System.out.println("NESTED Last : END Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
+                    }
+                    else if (dataPageHomeLiveResponseVariable.getCurrentPage() < dataPageHomeLiveResponseVariable.getMaxPage()) {
+                        System.out.println("NESTED Current Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
+                        System.out.println("NESTED Last : Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
+                        page++;
+                        homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+                    }
+                }
+            });
+        }
     }
 
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.tv_live_soon)
     void tvLiveSoonClick(){
+//        liveHistoryAdapter.clear();
+//        liveAdapter.clear();
+        pageComingSoon = 1;
         if(search){
             linearTitleContent.setVisibility(View.GONE);
             linearSearchAndLive.setVisibility(View.GONE);
@@ -519,7 +581,6 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             linearTitleContent.setVisibility(View.VISIBLE);
             linearSearchAndLive.setVisibility(View.VISIBLE);
         }
-        homePresenter.getHomeComingSoonApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
         nestedView.setBackgroundResource(R.color.colorPrimaryWhite);
         rvLive.setVisibility(View.GONE);
         rvLiveSoon.setVisibility(View.GONE);
@@ -534,13 +595,53 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         tvLiveSoon.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvRecord.setBackgroundResource(R.drawable.design_line);
         tvRecord.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        rvLiveSoon.setLayoutManager(linearLayoutManager);
+        rvLiveSoon.setNestedScrollingEnabled(false);
+        rvLiveSoon.setHasFixedSize(true);
+
+        liveSoonAdapter = new LiveSoonAdapter(new ArrayList<>(), getActivity(),convertDateServer(grosirMobilPreference.getTimeServer()));
+        rvLiveSoon.setAdapter(liveSoonAdapter);
+//        liveSoonAdapter.notifyDataSetChanged();
+
+        homePresenter.getHomeComingSoonApi(pageComingSoon,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+
+        if (nestedView != null) {
+            nestedView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                String TAG = "nested_sync";
+                if (scrollY > oldScrollY) {
+                    GrosirMobilLog.i(TAG, "Scroll DOWN");
+                }
+                if (scrollY < oldScrollY) {
+                    GrosirMobilLog.i(TAG, "Scroll UP");
+                }
+                if (scrollY == 0) {
+                    GrosirMobilLog.i(TAG, "TOP SCROLL");
+                }
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
+                    if (dataPageHomeComingSoonResponse.getCurrentPage() == dataPageHomeComingSoonResponse.getMaxPage()) {
+                        System.out.println("NESTED Current END Page : "+dataPageHomeComingSoonResponse.getCurrentPage());
+                        System.out.println("NESTED Last : END Page : "+dataPageHomeComingSoonResponse.getMaxPage());
+                    }
+                    else if (dataPageHomeComingSoonResponse.getCurrentPage() < dataPageHomeComingSoonResponse.getMaxPage()) {
+                        System.out.println("NESTED Current Page : "+dataPageHomeComingSoonResponse.getCurrentPage());
+                        System.out.println("NESTED Last : Page : "+dataPageHomeComingSoonResponse.getMaxPage());
+                        pageComingSoon++;
+                        homePresenter.getHomeComingSoonApi(pageComingSoon,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+                    }
+                }
+            });
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_record)
     void tvRecordClick(){
-//        homePresenter.tvRecordClick();
-        homePresenter.getHomeHistoryApi(page,max,"");
+//        liveSoonAdapter.clear();
+//        liveAdapter.clear();
+        pageRecord = 1;
         linearSearchAndLive.setVisibility(View.GONE);
         nestedView.setBackgroundResource(R.color.colorBackgroundHome);
         rvLive.setVisibility(View.GONE);
@@ -553,6 +654,50 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         tvLiveSoon.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvRecord.setBackgroundResource(R.drawable.design_line_selected);
         tvRecord.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        rvRecord.setLayoutManager(linearLayoutManager);
+        rvRecord.setNestedScrollingEnabled(false);
+        rvRecord.setHasFixedSize(true);
+
+        liveHistoryAdapter = new LiveHistoryAdapter(new ArrayList<>(), getActivity(),  dataHomeHistoryResponse -> {
+            Intent intent = new Intent(getActivity(), VehicleDetailActivity.class);
+            intent.putExtra(ID_VEHICLE, String.valueOf(dataHomeHistoryResponse.getOpenHouseId()));
+            intent.putExtra(KIK, dataHomeHistoryResponse.getKik());
+            intent.putExtra(FROM_PAGE, "HISTORY");
+            startActivity(intent);
+        });
+
+        rvRecord.setAdapter(liveHistoryAdapter);
+        homePresenter.getHomeHistoryApi(pageRecord,max,"");
+
+        if (nestedView != null) {
+            nestedView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                String TAG = "nested_sync";
+                if (scrollY > oldScrollY) {
+                    GrosirMobilLog.i(TAG, "Scroll DOWN");
+                }
+                if (scrollY < oldScrollY) {
+                    GrosirMobilLog.i(TAG, "Scroll UP");
+                }
+                if (scrollY == 0) {
+                    GrosirMobilLog.i(TAG, "TOP SCROLL");
+                }
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
+                    if (dataPageHomeHistoryResponse.getCurrentPage() == dataPageHomeHistoryResponse.getMaxPage()) {
+                        System.out.println("NESTED Current END Page : "+dataPageHomeHistoryResponse.getCurrentPage());
+                        System.out.println("NESTED Last : END Page : "+dataPageHomeHistoryResponse.getMaxPage());
+                    }
+                    else if (dataPageHomeHistoryResponse.getCurrentPage() < dataPageHomeHistoryResponse.getMaxPage()) {
+                        System.out.println("NESTED Current Page : "+dataPageHomeHistoryResponse.getCurrentPage());
+                        System.out.println("NESTED Last : Page : "+dataPageHomeHistoryResponse.getMaxPage());
+                        pageRecord++;
+                        homePresenter.getHomeHistoryApi(pageRecord,max,"");
+                    }
+                }
+            });
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -573,6 +718,16 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         progressBarData.setVisibility(View.GONE);
     }
 
+    @Override
+    public void showDialogLoadMoreLoading() {
+        progressBarLoadMore.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideDialogLoadMoreLoading() {
+        progressBarLoadMore.setVisibility(View.GONE);
+    }
+
     @SuppressLint("SetTextI18n")
     @Override
     public void homeLiveSuccess(DataPageHomeLiveResponse dataPageHomeLiveResponse, String timeServer) {
@@ -586,35 +741,44 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             linearEmptyData.setVisibility(View.GONE);
             tvResultTitleContent.setText("Ada " + dataPageHomeLiveResponse.getTotal() + " Kendaraan Live");
             tvResultSearch.setText(dataPageHomeLiveResponse.getTotal()+" Unit");
-            RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
-            rvLive.setLayoutManager(layoutManagerLive);
-            rvLive.setNestedScrollingEnabled(false);
-            LiveAdapter liveAdapter = new LiveAdapter(getActivity(), convertDateServer(timeServer), dataPageHomeLiveResponse.getDataHomeLiveResponseList());
-            rvLive.setAdapter(liveAdapter);
-            liveAdapter.notifyDataSetChanged();
+
         }
+        if(page==1){
+            liveAdapter.clear();
+        }
+//        liveSoonAdapter.clear();
+//        liveHistoryAdapter.clear();
+        dataPageHomeLiveResponseVariable = dataPageHomeLiveResponse;
+        liveAdapter.addItems(dataPageHomeLiveResponse.getDataHomeLiveResponseList());
+//        RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
+//        rvLive.setLayoutManager(layoutManagerLive);
+//        rvLive.setNestedScrollingEnabled(false);
+//        LiveAdapter liveAdapter = new LiveAdapter(getActivity(), convertDateServer(timeServer), dataPageHomeLiveResponse.getDataHomeLiveResponseList());
+//        rvLive.setAdapter(liveAdapter);
+//        liveAdapter.notifyDataSetChanged();
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void homeComingSoonSuccess(HomeComingSoonResponse dataPageHomeComingSoonResponse, String timeServer) {
-        System.out.println("DATA TOTAL COMING SOON : "+ dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal());
-        if(dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getDataHomeComingSoonResponseList()==null ||dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getDataHomeComingSoonResponseList().isEmpty()){
+    public void homeComingSoonSuccess(HomeComingSoonResponse homeComingSoonResponse, String timeServer) {
+        System.out.println("DATA TOTAL COMING SOON : "+ homeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal());
+        if(homeComingSoonResponse.getDataPageHomeComingSoonResponse().getDataHomeComingSoonResponseList()==null ||homeComingSoonResponse.getDataPageHomeComingSoonResponse().getDataHomeComingSoonResponseList().isEmpty()){
             tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_live));
             tvResultTitleContent.setText("Ada 0 Kendaraan Akan Tayang");
-            tvResultSearch.setText(dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal()+" Unit");
+            tvResultSearch.setText(homeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal()+" Unit");
             linearEmptyData.setVisibility(View.VISIBLE);
         }else {
             linearEmptyData.setVisibility(View.GONE);
-            tvResultTitleContent.setText("Ada " + dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal() + " Kendaraan Akan Tayang");
-            tvResultSearch.setText(dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal()+" Unit");
-            RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
-            rvLiveSoon.setLayoutManager(layoutManagerLive);
-            rvLiveSoon.setNestedScrollingEnabled(false);
-            LiveSoonAdapter liveSoonAdapter = new LiveSoonAdapter(getActivity(), convertDateServer(timeServer), dataPageHomeComingSoonResponse.getDataPageHomeComingSoonResponse().getDataHomeComingSoonResponseList());
-            rvLiveSoon.setAdapter(liveSoonAdapter);
-            liveSoonAdapter.notifyDataSetChanged();
+            tvResultTitleContent.setText("Ada " + homeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal() + " Kendaraan Akan Tayang");
+            tvResultSearch.setText(homeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal()+" Unit");
         }
+        if(pageComingSoon==1){
+            liveSoonAdapter.clear();
+        }
+//        liveAdapter.clear();
+//        liveHistoryAdapter.clear();
+        dataPageHomeComingSoonResponse = homeComingSoonResponse.getDataPageHomeComingSoonResponse();
+        liveSoonAdapter.addItems(homeComingSoonResponse.getDataPageHomeComingSoonResponse().getDataHomeComingSoonResponseList());
     }
 
     @SuppressLint("SetTextI18n")
@@ -623,16 +787,28 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         if(homeHistoryResponse.getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList()==null ||homeHistoryResponse.getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList().isEmpty()){
             tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_history));
             linearEmptyData.setVisibility(View.VISIBLE);
+            liveHistoryAdapter.clear();
         }else {
             linearEmptyData.setVisibility(View.GONE);
         }
-        RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
-        rvRecord.setLayoutManager(layoutManagerLive);
-        rvRecord.setNestedScrollingEnabled(false);
+        if(pageRecord==1){
+            liveHistoryAdapter.clear();
+        }
+//        liveAdapter.clear();
+//        liveSoonAdapter.clear();
+        dataPageHomeHistoryResponse = homeHistoryResponse.getDataPageHomeHistoryResponse();
+        liveHistoryAdapter.addItems(homeHistoryResponse.getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList());
         tvResultSearch.setText(homeHistoryResponse.getDataPageHomeHistoryResponse().getTotal()+" Unit");
-        LiveHistoryAdapter liveHistoryAdapter = new LiveHistoryAdapter(getActivity(), homeHistoryResponse.getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList());
-        rvRecord.setAdapter(liveHistoryAdapter);
-        liveHistoryAdapter.notifyDataSetChanged();
+
+//        LiveHistoryAdapter liveHistoryAdapter = new LiveHistoryAdapter(homeHistoryResponse.getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList(), getActivity(), dataHomeHistoryResponse -> {
+//            Intent intent = new Intent(getActivity(), VehicleDetailActivity.class);
+//            intent.putExtra(ID_VEHICLE, String.valueOf(dataHomeHistoryResponse.getOpenHouseId()));
+//            intent.putExtra(KIK, dataHomeHistoryResponse.getKik());
+//            intent.putExtra(FROM_PAGE, "HISTORY");
+//            startActivity(intent);
+//        });
+//        rvRecord.setAdapter(liveHistoryAdapter);
+//        liveHistoryAdapter.notifyDataSetChanged();
     }
 
     @SuppressLint("NonConstantResourceId")

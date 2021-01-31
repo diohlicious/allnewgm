@@ -10,6 +10,10 @@ public interface HomeView {
 
     void hideDialogLoading();
 
+    void showDialogLoadMoreLoading();
+
+    void hideDialogLoadMoreLoading();
+
     void homeLiveSuccess(DataPageHomeLiveResponse dataPageHomeLiveResponse, String timeServer);
 
     void homeComingSoonSuccess(HomeComingSoonResponse homeComingSoonResponse, String timeServer);

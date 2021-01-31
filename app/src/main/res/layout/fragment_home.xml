@@ -443,6 +443,11 @@
                         android:nestedScrollingEnabled="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
+                    <ProgressBar
+                        android:id="@+id/progress_bar_load_more"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

@@ -156,6 +156,7 @@
                         tools:ignore="UselessLeaf">
                         <ImageView
                             android:id="@+id/iv_min"
+                            android:visibility="gone"
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:layout_gravity="center"
@@ -189,6 +190,7 @@
                                 tools:ignore="Autofill,HardcodedText,LabelFor,NestedWeights,RelativeOverlap,RtlSymmetry" />
                             <ImageView
                                 android:id="@+id/iv_clear_price"
+                                android:visibility="invisible"
                                 android:layout_width="@dimen/_16sdp"
                                 android:layout_height="@dimen/_16sdp"
                                 android:layout_marginStart="@dimen/_5sdp"
@@ -198,6 +200,7 @@
                         </LinearLayout>
                         <ImageView
                             android:id="@+id/iv_plus"
+                            android:visibility="gone"
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:layout_gravity="center"
