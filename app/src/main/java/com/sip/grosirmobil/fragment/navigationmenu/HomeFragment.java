@@ -237,6 +237,12 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     }
 
     private void setUiReset(){
+        //TODO Utk API Home Live ini Diperlukan Request Param Sort(Waktu Penawaran  Cepat ke Lama
+        //TODO Utk API Home Live ini Diperlukan Request Param Sort(Waktu Penawaran  Lama ke Cepat
+        //TODO Utk API Home Live ini Diperlukan Request Param Sort(Lokasi Warehouse A-> Z
+        //TODO Utk API Home Live ini Diperlukan Request Param Sort(Lokasi Warehouse Z-> A
+        //TODO Utk API Home Live ini Diperlukan Request Param Sort(Bottom Price Terendah ke Tertinggi
+        //TODO Utk API Home Live ini Diperlukan Request Param Sort(Bottom Price  Tertinggi ke Terendah
         homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
 //        homePresenter.getTimeServerApi();
         search = false;

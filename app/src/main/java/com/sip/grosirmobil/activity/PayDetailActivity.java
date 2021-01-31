@@ -2,11 +2,15 @@ package com.sip.grosirmobil.activity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,10 +64,36 @@ public class PayDetailActivity extends GrosirMobilActivity {
     @BindView(R.id.rv_unit_to_buy) RecyclerView rvUnitToBuy;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_total_pembayaran) TextView tvTotalPembayaran;
+    
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_list_atm_bca) LinearLayout linearAtmBcaList;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_list_bca_mobile) LinearLayout linearAtmBcaMobile;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_list_inet_bca) LinearLayout linearInetBCA;    
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.linear_list_officer_bca)LinearLayout linearOfficerBCA;
+    
+    
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_atm_bca) TextView tvAtmBCA;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_bca_mobile) TextView tvBCAMobile;  
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_inet_bca) TextView tvInetBCA; 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_bca_officer) TextView tvBCAOfficer;
+    
 
     private GrosirMobilFunction grosirMobilFunction;
     private GrosirMobilPreference grosirMobilPreference;
-
+    private Context context;
+    private boolean atmBCA = false;
+    private boolean BCAMobile = false;
+    private boolean InetBCA = false;
+    private boolean BCAOfficer = false;
+    
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,11 +101,12 @@ public class PayDetailActivity extends GrosirMobilActivity {
         setContentView(R.layout.activity_pay_detail);
         adjustFontScale(this, getResources().getConfiguration());
         ButterKnife.bind(this);
-
+        context = this.getApplicationContext();
         grosirMobilFunction = new GrosirMobilFunction(this);
         grosirMobilPreference = new GrosirMobilPreference(this);
-
+        
         getInvoiceDetail(getIntent().getStringExtra(REF_NUMBER));
+        registerForContextMenu(tvPembayaranDash);
 
 //        startTimer(1000000);
 
@@ -135,6 +166,62 @@ public class PayDetailActivity extends GrosirMobilActivity {
 
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_atm_bca)
+    void setTvAtmBCAClick(){
+        if(atmBCA){
+            atmBCA = false;
+            tvAtmBCA.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_down), null);
+            linearAtmBcaList.setVisibility(View.GONE);
+        }else {
+            atmBCA = true;
+            tvAtmBCA.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_up), null);
+            linearAtmBcaList.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_bca_mobile)
+    void setTvBCAMobileClick(){
+        if(BCAMobile){
+            BCAMobile = false;
+            tvBCAMobile.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_down), null);
+            linearAtmBcaMobile.setVisibility(View.GONE);
+        }else {
+            BCAMobile = true;
+            tvBCAMobile.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_up), null);
+            linearAtmBcaMobile.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_inet_bca)
+    void setTvINetBCA(){
+        if(InetBCA){
+            InetBCA = false;
+            tvInetBCA.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_down), null);
+            linearInetBCA.setVisibility(View.GONE);
+        }else {
+            InetBCA = true;
+            tvInetBCA.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_up), null);
+            linearInetBCA.setVisibility(View.VISIBLE);
+        }
+        
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_bca_officer)
+    void setTvOfficerBCA() {
+        if (BCAOfficer) {
+            BCAOfficer = false;
+            tvBCAOfficer.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context, R.drawable.ic_chevron_down), null);
+            linearOfficerBCA.setVisibility(View.GONE);
+        } else {
+            BCAOfficer = true;
+            tvBCAOfficer.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context, R.drawable.ic_chevron_up), null);
+            linearOfficerBCA.setVisibility(View.VISIBLE);
+        }
+    }
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.iv_back)
     void ivBackClick() {
