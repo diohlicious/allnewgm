@@ -4,11 +4,11 @@ android {
 
     signingConfigs {
         signingproject {
-            keyAlias 'password'
-            keyPassword 'password'
-//            storeFile file('/Users/syahrulhajji/AndroidStudioProjects/Grosir Mobil/GrosirMobile.jks')
-            storeFile file('F:\\PROJECT\\Freelance\\Template.jks')
-            storePassword 'password'
+            keyAlias 'grosirMobile'
+            keyPassword '9r0s!rM0b!lE'
+            storeFile file('/Users/syahrulhajji/AndroidStudioProjects/Grosir Mobil/GrosirMobile.jks')
+//            storeFile file('F:\\PROJECT\\Freelance\\GrosirMobile.jks')
+            storePassword '9r0s!rM0b!lE'
         }
     }
 

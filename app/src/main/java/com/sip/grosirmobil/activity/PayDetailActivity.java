@@ -2,6 +2,7 @@ package com.sip.grosirmobil.activity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -25,6 +27,7 @@ import com.sip.grosirmobil.cloud.config.request.invoice.InvoiceVaRequest;
 import com.sip.grosirmobil.cloud.config.response.invoiceva.InvoiceVaResponse;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +47,10 @@ import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBar
 
 public class PayDetailActivity extends GrosirMobilActivity {
 
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_day_first) TextView tvDayFirst;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_day_second) TextView tvDaySecond;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_hour_first) TextView tvHourFirst;
     @SuppressLint("NonConstantResourceId")
@@ -167,6 +174,14 @@ public class PayDetailActivity extends GrosirMobilActivity {
     }
 
     @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.tv_pembayaran_dash)
+    void tvPembayaranDashClick(){
+        ClipboardManager cm = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+        cm.setText(tvPembayaranDash.getText());
+        Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show();
+    }
+
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_atm_bca)
     void setTvAtmBCAClick(){
         if(atmBCA){
@@ -242,12 +257,17 @@ public class PayDetailActivity extends GrosirMobilActivity {
         new CountDownTimer(noOfMinutes,  1000) {
             @SuppressLint({"SetTextI18n", "DefaultLocale"})
             public void onTick(long millisUntilFinished) {
+                long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
+                millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
                 int seconds = (int) (millisUntilFinished / 1000);
+                int day = (int) days;
                 int hours = seconds / (60 * 60);
                 int tempMint = (seconds - (hours * 60 * 60));
                 int minutes = tempMint / 60;
                 seconds = tempMint - (minutes * 60);
 
+                tvDayFirst.setText(String.format("%02d", day).substring(0,1));
+                tvDaySecond.setText(String.format("%02d", day).substring(1,2));
                 tvHourFirst.setText(String.format("%02d", hours).substring(0,1));
                 tvHourSecond.setText(String.format("%02d", hours).substring(1,2));
                 tvMinuteFirst.setText(String.format("%02d", minutes).substring(0,1));
@@ -257,6 +277,8 @@ public class PayDetailActivity extends GrosirMobilActivity {
             }
             @SuppressLint("SetTextI18n")
             public void onFinish() {
+                tvDayFirst.setText("0");
+                tvDaySecond.setText("0");
                 tvHourFirst.setText("0");
                 tvHourSecond.setText("0");
                 tvMinuteFirst.setText("0");
@@ -266,4 +288,16 @@ public class PayDetailActivity extends GrosirMobilActivity {
             }
         }.start();
     }
+
+//    long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
+//    millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
+//
+//    long hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
+//    millisUntilFinished -= TimeUnit.HOURS.toMillis(hours);
+//
+//    long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+//    millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
+//
+//    long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+//                tvTimer.setText(days + " Hari " + hours + " Jam " + minutes + " Menit " + seconds+" Detik");
 }
