@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/linear_car_data"
+    android:id="@+id/linear_list_bca_mobile"
     android:visibility="gone"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:paddingBottom="@dimen/_10sdp"
@@ -18,8 +18,8 @@
         android:layout_height="@dimen/_25sdp"
         tools:ignore="UselessParent">
         <TextView
-            android:gravity="center|left"
-            android:text= "@string/tv_id_nomor"
+            android:gravity="center|top"
+            android:text="-"
             android:textColor="@color/colorPrimaryFont"
             android:fontFamily="@font/nunito_regular"
             android:textSize="@dimen/text_12"
@@ -28,12 +28,68 @@
             android:layout_height="match_parent"
             tools:ignore="RtlHardcoded" />
         <TextView
-            android:id="@+id/tv_id_number"
-            android:gravity="center|start"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="15"
+            android:fontFamily="@font/nunito_regular"
+            android:gravity="center|left"
+            android:text="@string/tv_list_bca_mobile_1"
+            android:textColor="@color/colorPrimaryFont"
+            android:textSize="@dimen/text_12"
+            android:layout_marginBottom="@dimen/_5sdp"
+            tools:ignore="RtlHardcoded" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_5sdp"
+        tools:ignore="UselessParent">
+        <TextView
+            android:gravity="center|top"
+            android:text="-"
             android:textColor="@color/colorPrimaryFont"
             android:fontFamily="@font/nunito_regular"
             android:textSize="@dimen/text_12"
             android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="15"
+            android:fontFamily="@font/nunito_regular"
+            android:gravity="center|left"
+            android:text="@string/tv_list_bca_mobile_2"
+            android:textColor="@color/colorPrimaryFont"
+            android:textSize="@dimen/text_12"
+            tools:ignore="RtlHardcoded" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_5sdp"
+        tools:ignore="UselessParent">
+        <TextView
+            android:gravity="center|top"
+            android:text="-"
+            android:textColor="@color/colorPrimaryFont"
+            android:fontFamily="@font/nunito_regular"
+            android:textSize="@dimen/text_12"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            tools:ignore="RtlHardcoded" />
+        <TextView
+            android:gravity="center|left"
+            android:text="@string/tv_list_bca_mobile_3"
+            android:textColor="@color/colorPrimaryFont"
+            android:fontFamily="@font/nunito_regular"
+            android:textSize="@dimen/text_12"
+            android:layout_weight="15"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             tools:ignore="RtlHardcoded" />
@@ -41,11 +97,12 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_25sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_3sdp"
         tools:ignore="UselessParent">
         <TextView
-            android:gravity="center|left"
-            android:text="@string/tv_score"
+            android:gravity="center|top"
+            android:text="-"
             android:textColor="@color/colorPrimaryFont"
             android:fontFamily="@font/nunito_regular"
             android:textSize="@dimen/text_12"
@@ -54,12 +111,12 @@
             android:layout_height="match_parent"
             tools:ignore="RtlHardcoded" />
         <TextView
-            android:id="@+id/tv_score"
-            android:gravity="center|start"
+            android:gravity="center|left"
+            android:text="@string/tv_list_bca_mobile_4"
             android:textColor="@color/colorPrimaryFont"
             android:fontFamily="@font/nunito_regular"
             android:textSize="@dimen/text_12"
-            android:layout_weight="1"
+            android:layout_weight="15"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             tools:ignore="RtlHardcoded" />
@@ -67,11 +124,12 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_25sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_5sdp"
         tools:ignore="UselessParent">
         <TextView
-            android:gravity="center|left"
-            android:text="@string/tv_no_polisi"
+            android:gravity="center|top"
+            android:text="-"
             android:textColor="@color/colorPrimaryFont"
             android:fontFamily="@font/nunito_regular"
             android:textSize="@dimen/text_12"
@@ -80,12 +138,12 @@
             android:layout_height="match_parent"
             tools:ignore="RtlHardcoded" />
         <TextView
-            android:id="@+id/tv_plat_number_car_data"
-            android:gravity="center|start"
+            android:gravity="center|left"
+            android:text="@string/tv_list_bca_mobile_5"
             android:textColor="@color/colorPrimaryFont"
             android:fontFamily="@font/nunito_regular"
             android:textSize="@dimen/text_12"
-            android:layout_weight="1"
+            android:layout_weight="15"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             tools:ignore="RtlHardcoded" />
@@ -93,11 +151,12 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_25sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_5sdp"
         tools:ignore="UselessParent">
         <TextView
-            android:gravity="center|left"
-            android:text="@string/tv_year"
+            android:gravity="center|top"
+            android:text="-"
             android:textColor="@color/colorPrimaryFont"
             android:fontFamily="@font/nunito_regular"
             android:textSize="@dimen/text_12"
@@ -106,12 +165,12 @@
             android:layout_height="match_parent"
             tools:ignore="RtlHardcoded" />
         <TextView
-            android:id="@+id/tv_year"
-            android:gravity="center|start"
+            android:gravity="center|left"
+            android:text="@string/tv_list_atm_bca_6"
             android:textColor="@color/colorPrimaryFont"
             android:fontFamily="@font/nunito_regular"
             android:textSize="@dimen/text_12"
-            android:layout_weight="1"
+            android:layout_weight="15"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             tools:ignore="RtlHardcoded" />
@@ -119,11 +178,12 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_25sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_5sdp"
         tools:ignore="UselessParent">
         <TextView
-            android:gravity="center|left"
-            android:text="@string/tv_transmition"
+            android:gravity="center|top"
+            android:text="-"
             android:textColor="@color/colorPrimaryFont"
             android:fontFamily="@font/nunito_regular"
             android:textSize="@dimen/text_12"
@@ -132,12 +192,12 @@
             android:layout_height="match_parent"
             tools:ignore="RtlHardcoded" />
         <TextView
-            android:id="@+id/tv_transmition"
-            android:gravity="center|start"
+            android:gravity="center|left"
+            android:text="@string/tv_list_bca_mobile_7"
             android:textColor="@color/colorPrimaryFont"
             android:fontFamily="@font/nunito_regular"
             android:textSize="@dimen/text_12"
-            android:layout_weight="1"
+            android:layout_weight="15"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             tools:ignore="RtlHardcoded" />
@@ -145,11 +205,12 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_25sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_5sdp"
         tools:ignore="UselessParent">
         <TextView
-            android:gravity="center|left"
-            android:text="@string/tv_color"
+            android:gravity="center|top"
+            android:text="-"
             android:textColor="@color/colorPrimaryFont"
             android:fontFamily="@font/nunito_regular"
             android:textSize="@dimen/text_12"
@@ -158,170 +219,15 @@
             android:layout_height="match_parent"
             tools:ignore="RtlHardcoded" />
         <TextView
-            android:id="@+id/tv_color"
-            android:gravity="center|start"
+            android:gravity="center|left"
+            android:text="@string/tv_list_bca_mobile_8"
             android:textColor="@color/colorPrimaryFont"
             android:fontFamily="@font/nunito_regular"
             android:textSize="@dimen/text_12"
-            android:layout_weight="1"
+            android:layout_weight="15"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             tools:ignore="RtlHardcoded" />
     </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_25sdp"
-        tools:ignore="UselessParent">
-        <TextView
-            android:gravity="center|left"
-            android:text="@string/tv_km"
-            android:textColor="@color/colorPrimaryFont"
-            android:fontFamily="@font/nunito_regular"
-            android:textSize="@dimen/text_12"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            tools:ignore="RtlHardcoded" />
-        <TextView
-            android:id="@+id/tv_km"
-            android:gravity="center|start"
-            android:textColor="@color/colorPrimaryFont"
-            android:fontFamily="@font/nunito_regular"
-            android:textSize="@dimen/text_12"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            tools:ignore="RtlHardcoded" />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_25sdp"
-        tools:ignore="UselessParent">
-        <TextView
-            android:gravity="center|left"
-            android:text="@string/tv_kepemilikan"
-            android:textColor="@color/colorPrimaryFont"
-            android:fontFamily="@font/nunito_regular"
-            android:textSize="@dimen/text_12"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            tools:ignore="RtlHardcoded" />
-        <TextView
-            android:id="@+id/tv_kepemilikan"
-            android:gravity="center|start"
-            android:textColor="@color/colorPrimaryFont"
-            android:fontFamily="@font/nunito_regular"
-            android:textSize="@dimen/text_12"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            tools:ignore="RtlHardcoded" />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_25sdp"
-        tools:ignore="UselessParent">
-        <TextView
-            android:gravity="center|left"
-            android:text="@string/tv_location"
-            android:textColor="@color/colorPrimaryFont"
-            android:fontFamily="@font/nunito_regular"
-            android:textSize="@dimen/text_12"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            tools:ignore="RtlHardcoded" />
-        <TextView
-            android:id="@+id/tv_location"
-            android:gravity="center|start"
-            android:textColor="@color/colorPrimaryFont"
-            android:fontFamily="@font/nunito_regular"
-            android:textSize="@dimen/text_12"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            tools:ignore="RtlHardcoded" />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_25sdp"
-        tools:ignore="UselessParent">
-        <TextView
-            android:gravity="center|left"
-            android:text="@string/tv_stnk"
-            android:textColor="@color/colorPrimaryFont"
-            android:fontFamily="@font/nunito_regular"
-            android:textSize="@dimen/text_12"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            tools:ignore="RtlHardcoded" />
-        <TextView
-            android:id="@+id/tv_stnk"
-            android:gravity="center|start"
-            android:textColor="@color/colorPrimaryFont"
-            android:fontFamily="@font/nunito_regular"
-            android:textSize="@dimen/text_12"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            tools:ignore="RtlHardcoded" />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_25sdp"
-        tools:ignore="UselessParent">
-        <TextView
-            android:gravity="center|left"
-            android:text="@string/tv_masa_berlaku_pajak"
-            android:textColor="@color/colorPrimaryFont"
-            android:fontFamily="@font/nunito_regular"
-            android:textSize="@dimen/text_12"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            tools:ignore="RtlHardcoded" />
-        <TextView
-            android:id="@+id/tv_masa_berlaku_pajak"
-            android:gravity="center|start"
-            android:textColor="@color/colorPrimaryFont"
-            android:fontFamily="@font/nunito_regular"
-            android:textSize="@dimen/text_12"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            tools:ignore="RtlHardcoded" />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_25sdp"
-        tools:ignore="UselessParent">
-        <TextView
-            android:gravity="center|left"
-            android:text="@string/tv_masa_berlaku_stnk"
-            android:textColor="@color/colorPrimaryFont"
-            android:fontFamily="@font/nunito_regular"
-            android:textSize="@dimen/text_12"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            tools:ignore="RtlHardcoded" />
-        <TextView
-            android:id="@+id/tv_masa_berlaku_stnk"
-            android:gravity="center|start"
-            android:textColor="@color/colorPrimaryFont"
-            android:fontFamily="@font/nunito_regular"
-            android:textSize="@dimen/text_12"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            tools:ignore="RtlHardcoded" />
-    </LinearLayout>
+ 
 </LinearLayout>

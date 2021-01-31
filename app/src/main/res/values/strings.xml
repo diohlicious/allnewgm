@@ -450,4 +450,97 @@
     <string name="tv_harga_tertinggi">Harga Tertinggi</string>
     <string name="tv_status">Status</string>
     <string name="tv_va_number">VA Number</string>
+    <string name="atm_bca">
+           <![CDATA[
+            <html>
+                <body style="color:black;">
+                        <ul>     
+                        <li>Masukkan Kartu ATM BCA & PIN</li> 
+                        <li> Pilih menu Transaksi Lainnya > Transfer > ke Rekening BCA Virtual Account</li>     
+                        <li> Masukkan 5 angka kode perusahaan untuk Grosir Mobil, dh PT SOLUSI INTEGRASI PRATAMA (11904) dan Nomor HP yang         terdaftar di akun Grosir Mobil Anda (Contoh: 1190422004000114)</li>     
+                        <li> Di halaman konfirmasi, pastikan detil pembayaran sudah sesuai seperti No VA, Unit yang dibeli, Tanggal berlaku         VA dan Total Tagihan</li>     
+                        <li> Masukkan Jumlah Transfer sesuai dengan Total Tagihan</li>     
+                        <li> Ikuti instruksi untuk menyelesaikan transaksi</li>     
+                        <li> Simpan struk transaksi sebagai bukti pembayaran M - BCA (BCA Mobile)</li> 
+                        </ul>  
+                </body>
+            </html>
+           ]]>
+    </string>
+    <string name="atm_bca_mobile">
+         <![CDATA[
+            <html>
+                <body style="color:black;">
+                     <ul>
+                        <li>Lakukan log in pada aplikasi BCA Mobile</li>
+                        <li>Pilih menu m-BCA, kemudian masukkan kode akses m-BCA</li>
+                        <li>Pilih m-Transfer > BCA Virtual Account</li>
+                        <li>Pilih dari Daftar Transfer, atau masukkan 5 angka kode perusahaan untuk Grosir Mobil, dh. PT SOLUSI INTEGRASI
+                            PRATAMA (11904) dan Nomor HP yang terdaftar di akun Grosir Mobil Anda (Contoh: 1190422004000114)</li>
+                        <li>Masukkan pin m-BCA</li>
+                        <li>Pembayaran selesai.</li>
+                        <li>Simpan notifikasi yang muncul sebagai bukti pembayaran Internet Banking BCA</li>
+                    </ul> 
+                </body>
+            </html>
+         ]]>
+        
+    </string>
+    <string name="internet_banking_bca">
+        <![CDATA[
+            <html>
+                <body style="color:black;">
+                  <ul>
+                    <li>Login pada alamat Internet Banking BCA (klikbca.com)</li>
+                    <li>Pilih menu Pembayaran Tagihan > Pembayaran > BCA Virtual Account</li>
+                    <li>Pada kolom kode bayar, masukkan 5 angka kode perusahaan ntuk Grosir Mobil, dh PT SOLUSI INTEGRASI PRATAMA
+                        (11904) dan Nomor HP yang terdaftar di akun Grosir Mobil Anda (Contoh: 1190422004000114)</li>
+                    <li>Di halaman konfirmasi, pastikan detil pembayaran sudah sesuai seperti Nomor BCA Virtual Account, Unit yang
+                        dibeli, Tanggal berlaku VA dan Total Tagihan</li>
+                    <li>Masukkan password dan mToken</li>
+                    <li>Cetak/simpan struk pembayaran BCA Virtual Account sebagai bukti pembayaran Kantor Bank BCA</li>
+                </ul>
+                </body>
+            </html>
+         ]]>
+        </string>
+    <string name="bank_bca">
+        <![CDATA[
+            <html>
+                <body style="color:black;">
+                  <ul>
+                    <li>Ambil nomor antrian transaksi Teller dan isi slip setoran</li>
+                    <li>Serahkan slip dan jumlah setoran kepada Teller BCA</li>
+                    <li>Teller BCA akan melakukan validasi transaksi</li>
+                    <li>Simpan slip setoran hasil validasi sebagai bukti pembayaran</li>
+                </ul>
+                </body>
+            </html>
+         ]]>
+        
+    </string>
+    <string name="tv_list_atm_bca_1">Masukkan Kartu ATM BCA &amp; PIN</string>
+    <string name="tv_list_atm_bca_2">Pilih menu Transaksi Lainnya > Transfer > ke Rekening BCA Virtual Account</string>
+    <string name="tv_list_atm_bca_3">Masukkan 5 angka kode perusahaan untuk Grosir Mobil, dh PT SOLUSI INTEGRASI PRATAMA (11904) dan Nomor HP yang         terdaftar di akun Grosir Mobil Anda (Contoh: 1190422004000114)</string>
+    <string name="tv_list_atm_bca_4">Di halaman konfirmasi, pastikan detil pembayaran sudah sesuai seperti No VA, Unit yang dibeli, Tanggal berlaku         VA dan Total Tagihan</string>
+    <string name="tv_list_atm_bca_5">Masukkan Jumlah Transfer sesuai dengan Total Tagihan</string>
+    <string name="tv_list_atm_bca_6">Ikuti instruksi untuk menyelesaikan transaksi</string>
+    <string name="tv_list_atm_bca_7">Simpan struk transaksi sebagai bukti pembayaran M - BCA (BCA Mobile)</string>
+    <string name="tv_list_bca_mobile_1">Lakukan log in pada aplikasi BCA Mobile</string>
+    <string name="tv_list_bca_mobile_2">Pilih menu m-BCA, kemudian masukkan kode akses m-BCA</string>
+    <string name="tv_list_bca_mobile_3"><![CDATA[Pilih m-Transfer > BCA Virtual Account]]></string>
+    <string name="tv_list_bca_mobile_4">Pilih dari Daftar Transfer, atau masukkan 5 angka kode perusahaan untuk Grosir Mobil, dh. PT SOLUSI INTEGRASI         PRATAMA (11904) dan Nomor HP yang terdaftar di akun Grosir Mobil Anda (Contoh: 1190422004000114</string>
+    <string name="tv_list_bca_mobile_5">Masukkan pin m-BCA</string>
+    <string name="tv_list_bca_mobile_7">Pembayaran selesai.</string>
+    <string name="tv_list_bca_mobile_8">Simpan notifikasi yang muncul sebagai bukti pembayaran Internet Banking BCA</string>
+    <string name="tv_list_internet_banking_1">Login pada alamat Internet Banking BCA (klikbca.com)</string>
+    <string name="tv_list_internet_banking_2"><![CDATA[Pilih menu Pembayaran Tagihan > Pembayaran > BCA Virtual Account]]></string>
+    <string name="tv_list_internet_banking_3">Pada kolom kode bayar, masukkan 5 angka kode perusahaan ntuk Grosir Mobil, dh PT SOLUSI INTEGRASI PRATAMA         (11904) dan Nomor HP yang terdaftar di akun Grosir Mobil Anda (Contoh: 1190422004000114)</string>
+    <string name="tv_list_internet_banking_4">Di halaman konfirmasi, pastikan detil pembayaran sudah sesuai seperti Nomor BCA Virtual Account, Unit yang         dibeli, Tanggal berlaku VA dan Total Tagihan</string>
+    <string name="tv_list_internet_banking_5">Masukkan password dan mToken</string>
+    <string name="tv_list_internet_banking_6">Cetak/simpan struk pembayaran BCA Virtual Account sebagai bukti pembayaran Kantor Bank BCA</string>
+    <string name="tv_list_kantor_bca_1">Ambil nomor antrian transaksi Teller dan isi slip setoran</string>
+    <string name="tv_list_kantor_bca_2">Serahkan slip dan jumlah setoran kepada Teller BCA</string>
+    <string name="tv_list_kantor_bca_3">Teller BCA akan melakukan validasi transaksi</string>
+    <string name="tv_list_kantor_bca_4">Simpan slip setoran hasil validasi sebagai bukti pembayaran</string>
 </resources>

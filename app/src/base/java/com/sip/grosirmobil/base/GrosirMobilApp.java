@@ -5,6 +5,7 @@ import android.app.Application;
 
 import com.sip.grosirmobil.BuildConfig;
 import com.sip.grosirmobil.base.contract.GrosirMobilContract;
+import com.sip.grosirmobil.base.util.UnsafeOkHttpClient;
 import com.sip.grosirmobil.cloud.config.GrosirMobilApi;
 
 import java.util.concurrent.TimeUnit;
@@ -29,7 +30,9 @@ public class GrosirMobilApp extends Application {
     }
 
     public static GrosirMobilApi getApiGrosirMobil() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BuildConfig.BASE_URL).client(getClient())
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
+                .client(UnsafeOkHttpClient.getUnsafeOkHttpClient())
+//                .client(getClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build();
 
@@ -45,6 +48,8 @@ public class GrosirMobilApp extends Application {
                 .addInterceptor(getLoggingInterceptor())
                 .build();
     }
+
+
 
     public static HttpLoggingInterceptor.Level getInterceptorLevel() {
         if (BuildConfig.DEBUG) return HttpLoggingInterceptor.Level.BODY;

@@ -144,6 +144,7 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
         });
 
         holder.btnBuyNow.setOnClickListener(view -> {
+            //TODO Show Dialog Buy Now Same like Dialog Buy Now In Vehicle Detail (include_vehicle_detail_confirm_buy_now_dialog), after that Agus Parse tvName n Price in layout.
             NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(String.valueOf(dataCartResponse.getOhid()), dataCartResponse.getKik(), dataCartResponse.getAgreementNo().trim(), String.valueOf(dataCartResponse.getOpenPrice()));
             liveBuyNowApi(negoAndBuyNowRequest);
         });
