@@ -47,22 +47,24 @@ import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBar
 
 public class PayDetailActivity extends GrosirMobilActivity {
 
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_day_first) TextView tvDayFirst;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_day_second) TextView tvDaySecond;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_hour_first) TextView tvHourFirst;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_hour_second) TextView tvHourSecond;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_minute_first) TextView tvMinuteFirst;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_minute_second) TextView tvMinuteSecond;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_second_first) TextView tvSecondFirst;
+//    @SuppressLint("NonConstantResourceId")
+//    @BindView(R.id.tv_second_second) TextView tvSecondSecond;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_day_first) TextView tvDayFirst;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_day_second) TextView tvDaySecond;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_hour_first) TextView tvHourFirst;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_hour_second) TextView tvHourSecond;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_minute_first) TextView tvMinuteFirst;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_minute_second) TextView tvMinuteSecond;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_second_first) TextView tvSecondFirst;
-    @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_second_second) TextView tvSecondSecond;
+    @BindView(R.id.tv_timer) TextView tvTimer;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_pembayaran_dash) TextView tvPembayaranDash;
     @SuppressLint("NonConstantResourceId")
@@ -136,7 +138,7 @@ public class PayDetailActivity extends GrosirMobilActivity {
                         if (response.body().getMessage().equals("success")) {
                             String startDate = convertDate(response.body().getDataInvoiceResponse().getDataVaResponse().getStartDateVa(),"yyyy-MM-dd hh:mm:ss","dd-MM-yyyy HH:mm:ss");
                             String endDate = convertDate(response.body().getDataInvoiceResponse().getDataVaResponse().getEndDateVa(),"yyyy-MM-dd hh:mm:ss","dd-MM-yyyy HH:mm:ss");
-                            startTimer(calculateDate(startDate,endDate));
+                            startTimer(tvTimer, calculateDate(startDate,endDate));
                             LinearLayoutManager linearLayoutManagerBody = new LinearLayoutManager(PayDetailActivity.this);
                             rvUnitToBuy.setLayoutManager(linearLayoutManagerBody);
                             rvUnitToBuy.setItemAnimator(new DefaultItemAnimator());
@@ -253,38 +255,62 @@ public class PayDetailActivity extends GrosirMobilActivity {
         finish();
     }
 
-    public void startTimer(long noOfMinutes) {
+//    public void startTimer(long noOfMinutes) {
+//        new CountDownTimer(noOfMinutes,  1000) {
+//            @SuppressLint({"SetTextI18n", "DefaultLocale"})
+//            public void onTick(long millisUntilFinished) {
+//                long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
+//                millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
+//                int seconds = (int) (millisUntilFinished / 1000);
+//                int day = (int) days;
+//                int hours = seconds / (60 * 60);
+//                int tempMint = (seconds - (hours * 60 * 60));
+//                int minutes = tempMint / 60;
+//                seconds = tempMint - (minutes * 60);
+//
+//                tvDayFirst.setText(String.format("%02d", day).substring(0,1));
+//                tvDaySecond.setText(String.format("%02d", day).substring(1,2));
+//                tvHourFirst.setText(String.format("%02d", hours).substring(0,1));
+//                tvHourSecond.setText(String.format("%02d", hours).substring(1,2));
+//                tvMinuteFirst.setText(String.format("%02d", minutes).substring(0,1));
+//                tvMinuteSecond.setText(String.format("%02d", minutes).substring(1,2));
+//                tvSecondFirst.setText(String.format("%02d", seconds).substring(0,1));
+//                tvSecondSecond.setText(String.format("%02d", seconds).substring(1,2));
+//            }
+//            @SuppressLint("SetTextI18n")
+//            public void onFinish() {
+//                tvDayFirst.setText("0");
+//                tvDaySecond.setText("0");
+//                tvHourFirst.setText("0");
+//                tvHourSecond.setText("0");
+//                tvMinuteFirst.setText("0");
+//                tvMinuteSecond.setText("0");
+//                tvSecondFirst.setText("0");
+//                tvSecondSecond.setText("0");
+//            }
+//        }.start();
+//    }
+
+    public void startTimer(TextView tvTimer, long noOfMinutes) {
         new CountDownTimer(noOfMinutes,  1000) {
             @SuppressLint({"SetTextI18n", "DefaultLocale"})
             public void onTick(long millisUntilFinished) {
                 long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
                 millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
-                int seconds = (int) (millisUntilFinished / 1000);
-                int day = (int) days;
-                int hours = seconds / (60 * 60);
-                int tempMint = (seconds - (hours * 60 * 60));
-                int minutes = tempMint / 60;
-                seconds = tempMint - (minutes * 60);
 
-                tvDayFirst.setText(String.format("%02d", day).substring(0,1));
-                tvDaySecond.setText(String.format("%02d", day).substring(1,2));
-                tvHourFirst.setText(String.format("%02d", hours).substring(0,1));
-                tvHourSecond.setText(String.format("%02d", hours).substring(1,2));
-                tvMinuteFirst.setText(String.format("%02d", minutes).substring(0,1));
-                tvMinuteSecond.setText(String.format("%02d", minutes).substring(1,2));
-                tvSecondFirst.setText(String.format("%02d", seconds).substring(0,1));
-                tvSecondSecond.setText(String.format("%02d", seconds).substring(1,2));
+                long hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
+                millisUntilFinished -= TimeUnit.HOURS.toMillis(hours);
+
+                long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+                millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
+
+                long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+                tvTimer.setText(days + " Hari " + hours + " Jam " + minutes + " Menit " + seconds+" Detik");
             }
             @SuppressLint("SetTextI18n")
             public void onFinish() {
-                tvDayFirst.setText("0");
-                tvDaySecond.setText("0");
-                tvHourFirst.setText("0");
-                tvHourSecond.setText("0");
-                tvMinuteFirst.setText("0");
-                tvMinuteSecond.setText("0");
-                tvSecondFirst.setText("0");
-                tvSecondSecond.setText("0");
+                tvTimer.setText("Waktu Pembayaran Habis");
+
             }
         }.start();
     }
