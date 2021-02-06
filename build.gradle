@@ -6,7 +6,6 @@ buildscript {
         google()
         mavenCentral()
         jcenter()
-//        maven { url 'https://plugins.gradle.org/m2/'}//One Signal
     }
 
     dependencies {
@@ -18,11 +17,11 @@ buildscript {
     }
 
     ext.versions = [
-            'compileSdk'            : 29,
+            'compileSdk'            : 30,
             'minSdk'                : 21,
-            'targetSdk'             : 29,
-            'versionCodeApp'        : 2,
-            'versionNameApp'        : "1.0.0",
+            'targetSdk'             : 30,
+            'versionCodeApp'        : 3,
+            'versionNameApp'        : "1.0.1",
             'versionCodeMessage'    : 1,
             'versionNameMessage'    : "1.0",
             'rootDevice'            : "0.0.8",
