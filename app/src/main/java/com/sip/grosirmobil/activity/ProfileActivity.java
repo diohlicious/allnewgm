@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.fxn.pix.Pix;
+import com.sip.grosirmobil.BuildConfig;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
@@ -74,11 +75,14 @@ public class ProfileActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_loss_bidding) TextView tvLossBidding;
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_version) TextView tvVersion;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.progress_horizontal) ProgressBar progressHorizontal;
 
     private GrosirMobilPreference grosirMobilPreference;
     private GrosirMobilFunction grosirMobilFunction;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +95,7 @@ public class ProfileActivity extends GrosirMobilActivity {
         grosirMobilFunction = new GrosirMobilFunction(this);
 
         try {
+            tvVersion.setText("Version "+ BuildConfig.VERSION_NAME);
             tvFullName.setText(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getUserResponse().getNamaLengkap());
             tvFullNameDataDiri.setText(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getUserResponse().getNamaLengkap());
             tvPhoneNumber.setText(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getUserResponse().getNoHP());
