@@ -56,13 +56,19 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
     private String loadingShow;
     private GrosirMobilFunction grosirMobilFunction;
     private GrosirMobilPreference grosirMobilPreference;
+    private final OnItemClickListener onItemClickListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(DataCartResponse dataCartResponse);
+    }
 
 
-    public LiveGarageAdapter(Context context, String timeServer, String loadingShow, List<DataCartResponse> dataCartResponses) {
+    public LiveGarageAdapter(Context context, String timeServer, String loadingShow, List<DataCartResponse> dataCartResponses, OnItemClickListener onItemClickListener) {
         this.contexts = context;
         this.timeServer = timeServer;
         this.loadingShow = loadingShow;
         this.dataCartResponseList = dataCartResponses;
+        this.onItemClickListener = onItemClickListener;
         grosirMobilFunction = new GrosirMobilFunction(context);
         grosirMobilPreference = new GrosirMobilPreference(context);
     }
@@ -144,9 +150,10 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
         });
 
         holder.btnBuyNow.setOnClickListener(view -> {
+            onItemClickListener.onItemClick(dataCartResponse);
             //TODO Show Dialog Buy Now Same like Dialog Buy Now In Vehicle Detail (include_vehicle_detail_confirm_buy_now_dialog), after that Agus Parse tvName n Price in layout.
             NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(String.valueOf(dataCartResponse.getOhid()), dataCartResponse.getKik(), dataCartResponse.getAgreementNo().trim(), String.valueOf(dataCartResponse.getOpenPrice()));
-            liveBuyNowApi(negoAndBuyNowRequest);
+//            liveBuyNowApi(negoAndBuyNowRequest);
         });
         holder.ivClearPrice.setOnClickListener(view -> {
             if(dataCartResponse.getUserTertinggi()==null){

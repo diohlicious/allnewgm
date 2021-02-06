@@ -1,6 +1,7 @@
 package com.sip.grosirmobil.fragment.navigationmenu;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -28,6 +30,8 @@ import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilFragment;
+import com.sip.grosirmobil.cloud.config.request.negonbuynow.NegoAndBuyNowRequest;
+import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 import com.sip.grosirmobil.cloud.config.response.cart.CartResponse;
 import com.sip.grosirmobil.cloud.config.response.cart.DataCartResponse;
 import com.sip.grosirmobil.cloud.config.response.timeserver.TimeServerResponse;
@@ -47,6 +51,7 @@ import static com.sip.grosirmobil.base.GrosirMobilApp.getApiGrosirMobil;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.BEARER;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MAIN;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.convertDateServer;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBarFragment;
 
 /**
@@ -93,6 +98,14 @@ public class CartFragment extends GrosirMobilFragment {
     @BindView(R.id.btn_telusuri_kenderaan) Button btnFindVehicle;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.progress_bar) ProgressBar progressBar;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.relative_background_dialog_confirm_buy_now) RelativeLayout relativeBackgroundDialogConfirmBuyNow;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.iv_close_dialog_confirm_buy_now) ImageView ivCloseDialogConfirmBuyNow;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_message_buy_now) TextView tvMessageBuyNow;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.btn_confirm_buy_now_dialog) Button btnConfirmBuyNowDialog;
 
     Handler handler = new Handler();
     Runnable runnable;
@@ -102,6 +115,7 @@ public class CartFragment extends GrosirMobilFragment {
 
     private GrosirMobilFunction grosirMobilFunction;
     private GrosirMobilPreference grosirMobilPreference;
+    private NegoAndBuyNowRequest negoAndBuyNowRequest;
 
     private final List<DataCartResponse> dataCartLiveResponseList = new ArrayList<>();
     private final List<DataCartResponse> dataCartSuccessResponseList = new ArrayList<>();
@@ -199,6 +213,7 @@ public class CartFragment extends GrosirMobilFragment {
         }
         final Call<CartResponse> questionOneApi = getApiGrosirMobil().lisCartApi(BEARER+" "+grosirMobilPreference.getToken());
         questionOneApi.enqueue(new Callback<CartResponse>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<CartResponse> call, Response<CartResponse> response) {
                 hideProgressBar();
@@ -236,13 +251,16 @@ public class CartFragment extends GrosirMobilFragment {
                                         dataCartLostResponseList.add(response.body().getDataCartResponseList().get(i));
                                     }
                                 }
-                                System.out.println("Data Live : " + dataCartLiveResponseList.size());
-                                System.out.println("Data Live : " + dataCartLiveResponseList.size());
                                 if(dataCartLiveResponseList.isEmpty()||dataCartLiveResponseList==null){
                                     linearLiveGarage.setVisibility(View.GONE);
                                 }else {
                                     linearLiveGarage.setVisibility(View.VISIBLE);
-                                    liveGarageAdapter = new LiveGarageAdapter(getActivity(), convertDateServer(timeServer), loadingShow, dataCartLiveResponseList);
+                                    liveGarageAdapter = new LiveGarageAdapter(getActivity(), convertDateServer(timeServer), loadingShow, dataCartLiveResponseList, dataCartResponse -> {
+                                        tvMessageBuyNow.setText(dataCartResponse.getVehicleName()+"\nseharga\nRp"+setCurrencyFormat(String.valueOf(dataCartResponse.getOpenPrice())));
+                                        relativeBackgroundDialogConfirmBuyNow.setVisibility(View.VISIBLE);
+                                        negoAndBuyNowRequest = new NegoAndBuyNowRequest(String.valueOf(dataCartResponse.getOhid()), dataCartResponse.getKik(), dataCartResponse.getAgreementNo().trim(), String.valueOf(dataCartResponse.getOpenPrice()));
+//                                        liveBuyNowApi(negoAndBuyNowRequest);
+                                    });
                                     rvLiveGarage.setAdapter(liveGarageAdapter);
 //                                    liveGarageAdapter.notifyDataSetChanged();
                                 }
@@ -268,18 +286,21 @@ public class CartFragment extends GrosirMobilFragment {
                                     rvLostGarage.setAdapter(lostGarageAdapter);
                                     lostGarageAdapter.notifyDataSetChanged();
                                 }
+                                System.out.println("Data Live : " + dataCartLiveResponseList.size());
+                                System.out.println("Data Success : " + dataCartSuccessResponseList.size());
+                                System.out.println("Data Lost : " + dataCartLostResponseList.size());
 
-//                                if(dataCartSuccessResponseList.isEmpty()||dataCartSuccessResponseList==null &&
-//                                   dataCartLiveResponseList.isEmpty()||dataCartLiveResponseList==null &&
-//                                   dataCartLostResponseList.isEmpty()||dataCartLostResponseList==null){
-//                                    linearCartEmpty.setVisibility(View.VISIBLE);
-//                                    linearCartNotEmpty.setVisibility(View.GONE);
-//                                    checkAuto=false;
-//                                }else {
+                                if(dataCartSuccessResponseList.isEmpty()&&
+                                   dataCartLiveResponseList.isEmpty()&&
+                                   dataCartLostResponseList.isEmpty()){
+                                    linearCartEmpty.setVisibility(View.VISIBLE);
+                                    linearCartNotEmpty.setVisibility(View.GONE);
+                                    checkAuto=false;
+                                }else {
                                     checkAuto=true;
-//                                    linearCartEmpty.setVisibility(View.GONE);
-//                                    linearCartNotEmpty.setVisibility(View.VISIBLE);
-//                                }
+                                    linearCartEmpty.setVisibility(View.GONE);
+                                    linearCartNotEmpty.setVisibility(View.VISIBLE);
+                                }
                             }
                         }else {
                             grosirMobilFunction.showMessage(getActivity(), "GET Cart Data", response.body().getMessage());
@@ -316,6 +337,18 @@ public class CartFragment extends GrosirMobilFragment {
     @OnClick(R.id.relative_background_dialog_filter)
     void relativeBackgroundDialogFilterClick(){
         relativeBackgroundDialogFilter.setVisibility(View.GONE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.iv_close_dialog_confirm_buy_now)
+    void ivCloseDialogConfirmBuyNowClick(){
+        relativeBackgroundDialogConfirmBuyNow.setVisibility(View.GONE);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @OnClick(R.id.btn_confirm_buy_now_dialog)
+    void btnConfirmBuyNowDialogClick(){
+        liveBuyNowApi(negoAndBuyNowRequest);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -394,5 +427,48 @@ public class CartFragment extends GrosirMobilFragment {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         getActivity().finish();
+    }
+
+    public void liveBuyNowApi(NegoAndBuyNowRequest negoAndBuyNowRequest) {
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(getString(R.string.base_tv_please_wait));
+        progressDialog.show();
+        final Call<GeneralResponse> vehicleDetailApi = getApiGrosirMobil().liveBuyNowApi(BEARER+" "+grosirMobilPreference.getToken(),negoAndBuyNowRequest);
+        vehicleDetailApi.enqueue(new Callback<GeneralResponse>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
+                progressDialog.dismiss();
+                if (response.isSuccessful()) {
+                    try {
+                        if(response.body().getMessage().equals("success")){
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            intent.putExtra(REQUEST_MAIN, "win");
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+//                            finish();
+                        }else {
+                            grosirMobilFunction.showMessage(getActivity(), "POST Live Buy Now", response.body().getMessage());
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }else {
+                    try {
+                        grosirMobilFunction.showMessage(getActivity(), getString(R.string.base_null_error_title), response.errorBody().string());
+                    } catch (IOException e) {
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GeneralResponse> call, Throwable t) {
+                progressDialog.dismiss();
+                grosirMobilFunction.showMessage(getActivity(), "POST Live Buy Now", getString(R.string.base_null_server));
+                GrosirMobilLog.printStackTrace(t);
+            }
+        });
     }
 }

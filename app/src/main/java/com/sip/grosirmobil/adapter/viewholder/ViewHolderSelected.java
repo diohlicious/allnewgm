@@ -6,13 +6,17 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.adapter.GradeAdapter;
 import com.sip.grosirmobil.adapter.KabupatenAdapter;
 import com.sip.grosirmobil.adapter.KecamatanAdapter;
 import com.sip.grosirmobil.adapter.KelurahanAdapter;
+import com.sip.grosirmobil.adapter.MerekAdapter;
 import com.sip.grosirmobil.adapter.ProvinceAdapter;
 import com.sip.grosirmobil.adapter.QuestionAdapter;
 import com.sip.grosirmobil.adapter.TipeUsahaAdapter;
 import com.sip.grosirmobil.adapter.WareHouseAdapter;
+import com.sip.grosirmobil.cloud.config.response.filter.DataGradeResponse;
+import com.sip.grosirmobil.cloud.config.response.filter.DataMerekResponse;
 import com.sip.grosirmobil.cloud.config.response.kabupaten.DataKabupatenResponse;
 import com.sip.grosirmobil.cloud.config.response.kecamatan.DataKecamatanResponse;
 import com.sip.grosirmobil.cloud.config.response.kelurahan.DataKelurahanResponse;
@@ -64,6 +68,16 @@ public class ViewHolderSelected extends RecyclerView.ViewHolder {
         tvSelected.setText(dataQuestionResponse.getName());
         tvSelected.setTag(dataQuestionResponse.getCode());
         tvSelected.setOnClickListener(view -> listener.onItemClick(dataQuestionResponse));
+    }
+
+    public void bind(DataMerekResponse dataMerekResponse, final MerekAdapter.OnItemClickListener listener) {
+        tvSelected.setText(dataMerekResponse.getMerek());
+        tvSelected.setOnClickListener(view -> listener.onItemClick(dataMerekResponse));
+    }
+
+    public void bind(DataGradeResponse dataGradeResponse, final GradeAdapter.OnItemClickListener listener) {
+        tvSelected.setText(dataGradeResponse.getGrade());
+        tvSelected.setOnClickListener(view -> listener.onItemClick(dataGradeResponse));
     }
 
     public void bind(DataWareHouseResponse dataWareHouseResponse, final WareHouseAdapter.OnItemClickListener listener) {

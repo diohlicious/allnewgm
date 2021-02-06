@@ -17,12 +17,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
+import com.sip.grosirmobil.adapter.GradeAdapter;
+import com.sip.grosirmobil.adapter.MerekAdapter;
 import com.sip.grosirmobil.adapter.QuestionAdapter;
 import com.sip.grosirmobil.adapter.WareHouseAdapter;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
+import com.sip.grosirmobil.cloud.config.request.filter.MerekRequest;
+import com.sip.grosirmobil.cloud.config.response.filter.GradeResponse;
+import com.sip.grosirmobil.cloud.config.response.filter.MerekResponse;
 import com.sip.grosirmobil.cloud.config.response.question.QuestionResponse;
 import com.sip.grosirmobil.cloud.config.response.warehouse.WareHouseResponse;
 
@@ -39,6 +44,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.BEARER;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.END_PRICE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.END_YEAR;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
@@ -167,12 +173,51 @@ public class FilterActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.linear_merek)
     void linearMerekClick(){
+        rvChoose.setAdapter(null);
+        showProgressBar();
         showDialogChoose();
+        MerekRequest merekRequest = new MerekRequest();
+        final Call<MerekResponse> merekApi = getApiGrosirMobil().filterMerekApi(BEARER+" "+grosirMobilPreference.getToken(), merekRequest);
+        merekApi.enqueue(new Callback<MerekResponse>() {
+            @Override
+            public void onResponse(Call<MerekResponse> call, Response<MerekResponse> response) {
+                hideProgressBar();
+                if (response.isSuccessful()) {
+                    try {
+                        if(response.body().getMessage().equals("success")){
+                            MerekAdapter merekAdapter = new MerekAdapter(response.body().getDataMerekResponseList(), dataQuestionResponse -> {
+                                tvMerek.setText(dataQuestionResponse.getMerek());
+                                relativeDialogClick();
+                            });
+                            rvChoose.setAdapter(merekAdapter);
+                            merekAdapter.notifyDataSetChanged();
+                        }else {
+                            grosirMobilFunction.showMessage(FilterActivity.this, "GET Merek", response.body().getMessage());
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }else {
+                    try {
+                        grosirMobilFunction.showMessage(FilterActivity.this, getString(R.string.base_null_error_title), response.errorBody().string());
+                    } catch (IOException e) {
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<MerekResponse> call, Throwable t) {
+                hideProgressBar();
+                grosirMobilFunction.showMessage(FilterActivity.this, "GET Merek", getString(R.string.base_null_server));
+                GrosirMobilLog.printStackTrace(t);
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.linear_location)
     void linearLocationClick(){
+        rvChoose.setAdapter(null);
 //        if(grosirMobilPreference.getDataWareHouseList()==null||grosirMobilPreference.getDataWareHouseList().isEmpty()){
             showProgressBar();
             showDialogChoose();
@@ -232,6 +277,7 @@ public class FilterActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.linear_year)
     void linearYearClick(){
+        rvChoose.setAdapter(null);
         showProgressBar();
         showDialogChoose();
         final Call<QuestionResponse> tahunKendaraanApi = getApiGrosirMobil().tahunKendaraanApi();
@@ -275,7 +321,45 @@ public class FilterActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.linear_grade)
     void linearGradeClick(){
+        rvChoose.setAdapter(null);
+        showProgressBar();
         showDialogChoose();
+        MerekRequest merekRequest = new MerekRequest();
+        final Call<GradeResponse> merekApi = getApiGrosirMobil().filterGradeApi(BEARER+" "+grosirMobilPreference.getToken(), merekRequest);
+        merekApi.enqueue(new Callback<GradeResponse>() {
+            @Override
+            public void onResponse(Call<GradeResponse> call, Response<GradeResponse> response) {
+                hideProgressBar();
+                if (response.isSuccessful()) {
+                    try {
+                        if(response.body().getMessage().equals("success")){
+                            GradeAdapter gradeAdapter = new GradeAdapter(response.body().getDataGradeResponseList(), dataGradeResponse -> {
+                                tvGrade.setText(dataGradeResponse.getGrade());
+                                relativeDialogClick();
+                            });
+                            rvChoose.setAdapter(gradeAdapter);
+                            gradeAdapter.notifyDataSetChanged();
+                        }else {
+                            grosirMobilFunction.showMessage(FilterActivity.this, "GET Merek", response.body().getMessage());
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }else {
+                    try {
+                        grosirMobilFunction.showMessage(FilterActivity.this, getString(R.string.base_null_error_title), response.errorBody().string());
+                    } catch (IOException e) {
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<GradeResponse> call, Throwable t) {
+                hideProgressBar();
+                grosirMobilFunction.showMessage(FilterActivity.this, "GET Grade", getString(R.string.base_null_server));
+                GrosirMobilLog.printStackTrace(t);
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")

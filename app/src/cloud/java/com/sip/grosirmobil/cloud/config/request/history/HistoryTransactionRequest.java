@@ -22,4 +22,5 @@ public class HistoryTransactionRequest {
         this.max = max;
         this.isMenang = isMenang;
     }
+
 }

@@ -264,4 +264,5 @@
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <include layout="@layout/include_vehicle_detail_confirm_buy_now_dialog"/>
 </RelativeLayout>

@@ -90,9 +90,15 @@
                     android:text="@string/tv_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"/>
                 <TextView
                     android:id="@+id/tv_status"
                     android:textSize="@dimen/text_14"
+                    android:visibility="gone"
                     android:textColor="@color/colorPrimaryFont"
                     android:fontFamily="@font/nunito_bold"
                     android:layout_width="wrap_content"

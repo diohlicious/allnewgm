@@ -198,6 +198,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         setStatusBarFragment(getActivity());
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
+        tvSearch.setVisibility(View.GONE);
 
         grosirMobilPreference = new GrosirMobilPreference(getActivity());
 
@@ -257,15 +258,6 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         pageRecord = 1;
         page = 1;
 //        tvLiveClick();
-        //TODO Utk API Home Live ini Diperlukan Request Param Sort(Waktu Penawaran  Cepat ke Lama
-        //TODO Utk API Home Live ini Diperlukan Request Param Sort(Waktu Penawaran  Lama ke Cepat
-        //TODO Utk API Home Live ini Diperlukan Request Param Sort(Lokasi Warehouse A-> Z
-        //TODO Utk API Home Live ini Diperlukan Request Param Sort(Lokasi Warehouse Z-> A
-        //TODO Utk API Home Live ini Diperlukan Request Param Sort(Bottom Price Terendah ke Tertinggi
-        //TODO Utk API Home Live ini Diperlukan Request Param Sort(Bottom Price  Tertinggi ke Terendah
-
-        homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
-//        homePresenter.getTimeServerApi();
         search = false;
         relativeHome.setVisibility(View.VISIBLE);
         linearSearchAndFilterShow.setVisibility(View.GONE);
@@ -288,6 +280,53 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         tvLiveSoon.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvRecord.setBackgroundResource(R.drawable.design_line);
         tvRecord.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        rvLive.setLayoutManager(linearLayoutManager);
+        rvLive.setNestedScrollingEnabled(false);
+        rvLive.setHasFixedSize(true);
+
+        liveAdapter = new LiveAdapter(new ArrayList<>(), getActivity(),convertDateServer(grosirMobilPreference.getTimeServer()));
+        rvLive.setAdapter(liveAdapter);
+//        liveAdapter.notifyDataSetChanged();
+
+        homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+
+        if (nestedView != null) {
+            nestedView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                String TAG = "nested_sync";
+                if (scrollY > oldScrollY) {
+                    GrosirMobilLog.i(TAG, "Scroll DOWN");
+                }
+                if (scrollY < oldScrollY) {
+                    GrosirMobilLog.i(TAG, "Scroll UP");
+                }
+                if (scrollY == 0) {
+                    GrosirMobilLog.i(TAG, "TOP SCROLL");
+                }
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    try {
+                         GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
+                         if(dataPageHomeLiveResponseVariable==null){
+
+                         }else {
+                             if (dataPageHomeLiveResponseVariable.getCurrentPage() == dataPageHomeLiveResponseVariable.getMaxPage()) {
+                                 System.out.println("NESTED Current END Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
+                                 System.out.println("NESTED Last : END Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
+                             }
+                             else if (dataPageHomeLiveResponseVariable.getCurrentPage() < dataPageHomeLiveResponseVariable.getMaxPage()) {
+                                 System.out.println("NESTED Current Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
+                                 System.out.println("NESTED Last : Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
+                                 page++;
+                                 homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+                             }
+                         }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
+                    }
+                }
+            });
+        }
     }
 
 
@@ -453,9 +492,12 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             }
         }else if(requestCode == FILTER_REQUEST){
             if(resultCode==RESULT_OK){
+                search = true;
                 if(search){
-                    cardSearchResult.setVisibility(View.VISIBLE);
-                    linearAllUnit.setVisibility(View.GONE);
+//                    cardSearchResult.setVisibility(View.VISIBLE);
+//                    linearAllUnit.setVisibility(View.GONE);
+                    cardSearchResult.setVisibility(View.GONE);
+                    linearAllUnit.setVisibility(View.VISIBLE);
                 }else {
                     cardSearchResult.setVisibility(View.GONE);
                     linearAllUnit.setVisibility(View.VISIBLE);
@@ -559,16 +601,20 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                     GrosirMobilLog.i(TAG, "TOP SCROLL");
                 }
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
-                    if (dataPageHomeLiveResponseVariable.getCurrentPage() == dataPageHomeLiveResponseVariable.getMaxPage()) {
-                        System.out.println("NESTED Current END Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
-                        System.out.println("NESTED Last : END Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
-                    }
-                    else if (dataPageHomeLiveResponseVariable.getCurrentPage() < dataPageHomeLiveResponseVariable.getMaxPage()) {
-                        System.out.println("NESTED Current Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
-                        System.out.println("NESTED Last : Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
-                        page++;
-                        homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+                    try {
+                         GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
+                        if (dataPageHomeLiveResponseVariable.getCurrentPage() == dataPageHomeLiveResponseVariable.getMaxPage()) {
+                            System.out.println("NESTED Current END Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
+                            System.out.println("NESTED Last : END Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
+                        }
+                        else if (dataPageHomeLiveResponseVariable.getCurrentPage() < dataPageHomeLiveResponseVariable.getMaxPage()) {
+                            System.out.println("NESTED Current Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
+                            System.out.println("NESTED Last : Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
+                            page++;
+                            homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
                     }
                 }
             });
@@ -627,16 +673,20 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                     GrosirMobilLog.i(TAG, "TOP SCROLL");
                 }
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
-                    if (dataPageHomeComingSoonResponse.getCurrentPage() == dataPageHomeComingSoonResponse.getMaxPage()) {
-                        System.out.println("NESTED Current END Page : "+dataPageHomeComingSoonResponse.getCurrentPage());
-                        System.out.println("NESTED Last : END Page : "+dataPageHomeComingSoonResponse.getMaxPage());
-                    }
-                    else if (dataPageHomeComingSoonResponse.getCurrentPage() < dataPageHomeComingSoonResponse.getMaxPage()) {
-                        System.out.println("NESTED Current Page : "+dataPageHomeComingSoonResponse.getCurrentPage());
-                        System.out.println("NESTED Last : Page : "+dataPageHomeComingSoonResponse.getMaxPage());
-                        pageComingSoon++;
-                        homePresenter.getHomeComingSoonApi(pageComingSoon,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+                    try {
+                        GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
+                        if (dataPageHomeComingSoonResponse.getCurrentPage() == dataPageHomeComingSoonResponse.getMaxPage()) {
+                            System.out.println("NESTED Current END Page : "+dataPageHomeComingSoonResponse.getCurrentPage());
+                            System.out.println("NESTED Last : END Page : "+dataPageHomeComingSoonResponse.getMaxPage());
+                        }
+                        else if (dataPageHomeComingSoonResponse.getCurrentPage() < dataPageHomeComingSoonResponse.getMaxPage()) {
+                            System.out.println("NESTED Current Page : "+dataPageHomeComingSoonResponse.getCurrentPage());
+                            System.out.println("NESTED Last : Page : "+dataPageHomeComingSoonResponse.getMaxPage());
+                            pageComingSoon++;
+                            homePresenter.getHomeComingSoonApi(pageComingSoon,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
                     }
                 }
             });
@@ -691,16 +741,20 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                     GrosirMobilLog.i(TAG, "TOP SCROLL");
                 }
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
-                    if (dataPageHomeHistoryResponse.getCurrentPage() == dataPageHomeHistoryResponse.getMaxPage()) {
-                        System.out.println("NESTED Current END Page : "+dataPageHomeHistoryResponse.getCurrentPage());
-                        System.out.println("NESTED Last : END Page : "+dataPageHomeHistoryResponse.getMaxPage());
-                    }
-                    else if (dataPageHomeHistoryResponse.getCurrentPage() < dataPageHomeHistoryResponse.getMaxPage()) {
-                        System.out.println("NESTED Current Page : "+dataPageHomeHistoryResponse.getCurrentPage());
-                        System.out.println("NESTED Last : Page : "+dataPageHomeHistoryResponse.getMaxPage());
-                        pageRecord++;
-                        homePresenter.getHomeHistoryApi(pageRecord,max,"");
+                    try {
+                         GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
+                        if (dataPageHomeHistoryResponse.getCurrentPage() == dataPageHomeHistoryResponse.getMaxPage()) {
+                            System.out.println("NESTED Current END Page : "+dataPageHomeHistoryResponse.getCurrentPage());
+                            System.out.println("NESTED Last : END Page : "+dataPageHomeHistoryResponse.getMaxPage());
+                        }
+                        else if (dataPageHomeHistoryResponse.getCurrentPage() < dataPageHomeHistoryResponse.getMaxPage()) {
+                            System.out.println("NESTED Current Page : "+dataPageHomeHistoryResponse.getCurrentPage());
+                            System.out.println("NESTED Last : Page : "+dataPageHomeHistoryResponse.getMaxPage());
+                            pageRecord++;
+                            homePresenter.getHomeHistoryApi(pageRecord,max,"");
+                        }
+                    }catch (Exception e){
+                        GrosirMobilLog.printStackTrace(e);
                     }
                 }
             });
@@ -710,8 +764,11 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.iv_filter_search)
     void relativeFilterClick(){
+//        Intent intent = new Intent(getActivity(), FilterActivity.class);
+//        intent.putExtra(FROM_PAGE, "AFTER_SEARCH");
+//        startActivityForResult(intent, FILTER_REQUEST);
         Intent intent = new Intent(getActivity(), FilterActivity.class);
-        intent.putExtra(FROM_PAGE, "AFTER_SEARCH");
+        intent.putExtra(FROM_PAGE, "BEFORE_SEARCH");
         startActivityForResult(intent, FILTER_REQUEST);
     }
 
@@ -738,31 +795,33 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     @SuppressLint("SetTextI18n")
     @Override
     public void homeLiveSuccess(DataPageHomeLiveResponse dataPageHomeLiveResponse, String timeServer) {
+        rvRecord.setVisibility(View.GONE);
+        rvLiveSoon.setVisibility(View.GONE);
         System.out.println("DATA LOGIN : "+ grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getId());
         if(dataPageHomeLiveResponse.getDataHomeLiveResponseList()==null ||dataPageHomeLiveResponse.getDataHomeLiveResponseList().isEmpty()){
             tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_live));
             tvResultTitleContent.setText("Ada 0 Kendaraan Live");
             tvResultSearch.setText(dataPageHomeLiveResponse.getTotal()+" Unit");
+            tvSearchResultAllUnit.setText(dataPageHomeLiveResponse.getTotal() + " Unit");
             linearEmptyData.setVisibility(View.VISIBLE);
+            rvLive.setVisibility(View.GONE);
+            dataPageHomeLiveResponseVariable = null;
         }else {
             linearEmptyData.setVisibility(View.GONE);
             tvResultTitleContent.setText("Ada " + dataPageHomeLiveResponse.getTotal() + " Kendaraan Live");
+            tvSearchResultAllUnit.setText(dataPageHomeLiveResponse.getTotal() + " Unit");
             tvResultSearch.setText(dataPageHomeLiveResponse.getTotal()+" Unit");
 
+            if(page==1){
+                if(!dataPageHomeLiveResponse.getDataHomeLiveResponseList().isEmpty()){
+                    liveAdapter.clear();
+                }
+            }
+            dataPageHomeLiveResponseVariable = dataPageHomeLiveResponse;
+            if(!dataPageHomeLiveResponse.getDataHomeLiveResponseList().isEmpty()){
+                liveAdapter.addItems(dataPageHomeLiveResponse.getDataHomeLiveResponseList());
+            }
         }
-        if(page==1){
-            liveAdapter.clear();
-        }
-//        liveSoonAdapter.clear();
-//        liveHistoryAdapter.clear();
-        dataPageHomeLiveResponseVariable = dataPageHomeLiveResponse;
-        liveAdapter.addItems(dataPageHomeLiveResponse.getDataHomeLiveResponseList());
-//        RecyclerView.LayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
-//        rvLive.setLayoutManager(layoutManagerLive);
-//        rvLive.setNestedScrollingEnabled(false);
-//        LiveAdapter liveAdapter = new LiveAdapter(getActivity(), convertDateServer(timeServer), dataPageHomeLiveResponse.getDataHomeLiveResponseList());
-//        rvLive.setAdapter(liveAdapter);
-//        liveAdapter.notifyDataSetChanged();
     }
 
     @SuppressLint("SetTextI18n")
@@ -773,19 +832,26 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             tvKetEmptyDataHome.setText(getString(R.string.tv_empty_data_live));
             tvResultTitleContent.setText("Ada 0 Kendaraan Akan Tayang");
             tvResultSearch.setText(homeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal()+" Unit");
+            tvSearchResultAllUnit.setText(homeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal()+" Unit");
             linearEmptyData.setVisibility(View.VISIBLE);
         }else {
             linearEmptyData.setVisibility(View.GONE);
             tvResultTitleContent.setText("Ada " + homeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal() + " Kendaraan Akan Tayang");
             tvResultSearch.setText(homeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal()+" Unit");
+            tvSearchResultAllUnit.setText(homeComingSoonResponse.getDataPageHomeComingSoonResponse().getTotal()+" Unit");
+
         }
         if(pageComingSoon==1){
-            liveSoonAdapter.clear();
+            if(!homeComingSoonResponse.getDataPageHomeComingSoonResponse().getDataHomeComingSoonResponseList().isEmpty()){
+                liveSoonAdapter.clear();
+            }
         }
 //        liveAdapter.clear();
 //        liveHistoryAdapter.clear();
         dataPageHomeComingSoonResponse = homeComingSoonResponse.getDataPageHomeComingSoonResponse();
-        liveSoonAdapter.addItems(homeComingSoonResponse.getDataPageHomeComingSoonResponse().getDataHomeComingSoonResponseList());
+        if(!homeComingSoonResponse.getDataPageHomeComingSoonResponse().getDataHomeComingSoonResponseList().isEmpty()){
+            liveSoonAdapter.addItems(homeComingSoonResponse.getDataPageHomeComingSoonResponse().getDataHomeComingSoonResponseList());
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -799,13 +865,18 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             linearEmptyData.setVisibility(View.GONE);
         }
         if(pageRecord==1){
-            liveHistoryAdapter.clear();
+            if(!homeHistoryResponse.getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList().isEmpty()){
+                liveHistoryAdapter.clear();
+            }
         }
 //        liveAdapter.clear();
 //        liveSoonAdapter.clear();
         dataPageHomeHistoryResponse = homeHistoryResponse.getDataPageHomeHistoryResponse();
-        liveHistoryAdapter.addItems(homeHistoryResponse.getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList());
+        if(!homeHistoryResponse.getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList().isEmpty()){
+            liveHistoryAdapter.addItems(homeHistoryResponse.getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList());
+        }
         tvResultSearch.setText(homeHistoryResponse.getDataPageHomeHistoryResponse().getTotal()+" Unit");
+        tvSearchResultAllUnit.setText(homeHistoryResponse.getDataPageHomeHistoryResponse().getTotal()+" Unit");
 
 //        LiveHistoryAdapter liveHistoryAdapter = new LiveHistoryAdapter(homeHistoryResponse.getDataPageHomeHistoryResponse().getDataHomeHistoryResponseList(), getActivity(), dataHomeHistoryResponse -> {
 //            Intent intent = new Intent(getActivity(), VehicleDetailActivity.class);

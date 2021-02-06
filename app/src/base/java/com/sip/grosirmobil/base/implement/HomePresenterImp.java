@@ -216,11 +216,11 @@ public class HomePresenterImp implements HomePresenter {
     public void setDataBannerHome(AutoScrollViewPager viewPagerHome, CircleIndicator circleIndicator) {
         List<BannerDataModel> bannerDataModelList = new ArrayList<>();
 
-        BannerDataModel bannerDataModel = new BannerDataModel("Dapatkan promo akhir tahun dengan berbagai\nmacam unit yang ada!","Promo\nAkhir 2020");
+        BannerDataModel bannerDataModel = new BannerDataModel("Dapatkan promo awal tahun dengan berbagai\nmacam unit yang ada!","Promo\nAwal 2021");
         bannerDataModelList.add(bannerDataModel);
-        bannerDataModel = new BannerDataModel("Dapatkan promo akhir tahun dengan berbagai\nmacam unit yang ada!","Promo\nAkhir 2020");
+        bannerDataModel = new BannerDataModel("Dapatkan promo awal tahun dengan berbagai\nmacam unit yang ada!","Promo\nAwal 2021");
         bannerDataModelList.add(bannerDataModel);
-        bannerDataModel = new BannerDataModel("Dapatkan promo akhir tahun dengan berbagai\nmacam unit yang ada!","Promo\nAkhir 2020");
+        bannerDataModel = new BannerDataModel("Dapatkan promo awal tahun dengan berbagai\nmacam unit yang ada!","Promo\nAwal 2021");
         bannerDataModelList.add(bannerDataModel);
 
         viewPagerHome.startAutoScroll();

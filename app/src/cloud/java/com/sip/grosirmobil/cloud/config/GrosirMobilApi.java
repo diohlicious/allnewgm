@@ -2,7 +2,9 @@ package com.sip.grosirmobil.cloud.config;
 
 import com.sip.grosirmobil.cloud.config.request.favorite.FavoriteRequest;
 import com.sip.grosirmobil.cloud.config.request.changepassword.ChangePasswordRequest;
+import com.sip.grosirmobil.cloud.config.request.filter.MerekRequest;
 import com.sip.grosirmobil.cloud.config.request.generateva.GenerateVaRequest;
+import com.sip.grosirmobil.cloud.config.request.history.CheckStatusHistoryRequest;
 import com.sip.grosirmobil.cloud.config.request.history.HistoryTransactionRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeComingSoonRequest;
 import com.sip.grosirmobil.cloud.config.request.home.HomeHistoryRequest;
@@ -20,11 +22,15 @@ import com.sip.grosirmobil.cloud.config.request.vehicledetail.VehicleDetailReque
 import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 import com.sip.grosirmobil.cloud.config.response.cart.CartResponse;
 import com.sip.grosirmobil.cloud.config.response.checkactivetoken.CheckActiveTokenResponse;
+import com.sip.grosirmobil.cloud.config.response.filter.GradeResponse;
+import com.sip.grosirmobil.cloud.config.response.filter.MerekResponse;
 import com.sip.grosirmobil.cloud.config.response.generateva.GenerateVaResponse;
+import com.sip.grosirmobil.cloud.config.response.historytransaction.CheckStatusHistoryTransactionResponse;
 import com.sip.grosirmobil.cloud.config.response.historytransaction.HistoryTransactionResponse;
 import com.sip.grosirmobil.cloud.config.response.homecomingsoon.HomeComingSoonResponse;
 import com.sip.grosirmobil.cloud.config.response.homehistory.HomeHistoryResponse;
 import com.sip.grosirmobil.cloud.config.response.homelive.HomeLiveResponse;
+import com.sip.grosirmobil.cloud.config.response.infomenu.InfoMenuResponse;
 import com.sip.grosirmobil.cloud.config.response.invoiceva.InvoiceVaResponse;
 import com.sip.grosirmobil.cloud.config.response.kabupaten.KabupatenResponse;
 import com.sip.grosirmobil.cloud.config.response.kecamatan.KecamatanResponse;
@@ -87,6 +93,10 @@ public interface GrosirMobilApi {
     String generateVaPath = "/api/Pembayaran/GenerateVA";
     String invoiceVaPath = "/api/Pembayaran/InvoiceVA";
     String historyTransactionPath = "/api/Live/RiwayatMobile";
+    String checkStatusHistoryTransactionPath = "/api/Pembayaran/cekStatusPembayaran";
+    String merekPath = "/api/filter/merek";
+    String gradePath = "/api/filter/grade";
+    String infoMenuPath = "/api/info/getInfo";
 
     @Headers("X-Requested-With:XMLHttpRequest")
     @POST(loginPath)
@@ -231,6 +241,27 @@ public interface GrosirMobilApi {
     @POST(historyTransactionPath)
     Call<HistoryTransactionResponse> historyTransactionApi(@Header("Authorization") String authToken,
                                                            @Body HistoryTransactionRequest historyTransactionRequest);
+
+    @Headers("Content-Type: application/json")
+    @POST(merekPath)
+    Call<MerekResponse> filterMerekApi(@Header("Authorization") String authToken,
+                                       @Body MerekRequest merekRequest);
+
+    @Headers("Content-Type: application/json")
+    @POST(gradePath)
+    Call<GradeResponse> filterGradeApi(@Header("Authorization") String authToken,
+                                       @Body MerekRequest merekRequest);
+
+    @Headers("Content-Type: application/json")
+    @POST(infoMenuPath)
+    Call<InfoMenuResponse> infoMenuApi(@Header("Authorization") String authToken,
+                                       @Body MerekRequest merekRequest);
+
+    @Headers("Content-Type: application/json")
+    @POST(checkStatusHistoryTransactionPath)
+    Call<CheckStatusHistoryTransactionResponse> checkStatusHistoryTransactionApi(@Header("Authorization") String authToken,
+                                                                                 @Body CheckStatusHistoryRequest historyTransactionRequest);
+
 
 
 }

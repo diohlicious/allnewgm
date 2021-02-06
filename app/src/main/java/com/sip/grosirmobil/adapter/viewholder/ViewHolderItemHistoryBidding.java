@@ -1,6 +1,7 @@
 package com.sip.grosirmobil.adapter.viewholder;
 
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -12,6 +13,7 @@ public class ViewHolderItemHistoryBidding extends RecyclerView.ViewHolder {
 
     public TextView tvVehicleName, tvEventDate, tvCity, tvHargaTertinggi, tvPriceWin, tvStatus, tvNoVa;
     public CardView cardVehicle;
+    public ProgressBar progressBar;
 
     public ViewHolderItemHistoryBidding(View view) {
         super(view);
@@ -23,5 +25,6 @@ public class ViewHolderItemHistoryBidding extends RecyclerView.ViewHolder {
         tvPriceWin          = view.findViewById(R.id.tv_price_win);
         tvNoVa              = view.findViewById(R.id.tv_no_va);
         tvStatus            = view.findViewById(R.id.tv_status);
+        progressBar         = view.findViewById(R.id.progress_bar);
     }
 }

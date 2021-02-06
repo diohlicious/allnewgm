@@ -94,7 +94,7 @@
                                 tools:ignore="RelativeOverlap" />
                             <TextView
                                 android:id="@+id/tv_search_result_all_unit"
-                                android:text="23 Unit"
+                                android:text="0 Unit"
                                 android:textSize="@dimen/text_14"
                                 android:gravity="center"
                                 android:textColor="@color/colorPrimaryFont"
@@ -176,6 +176,7 @@
                             android:layout_toEndOf="@id/iv_filter_search"
                             android:paddingStart="@dimen/_5sdp"
                             android:paddingEnd="@dimen/_5sdp"
+                            android:visibility="gone"
                             android:src="@drawable/ic_sort_home"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -206,6 +207,7 @@
                         android:id="@+id/tv_search"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_40sdp"
+                        android:visibility="gone"
                         android:background="@drawable/design_search"
                         android:drawableStart="@drawable/ic_search"
                         android:drawablePadding="@dimen/_10sdp"
@@ -338,6 +340,7 @@
                             android:paddingStart="@dimen/_5sdp"
                             android:paddingEnd="@dimen/_5sdp"
                             android:src="@drawable/ic_sort_home"
+                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             tools:ignore="ContentDescription,RelativeOverlap" />
