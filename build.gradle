@@ -20,7 +20,7 @@ buildscript {
             'compileSdk'            : 30,
             'minSdk'                : 21,
             'targetSdk'             : 30,
-            'versionCodeApp'        : 3,
+            'versionCodeApp'        : 4,
             'versionNameApp'        : "1.0.1",
             'versionCodeMessage'    : 1,
             'versionNameMessage'    : "1.0",

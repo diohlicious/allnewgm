@@ -188,9 +188,13 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                     }
                 }
 
-                String startDate = convertDate(timeServer,"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
-                String endDate   = convertDate(dataHomeComingSoonResponse.getEndDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
-                startTimer(tvTimer, calculateDate(startDate,endDate));
+                String timeServerDate = convertDate(timeServer,"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
+                String startDateSoonDate   = convertDate(dataHomeComingSoonResponse.getStartDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
+
+                System.out.println("Time StartDate  : "+timeServerDate);
+                System.out.println("Time EndDate    : "+startDateSoonDate);
+
+                startTimer(tvTimer, calculateDate(timeServerDate,startDateSoonDate), position, dataHomeComingSoonResponseList);
 
                 AtomicBoolean favorite = new AtomicBoolean(false);
 
@@ -316,7 +320,7 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 //        return dataHomeComingSoonResponseList.size();
 //    }
 
-    public void startTimer(TextView tvTimer, long noOfMinutes) {
+    public void startTimer(TextView tvTimer, long noOfMinutes, int position, List<DataHomeComingSoonResponse> dataHomeComingSoonResponseList) {
         new CountDownTimer(noOfMinutes,  1000) {
             @SuppressLint({"SetTextI18n", "DefaultLocale"})
             public void onTick(long millisUntilFinished) {
@@ -335,6 +339,8 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             @SuppressLint("SetTextI18n")
             public void onFinish() {
                 tvTimer.setText("Waktu Penawaran Habis");
+                dataHomeComingSoonResponseList.remove(position);
+                notifyDataSetChanged();
             }
         }.start();
     }

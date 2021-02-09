@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,15 +25,19 @@ import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.sip.grosirmobil.BuildConfig;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.implement.MainPresenterImp;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.permission.MultiPermissionActivity;
 import com.sip.grosirmobil.base.presenter.MainPresenter;
-import com.sip.grosirmobil.base.util.GrosirMobilFragment;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
+import com.sip.grosirmobil.base.util.GrosirMobilFragment;
 import com.sip.grosirmobil.base.view.MainView;
+
+import org.jsoup.Jsoup;
 
 import java.util.Objects;
 
@@ -109,6 +114,41 @@ public class MainActivity extends GrosirMobilActivity implements GrosirMobilFrag
             case "win":
                 linearWinClick();
                 break;
+        }
+
+        new GetVersionCode().execute();
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class GetVersionCode extends AsyncTask<Void, String, String> {
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            String newVersion = null;
+            try {
+                newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + getPackageName() + "&hl=it")
+                        .timeout(30000)
+                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                        .referrer("http://www.google.com")
+                        .get()
+                        .select(".hAyfc .htlgb")
+                        .get(7)
+                        .ownText();
+                return newVersion;
+            } catch (Exception e) {
+                return newVersion;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String onlineVersion) {
+            super.onPostExecute(onlineVersion);
+            GrosirMobilLog.d("update", "Current version " + BuildConfig.VERSION_NAME.replace(".","") + " playstore version " + onlineVersion.replace(".",""));
+            if (onlineVersion != null && !onlineVersion.isEmpty()) {
+                if (Integer.parseInt(BuildConfig.VERSION_NAME.replace(".","")) < Integer.parseInt(onlineVersion.replace(".",""))) {
+                    grosirMobilFunction.showMessageUpdateApps(MainActivity.this, MainActivity.this, getString(R.string.app_name), "Mohon Update Aplikasi Anda");
+                }
+            }
         }
     }
 

@@ -142,6 +142,7 @@ dependencies {
 //    api "ja.burhanrashid52:photoeditor:${versions.photoEditor}"
     api "com.theartofdev.edmodo:android-image-cropper:${versions.cropEditor}"
     implementation 'joda-time:joda-time:2.10.8'
+    implementation 'org.jsoup:jsoup:1.13.1'
 //    api "com.github.rtugeek:colorseekbar:${versions.colorSeekBar}"
 //    api "com.github.shrikanth7698:Collapsible-Calendar-View-Android:${versions.calendarView}"
     //Library Feature Finish

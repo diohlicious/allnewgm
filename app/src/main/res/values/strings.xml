@@ -543,4 +543,5 @@
     <string name="tv_list_kantor_bca_2">Serahkan slip dan jumlah setoran kepada Teller BCA</string>
     <string name="tv_list_kantor_bca_3">Teller BCA akan melakukan validasi transaksi</string>
     <string name="tv_list_kantor_bca_4">Simpan slip setoran hasil validasi sebagai bukti pembayaran</string>
+    <string name="btn_update">Update</string>
 </resources>

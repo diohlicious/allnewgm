@@ -301,7 +301,7 @@ public class HomePresenterImp implements HomePresenter {
                             grosirMobilPreference.saveTimeServer(response.body().getData().getTimeServer());
                             if(type.equals("Live")){
                                 homeView.homeLiveSuccess(grosirMobilPreference.getDataHomeLive(), response.body().getData().getTimeServer());
-                            }else {
+                            }else if(type.equals("Coming Soon")){
                                 homeView.homeComingSoonSuccess(grosirMobilPreference.getDataComingSoon(), response.body().getData().getTimeServer());
                             }
                         }else {

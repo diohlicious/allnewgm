@@ -134,8 +134,10 @@ public class LiveHistoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 tvEventDate.setText("Event "+convertDate(dataHomeHistoryResponse.getEventDate(),"yyyy-MM-dd hh:mm:ss","dd MMM yyyy")+" - ");
 
                 if(dataHomeHistoryResponse.getSoldPrice()==null){
-                    tvSoldPriceHistory.setText("Rp 0");
+                    tvStatusHistory.setText("Status");
+                    tvSoldPriceHistory.setText(dataHomeHistoryResponse.getStatus());
                 }else {
+                    tvStatusHistory.setText("Terjual");
                     tvSoldPriceHistory.setText("Rp "+setCurrencyFormat(dataHomeHistoryResponse.getSoldPrice()));
                 }
                 cardVehicleHistory.setOnClickListener(view -> {

@@ -286,8 +286,12 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         rvLive.setNestedScrollingEnabled(false);
         rvLive.setHasFixedSize(true);
 
-        liveAdapter = new LiveAdapter(new ArrayList<>(), getActivity(),convertDateServer(grosirMobilPreference.getTimeServer()));
-        rvLive.setAdapter(liveAdapter);
+        if(grosirMobilPreference.getTimeServer()==null){
+            homePresenter.getTimeServerApi("");
+        }else {
+            liveAdapter = new LiveAdapter(new ArrayList<>(), getActivity(),convertDateServer(grosirMobilPreference.getTimeServer()));
+            rvLive.setAdapter(liveAdapter);
+        }
 //        liveAdapter.notifyDataSetChanged();
 
         homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);

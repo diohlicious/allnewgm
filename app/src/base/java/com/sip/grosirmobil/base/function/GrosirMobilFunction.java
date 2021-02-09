@@ -4,11 +4,13 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.text.Editable;
 import android.text.Html;
@@ -90,6 +92,31 @@ public class GrosirMobilFunction {
         bmp.compress(Bitmap.CompressFormat.JPEG, quality, baos);
         byte[] bytes = baos.toByteArray();
         return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
+
+    public void showMessageUpdateApps(Activity activity, Context context, String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(context.getString(R.string.btn_update), null);
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
+        dialog.setCancelable(false);
+        Button btnYes = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        btnYes.setTextColor(context.getResources().getColor(R.color.colorAccent));
+        btnYes.setOnClickListener(v -> {
+            dialog.dismiss();
+            try {
+//                HijrahPreference hijrahPreference = new HijrahPreference(context);
+//                hijrahPreference.clearSharePreference();
+                activity.finish();
+                activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + context.getPackageName())));
+            } catch (android.content.ActivityNotFoundException anfe) {
+                activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + context.getPackageName())));
+            }
+//            logoutApi(activity, context);
+        });
     }
 
     public Bitmap getBitmap(String path, ImageView imageView) {
