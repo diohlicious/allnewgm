@@ -13,6 +13,10 @@ public class HomeLiveRequest {
     @Expose
     private int max;
 
+    @SerializedName("grade")
+    @Expose
+    private String grade;
+
     @SerializedName("lokasi")
     @Expose
     private String lokasi;
@@ -41,9 +45,10 @@ public class HomeLiveRequest {
     @Expose
     private String category;
 
-    public HomeLiveRequest(int page, int max, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek, String category) {
+    public HomeLiveRequest(int page, int max, String grade, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek, String category) {
         this.page = page;
         this.max = max;
+        this.grade = grade;
         this.lokasi = lokasi;
         this.tahunStart = tahunStart;
         this.tahunEnd = tahunEnd;

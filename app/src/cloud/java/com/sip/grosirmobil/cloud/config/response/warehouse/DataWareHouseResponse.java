@@ -36,4 +36,11 @@ public class DataWareHouseResponse {
     public String getSeqNo() {
         return seqNo;
     }
+
+    public DataWareHouseResponse(String id, String warehouseCode, String name, String seqNo) {
+        this.id = id;
+        this.warehouseCode = warehouseCode;
+        this.name = name;
+        this.seqNo = seqNo;
+    }
 }

@@ -63,12 +63,12 @@ public class HomePresenterImp implements HomePresenter {
     private final int page;
     private final int max;
     private final String lokasi;
+    private final String grade;
     private final int tahunStart;
     private final int tahunEnd;
     private final long hargaStart;
     private final long hargaEnd;
     private final String merek;
-    private final String grade;
 
     public HomePresenterImp(HomeView homeView, Context context, boolean search, LinearLayout linearTitleContent, LinearLayout linearSearchAndLive, LinearLayout linearEmptyData, RecyclerView rvLive, NestedScrollView nestedView, RecyclerView rvLiveSoon, RecyclerView rvRecord, LinearLayout linearResultTitleContent, TextView tvResultTitleContent, TextView tvTitleContent, TextView tvLive, TextView tvLiveSoon, TextView tvRecord, TextView tvKetEmptyDataHome, int page, int max, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek, String grade) {
         this.homeView = homeView;
@@ -103,7 +103,7 @@ public class HomePresenterImp implements HomePresenter {
 
 
     @Override
-    public void getHomeLiveApi(int page, int max, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek) {
+    public void getHomeLiveApi(int page, int max, String grade, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek) {
         linearEmptyData.setVisibility(View.GONE);
         if(page==1){
             rvLive.setVisibility(View.GONE);
@@ -112,7 +112,7 @@ public class HomePresenterImp implements HomePresenter {
             rvLive.setVisibility(View.VISIBLE);
             homeView.showDialogLoadMoreLoading();
         }
-        HomeLiveRequest homeLiveRequest = new HomeLiveRequest(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek,"live");
+        HomeLiveRequest homeLiveRequest = new HomeLiveRequest(page,max,grade, lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek,"live");
         final Call<HomeLiveResponse> timeServerApi = getApiGrosirMobil().homeLiveApi(BEARER+" "+grosirMobilPreference.getToken(),homeLiveRequest);
         timeServerApi.enqueue(new Callback<HomeLiveResponse>() {
             @SuppressLint("SetTextI18n")
@@ -158,7 +158,7 @@ public class HomePresenterImp implements HomePresenter {
     }
 
     @Override
-    public void getHomeComingSoonApi(int page, int max, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek) {
+    public void getHomeComingSoonApi(int page, int max, String grade, String lokasi, int tahunStart, int tahunEnd, long hargaStart, long hargaEnd, String merek) {
         linearEmptyData.setVisibility(View.GONE);
         if(page==1){
             rvLiveSoon.setVisibility(View.GONE);
@@ -167,7 +167,7 @@ public class HomePresenterImp implements HomePresenter {
             rvLiveSoon.setVisibility(View.VISIBLE);
             homeView.showDialogLoadMoreLoading();
         }
-        HomeComingSoonRequest homeComingSoonRequest = new HomeComingSoonRequest(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek, "akan tayang");
+        HomeComingSoonRequest homeComingSoonRequest = new HomeComingSoonRequest(page,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek, "akan tayang");
         final Call<HomeComingSoonResponse> timeServerApi = getApiGrosirMobil().homeComingSoonApi(BEARER+" "+grosirMobilPreference.getToken(),homeComingSoonRequest);
         timeServerApi.enqueue(new Callback<HomeComingSoonResponse>() {
             @SuppressLint("SetTextI18n")

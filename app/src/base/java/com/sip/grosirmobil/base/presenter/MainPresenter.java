@@ -2,7 +2,7 @@ package com.sip.grosirmobil.base.presenter;
 
 public interface MainPresenter {
 
-    void cannotReplaceFragmentHome();
+//    void cannotReplaceFragmentHome();
 
     void replaceFragmentHome();
 

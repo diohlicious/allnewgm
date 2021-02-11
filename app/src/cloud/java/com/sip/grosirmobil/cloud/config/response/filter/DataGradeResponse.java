@@ -12,4 +12,8 @@ public class DataGradeResponse {
     public String getGrade() {
         return grade;
     }
+
+    public DataGradeResponse(String grade) {
+        this.grade = grade;
+    }
 }

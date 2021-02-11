@@ -21,11 +21,11 @@ public class MainPresenterImp implements MainPresenter {
         this.context = context;
     }
 
-    @Override
-    public void cannotReplaceFragmentHome() {
-        mainView.cannotReplaceFragment(new HomeFragment());
-    }
-
+//    @Override
+//    public void cannotReplaceFragmentHome() {
+//        mainView.cannotReplaceFragment(new HomeFragment());
+//    }
+//
     @Override
     public void replaceFragmentHome() {
         mainView.replaceFragment(new HomeFragment());

@@ -191,6 +191,7 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 String timeServerDate = convertDate(timeServer,"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
                 String startDateSoonDate   = convertDate(dataHomeComingSoonResponse.getStartDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
 
+                System.out.println("Time StartDate  : "+timeServer);
                 System.out.println("Time StartDate  : "+timeServerDate);
                 System.out.println("Time EndDate    : "+startDateSoonDate);
 

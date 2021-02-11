@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.adapter.GradeAdapter;
 import com.sip.grosirmobil.adapter.MerekAdapter;
@@ -26,20 +27,21 @@ import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
 import com.sip.grosirmobil.cloud.config.request.filter.MerekRequest;
+import com.sip.grosirmobil.cloud.config.response.filter.DataGradeResponse;
 import com.sip.grosirmobil.cloud.config.response.filter.GradeResponse;
 import com.sip.grosirmobil.cloud.config.response.filter.MerekResponse;
 import com.sip.grosirmobil.cloud.config.response.question.QuestionResponse;
+import com.sip.grosirmobil.cloud.config.response.warehouse.DataWareHouseResponse;
 import com.sip.grosirmobil.cloud.config.response.warehouse.WareHouseResponse;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.bendik.simplerangeview.SimpleRangeView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -72,7 +74,7 @@ public class FilterActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_end_range) TextView tvEndRange;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.range_seek_bar) SimpleRangeView rangeSeekBar;
+    @BindView(R.id.range_seek_bar) CrystalRangeSeekbar rangeSeekBar;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.linear_year) LinearLayout linearYear;
     @SuppressLint("NonConstantResourceId")
@@ -90,7 +92,8 @@ public class FilterActivity extends GrosirMobilActivity {
 
     private GrosirMobilPreference grosirMobilPreference;
     private GrosirMobilFunction grosirMobilFunction;
-
+    private final List<DataGradeResponse> dataGradeResponseList = new ArrayList<>();
+    private final List<DataWareHouseResponse> dataWareHouseResponseList = new ArrayList<>();
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,41 +109,68 @@ public class FilterActivity extends GrosirMobilActivity {
             linearMerek.setVisibility(View.GONE);
         }
 
-        rangeSeekBar.setOnTrackRangeListener(new SimpleRangeView.OnTrackRangeListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onStartRangeChanged(@NotNull SimpleRangeView rangeView, int start) {
-                if(start==0){
-                    tvStartRange.setText("Rp "+ start+"");
-                }else {
-                    tvStartRange.setText("Rp "+ start+"00.000.000");
-                }
-            }
-
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onEndRangeChanged(@NotNull SimpleRangeView rangeView, int end) {
-                System.out.println("END TRACK : "+ end);
-                if(end==10){
-                    tvEndRange.setText("Rp 1.000.000.000");
-                }else {
-                    tvEndRange.setText("Rp "+ end+"00.000.000");
-                }
-            }
-        });
-
-        rangeSeekBar.setOnChangeRangeListener((rangeView, start, end) -> {
-            if(start==0){
-                tvStartRange.setText("Rp "+ start+"");
-            }else {
-                tvStartRange.setText("Rp "+ start+"00.000.000");
-            }
-            if(end==10){
+        rangeSeekBar.setOnRangeSeekbarChangeListener((minValue, maxValue) -> {
+//            if(minValue){
+//                tvStartRange.setText("Rp "+ start+"");
+//            }else {
+//            }
+            tvStartRange.setText("Rp "+ minValue+".000.000");
+//            tvStartRange.setText(String.valueOf(minValue));
+//            tvEndRange.setText(String.valueOf(maxValue));
+            if(String.valueOf(maxValue).equals("1000")){
                 tvEndRange.setText("Rp 1.000.000.000");
-            }else {
-                tvEndRange.setText("Rp "+ end+"00.000.000");
+            }else{
+                tvEndRange.setText("Rp "+ maxValue+".000.000");
             }
         });
+
+// set final value listener
+        rangeSeekBar.setOnRangeSeekbarFinalValueListener((minValue, maxValue) -> {
+            //DDD
+            if(String.valueOf(maxValue).equals("1000")){
+                tvEndRange.setText("Rp 1.000.000.000");
+            }else{
+                tvEndRange.setText("Rp "+ maxValue+".000.000");
+            }
+            GrosirMobilLog.d("CRS=>", String.valueOf(minValue) + " : " + String.valueOf(maxValue));
+        });
+
+//        rangeSeekBar.setOnTrackRangeListener(new SimpleRangeView.OnTrackRangeListener() {
+//            @SuppressLint("SetTextI18n")
+//            @Override
+//            public void onStartRangeChanged(@NotNull SimpleRangeView rangeView, int start) {
+//                if(start==0){
+//                    tvStartRange.setText("Rp "+ start+"");
+//                }else {
+//                    tvStartRange.setText("Rp "+ start+"00.000.000");
+//                }
+//            }
+//
+//            @SuppressLint("SetTextI18n")
+//            @Override
+//            public void onEndRangeChanged(@NotNull SimpleRangeView rangeView, int end) {
+//                System.out.println("END TRACK : "+ end);
+//                if(end==10){
+//                    tvEndRange.setText("Rp 1.000.000.000");
+//                }else {
+//                    tvEndRange.setText("Rp "+ end+"00.000.000");
+//                }
+//            }
+//        });
+//
+//        rangeSeekBar.setOnChangeRangeListener((rangeView, start, end) -> {
+//            if(start==0){
+//                tvStartRange.setText("Rp "+ start+"");
+//            }else {
+//                tvStartRange.setText("Rp "+ start+"00.000.000");
+//            }
+//            if(end==10){
+//                tvEndRange.setText("Rp 1.000.000.000");
+//            }else {
+//                tvEndRange.setText("Rp "+ end+"00.000.000");
+//            }
+//        });
+
     }
 
     private void showDialogChoose(){
@@ -232,8 +262,11 @@ public class FilterActivity extends GrosirMobilActivity {
                                 if(!response.body().getData().isEmpty()){
                                     grosirMobilPreference.saveDataWareHouseList(response.body().getData());
                                 }
-                                WareHouseAdapter wareHouseAdapter = new WareHouseAdapter(response.body().getData(), dataWareHouseResponse -> {
-                                    tvLocation.setText(dataWareHouseResponse.getName().replace("WAREHOUSE ", ""));
+                                DataWareHouseResponse dataWareHouseResponseHardcode = new DataWareHouseResponse("","","SEMUA","");
+                                dataWareHouseResponseList.add(dataWareHouseResponseHardcode);
+                                dataWareHouseResponseList.addAll(response.body().getData());
+                                WareHouseAdapter wareHouseAdapter = new WareHouseAdapter(dataWareHouseResponseList, dataWareHouseResponse -> {
+                                    tvLocation.setText(dataWareHouseResponse.getName());
                                     tvLocation.setTag(dataWareHouseResponse.getWarehouseCode());
                                     relativeDialogClick();
                                 });
@@ -333,7 +366,11 @@ public class FilterActivity extends GrosirMobilActivity {
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
-                            GradeAdapter gradeAdapter = new GradeAdapter(response.body().getDataGradeResponseList(), dataGradeResponse -> {
+                            dataGradeResponseList.clear();
+                            DataGradeResponse dataGradeResponseHardCode = new DataGradeResponse("SEMUA");
+                            dataGradeResponseList.add(dataGradeResponseHardCode);
+                            dataGradeResponseList.addAll(response.body().getDataGradeResponseList());
+                            GradeAdapter gradeAdapter = new GradeAdapter(dataGradeResponseList, dataGradeResponse -> {
                                 tvGrade.setText(dataGradeResponse.getGrade());
                                 relativeDialogClick();
                             });
@@ -373,8 +410,8 @@ public class FilterActivity extends GrosirMobilActivity {
     void tvDeleteClick(){
         tvMerek.setText("");
         tvLocation.setText("");
-        tvStartRange.setText("");
-        tvEndRange.setText("");
+        tvStartRange.setText("Rp 0");
+        tvEndRange.setText("Rp 1.000.000.000");
         tvYear.setText("");
         tvGrade.setText("");
     }

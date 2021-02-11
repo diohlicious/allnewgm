@@ -81,7 +81,7 @@ public class ViewHolderSelected extends RecyclerView.ViewHolder {
     }
 
     public void bind(DataWareHouseResponse dataWareHouseResponse, final WareHouseAdapter.OnItemClickListener listener) {
-        tvSelected.setText(dataWareHouseResponse.getName().replace("WAREHOUSE ", ""));
+        tvSelected.setText(dataWareHouseResponse.getName());
 //        tvSelected.setText(dataWareHouseResponse.getName());
         tvSelected.setTag(dataWareHouseResponse.getWarehouseCode());
         tvSelected.setOnClickListener(view -> listener.onItemClick(dataWareHouseResponse));

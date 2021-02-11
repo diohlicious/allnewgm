@@ -191,22 +191,44 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"/>
                     </LinearLayout>
-                    <me.bendik.simplerangeview.SimpleRangeView
+<!--                    <me.bendik.simplerangeview.SimpleRangeView-->
+<!--                        android:id="@+id/range_seek_bar"-->
+<!--                        app:lineColor="#DADADA"-->
+<!--                        android:visibility="gone"-->
+<!--                        app:activeLineColor="@color/colorPrimaryTheme"-->
+<!--                        app:showFixedTicks="false"-->
+<!--                        app:showActiveTicks="false"-->
+<!--                        app:showTicks="false"-->
+<!--                        app:movable="true"-->
+<!--                        app:count="11"-->
+<!--                        app:start="0"-->
+<!--                        app:end="10"-->
+<!--                        app:minDistance="1"-->
+<!--                        app:activeThumbColor="@color/colorPrimaryTheme"-->
+<!--                        android:layout_marginTop="@dimen/_10sdp"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"/>-->
+                    <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
                         android:id="@+id/range_seek_bar"
-                        app:lineColor="#DADADA"
-                        app:activeLineColor="@color/colorPrimaryTheme"
-                        app:showFixedTicks="false"
-                        app:showActiveTicks="false"
-                        app:showTicks="false"
-                        app:movable="true"
-                        app:count="11"
-                        app:start="0"
-                        app:end="10"
-                        app:minDistance="1"
-                        app:activeThumbColor="@color/colorPrimaryTheme"
-                        android:layout_marginTop="@dimen/_10sdp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        app:corner_radius="10"
+                        app:min_value="0"
+                        app:max_value="1000"
+                        app:gap="50"
+                        app:bar_color="@color/colorPrimaryTheme"
+                        app:bar_highlight_color="@color/colorPrimaryTheme"
+                        app:left_thumb_color="@color/colorPrimaryTheme"
+                        app:right_thumb_color="@color/colorPrimaryTheme"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        app:left_thumb_color_pressed="@color/colorPrimaryTheme"
+                        app:right_thumb_color_pressed="@color/colorPrimaryTheme"
+                        app:data_type="_integer"/>
+<!--                        app:left_thumb_image="@drawable/thumb"-->
+<!--                        app:right_thumb_image="@drawable/thumb"-->
+<!--                        app:left_thumb_image_pressed="@drawable/thumb_pressed"-->
+<!--                        app:right_thumb_image_pressed="@drawable/thumb_pressed"-->
+
                     <RelativeLayout
                         android:layout_marginTop="@dimen/_5sdp"
                         android:layout_width="match_parent"
@@ -283,7 +305,6 @@
                         tools:ignore="RtlHardcoded" />
                     <TextView
                         android:id="@+id/tv_grade"
-                        android:text="A"
                         android:gravity="center"
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:textColor="@color/colorPrimaryHintFont"

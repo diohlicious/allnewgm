@@ -294,7 +294,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         }
 //        liveAdapter.notifyDataSetChanged();
 
-        homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+        homePresenter.getHomeLiveApi(page,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
 
         if (nestedView != null) {
             nestedView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
@@ -322,7 +322,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                                  System.out.println("NESTED Current Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
                                  System.out.println("NESTED Last : Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
                                  page++;
-                                 homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+                                 homePresenter.getHomeLiveApi(page,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
                              }
                          }
                     }catch (Exception e){
@@ -512,7 +512,11 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                 lokasi = data.getStringExtra(LOCATION);
                 tahunStart = Integer.parseInt(data.getStringExtra(START_YEAR));
                 tahunEnd = Integer.parseInt(data.getStringExtra(END_YEAR));
-                grade = data.getStringExtra(GRADE);
+                if(data.getStringExtra(GRADE).equals("Semua")){
+                    grade = "";
+                }else {
+                    grade = data.getStringExtra(GRADE);
+                }
                 String filter = "";
                 if(!merek.equals("")){
                     if(filter.equals("")){
@@ -543,7 +547,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                 relativeResultSearch.setVisibility(View.VISIBLE);
                 page = 1;
                 max = 20;
-                homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd,hargaStart,hargaEnd,merek);
+                homePresenter.getHomeLiveApi(page,max,grade,lokasi,tahunStart,tahunEnd,hargaStart,hargaEnd,merek);
             }
         }
     }
@@ -590,7 +594,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         rvLive.setAdapter(liveAdapter);
 //        liveAdapter.notifyDataSetChanged();
 
-        homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+        homePresenter.getHomeLiveApi(page,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
 
         if (nestedView != null) {
             nestedView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
@@ -615,7 +619,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                             System.out.println("NESTED Current Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
                             System.out.println("NESTED Last : Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
                             page++;
-                            homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+                            homePresenter.getHomeLiveApi(page,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
                         }
                     }catch (Exception e){
                         GrosirMobilLog.printStackTrace(e);
@@ -662,7 +666,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         rvLiveSoon.setAdapter(liveSoonAdapter);
 //        liveSoonAdapter.notifyDataSetChanged();
 
-        homePresenter.getHomeComingSoonApi(pageComingSoon,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+        homePresenter.getHomeComingSoonApi(pageComingSoon,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
 
         if (nestedView != null) {
             nestedView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
@@ -687,7 +691,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                             System.out.println("NESTED Current Page : "+dataPageHomeComingSoonResponse.getCurrentPage());
                             System.out.println("NESTED Last : Page : "+dataPageHomeComingSoonResponse.getMaxPage());
                             pageComingSoon++;
-                            homePresenter.getHomeComingSoonApi(pageComingSoon,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+                            homePresenter.getHomeComingSoonApi(pageComingSoon,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
                         }
                     }catch (Exception e){
                         GrosirMobilLog.printStackTrace(e);

@@ -162,7 +162,7 @@ public class LiveAdapter
                 tvPlatNumber.setText(dataHomeLiveResponse.getKikNumber().substring(0, 10) + " - ");
                 tvCity.setText(dataHomeLiveResponse.getWareHouse().replace("WAREHOUSE ", ""));
                 tvOpenPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getBottomPrice()));
-                tvBottomPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getOpenPrice()));
+                tvBottomPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getPriceNow()));
                 tvInitialName.setText(dataHomeLiveResponse.getGrade());
 
                 AtomicBoolean favorite = new AtomicBoolean(false);
