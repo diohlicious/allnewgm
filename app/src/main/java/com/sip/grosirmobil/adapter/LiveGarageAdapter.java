@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +19,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.sip.grosirmobil.R;
-import com.sip.grosirmobil.activity.MainActivity;
 import com.sip.grosirmobil.activity.VehicleDetailActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehicleLiveGarage;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
@@ -41,7 +41,6 @@ import static com.sip.grosirmobil.base.contract.GrosirMobilContract.BEARER;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
-import static com.sip.grosirmobil.base.contract.GrosirMobilContract.REQUEST_MAIN;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.calculateDate;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.convertDate;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
@@ -52,6 +51,7 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
     private final List<DataCartResponse> dataCartResponseList;
     private final Context contexts;
     private long negoPrice = 0;
+    private long lastPrice = 0;
     private final String timeServer;
     private String loadingShow;
     private GrosirMobilFunction grosirMobilFunction;
@@ -88,82 +88,13 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
         holder.tvVehicleName.setText(dataCartResponse.getVehicleName());
         holder.tvPlatNumber.setText(dataCartResponse.getKik().substring(0, 10) + " - ");
         holder.btnBuyNow.setText(contexts.getString(R.string.btn_buy_now)+ " Rp "+setCurrencyFormat(String.valueOf(dataCartResponse.getOpenPrice())));
-//        holder.tvCity.setText(dataCartResponse.get().replace("WAREHOUSE ", ""));
-        if(dataCartResponse.getUserTertinggi()==null){
-            holder.tvPenawaranAnda.setText("Rp 0");
-            long lastPrice = 0;
-            negoPrice = 0;
-        }
-        else {
-            holder.tvPenawaranAnda.setText("Rp "+setCurrencyFormat(dataCartResponse.getUserTertinggi()));
-            long lastPrice = Long.parseLong(dataCartResponse.getUserTertinggi());
-            negoPrice = Long.parseLong(dataCartResponse.getUserTertinggi());
-        }
-        if(dataCartResponse.getTertinggi()==null){
-            holder.tvPenawaranTerakhir.setText("Rp 0");
-            long highPrice = Long.parseLong(dataCartResponse.getBottomPrice());
-//            highPrice = highPrice+500000;
-            holder.tvPrice.setText("Rp "+setCurrencyFormat(String.valueOf(highPrice)));
-        }
-        else {
-            holder.tvPenawaranTerakhir.setText("Rp "+setCurrencyFormat(dataCartResponse.getTertinggi()));
-
-            long highPrice = Long.parseLong(dataCartResponse.getTertinggi());
-            highPrice = highPrice+500000;
-            holder.tvPrice.setText("Rp "+setCurrencyFormat(String.valueOf(highPrice)));
-        }
-
-
-
-
         holder.tvInitialName.setText(dataCartResponse.getGrade());
+        holder.tvPenawaranAnda.setText("Rp "+setCurrencyFormat(dataCartResponse.getUserTertinggi()));
+        holder.tvPenawaranTerakhir.setText("Rp "+setCurrencyFormat(dataCartResponse.getTertinggi()));
+
         String startDate = convertDate(timeServer,"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
         String endDate   = convertDate(dataCartResponse.getEndDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
         startTimer(holder.tvTimer, calculateDate(startDate,endDate));
-//        holder.ivMin.setOnClickListener(view -> {
-//            if(negoPrice==lastPrice){
-//                Toast.makeText(contexts, "Minimum Tawar Harus Lebih Besar dari Penawaran Terakhir", Toast.LENGTH_SHORT).show();
-//            }else {
-//                negoPrice = negoPrice-500000;
-//                holder.tvPrice.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
-//            }
-//        });
-//
-//        holder.ivPlus.setOnClickListener(view -> {
-//            negoPrice = negoPrice+500000;
-//            holder.tvPrice.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
-//        });
-
-        holder.btnNego.setOnClickListener(view -> {
-            if(dataCartResponse.getTertinggi()==null){
-                long highPriceNego = Long.parseLong(dataCartResponse.getBottomPrice());
-                NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(String.valueOf(dataCartResponse.getOhid()), dataCartResponse.getKik(), dataCartResponse.getAgreementNo().trim(), String.valueOf(highPriceNego));
-                liveNegoApi(negoAndBuyNowRequest);
-            }else {
-                long highPriceNego = Long.parseLong(dataCartResponse.getTertinggi());
-                highPriceNego = highPriceNego+500000;
-                System.out.println("Test NEGO : " + highPriceNego);
-                NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(String.valueOf(dataCartResponse.getOhid()), dataCartResponse.getKik(), dataCartResponse.getAgreementNo().trim(), String.valueOf(highPriceNego));
-                liveNegoApi(negoAndBuyNowRequest);
-            }
-            holder.relativeSuccessNego.setVisibility(View.VISIBLE);
-        });
-
-        holder.btnBuyNow.setOnClickListener(view -> {
-            onItemClickListener.onItemClick(dataCartResponse);
-            //TODO Show Dialog Buy Now Same like Dialog Buy Now In Vehicle Detail (include_vehicle_detail_confirm_buy_now_dialog), after that Agus Parse tvName n Price in layout.
-            NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(String.valueOf(dataCartResponse.getOhid()), dataCartResponse.getKik(), dataCartResponse.getAgreementNo().trim(), String.valueOf(dataCartResponse.getOpenPrice()));
-//            liveBuyNowApi(negoAndBuyNowRequest);
-        });
-        holder.ivClearPrice.setOnClickListener(view -> {
-            if(dataCartResponse.getUserTertinggi()==null){
-                negoPrice = 0;
-                holder.tvPrice.setText("Rp 0");
-            }else {
-                negoPrice = Long.parseLong(dataCartResponse.getUserTertinggi());
-                holder.tvPrice.setText("Rp "+setCurrencyFormat(dataCartResponse.getUserTertinggi()));
-            }
-        });
 
         CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
         circularProgressDrawable.setStrokeWidth(5f);
@@ -186,50 +117,135 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
             intent.putExtra(FROM_PAGE, "LIVE");
             contexts.startActivity(intent);
         });
-    }
 
-    public void liveBuyNowApi(NegoAndBuyNowRequest negoAndBuyNowRequest) {
-        ProgressDialog progressDialog = new ProgressDialog(contexts);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage(contexts.getString(R.string.base_tv_please_wait));
-        progressDialog.show();
-        final Call<GeneralResponse> vehicleDetailApi = getApiGrosirMobil().liveBuyNowApi(BEARER+" "+grosirMobilPreference.getToken(),negoAndBuyNowRequest);
-        vehicleDetailApi.enqueue(new Callback<GeneralResponse>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
-                progressDialog.dismiss();
-                if (response.isSuccessful()) {
-                    try {
-                        if(response.body().getMessage().equals("success")){
-                            Intent intent = new Intent(contexts, MainActivity.class);
-                            intent.putExtra(REQUEST_MAIN, "win");
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            contexts.startActivity(intent);
-//                            finish();
-                        }else {
-                            grosirMobilFunction.showMessage(contexts, "POST Live Buy Now", response.body().getMessage());
-                        }
-                    }catch (Exception e){
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }else {
-                    try {
-                        grosirMobilFunction.showMessage(contexts, contexts.getString(R.string.base_null_error_title), response.errorBody().string());
-                    } catch (IOException e) {
-                        GrosirMobilLog.printStackTrace(e);
-                    }
-                }
-            }
+//        if(dataCartResponse.getUserTertinggi()==null){
+//            holder.tvPenawaranAnda.setText("Rp 0");
+////            lastPrice = 0;
+//            negoPrice = 0;
+//        }
+//        else {
+//
+//        }
+//        holder.setIsRecyclable(false);
+        dataCartResponse.setNego(dataCartResponse.getTertinggi());
+        lastPrice = Long.parseLong(dataCartResponse.getTertinggi());
 
-            @Override
-            public void onFailure(Call<GeneralResponse> call, Throwable t) {
-                progressDialog.dismiss();
-                grosirMobilFunction.showMessage(contexts, "POST Live Buy Now", contexts.getString(R.string.base_null_server));
-                GrosirMobilLog.printStackTrace(t);
+        if(grosirMobilPreference.getBidPrice(String.valueOf(position))==null){
+            grosirMobilPreference.saveBidPrice(dataCartResponse.getTertinggi(), String.valueOf(position));
+        }
+//        if(dataCartResponse.getTertinggi()==null){
+////            holder.tvPenawaranTerakhir.setText("Rp 0");
+//            long highPrice = Long.parseLong(dataCartResponse.getBottomPrice());
+////            highPrice = highPrice+500000;
+//            holder.tvPrice.setText("Rp "+setCurrencyFormat(String.valueOf(highPrice)));
+//        }
+//        else {
+//
+//        }
+//        lastPrice = Long.parseLong(dataCartResponse.getTertinggi());
+//        if(dataCartResponse.getTertinggi())
+        negoPrice = Long.parseLong(grosirMobilPreference.getBidPrice(String.valueOf(position)));
+        holder.tvPrice.setText("Rp "+setCurrencyFormat(grosirMobilPreference.getBidPrice(String.valueOf(position))));
+        holder.ivMin.setOnClickListener(view -> {
+            if(negoPrice<=lastPrice){
+                Toast.makeText(contexts, "Minimum Tawar Harus Lebih Besar dari Penawaran Terakhir", Toast.LENGTH_SHORT).show();
+            }else {
+                negoPrice = negoPrice-500000;
+//                dataCartResponse.setNego(String.valueOf(negoPrice));
+                grosirMobilPreference.saveBidPrice(String.valueOf(negoPrice), String.valueOf(position));
+                holder.tvPrice.setText("Rp "+setCurrencyFormat(grosirMobilPreference.getBidPrice(String.valueOf(position))));
             }
         });
+
+        holder.ivPlus.setOnClickListener(view -> {
+            if(negoPrice>=dataCartResponse.getOpenPrice()){
+
+            }else {
+                negoPrice = negoPrice+500000;
+            }
+//            dataCartResponse.setNego(String.valueOf(negoPrice));
+            grosirMobilPreference.saveBidPrice(String.valueOf(negoPrice), String.valueOf(position));
+            holder.tvPrice.setText("Rp "+setCurrencyFormat(grosirMobilPreference.getBidPrice(String.valueOf(position))));
+        });
+
+        holder.btnNego.setOnClickListener(view -> {
+            if(dataCartResponse.getTertinggi()==null){
+                long highPriceNego = Long.parseLong(dataCartResponse.getBottomPrice());
+                NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(String.valueOf(dataCartResponse.getOhid()), dataCartResponse.getKik(), dataCartResponse.getAgreementNo().trim(), String.valueOf(highPriceNego));
+                liveNegoApi(negoAndBuyNowRequest);
+            }else {
+                long highPriceNego = Long.parseLong(grosirMobilPreference.getBidPrice(String.valueOf(position)));
+//                highPriceNego = highPriceNego+500000;
+                System.out.println("Test NEGO : " + highPriceNego);
+                NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(String.valueOf(dataCartResponse.getOhid()), dataCartResponse.getKik(), dataCartResponse.getAgreementNo().trim(), String.valueOf(highPriceNego));
+                liveNegoApi(negoAndBuyNowRequest);
+            }
+            holder.relativeSuccessNego.setVisibility(View.VISIBLE);
+        });
+
+        holder.btnBuyNow.setOnClickListener(view -> {
+            onItemClickListener.onItemClick(dataCartResponse);
+        });
+        holder.ivClearPrice.setOnClickListener(view -> {
+            if(dataCartResponse.getUserTertinggi()==null){
+                negoPrice = 0;
+                holder.tvPrice.setText("Rp 0");
+            }else {
+                negoPrice = Long.parseLong(dataCartResponse.getUserTertinggi());
+                holder.tvPrice.setText("Rp "+setCurrencyFormat(dataCartResponse.getUserTertinggi()));
+            }
+        });
+
+
     }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+
+    //    public void liveBuyNowApi(NegoAndBuyNowRequest negoAndBuyNowRequest) {
+//        ProgressDialog progressDialog = new ProgressDialog(contexts);
+//        progressDialog.setCancelable(false);
+//        progressDialog.setMessage(contexts.getString(R.string.base_tv_please_wait));
+//        progressDialog.show();
+//        final Call<GeneralResponse> vehicleDetailApi = getApiGrosirMobil().liveBuyNowApi(BEARER+" "+grosirMobilPreference.getToken(),negoAndBuyNowRequest);
+//        vehicleDetailApi.enqueue(new Callback<GeneralResponse>() {
+//            @SuppressLint("SetTextI18n")
+//            @Override
+//            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
+//                progressDialog.dismiss();
+//                if (response.isSuccessful()) {
+//                    try {
+//                        if(response.body().getMessage().equals("success")){
+//                            Intent intent = new Intent(contexts, MainActivity.class);
+//                            intent.putExtra(REQUEST_MAIN, "win");
+//                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                            contexts.startActivity(intent);
+////                            finish();
+//                        }else {
+//                            grosirMobilFunction.showMessage(contexts, "POST Live Buy Now", response.body().getMessage());
+//                        }
+//                    }catch (Exception e){
+//                        GrosirMobilLog.printStackTrace(e);
+//                    }
+//                }else {
+//                    try {
+//                        grosirMobilFunction.showMessage(contexts, contexts.getString(R.string.base_null_error_title), response.errorBody().string());
+//                    } catch (IOException e) {
+//                        GrosirMobilLog.printStackTrace(e);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<GeneralResponse> call, Throwable t) {
+//                progressDialog.dismiss();
+//                grosirMobilFunction.showMessage(contexts, "POST Live Buy Now", contexts.getString(R.string.base_null_server));
+//                GrosirMobilLog.printStackTrace(t);
+//            }
+//        });
+//    }
 
     public void liveNegoApi(NegoAndBuyNowRequest negoAndBuyNowRequest) {
         ProgressDialog progressDialog = new ProgressDialog(contexts);

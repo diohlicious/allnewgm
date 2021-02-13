@@ -36,11 +36,13 @@ public class DataCartResponse {
     @SerializedName("vehicle_name")
     @Expose
     private String vehicleName;
+
+    private String nego;
     
     @SerializedName("tertinggi")
     @Expose
     private String tertinggi;
-    
+
     @SerializedName("user_tertinggi")
     @Expose
     private String userTertinggi;
@@ -175,6 +177,14 @@ public class DataCartResponse {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getNego() {
+        return nego;
+    }
+
+    public void setNego(String nego) {
+        this.nego = nego;
     }
 
     public DataOtoJsonResponse getDataOtoJsonResponse() {

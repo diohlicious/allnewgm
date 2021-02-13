@@ -158,7 +158,8 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             try {
                 DataHomeComingSoonResponse dataHomeComingSoonResponse = dataHomeComingSoonResponseList.get(position);
                 tvVehicleName.setText(dataHomeComingSoonResponse.getVehicleName());
-                tvPlatNumber.setText(dataHomeComingSoonResponse.getKikNumber().substring(0, 10) + " - ");
+                tvPlatNumber.setText(dataHomeComingSoonResponse.getKikNumber() + " - ");
+//                tvPlatNumber.setText(dataHomeComingSoonResponse.getKikNumber().substring(0, 10) + " - ");
                 tvCity.setText(dataHomeComingSoonResponse.getWareHouse().replace("WAREHOUSE ", ""));
                 tvOpenPrice.setText("Rp "+setCurrencyFormat(dataHomeComingSoonResponse.getBottomPrice()));
                 tvBottomPrice.setText("Rp "+ setCurrencyFormat(dataHomeComingSoonResponse.getBottomPrice()));

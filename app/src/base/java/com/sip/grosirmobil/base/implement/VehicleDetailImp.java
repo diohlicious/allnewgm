@@ -164,7 +164,7 @@ public class VehicleDetailImp implements VehicleDetailPresenter {
                     try {
                         if(response.body().getMessage().equals("success")){
                             grosirMobilPreference.saveTimeServer(response.body().getData().getTimeServer());
-                            vehicleDetailView.vehicleDetailSuccess(dataVehicleDetailResponse, response.body().getData().getTimeServer());
+                            vehicleDetailView.vehicleDetailSuccess(dataVehicleDetailResponse, grosirMobilPreference.getTimeServer());
                         }else {
                             grosirMobilFunction.showMessage(context, "GET Time Server", response.body().getMessage());
                         }

@@ -207,7 +207,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                 tvTitleContent,tvLive,tvLiveSoon,tvRecord, tvKetEmptyDataHome, page,max,lokasi,tahunStart,
                 tahunEnd,hargaStart,hargaEnd,merek,grade);
 
-
+//        grosirMobilPreference.clearSharePreferenceBidPrice("0");
         setUiReset();
 
         homePresenter.setDataBannerHome(viewPagerHome, circleIndicator);

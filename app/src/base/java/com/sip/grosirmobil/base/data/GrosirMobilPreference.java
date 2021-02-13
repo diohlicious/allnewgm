@@ -24,6 +24,7 @@ public class GrosirMobilPreference {
     private static final String PREFERENCE_NAME = BuildConfig.APP_NAME;
     private static final String TOKEN = "token";
     private static final String TIME_SERVER = "timeServer";
+    private static final String BID_PRICE = "bidPrice";
     private static final String PHONE_NUMBER = "phoneNumber";
     private static final String PASSWORD = "password";
     private static final String EMAIL = "email";
@@ -225,6 +226,18 @@ public class GrosirMobilPreference {
     public String getTimeServer() {
         return sharedpreferences.getString(TIME_SERVER, null);
     }
+
+    public void saveBidPrice(String bidPrice, String position) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(BID_PRICE+position, bidPrice);
+        editor.apply();
+    }
+
+    public String getBidPrice(String position) {
+        return sharedpreferences.getString(BID_PRICE+position, null);
+    }
+
+
 
     public void saveEmail(String email) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -472,6 +485,11 @@ public class GrosirMobilPreference {
         return (ArrayList<DataWareHouseResponse>) dataWareHouseResponseList;
     }
 
+    public void clearSharePreferenceBidPrice(String position) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.remove(BID_PRICE+position);
+        editor.apply();
+    }
 
     public void clearSharePreference() {
         SharedPreferences.Editor editor = sharedpreferences.edit();

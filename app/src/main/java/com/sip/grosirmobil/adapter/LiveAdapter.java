@@ -159,7 +159,8 @@ public class LiveAdapter
             try {
                 DataHomeLiveResponse dataHomeLiveResponse = dataHomeLiveResponseList.get(position);
                 tvVehicleName.setText(dataHomeLiveResponse.getVehicleName());
-                tvPlatNumber.setText(dataHomeLiveResponse.getKikNumber().substring(0, 10) + " - ");
+                tvPlatNumber.setText(dataHomeLiveResponse.getKikNumber() + " - ");
+//                tvPlatNumber.setText(dataHomeLiveResponse.getKikNumber().substring(0, 10) + " - ");
                 tvCity.setText(dataHomeLiveResponse.getWareHouse().replace("WAREHOUSE ", ""));
                 tvOpenPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getBottomPrice()));
                 tvBottomPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getPriceNow()));
