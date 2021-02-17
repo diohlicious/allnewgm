@@ -111,12 +111,13 @@ public class CartFragment extends GrosirMobilFragment {
     Runnable runnable;
     int delay = 1000;
     private boolean checkAuto = false;
+    private boolean first = true;
     private LiveGarageAdapter liveGarageAdapter;
-
     private GrosirMobilFunction grosirMobilFunction;
     private GrosirMobilPreference grosirMobilPreference;
     private NegoAndBuyNowRequest negoAndBuyNowRequest;
 
+    private final List<DataCartResponse> dataCartLiveResponseListTemp = new ArrayList<>();
     private final List<DataCartResponse> dataCartLiveResponseList = new ArrayList<>();
     private final List<DataCartResponse> dataCartSuccessResponseList = new ArrayList<>();
     private final List<DataCartResponse> dataCartLostResponseList = new ArrayList<>();
@@ -227,6 +228,7 @@ public class CartFragment extends GrosirMobilFragment {
                                 linearCartNotEmpty.setVisibility(View.VISIBLE);
                                 linearCartEmpty.setVisibility(View.GONE);
                                 dataCartLiveResponseList.clear();
+                                dataCartLiveResponseListTemp.clear();
                                 dataCartSuccessResponseList.clear();
                                 dataCartLostResponseList.clear();
 
@@ -239,7 +241,33 @@ public class CartFragment extends GrosirMobilFragment {
 
                                 for(int i=0;i<response.body().getDataCartResponseList().size();i++){
                                     if(response.body().getDataCartResponseList().get(i).getIsLive()==1){
-                                        dataCartLiveResponseList.add(response.body().getDataCartResponseList().get(i));
+                                        DataCartResponse dataCartResponse;
+                                        String negoBid = null;
+//                                        dataCartLiveResponseListTemp.add(response.body().getDataCartResponseList().get(i));
+                                        if(first){
+                                            dataCartLiveResponseListTemp.add(response.body().getDataCartResponseList().get(i));
+                                            grosirMobilPreference.saveDataCartLive(dataCartLiveResponseListTemp);
+                                        }
+//                                        else {
+//                                            //                                            if(dataCartLiveResponseListTemp.get(i).getNego()==null||dataCartLiveResponseListTemp.get(i).getNego().equals("")){
+////                                                dataCartLiveResponseListTemp.get(i).setNego(response.body().getDataCartResponseList().get(i).getTertinggi());
+////                                            }
+//                                        }
+                                        negoBid = response.body().getDataCartResponseList().get(i).getTertinggi();
+//                                        System.out.println("DATA : "+ dataCartLiveResponseListTemp.get(i).getNego());
+                                        dataCartResponse = new DataCartResponse(response.body().getDataCartResponseList().get(i).getUserIdGrosir(),
+                                                response.body().getDataCartResponseList().get(i).getUserIdWin(), response.body().getDataCartResponseList().get(i).getOhid(),
+                                                response.body().getDataCartResponseList().get(i).getAgreementNo(), response.body().getDataCartResponseList().get(i).getStart_Date(),
+                                                response.body().getDataCartResponseList().get(i).getEndDate(), response.body().getDataCartResponseList().get(i).getKik(),
+                                                response.body().getDataCartResponseList().get(i).getVehicleName(), negoBid,
+                                                response.body().getDataCartResponseList().get(i).getTertinggi(), response.body().getDataCartResponseList().get(i).getUserTertinggi(),
+                                                response.body().getDataCartResponseList().get(i).getIsKeranjang(), response.body().getDataCartResponseList().get(i).getIsWinner(),
+                                                response.body().getDataCartResponseList().get(i).getUserWin(), response.body().getDataCartResponseList().get(i).getBottomPrice(),
+                                                response.body().getDataCartResponseList().get(i).getOpenPrice(), response.body().getDataCartResponseList().get(i).getGrade(),
+                                                response.body().getDataCartResponseList().get(i).getIsLive(), response.body().getDataCartResponseList().get(i).getCategoryName(),
+                                                response.body().getDataCartResponseList().get(i).getIsBlock(), response.body().getDataCartResponseList().get(i).getFoto(),
+                                                response.body().getDataCartResponseList().get(i).getStatus());
+                                        dataCartLiveResponseList.add(dataCartResponse);
                                     }
                                     if(response.body().getDataCartResponseList().get(i).getIsWinner()==1 &&
                                        response.body().getDataCartResponseList().get(i).getUserWin()==1) {
@@ -254,14 +282,17 @@ public class CartFragment extends GrosirMobilFragment {
                                     linearLiveGarage.setVisibility(View.GONE);
                                 }else {
                                     linearLiveGarage.setVisibility(View.VISIBLE);
-                                    liveGarageAdapter = new LiveGarageAdapter(getActivity(), convertDateServer(timeServer), loadingShow, dataCartLiveResponseList, dataCartResponse -> {
+
+                                    liveGarageAdapter = new LiveGarageAdapter(first,  getActivity(), convertDateServer(timeServer), dataCartLiveResponseList, dataCartResponse -> {
                                         tvMessageBuyNow.setText(dataCartResponse.getVehicleName()+"\nseharga\nRp"+setCurrencyFormat(String.valueOf(dataCartResponse.getOpenPrice())));
                                         relativeBackgroundDialogConfirmBuyNow.setVisibility(View.VISIBLE);
                                         negoAndBuyNowRequest = new NegoAndBuyNowRequest(String.valueOf(dataCartResponse.getOhid()), dataCartResponse.getKik(), dataCartResponse.getAgreementNo().trim(), String.valueOf(dataCartResponse.getOpenPrice()));
 //                                        liveBuyNowApi(negoAndBuyNowRequest);
                                     });
+
                                     rvLiveGarage.setAdapter(liveGarageAdapter);
                                     liveGarageAdapter.notifyDataSetChanged();
+                                    first = false;
                                 }
                                 if(dataCartSuccessResponseList.isEmpty()||dataCartSuccessResponseList==null){
                                     linearSuccessGarage.setVisibility(View.GONE);

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.sip.grosirmobil.BuildConfig;
 import com.sip.grosirmobil.cloud.config.model.SearchDataModel;
+import com.sip.grosirmobil.cloud.config.response.cart.DataCartResponse;
 import com.sip.grosirmobil.cloud.config.response.checkactivetoken.DataCheckActiveTokenResponse;
 import com.sip.grosirmobil.cloud.config.response.homecomingsoon.HomeComingSoonResponse;
 import com.sip.grosirmobil.cloud.config.response.homelive.DataPageHomeLiveResponse;
@@ -227,15 +228,27 @@ public class GrosirMobilPreference {
         return sharedpreferences.getString(TIME_SERVER, null);
     }
 
-    public void saveBidPrice(String bidPrice, String position) {
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(BID_PRICE+position, bidPrice);
-        editor.apply();
-    }
+//    public void saveBidPrice(List<String> bidPrice) {
+//        SharedPreferences.Editor editor = sharedpreferences.edit();
+//        Gson gson = new Gson();
+//        String json = gson.toJson(bidPrice);
+//        editor.putString(BID_PRICE, json);
+//        editor.apply();
+////        editor.putString(BID_PRICE, bidPrice);
+////        editor.apply();
+//    }
+//
+//    public ArrayList<String> getBidPrice(){
+////        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+//        Gson gson = new Gson();
+//        String json = sharedpreferences.getString(BID_PRICE, null);
+//        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+//        return gson.fromJson(json, type);
+//    }
 
-    public String getBidPrice(String position) {
-        return sharedpreferences.getString(BID_PRICE+position, null);
-    }
+//    public String getBidPrice(String position) {
+//        return sharedpreferences.getString(BID_PRICE+position, null);
+//    }
 
 
 
@@ -341,6 +354,30 @@ public class GrosirMobilPreference {
             return null;
 
         return (ArrayList<DataProvinceResponse>) dataProvinceResponseList;
+    }
+
+    public void saveDataCartLive(List<DataCartResponse> dataCartResponseList){
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        Gson gson = new Gson();
+        String dataCartLiveJson = gson.toJson(dataCartResponseList);
+        editor.putString(BID_PRICE, dataCartLiveJson);
+        editor.apply();
+    }
+
+    public ArrayList<DataCartResponse> getDataCartLive(){
+        List<DataCartResponse> dataCartResponseList;
+        if (sharedpreferences.contains(BID_PRICE)) {
+            String dataCartLiveJson = sharedpreferences.getString(BID_PRICE, null);
+            Gson gson = new Gson();
+            DataCartResponse[] dataCartResponses = gson.fromJson(dataCartLiveJson,
+                    DataCartResponse[].class);
+
+            dataCartResponseList = Arrays.asList(dataCartResponses);
+            dataCartResponseList = new ArrayList<>(dataCartResponseList);
+        } else
+            return null;
+
+        return (ArrayList<DataCartResponse>) dataCartResponseList;
     }
 
     public void saveDataTypeUsahaList(List<DataTipeUsahaResponse> dataTipeUsahaResponseList){
@@ -494,6 +531,7 @@ public class GrosirMobilPreference {
     public void clearSharePreference() {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.remove(TOKEN);
+        editor.remove(BID_PRICE);
         editor.remove(PHONE_NUMBER);
         editor.remove(PASSWORD);
         editor.remove(EMAIL);

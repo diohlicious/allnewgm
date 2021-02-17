@@ -183,15 +183,107 @@ public class DataCartResponse {
         return nego;
     }
 
-    public void setNego(String nego) {
-        this.nego = nego;
-    }
-
     public DataOtoJsonResponse getDataOtoJsonResponse() {
         return dataOtoJsonResponse;
     }
 
-    public DataCartResponse(int userIdGrosir, int userIdWin, int ohid, String agreementNo, String start_Date, String endDate, String kik, String vehicleName, String tertinggi, String userTertinggi, String isKeranjang, int isWinner, int userWin, String bottomPrice, int openPrice, String grade, int isLive, String categoryName, int isBlock, String foto, String status) {
+    public void setUserIdGrosir(int userIdGrosir) {
+        this.userIdGrosir = userIdGrosir;
+    }
+
+    public void setUserIdWin(int userIdWin) {
+        this.userIdWin = userIdWin;
+    }
+
+    public void setOhid(int ohid) {
+        this.ohid = ohid;
+    }
+
+    public void setAgreementNo(String agreementNo) {
+        this.agreementNo = agreementNo;
+    }
+
+    public void setStart_Date(String start_Date) {
+        this.start_Date = start_Date;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setKik(String kik) {
+        this.kik = kik;
+    }
+
+    public void setVehicleName(String vehicleName) {
+        this.vehicleName = vehicleName;
+    }
+
+    public void setNego(String nego) {
+        this.nego = nego;
+    }
+
+    public void setTertinggi(String tertinggi) {
+        this.tertinggi = tertinggi;
+    }
+
+    public void setUserTertinggi(String userTertinggi) {
+        this.userTertinggi = userTertinggi;
+    }
+
+    public void setIsKeranjang(String isKeranjang) {
+        this.isKeranjang = isKeranjang;
+    }
+
+    public void setIsWinner(int isWinner) {
+        this.isWinner = isWinner;
+    }
+
+    public void setUserWin(int userWin) {
+        this.userWin = userWin;
+    }
+
+    public void setBottomPrice(String bottomPrice) {
+        this.bottomPrice = bottomPrice;
+    }
+
+    public void setOpenPrice(int openPrice) {
+        this.openPrice = openPrice;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public void setIsLive(int isLive) {
+        this.isLive = isLive;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public void setIsBlock(int isBlock) {
+        this.isBlock = isBlock;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setDataOtoJsonResponse(DataOtoJsonResponse dataOtoJsonResponse) {
+        this.dataOtoJsonResponse = dataOtoJsonResponse;
+    }
+
+
+    public DataCartResponse() {
+    }
+
+    public DataCartResponse(int userIdGrosir, int userIdWin, int ohid, String agreementNo, String start_Date, String endDate, String kik, String vehicleName, String nego, String tertinggi, String userTertinggi, String isKeranjang, int isWinner, int userWin, String bottomPrice, int openPrice, String grade, int isLive, String categoryName, int isBlock, String foto, String status) {
         this.userIdGrosir = userIdGrosir;
         this.userIdWin = userIdWin;
         this.ohid = ohid;
@@ -200,6 +292,7 @@ public class DataCartResponse {
         this.endDate = endDate;
         this.kik = kik;
         this.vehicleName = vehicleName;
+        this.nego = nego;
         this.tertinggi = tertinggi;
         this.userTertinggi = userTertinggi;
         this.isKeranjang = isKeranjang;
