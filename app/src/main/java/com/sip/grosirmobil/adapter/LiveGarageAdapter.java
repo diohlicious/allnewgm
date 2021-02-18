@@ -23,8 +23,8 @@ import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.cloud.config.request.negonbuynow.NegoAndBuyNowRequest;
-import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 import com.sip.grosirmobil.cloud.config.response.cart.DataCartResponse;
+import com.sip.grosirmobil.cloud.config.response.nego.GeneralNegoAndBuyNowResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,15 +83,31 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
         try {
             DataCartResponse dataCartResponse = dataCartResponseList.get(position);
             holder.tvVehicleName.setText(dataCartResponse.getVehicleName());
-            holder.tvPlatNumber.setText(dataCartResponse.getKik().substring(0, 10) + " - ");
+            if(dataCartResponse.getDataOtoJsonResponse()==null){
+
+            }else {
+                if(dataCartResponse.getDataOtoJsonResponse().getLokasi()==null||dataCartResponse.getDataOtoJsonResponse().getLokasi().equals("")){
+
+                }
+                else {
+//                    holder.tvPlatNumber.setText(dataCartResponse.getKik().substring(0, 10) + " - "+dataCartResponse.getDataOtoJsonResponse().getLokasi().replace("WAREHOUSE ", ""));
+                }
+            }
+            holder.tvPlatNumber.setText(dataCartResponse.getKik().substring(0, 10) + " - "+dataCartResponse.getDataOtoJsonResponse().getLokasi().replace("WAREHOUSE ", ""));
             holder.btnBuyNow.setText(contexts.getString(R.string.btn_buy_now)+ " Rp "+setCurrencyFormat(String.valueOf(dataCartResponse.getOpenPrice())));
             holder.tvInitialName.setText(dataCartResponse.getGrade());
-            if(dataCartResponse.getUserTertinggi()==null){}
+            if(dataCartResponse.getUserTertinggi()==null){
+                holder.tvPenawaranAndaKet.setText("Harga Awal");
+                holder.tvPenawaranAnda.setText("Rp "+setCurrencyFormat(dataCartResponse.getBottomPrice()));
+            }
             else {
+                holder.tvPenawaranAndaKet.setText(contexts.getString(R.string.tv_penawaran_anda));
                 holder.tvPenawaranAnda.setText("Rp "+setCurrencyFormat(dataCartResponse.getUserTertinggi()));
             }
 
-            if (dataCartResponse.getTertinggi() == null) {}
+            if (dataCartResponse.getTertinggi() == null) {
+                holder.tvPenawaranTerakhir.setText("Rp "+setCurrencyFormat(dataCartResponse.getBottomPrice()));
+            }
             else {
                 holder.tvPenawaranTerakhir.setText("Rp "+setCurrencyFormat(dataCartResponse.getTertinggi()));
             }
@@ -123,12 +139,16 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
             });
 
             if(dataCartResponse.getOhid()==grosirMobilPreference.getDataCartLive().get(position).getOhid()){
-                lastPrice = Long.parseLong(dataCartResponse.getTertinggi());
+                if(dataCartResponse.getTertinggi()==null){
+                    lastPrice = Long.parseLong(dataCartResponse.getBottomPrice());
+                }else {
+                    lastPrice = Long.parseLong(dataCartResponse.getTertinggi());
+                }
             }
             if(first){
                 if(dataCartResponse.getOhid()==grosirMobilPreference.getDataCartLive().get(position).getOhid()){
 //                    holder.tvPrice.setText("Rp "+setCurrencyFormat(dataCartResponse.getNego()));
-                    if(grosirMobilPreference.getDataCartLive().get(position).getNego()==null){
+                    if(grosirMobilPreference.getDataCartLive().get(position).getNego()==null||grosirMobilPreference.getDataCartLive().get(position).getNego().equals("")){
                         List<DataCartResponse> dataCartResponseList1 = new ArrayList<>();
                         for(int i=0;i<dataCartResponseList.size();i++){
                             DataCartResponse dataCartResponse1 =  new DataCartResponse(dataCartResponseList.get(i).getUserIdGrosir(),
@@ -139,6 +159,7 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
                                     dataCartResponseList.get(i).getEndDate(),
                                     dataCartResponseList.get(i).getKik(),
                                     dataCartResponseList.get(i).getVehicleName(),
+//                                    dataCartResponseList.get(i).getBottomPrice(),
                                     dataCartResponseList.get(i).getNego(),
                                     dataCartResponseList.get(i).getTertinggi(),
                                     dataCartResponseList.get(i).getUserTertinggi(),
@@ -152,17 +173,56 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
                                     dataCartResponseList.get(i).getCategoryName(),
                                     dataCartResponseList.get(i).getIsBlock(),
                                     dataCartResponseList.get(i).getFoto(),
-                                    dataCartResponseList.get(i).getStatus());
+                                    dataCartResponseList.get(i).getStatus(),
+                                    dataCartResponseList.get(i).getDataOtoJsonResponse());
                             dataCartResponseList1.add(dataCartResponse1);
                         }
                         grosirMobilPreference.saveDataCartLive(dataCartResponseList1);
+
+//                        for(int i=0;i<dataCartResponseList.size();i++){
+//                            DataCartResponse dataCartResponse1 =  new DataCartResponse();
+//                            dataCartResponse1.setUserIdGrosir(dataCartResponseList.get(i).getUserIdGrosir());
+//                            dataCartResponse1.setUserIdWin(dataCartResponseList.get(i).getUserIdWin());
+//                            dataCartResponse1.setOhid(dataCartResponseList.get(i).getOhid());
+//                            dataCartResponse1.setAgreementNo(dataCartResponseList.get(i).getAgreementNo());
+//                            dataCartResponse1.setStart_Date(dataCartResponseList.get(i).getStart_Date());
+//                            dataCartResponse1.setEndDate(dataCartResponseList.get(i).getEndDate());
+//                            dataCartResponse1.setKik(dataCartResponseList.get(i).getKik());
+//                            dataCartResponse1.setVehicleName(dataCartResponseList.get(i).getVehicleName());
+//                            if(dataCartResponse1.getOhid()==grosirMobilPreference.getDataCartLive().get(position).getOhid()){
+//                                dataCartResponse1.setNego(String.valueOf(negoPrice));
+//                            }
+//                            else {
+//                                dataCartResponse1.setNego(dataCartResponseList.get(i).getNego());
+//                            }
+//                            dataCartResponse1.setTertinggi(dataCartResponseList.get(i).getTertinggi());
+//                            dataCartResponse1.setUserTertinggi(dataCartResponseList.get(i).getUserTertinggi());
+//                            dataCartResponse1.setIsKeranjang(dataCartResponseList.get(i).getIsKeranjang());
+//                            dataCartResponse1.setIsWinner(dataCartResponseList.get(i).getIsWinner());
+//                            dataCartResponse1.setUserWin(dataCartResponseList.get(i).getUserWin());
+//                            dataCartResponse1.setBottomPrice(dataCartResponseList.get(i).getBottomPrice());
+//                            dataCartResponse1.setOpenPrice(dataCartResponseList.get(i).getOpenPrice());
+//                            dataCartResponse1.setGrade(dataCartResponseList.get(i).getGrade());
+//                            dataCartResponse1.setIsLive(dataCartResponseList.get(i).getIsLive());
+//                            dataCartResponse1.setCategoryName(dataCartResponseList.get(i).getCategoryName());
+//                            dataCartResponse1.setIsBlock(dataCartResponseList.get(i).getIsBlock());
+//                            dataCartResponse1.setFoto(dataCartResponseList.get(i).getFoto());
+//                            dataCartResponse1.setStatus(dataCartResponseList.get(i).getStatus());
+//
+//                            dataCartResponseList1.add(dataCartResponse1);
+//                        }
+//                        grosirMobilPreference.saveDataCartLive(dataCartResponseList1);
                     }
 //                    negoPrice = Long.parseLong(grosirMobilPreference.getDataCartLive().get(position).getNego());
                 }
             }
             else {
                 if(dataCartResponse.getOhid()==grosirMobilPreference.getDataCartLive().get(position).getOhid()){
-                    holder.tvPrice.setText("Rp "+setCurrencyFormat(grosirMobilPreference.getDataCartLive().get(position).getNego()));
+                    if(grosirMobilPreference.getDataCartLive().get(position).getNego()==null||grosirMobilPreference.getDataCartLive().get(position).getNego().equals("")){
+                        holder.tvPrice.setText("Rp "+setCurrencyFormat(grosirMobilPreference.getDataCartLive().get(position).getBottomPrice()));
+                    }else {
+                        holder.tvPrice.setText("Rp "+setCurrencyFormat(grosirMobilPreference.getDataCartLive().get(position).getNego()));
+                    }
                 }
 //                if(dataCartResponse.getOhid()==grosirMobilPreference.getDataCartLive().get(position).getOhid()){
 //                    if(grosirMobilPreference.getDataCartLive().get(position).getNego()==null){
@@ -174,7 +234,12 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
             }
             holder.ivMin.setOnClickListener(view -> {
                 if(dataCartResponse.getOhid()==grosirMobilPreference.getDataCartLive().get(position).getOhid()){
-                    long negoPrice = Long.parseLong(grosirMobilPreference.getDataCartLive().get(position).getNego());
+                    long negoPrice;
+                    if(grosirMobilPreference.getDataCartLive().get(position).getNego()==null||grosirMobilPreference.getDataCartLive().get(position).getNego().equals("")){
+                        negoPrice = Long.parseLong(grosirMobilPreference.getDataCartLive().get(position).getBottomPrice());
+                    }else {
+                        negoPrice = Long.parseLong(grosirMobilPreference.getDataCartLive().get(position).getNego());
+                    }
                     if(negoPrice<=lastPrice){
                         Toast.makeText(contexts, "Minimum Tawar Harus Lebih Besar dari Penawaran Terakhir", Toast.LENGTH_SHORT).show();
                     }else {
@@ -214,7 +279,6 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
                                 dataCartResponseList1.add(dataCartResponse1);
                             }
                             grosirMobilPreference.saveDataCartLive(dataCartResponseList1);
-//                            holder.tvPrice.setText("Rp "+setCurrencyFormat(grosirMobilPreference.getDataCartLive().get(position).getNego()));
                         }
                     }
                 }
@@ -222,37 +286,18 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
 
             holder.ivPlus.setOnClickListener(view -> {
                 if(dataCartResponse.getOhid()==grosirMobilPreference.getDataCartLive().get(position).getOhid()){
-                    long negoPrice = Long.parseLong(grosirMobilPreference.getDataCartLive().get(position).getNego());
+                    long negoPrice;
+                    if(grosirMobilPreference.getDataCartLive().get(position).getNego()==null||grosirMobilPreference.getDataCartLive().get(position).getNego().equals("")){
+                        negoPrice = Long.parseLong(grosirMobilPreference.getDataCartLive().get(position).getBottomPrice());
+                    }else {
+                        negoPrice = Long.parseLong(grosirMobilPreference.getDataCartLive().get(position).getNego());
+                    }
                     if(negoPrice>=grosirMobilPreference.getDataCartLive().get(position).getOpenPrice()){}
                     else {
                         negoPrice = negoPrice + 500000;
                     }
                     List<DataCartResponse> dataCartResponseList1 = new ArrayList<>();
                     for(int i=0;i<dataCartResponseList.size();i++){
-//                        DataCartResponse dataCartResponse1 =  new DataCartResponse(
-//                                dataCartResponseList.get(i).getUserIdGrosir(),
-//                                dataCartResponseList.get(i).getUserIdWin(),
-//                                dataCartResponseList.get(i).getOhid(),
-//                                dataCartResponseList.get(i).getAgreementNo(),
-//                                dataCartResponseList.get(i).getStart_Date(),
-//                                dataCartResponseList.get(i).getEndDate(),
-//                                dataCartResponseList.get(i).getKik(),
-//                                dataCartResponseList.get(i).getVehicleName(),
-//                                String.valueOf(negoPrice),
-//                                dataCartResponseList.get(i).getTertinggi(),
-//                                dataCartResponseList.get(i).getUserTertinggi(),
-//                                dataCartResponseList.get(i).getIsKeranjang(),
-//                                dataCartResponseList.get(i).getIsWinner(),
-//                                dataCartResponseList.get(i).getUserWin(),
-//                                dataCartResponseList.get(i).getBottomPrice(),
-//                                dataCartResponseList.get(i).getOpenPrice(),
-//                                dataCartResponseList.get(i).getGrade(),
-//                                dataCartResponseList.get(i).getIsLive(),
-//                                dataCartResponseList.get(i).getCategoryName(),
-//                                dataCartResponseList.get(i).getIsBlock(),
-//                                dataCartResponseList.get(i).getFoto(),
-//                                dataCartResponseList.get(i).getStatus());
-
                         DataCartResponse dataCartResponse1 =  new DataCartResponse();
                         dataCartResponse1.setUserIdGrosir(dataCartResponseList.get(i).getUserIdGrosir());
                         dataCartResponse1.setUserIdWin(dataCartResponseList.get(i).getUserIdWin());
@@ -304,14 +349,24 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
 //                }
             });
 
-            holder.tvPrice.setText("Rp "+setCurrencyFormat(grosirMobilPreference.getDataCartLive().get(position).getNego()));
+            if(grosirMobilPreference.getDataCartLive().get(position).getNego()==null||grosirMobilPreference.getDataCartLive().get(position).getNego().equals("")){
+                holder.tvPrice.setText("Rp "+setCurrencyFormat(grosirMobilPreference.getDataCartLive().get(position).getBottomPrice()));
+            }else {
+                holder.tvPrice.setText("Rp "+setCurrencyFormat(grosirMobilPreference.getDataCartLive().get(position).getNego()));
+            }
             holder.btnNego.setOnClickListener(view -> {
                 if(dataCartResponse.getTertinggi()==null){
                     long highPriceNego = Long.parseLong(dataCartResponse.getBottomPrice());
                     NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(String.valueOf(dataCartResponse.getOhid()), dataCartResponse.getKik(), dataCartResponse.getAgreementNo().trim(), String.valueOf(highPriceNego));
                     liveNegoApi(negoAndBuyNowRequest);
                 }else {
-                    long highPriceNego = Long.parseLong(grosirMobilPreference.getDataCartLive().get(position).getNego());
+                    long highPriceNego;
+                    if(grosirMobilPreference.getDataCartLive().get(position).getNego()==null||grosirMobilPreference.getDataCartLive().get(position).getNego().equals("")){
+                        highPriceNego = Long.parseLong(grosirMobilPreference.getDataCartLive().get(position).getBottomPrice());
+                    }else {
+                        holder.tvPrice.setText("Rp "+setCurrencyFormat(grosirMobilPreference.getDataCartLive().get(position).getNego()));
+                        highPriceNego = Long.parseLong(grosirMobilPreference.getDataCartLive().get(position).getNego());
+                    }
                     System.out.println("Test NEGO : " + highPriceNego);
                     NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(String.valueOf(dataCartResponse.getOhid()), dataCartResponse.getKik(), dataCartResponse.getAgreementNo().trim(), String.valueOf(highPriceNego));
                     liveNegoApi(negoAndBuyNowRequest);
@@ -359,11 +414,11 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
         progressDialog.setCancelable(false);
         progressDialog.setMessage(contexts.getString(R.string.base_tv_please_wait));
         progressDialog.show();
-        final Call<GeneralResponse> vehicleDetailApi = getApiGrosirMobil().liveNegoApi(BEARER+" "+grosirMobilPreference.getToken(),negoAndBuyNowRequest);
-        vehicleDetailApi.enqueue(new Callback<GeneralResponse>() {
+        final Call<GeneralNegoAndBuyNowResponse> vehicleDetailApi = getApiGrosirMobil().liveNegoApi(BEARER+" "+grosirMobilPreference.getToken(),negoAndBuyNowRequest);
+        vehicleDetailApi.enqueue(new Callback<GeneralNegoAndBuyNowResponse>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
+            public void onResponse(Call<GeneralNegoAndBuyNowResponse> call, Response<GeneralNegoAndBuyNowResponse> response) {
                 progressDialog.dismiss();
                 if (response.isSuccessful()) {
                     try {
@@ -385,7 +440,7 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
             }
 
             @Override
-            public void onFailure(Call<GeneralResponse> call, Throwable t) {
+            public void onFailure(Call<GeneralNegoAndBuyNowResponse> call, Throwable t) {
                 progressDialog.dismiss();
                 grosirMobilFunction.showMessage(contexts, "POST Live Nego", contexts.getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);

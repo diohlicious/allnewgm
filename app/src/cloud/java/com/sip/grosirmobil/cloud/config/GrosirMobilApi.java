@@ -36,6 +36,7 @@ import com.sip.grosirmobil.cloud.config.response.kabupaten.KabupatenResponse;
 import com.sip.grosirmobil.cloud.config.response.kecamatan.KecamatanResponse;
 import com.sip.grosirmobil.cloud.config.response.kelurahan.KelurahanResponse;
 import com.sip.grosirmobil.cloud.config.response.login.LoginResponse;
+import com.sip.grosirmobil.cloud.config.response.nego.GeneralNegoAndBuyNowResponse;
 import com.sip.grosirmobil.cloud.config.response.province.ProvinceResponse;
 import com.sip.grosirmobil.cloud.config.response.question.QuestionResponse;
 import com.sip.grosirmobil.cloud.config.response.savedataregister.SaveDataRegisterResponse;
@@ -206,12 +207,12 @@ public interface GrosirMobilApi {
 
     @Headers("Content-Type: application/json")
     @POST(liveNegoPath)
-    Call<GeneralResponse> liveNegoApi(@Header("Authorization") String authToken,
-                                      @Body NegoAndBuyNowRequest negoAndBuyNowRequest);
+    Call<GeneralNegoAndBuyNowResponse> liveNegoApi(@Header("Authorization") String authToken,
+                                                   @Body NegoAndBuyNowRequest negoAndBuyNowRequest);
 
     @Headers("Content-Type: application/json")
     @POST(liveBuyNowPath)
-    Call<GeneralResponse> liveBuyNowApi(@Header("Authorization") String authToken,
+    Call<GeneralNegoAndBuyNowResponse> liveBuyNowApi(@Header("Authorization") String authToken,
                                         @Body NegoAndBuyNowRequest negoAndBuyNowRequest);
 
     @Headers("Content-Type: application/json")

@@ -16,6 +16,8 @@ public interface HomeView {
 
     void homeLiveSuccess(DataPageHomeLiveResponse dataPageHomeLiveResponse, String timeServer);
 
+    void timeServerSuccess(boolean success);
+
     void homeComingSoonSuccess(HomeComingSoonResponse homeComingSoonResponse, String timeServer);
 
     void homeHistorySuccess(HomeHistoryResponse homeHistoryResponse);

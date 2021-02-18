@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderPreviewImage;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.cloud.config.response.vehicledetail.ImageBrokenResponse;
 
 import java.util.List;
@@ -41,28 +42,31 @@ public class PreviewImageBrokenAdapter extends RecyclerView.Adapter<ViewHolderPr
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderPreviewImage holder, int position) {
-        ImageBrokenResponse imageBrokenResponse = imageBrokenResponseList.get(position);
-        if(imageBrokenResponse.getDescription().equals("")){
-            holder.linearDescription.setVisibility(View.GONE);
-        }else {
-            holder.linearDescription.setVisibility(View.VISIBLE);
-            holder.tvDescription.setText(imageBrokenResponse.getDescription());
-        }
+        try {
+            ImageBrokenResponse imageBrokenResponse = imageBrokenResponseList.get(position);
+            if(imageBrokenResponse.getDescription().equals("")){
+                holder.linearDescription.setVisibility(View.GONE);
+            }else {
+                holder.linearDescription.setVisibility(View.VISIBLE);
+                holder.tvDescription.setText(imageBrokenResponse.getDescription());
+            }
 
-        CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
-        circularProgressDrawable.setStrokeWidth(5f);
-        circularProgressDrawable.setCenterRadius(30f);
-        circularProgressDrawable.start();
-        Glide.with(contexts)
-                .load(imageBrokenResponse.getUrlImage())
-                .apply(new RequestOptions()
-                        .placeholder(circularProgressDrawable)
+            CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
+            circularProgressDrawable.setStrokeWidth(5f);
+            circularProgressDrawable.setCenterRadius(30f);
+            circularProgressDrawable.start();
+            Glide.with(contexts)
+                    .load(imageBrokenResponse.getUrlImage())
+                    .apply(new RequestOptions()
+                            .placeholder(circularProgressDrawable)
 //                          .error(R.drawable.ic_image_empty)
-                        .dontAnimate()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true))
-                .into(holder.photoView);
-
+                            .dontAnimate()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true))
+                    .into(holder.photoView);
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
+        }
     }
 
     @Override

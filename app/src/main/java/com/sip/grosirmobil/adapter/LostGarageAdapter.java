@@ -17,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.VehicleDetailActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemVehicleLostGarage;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.cloud.config.response.cart.DataCartResponse;
 
 import java.util.List;
@@ -48,34 +49,55 @@ public class LostGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderItemVehicleLostGarage holder, int position) {
-        DataCartResponse dataCartResponse = dataCartResponseList.get(position);
-        holder.tvVehicleName.setText(dataCartResponse.getVehicleName());
-        holder.tvPlatNumber.setText(dataCartResponse.getKik().substring(0, 10) + " - ");
-//        holder.tvCity.setText(dataCartResponse.getWareHouse().replace("WAREHOUSE ", ""));
-        holder.tvPrice.setText("Rp "+setCurrencyFormat(dataCartResponse.getUserTertinggi()));
-        holder.tvPriceSold.setText("Rp "+setCurrencyFormat(dataCartResponse.getTertinggi()));
-        holder.tvInitialName.setText(dataCartResponse.getGrade());
-        holder.cardVehicle.setOnClickListener(view -> {
-            Intent intent = new Intent(contexts, VehicleDetailActivity.class);
-            intent.putExtra(ID_VEHICLE, String.valueOf(dataCartResponse.getOhid()));
-            intent.putExtra(KIK, dataCartResponse.getKik());
-            intent.putExtra(FROM_PAGE, "HISTORY");
-            contexts.startActivity(intent);
-        });
+        try {
+            DataCartResponse dataCartResponse = dataCartResponseList.get(position);
+            holder.tvVehicleName.setText(dataCartResponse.getVehicleName());
+            if(dataCartResponse.getDataOtoJsonResponse()==null){
 
-        CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
-        circularProgressDrawable.setStrokeWidth(5f);
-        circularProgressDrawable.setCenterRadius(30f);
-        circularProgressDrawable.start();
-        Glide.with(contexts)
-                .load(dataCartResponse.getFoto())
-                .apply(new RequestOptions()
-                        .placeholder(circularProgressDrawable)
-                        .error(R.drawable.ic_broken_image)
-                        .dontAnimate()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(false))
-                .into(holder.ivImage);
+            }else {
+                if(dataCartResponse.getDataOtoJsonResponse().getLokasi()==null||dataCartResponse.getDataOtoJsonResponse().getLokasi().equals("")){
+
+                }
+                else {
+                    holder.tvPlatNumber.setText(dataCartResponse.getKik().substring(0, 10) + " - "+dataCartResponse.getDataOtoJsonResponse().getLokasi().replace("WAREHOUSE ", ""));
+                }
+            }
+//        holder.tvCity.setText(dataCartResponse.getWareHouse().replace("WAREHOUSE ", ""));
+            if(dataCartResponse.getUserTertinggi()==null||dataCartResponse.getUserTertinggi().equals("")){
+                holder.tvPrice.setText("Rp 0");
+            }else {
+                holder.tvPrice.setText("Rp "+setCurrencyFormat(dataCartResponse.getUserTertinggi()));
+            }
+            if(dataCartResponse.getTertinggi()==null||dataCartResponse.getTertinggi().equals("")){
+                holder.tvPriceSold.setText("Rp 0");
+            }else {
+                holder.tvPriceSold.setText("Rp "+setCurrencyFormat(dataCartResponse.getTertinggi()));
+            }
+            holder.tvInitialName.setText(dataCartResponse.getGrade());
+            holder.cardVehicle.setOnClickListener(view -> {
+                Intent intent = new Intent(contexts, VehicleDetailActivity.class);
+                intent.putExtra(ID_VEHICLE, String.valueOf(dataCartResponse.getOhid()));
+                intent.putExtra(KIK, dataCartResponse.getKik());
+                intent.putExtra(FROM_PAGE, "HISTORY");
+                contexts.startActivity(intent);
+            });
+
+            CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
+            circularProgressDrawable.setStrokeWidth(5f);
+            circularProgressDrawable.setCenterRadius(30f);
+            circularProgressDrawable.start();
+            Glide.with(contexts)
+                    .load(dataCartResponse.getFoto())
+                    .apply(new RequestOptions()
+                            .placeholder(circularProgressDrawable)
+                            .error(R.drawable.ic_broken_image)
+                            .dontAnimate()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(false))
+                    .into(holder.ivImage);
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
+        }
     }
 
     @Override

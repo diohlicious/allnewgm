@@ -14,6 +14,7 @@ import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.PayDetailActivity;
 import com.sip.grosirmobil.activity.VehicleDetailActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderItemHistoryBidding;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.cloud.config.response.historytransaction.DataHistoryTransactionResponse;
 
 import java.util.List;
@@ -47,33 +48,37 @@ public class LostBiddingAdapter  extends RecyclerView.Adapter<ViewHolderItemHist
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderItemHistoryBidding holder, int position) {
-        DataHistoryTransactionResponse dataHistoryTransactionResponse = dataHistoryTransactionResponseList.get(position);
-        holder.tvVehicleName.setText(dataHistoryTransactionResponse.getVehicleName());
-        String eventDate = convertDate(dataHistoryTransactionResponse.getEventDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
-        holder.tvEventDate.setText(eventDate+" - ");
-        holder.tvCity.setText(dataHistoryTransactionResponse.getWarehouse());
-        holder.tvPriceWin.setText("Rp "+setCurrencyFormat(dataHistoryTransactionResponse.getSoldPrice()));
-        holder.tvHargaTertinggi.setText("Rp "+setCurrencyFormat(dataHistoryTransactionResponse.getUserPrice()));
-        holder.tvStatus.setText(dataHistoryTransactionResponse.getStatus());
-        if(dataHistoryTransactionResponse.getVaNumber()==null||dataHistoryTransactionResponse.getVaNumber().equals("")){
-            holder.tvNoVa.setText("-");
-        }else {
-            holder.tvNoVa.setText(dataHistoryTransactionResponse.getVaNumber());
-        }
-        if(dataHistoryTransactionResponse.getStatus().equals("Menunggu Pembayaran")){
-            holder.cardVehicle.setOnClickListener(view -> {
-                Intent intent = new Intent(contexts, PayDetailActivity.class);
-                intent.putExtra(REF_NUMBER, dataHistoryTransactionResponse.getOrderNumber());
-                contexts.startActivity(intent);
-            });
-        }else{
-            holder.cardVehicle.setOnClickListener(view -> {
-                Intent intent = new Intent(contexts, VehicleDetailActivity.class);
-                intent.putExtra(ID_VEHICLE, String.valueOf(dataHistoryTransactionResponse.getOhId()));
-                intent.putExtra(KIK, dataHistoryTransactionResponse.getKik());
-                intent.putExtra(FROM_PAGE, "HISTORY");
-                contexts.startActivity(intent);
-            });
+        try {
+            DataHistoryTransactionResponse dataHistoryTransactionResponse = dataHistoryTransactionResponseList.get(position);
+            holder.tvVehicleName.setText(dataHistoryTransactionResponse.getVehicleName());
+            String eventDate = convertDate(dataHistoryTransactionResponse.getEventDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
+            holder.tvEventDate.setText(eventDate+" - ");
+            holder.tvCity.setText(dataHistoryTransactionResponse.getWarehouse());
+            holder.tvPriceWin.setText("Rp "+setCurrencyFormat(dataHistoryTransactionResponse.getSoldPrice()));
+            holder.tvHargaTertinggi.setText("Rp "+setCurrencyFormat(dataHistoryTransactionResponse.getUserPrice()));
+            holder.tvStatus.setText(dataHistoryTransactionResponse.getStatus());
+            if(dataHistoryTransactionResponse.getVaNumber()==null||dataHistoryTransactionResponse.getVaNumber().equals("")){
+                holder.tvNoVa.setText("-");
+            }else {
+                holder.tvNoVa.setText(dataHistoryTransactionResponse.getVaNumber());
+            }
+            if(dataHistoryTransactionResponse.getStatus().equals("Menunggu Pembayaran")){
+                holder.cardVehicle.setOnClickListener(view -> {
+                    Intent intent = new Intent(contexts, PayDetailActivity.class);
+                    intent.putExtra(REF_NUMBER, dataHistoryTransactionResponse.getOrderNumber());
+                    contexts.startActivity(intent);
+                });
+            }else{
+                holder.cardVehicle.setOnClickListener(view -> {
+                    Intent intent = new Intent(contexts, VehicleDetailActivity.class);
+                    intent.putExtra(ID_VEHICLE, String.valueOf(dataHistoryTransactionResponse.getOhId()));
+                    intent.putExtra(KIK, dataHistoryTransactionResponse.getKik());
+                    intent.putExtra(FROM_PAGE, "HISTORY");
+                    contexts.startActivity(intent);
+                });
+            }
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
         }
     }
 

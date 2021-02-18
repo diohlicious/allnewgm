@@ -5,11 +5,11 @@ import com.sip.grosirmobil.cloud.config.response.vehicledetail.DataVehicleDetail
 
 public interface VehicleDetailPresenter {
 
-    void vehicleDetailApi(String kik, String openHouseId);
+    void vehicleDetailApi(boolean flag, String kik, String openHouseId, boolean time);
 
     void liveNegoApi(NegoAndBuyNowRequest negoAndBuyNowRequest);
 
     void liveBuyNowApi(NegoAndBuyNowRequest negoAndBuyNowRequest);
 
-    void getTimeServerApi(DataVehicleDetailResponse dataVehicleDetailResponse);
+    void getTimeServerApi(boolean flag, DataVehicleDetailResponse dataVehicleDetailResponse);
 }

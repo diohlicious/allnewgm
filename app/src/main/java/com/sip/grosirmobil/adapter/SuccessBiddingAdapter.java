@@ -65,36 +65,39 @@ public class SuccessBiddingAdapter extends RecyclerView.Adapter<ViewHolderItemHi
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderItemHistoryBidding holder, int position) {
-        DataHistoryTransactionResponse dataHistoryTransactionResponse = dataHistoryTransactionResponseList.get(position);
-        holder.tvVehicleName.setText(dataHistoryTransactionResponse.getVehicleName());
-        String eventDate = convertDate(dataHistoryTransactionResponse.getEventDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
-        holder.tvEventDate.setText(eventDate+" - ");
-        holder.tvCity.setText(dataHistoryTransactionResponse.getWarehouse());
-        holder.tvPriceWin.setText("Rp "+setCurrencyFormat(dataHistoryTransactionResponse.getSoldPrice()));
-        holder.tvHargaTertinggi.setText("Rp "+setCurrencyFormat(dataHistoryTransactionResponse.getUserPrice()));
+        try {
+            DataHistoryTransactionResponse dataHistoryTransactionResponse = dataHistoryTransactionResponseList.get(position);
+            holder.tvVehicleName.setText(dataHistoryTransactionResponse.getVehicleName());
+            String eventDate = convertDate(dataHistoryTransactionResponse.getEventDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
+            holder.tvEventDate.setText(eventDate+" - ");
+            holder.tvCity.setText(dataHistoryTransactionResponse.getWarehouse());
+            holder.tvPriceWin.setText("Rp "+setCurrencyFormat(dataHistoryTransactionResponse.getSoldPrice()));
+            holder.tvHargaTertinggi.setText("Rp "+setCurrencyFormat(dataHistoryTransactionResponse.getUserPrice()));
 //        holder.tvStatus.setText(dataHistoryTransactionResponse.getStatus());
-        holder.tvNoVa.setText(dataHistoryTransactionResponse.getVaNumber());
-        if(dataHistoryTransactionResponse.getVaNumber()==null||dataHistoryTransactionResponse.getVaNumber().equals("")){
-            holder.tvStatus.setText(dataHistoryTransactionResponse.getStatus());
-        }else {
-            checkStatus(holder.progressBar, holder.tvStatus, dataHistoryTransactionResponse.getVaNumber());
+            holder.tvNoVa.setText(dataHistoryTransactionResponse.getVaNumber());
+            if(dataHistoryTransactionResponse.getVaNumber()==null||dataHistoryTransactionResponse.getVaNumber().equals("")){
+                holder.tvStatus.setText(dataHistoryTransactionResponse.getStatus());
+            }else {
+                checkStatus(holder.progressBar, holder.tvStatus, dataHistoryTransactionResponse.getVaNumber());
+            }
+            if(dataHistoryTransactionResponse.getStatus().equals("Menunggu Pembayaran")){
+                holder.cardVehicle.setOnClickListener(view -> {
+                    Intent intent = new Intent(contexts, PayDetailActivity.class);
+                    intent.putExtra(REF_NUMBER, dataHistoryTransactionResponse.getOrderNumber());
+                    contexts.startActivity(intent);
+                });
+            }else{
+                holder.cardVehicle.setOnClickListener(view -> {
+                    Intent intent = new Intent(contexts, VehicleDetailActivity.class);
+                    intent.putExtra(ID_VEHICLE, String.valueOf(dataHistoryTransactionResponse.getOhId()));
+                    intent.putExtra(KIK, dataHistoryTransactionResponse.getKik());
+                    intent.putExtra(FROM_PAGE, "HISTORY");
+                    contexts.startActivity(intent);
+                });
+            }
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
         }
-        if(dataHistoryTransactionResponse.getStatus().equals("Menunggu Pembayaran")){
-            holder.cardVehicle.setOnClickListener(view -> {
-                Intent intent = new Intent(contexts, PayDetailActivity.class);
-                intent.putExtra(REF_NUMBER, dataHistoryTransactionResponse.getOrderNumber());
-                contexts.startActivity(intent);
-            });
-        }else{
-            holder.cardVehicle.setOnClickListener(view -> {
-                Intent intent = new Intent(contexts, VehicleDetailActivity.class);
-                intent.putExtra(ID_VEHICLE, String.valueOf(dataHistoryTransactionResponse.getOhId()));
-                intent.putExtra(KIK, dataHistoryTransactionResponse.getKik());
-                intent.putExtra(FROM_PAGE, "HISTORY");
-                contexts.startActivity(intent);
-            });
-        }
-
     }
 
     private void checkStatus(ProgressBar progressBar, TextView tvStatus, String vaNumber){

@@ -283,7 +283,32 @@ public class DataCartResponse {
     public DataCartResponse() {
     }
 
-    public DataCartResponse(int userIdGrosir, int userIdWin, int ohid, String agreementNo, String start_Date, String endDate, String kik, String vehicleName, String nego, String tertinggi, String userTertinggi, String isKeranjang, int isWinner, int userWin, String bottomPrice, int openPrice, String grade, int isLive, String categoryName, int isBlock, String foto, String status) {
+//    public DataCartResponse(int userIdGrosir, int userIdWin, int ohid, String agreementNo, String start_Date, String endDate, String kik, String vehicleName, String nego, String tertinggi, String userTertinggi, String isKeranjang, int isWinner, int userWin, String bottomPrice, int openPrice, String grade, int isLive, String categoryName, int isBlock, String foto, String status) {
+//        this.userIdGrosir = userIdGrosir;
+//        this.userIdWin = userIdWin;
+//        this.ohid = ohid;
+//        this.agreementNo = agreementNo;
+//        this.start_Date = start_Date;
+//        this.endDate = endDate;
+//        this.kik = kik;
+//        this.vehicleName = vehicleName;
+//        this.nego = nego;
+//        this.tertinggi = tertinggi;
+//        this.userTertinggi = userTertinggi;
+//        this.isKeranjang = isKeranjang;
+//        this.isWinner = isWinner;
+//        this.userWin = userWin;
+//        this.bottomPrice = bottomPrice;
+//        this.openPrice = openPrice;
+//        this.grade = grade;
+//        this.isLive = isLive;
+//        this.categoryName = categoryName;
+//        this.isBlock = isBlock;
+//        this.foto = foto;
+//        this.status = status;
+//    }
+
+    public DataCartResponse(int userIdGrosir, int userIdWin, int ohid, String agreementNo, String start_Date, String endDate, String kik, String vehicleName, String nego, String tertinggi, String userTertinggi, String isKeranjang, int isWinner, int userWin, String bottomPrice, int openPrice, String grade, int isLive, String categoryName, int isBlock, String foto, String status, DataOtoJsonResponse dataOtoJsonResponse) {
         this.userIdGrosir = userIdGrosir;
         this.userIdWin = userIdWin;
         this.ohid = ohid;
@@ -306,5 +331,6 @@ public class DataCartResponse {
         this.isBlock = isBlock;
         this.foto = foto;
         this.status = status;
+        this.dataOtoJsonResponse = dataOtoJsonResponse;
     }
 }

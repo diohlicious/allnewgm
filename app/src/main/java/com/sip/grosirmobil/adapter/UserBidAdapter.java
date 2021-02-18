@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderUserBid;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.cloud.config.response.vehicledetail.UserBidResponse;
 
 import java.util.List;
@@ -36,12 +37,16 @@ public class UserBidAdapter extends RecyclerView.Adapter<ViewHolderUserBid> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderUserBid holder, int position) {
-        UserBidResponse userBidResponse = userBidResponseList.get(position);
-        holder.tvNameBid.setText(userBidResponse.getName());
-        String date = userBidResponse.getDateBid().substring(0, 19);
-        System.out.println("Date Bid : " + date);
-        holder.tvDateBid.setText(convertDate(userBidResponse.getDateBid(),"yyyy-MM-dd'T'hh:mm:ss","dd-MM-yyyy hh:mm"));
-        holder.tvPriceBid.setText("Rp "+setCurrencyFormat(userBidResponse.getPriceBid()));
+        try {
+            UserBidResponse userBidResponse = userBidResponseList.get(position);
+            holder.tvNameBid.setText(userBidResponse.getName());
+            String date = userBidResponse.getDateBid().substring(0, 19);
+            System.out.println("Date Bid : " + date);
+            holder.tvDateBid.setText(convertDate(userBidResponse.getDateBid(),"yyyy-MM-dd'T'hh:mm:ss","dd-MM-yyyy hh:mm"));
+            holder.tvPriceBid.setText("Rp "+setCurrencyFormat(userBidResponse.getPriceBid()));
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
+        }
     }
 
     @Override

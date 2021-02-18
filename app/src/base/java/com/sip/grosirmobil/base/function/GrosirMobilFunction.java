@@ -226,8 +226,8 @@ public class GrosirMobilFunction {
     public static String convertDateServer(String inputDateString){
         Date date;
         String outPutTimeServer = null;
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ssZ");
+        @SuppressLint("SimpleDateFormat")//2021-02-18 13:03:45
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
@@ -248,7 +248,7 @@ public class GrosirMobilFunction {
             Date d1 = sdf.parse(start_date);
             Date d2 = sdf.parse(end_date);
 
-            System.out.println("DATE T T T : "+ d1.getTime());
+//            System.out.println("DATE T T T : "+ d1.getTime());
             long difference_In_Time
                     = d2.getTime() - d1.getTime();
 
@@ -283,24 +283,24 @@ public class GrosirMobilFunction {
             
             timeToLong = difference_In_Time;
 
-            System.out.print(
-                    "Difference"
-                            + " between two dates is: "+timeToLong);
-
-            
-            // Print result
-            System.out.println(
-                    difference_In_Years
-                            + " years, "
-                            + difference_In_Days
-                            + " days, "
-                            + difference_In_Hours
-                            + " hours, "
-                            + difference_In_Minutes
-                            + " minutes, "
-                            + difference_In_Seconds
-                            + " seconds");
-            
+//            System.out.print(
+//                    "Difference"
+//                            + " between two dates is: "+timeToLong);
+//
+//
+//            // Print result
+//            System.out.println(
+//                    difference_In_Years
+//                            + " years, "
+//                            + difference_In_Days
+//                            + " days, "
+//                            + difference_In_Hours
+//                            + " hours, "
+//                            + difference_In_Minutes
+//                            + " minutes, "
+//                            + difference_In_Seconds
+//                            + " seconds");
+//
         }
 
         catch (ParseException e) {

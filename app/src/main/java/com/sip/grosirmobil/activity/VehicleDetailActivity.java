@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.adapter.BrokenImageAdapter;
@@ -38,6 +40,7 @@ import com.sip.grosirmobil.base.view.VehicleDetailView;
 import com.sip.grosirmobil.cloud.config.request.favorite.FavoriteRequest;
 import com.sip.grosirmobil.cloud.config.request.negonbuynow.NegoAndBuyNowRequest;
 import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
+import com.sip.grosirmobil.cloud.config.response.nego.GeneralNegoAndBuyNowResponse;
 import com.sip.grosirmobil.cloud.config.response.vehicledetail.DataVehicleDetailResponse;
 
 import java.io.IOException;
@@ -67,6 +70,8 @@ import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBar
 public class VehicleDetailActivity extends GrosirMobilActivity implements VehicleDetailView {
 
     @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.iv_favorite) ImageView ivFavorite;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_title_vehicle) TextView tvTitleVehicle;
@@ -76,6 +81,8 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @BindView(R.id.tv_city) TextView tvCity;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_harga_awal) TextView tvHargaAwal;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.tv_harga_awal_dialog) TextView tvHargaAwalDialog;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_harga_sekarang) TextView tvHargaSekarang;
     @SuppressLint("NonConstantResourceId")
@@ -226,14 +233,23 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     private boolean other = false;
     private boolean brokenImage = false;
     private boolean favorite = false;
-    private long negoPrice, lastPrice, bidNego, buyNow;
+    private boolean isLive = false;
+    private boolean flag = true;
+    private boolean updateBid = false;
+    private boolean checkauto = false;
+    private boolean plusmin = false;
+    private long negoPrice,negoPriceTemp, lastPrice, bidNego, buyNow;
 
     private Context context;
     private String openHouseId="";
     private String kik="";
     private String lastPriceFirst="";
     private String negoPriceFirst="";
-    private DataVehicleDetailResponse dataVehicleDetailResponse = null;
+    private DataVehicleDetailResponse dataVehicleDetailResponseTemp = null;
+
+    Handler handler = new Handler();
+    Runnable runnable;
+    int delay = 1000;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -253,20 +269,69 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         openHouseId = getIntent().getStringExtra(ID_VEHICLE);
         kik = getIntent().getStringExtra(KIK);
 
-        vehicleDetailPresenter.vehicleDetailApi(kik,openHouseId);
+        LinearLayoutManager layoutManagerBid = new LinearLayoutManager(this);
+        rvBid.setLayoutManager(layoutManagerBid);
+        rvBid.setNestedScrollingEnabled(false);
 
-        if(getIntent().getStringExtra(FROM_PAGE).equals("LIVE")){
-            btnNego.setVisibility(View.VISIBLE);
-            linearDescription.setVisibility(View.VISIBLE);
-        }else if(getIntent().getStringExtra(FROM_PAGE).equals("HISTORY")){
-            linearDescription.setVisibility(View.GONE);
-            btnNego.setVisibility(View.INVISIBLE);
-        }else if(getIntent().getStringExtra(FROM_PAGE).equals("COMING SOON")){
-            linearDescription.setVisibility(View.GONE);
-            btnNego.setVisibility(View.INVISIBLE);
+        vehicleDetailPresenter.vehicleDetailApi(true, kik,openHouseId, true);
+        checkauto = false;
+        switch (getIntent().getStringExtra(FROM_PAGE)) {
+            case "LIVE":
+                btnNego.setVisibility(View.VISIBLE);
+                linearDescription.setVisibility(View.VISIBLE);
+                break;
+            case "HISTORY":
+            case "COMING SOON":
+                linearDescription.setVisibility(View.GONE);
+                btnNego.setVisibility(View.INVISIBLE);
+                break;
         }
 
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            swipeRefreshLayout.setRefreshing(false);
+            vehicleDetailPresenter.vehicleDetailApi(true, kik,openHouseId, true);
+            checkauto = false;
+            loadData();
+        });
         loadData();
+
+//        tvInputPriceNego.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                isLive=false;
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                isLive=true;
+//            }
+//        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    protected void onResume() {
+        handler.postDelayed(runnable = () -> {
+            handler.postDelayed(runnable, delay);
+            if(checkauto){
+                if(isLive){
+                    if(getIntent().getStringExtra(FROM_PAGE).equals("LIVE")){
+                        vehicleDetailPresenter.vehicleDetailApi(false, kik,openHouseId, true);
+                        checkauto = false;
+                    }
+                }
+            }
+        }, delay);
+        super.onResume();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -275,11 +340,11 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         if(favorite){
             favorite = false;
             ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
-            setAndUnsetFavorite(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getId(),kik,dataVehicleDetailResponse.getAgreementNo(),openHouseId,"0");
+            setAndUnsetFavorite(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getId(),kik,dataVehicleDetailResponseTemp.getAgreementNo(),openHouseId,"0");
         }else {
             favorite = true;
             ivFavorite.setImageResource(R.drawable.ic_favorite);
-            setAndUnsetFavorite(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getId(),kik,dataVehicleDetailResponse.getAgreementNo(),openHouseId,"1");
+            setAndUnsetFavorite(grosirMobilPreference.getDataLogin().getLoggedInUserResponse().getUserResponse().getId(),kik,dataVehicleDetailResponseTemp.getAgreementNo(),openHouseId,"1");
         }
     }
 
@@ -432,7 +497,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.relative_background_dialog_success_nego)
     void relativeBackgroundDialogSuccessNegoClick(){
-        relativeBackgroundDialogSuccessNego.setVisibility(View.GONE);
+//        relativeBackgroundDialogSuccessNego.setVisibility(View.GONE);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -444,13 +509,14 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.relative_background_dialog_success_buy_now)
     void relativeBackgroundDialogSuccessBuyNowClick(){
-        relativeBackgroundDialogSuccessBuyNow.setVisibility(View.GONE);
+//        relativeBackgroundDialogSuccessBuyNow.setVisibility(View.GONE);
     }
 
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.btn_nego_dialog)
     void btnNegoDialogClick(){
-        String vehicleName = dataVehicleDetailResponse.getVehicleName();
+        isLive = false;
+        String vehicleName = dataVehicleDetailResponseTemp.getVehicleName();
         tvMessageNego.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(String.valueOf(negoPrice)));
         linearDialogNegoClick();
     }
@@ -458,8 +524,9 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.btn_buy_now_dialog)
     void btnBuyNowDialogClick(){
-        String vehicleName = dataVehicleDetailResponse.getVehicleName();
-        tvMessageBuyNow.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(dataVehicleDetailResponse.getOpenPrice()));
+        isLive = false;
+        String vehicleName = dataVehicleDetailResponseTemp.getVehicleName();
+        tvMessageBuyNow.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(dataVehicleDetailResponseTemp.getOpenPrice()));
         linearDialogBuyNowClick();
     }
 
@@ -478,14 +545,14 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_nego_confirm_dialog)
     void btnNegoConfirmDialogClick(){
-        NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(dataVehicleDetailResponse.getOpenHouseId(), dataVehicleDetailResponse.getKik(), dataVehicleDetailResponse.getAgreementNo(),String.valueOf(negoPrice));
+        NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(dataVehicleDetailResponseTemp.getOpenHouseId(), dataVehicleDetailResponseTemp.getKik(), dataVehicleDetailResponseTemp.getAgreementNo(),String.valueOf(negoPrice));
         vehicleDetailPresenter.liveNegoApi(negoAndBuyNowRequest);
     }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_confirm_buy_now_dialog)
     void btnConfirmBuyNowDialogClick(){
-        NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(dataVehicleDetailResponse.getOpenHouseId(), dataVehicleDetailResponse.getKik(), dataVehicleDetailResponse.getAgreementNo(), dataVehicleDetailResponse.getOpenPrice());
+        NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(dataVehicleDetailResponseTemp.getOpenHouseId(), dataVehicleDetailResponseTemp.getKik(), dataVehicleDetailResponseTemp.getAgreementNo(), dataVehicleDetailResponseTemp.getOpenPrice());
         vehicleDetailPresenter.liveBuyNowApi(negoAndBuyNowRequest);
     }
 
@@ -495,7 +562,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         relativeBackgroundDialog.setVisibility(View.GONE);
         relativeBackgroundDialogConfirmNego.setVisibility(View.GONE);
         relativeBackgroundDialogSuccessNego.setVisibility(View.VISIBLE);
-        String vehicleName = dataVehicleDetailResponse.getVehicleName();
+        String vehicleName = dataVehicleDetailResponseTemp.getVehicleName();
         tvMessageSuccessNego.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(String.valueOf(negoPrice)));
     }
 
@@ -505,8 +572,8 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         relativeBackgroundDialog.setVisibility(View.GONE);
         relativeBackgroundDialogConfirmBuyNow.setVisibility(View.GONE);
         relativeBackgroundDialogSuccessBuyNow.setVisibility(View.VISIBLE);
-        String vehicleName = dataVehicleDetailResponse.getVehicleName();
-        tvMessageSuccessBuyNow.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(dataVehicleDetailResponse.getOpenPrice()));
+        String vehicleName = dataVehicleDetailResponseTemp.getVehicleName();
+        tvMessageSuccessBuyNow.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(dataVehicleDetailResponseTemp.getOpenPrice()));
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -564,6 +631,8 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         }
         else {
             negoPrice = negoPrice-bidNego;
+            negoPriceTemp = negoPrice;
+            plusmin=true;
             tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
         }
     }
@@ -577,6 +646,8 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
         }else {
             btnNegoDialog.setVisibility(View.VISIBLE);
             negoPrice = negoPrice+bidNego;
+            negoPriceTemp = negoPrice;
+            plusmin=true;
             tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
         }
     }
@@ -679,193 +750,225 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void vehicleDetailSuccess(DataVehicleDetailResponse dataVehicleDetailResponse, String timeServer) {
-        this.dataVehicleDetailResponse = dataVehicleDetailResponse;
-        String startDate = convertDate(convertDateServer(timeServer),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
-        String endDate   = convertDate(dataVehicleDetailResponse.getEndDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss");
-        System.out.println("-- END DATE VEHICLE     : "+ convertDate(dataVehicleDetailResponse.getEndDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss"));
-        System.out.println("-- TIME SERVER BEFORE   : "+ timeServer);
-        System.out.println("-- TIME SERVER AFTER    : "+ convertDate(convertDateServer(timeServer),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss"));
-        System.out.println("Start DATE : "+ startDate);
-        System.out.println("End DATE   : "+ endDate);
-        startTimer(tvTimer, calculateDate(startDate,endDate));
+    public void vehicleDetailSuccess(boolean flag, DataVehicleDetailResponse dataVehicleDetailResponse, String timeServer) {
+        try {
+            this.dataVehicleDetailResponseTemp = dataVehicleDetailResponse;
+            if (dataVehicleDetailResponse.getIsLive() == null || dataVehicleDetailResponse.getIsLive().equals("")) {
+                isLive = false;
+            } else {
+                isLive = dataVehicleDetailResponse.getIsLive().equals("1");
+            }
+//            System.out.println("------------------- Flag : "+flag);
+//            System.out.println("------------------- Is Live : "+isLive);
+            String startDate = convertDate(convertDateServer(timeServer), "yyyy-MM-dd HH:mm:ss", "dd-MM-yyyy HH:mm:ss");
+            String endDate = convertDate(dataVehicleDetailResponse.getEndDate(), "yyyy-MM-dd HH:mm:ss", "dd-MM-yyyy HH:mm:ss");
+//            System.out.println("-- END DATE VEHICLE     : "+ convertDate(dataVehicleDetailResponse.getEndDate(),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss"));
+//            System.out.println("-- TIME SERVER BEFORE   : "+ timeServer);
+//            System.out.println("-- TIME SERVER AFTER    : "+ convertDate(convertDateServer(timeServer),"yyyy-MM-dd HH:mm:ss","dd-MM-yyyy HH:mm:ss"));
+//            System.out.println("Start DATE : "+ startDate);
+//            System.out.println("End DATE   : "+ endDate);
+            startTimer(tvTimer, calculateDate(startDate, endDate));
 
-        startTimerDialog(calculateDate(startDate,endDate));
-//        Awalnya : YYYY-MM-DD hh:mm:ss
-//        I: -- END DATE VEHICLE     : 2021-01-14 18:00:00
-//        I: -- TIME SERVER BEFORE   : 2021-01-13T16:10:20+07:00
-//        I: -- TIME SERVER AFTER    : 2021-01-13 16:10:20
-//        I: -- CALCULATE            : 31542580000
-//        System.out.println("-- END DATE VEHICLE     : "+ dataVehicleDetailResponse.getEndDate());
-//        System.out.println("-- TIME SERVER BEFORE   : "+ timeServer);
-//        System.out.println("-- TIME SERVER AFTER    : "+ convertDateServer(timeServer));
-//        System.out.println("-- CALCULATE            : "+ calculateDate(convertDateServer(timeServer),dataVehicleDetailResponse.getEndDate()));
+            startTimerDialog(calculateDate(startDate, endDate));
+            String vehicleName = dataVehicleDetailResponse.getVehicleName();
+//            System.out.println("SIZE NAME : "+ vehicleName.length());
+            if (vehicleName.length() > 17) {
+                tvTitleVehicle.setText(vehicleName + "...");
+                tvMessageNego.setText(vehicleName + "...");
+                tvMessageBuyNow.setText(vehicleName + "...");
+            } else {
+                tvTitleVehicle.setText(vehicleName);
+                tvMessageNego.setText(vehicleName);
+                tvMessageBuyNow.setText(vehicleName);
+            }
+            tvInitialName.setText(dataVehicleDetailResponse.getGrade());
+            tvHargaAwal.setText("Rp " + setCurrencyFormat(dataVehicleDetailResponse.getHargaAwal()));
+            tvHargaAwalDialog.setText("Rp " + setCurrencyFormat(dataVehicleDetailResponse.getHargaAwal()));
+            tvHargaSekarang.setText("Rp " + setCurrencyFormat(dataVehicleDetailResponse.getBottomPrice()));
 
-        String vehicleName = dataVehicleDetailResponse.getVehicleName();
-        System.out.println("SIZE NAME : "+ vehicleName.length());
-        if(vehicleName.length()>17){
-            tvTitleVehicle.setText(vehicleName+"...");
-            tvMessageNego.setText(vehicleName+"...");
-            tvMessageBuyNow.setText(vehicleName+"...");
-        }else {
-            tvTitleVehicle.setText(vehicleName);
-            tvMessageNego.setText(vehicleName);
-            tvMessageBuyNow.setText(vehicleName);
+            if (dataVehicleDetailResponse.getIsFavorite() == null) {
+                favorite = false;
+            } else if (dataVehicleDetailResponse.getIsFavorite().equals("1")) {
+                favorite = true;
+            } else {
+                favorite = false;
+            }
+            if (favorite) {
+                ivFavorite.setImageResource(R.drawable.ic_favorite);
+            } else {
+                ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
+            }
+            tvPlatNumber.setText(dataVehicleDetailResponse.getKik().substring(0, 10) + " - ");
+            tvCity.setText(dataVehicleDetailResponse.getWarehouse().replace("WAREHOUSE ", ""));
+            if (dataVehicleDetailResponse.getVehicleSummary() == null || dataVehicleDetailResponse.getVehicleSummary().equals("")) {
+                tvDescription.setText("-");
+            } else {
+                String description = dataVehicleDetailResponse.getVehicleSummary();
+                String newDescription = description.replace(",", "\n-");
+                tvDescription.setText("-" + newDescription);
+            }
+
+            if (flag) {
+                LinearLayoutManager layoutManagerImageCar = new LinearLayoutManager(VehicleDetailActivity.this, LinearLayoutManager.HORIZONTAL, false);
+                rvImageCar.setLayoutManager(layoutManagerImageCar);
+                rvImageCar.setItemAnimator(new DefaultItemAnimator());
+                rvImageCar.setNestedScrollingEnabled(false);
+                PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
+                pagerSnapHelper.attachToRecyclerView(rvImageCar);
+                System.out.println("DATA GAMBAR : " + dataVehicleDetailResponse.getImageResponseList().size());
+                if (dataVehicleDetailResponse.getImageResponseList() == null || dataVehicleDetailResponse.getImageResponseList().isEmpty()) {
+                    rvImageCar.setVisibility(View.GONE);
+                } else {
+                    rvImageCar.setVisibility(View.VISIBLE);
+                    ImageVehicleDetailAdapter imageVehicleDetailAdapter = new ImageVehicleDetailAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getImageResponseList());
+                    rvImageCar.setAdapter(imageVehicleDetailAdapter);
+                    imageVehicleDetailAdapter.notifyDataSetChanged();
+                }
+            }
+
+            if (dataVehicleDetailResponse.getVehicleDataResponse() == null) {
+                linearCarData.setVisibility(View.GONE);
+                tvCarData.setVisibility(View.GONE);
+            } else {
+                tvIdNumber.setText(dataVehicleDetailResponse.getVehicleDataResponse().getIdNomor());
+                tvScore.setText(dataVehicleDetailResponse.getVehicleDataResponse().getGrade());
+                tvPlatNumberCarData.setText(dataVehicleDetailResponse.getVehicleDataResponse().getNomorPolisi());
+                tvYear.setText(String.valueOf(dataVehicleDetailResponse.getVehicleDataResponse().getTahun()));
+                tvTransmition.setText(dataVehicleDetailResponse.getVehicleDataResponse().getTransmisi());
+                tvColor.setText(dataVehicleDetailResponse.getVehicleDataResponse().getColor());
+                tvKm.setText(String.valueOf(dataVehicleDetailResponse.getVehicleDataResponse().getKm()));
+                tvKepemilikan.setText(dataVehicleDetailResponse.getVehicleDataResponse().getKepemilikan());
+                tvLocation.setText(dataVehicleDetailResponse.getVehicleDataResponse().getLokasi());
+                tvStnk.setText(dataVehicleDetailResponse.getVehicleDataResponse().getStnk());
+                tvMasaBerlakuPajak.setText(dataVehicleDetailResponse.getVehicleDataResponse().getMasaBerlakuPajak());
+                tvMasaBerlakuStnk.setText(dataVehicleDetailResponse.getVehicleDataResponse().getMasaBerlakuSTNK());
+            }
+
+            if (dataVehicleDetailResponse.getVehicleBodyResponseList() == null || dataVehicleDetailResponse.getVehicleBodyResponseList().isEmpty()) {
+                rvBody.setVisibility(View.GONE);
+                tvBody.setVisibility(View.GONE);
+            } else {
+                LinearLayoutManager linearLayoutManagerBody = new LinearLayoutManager(VehicleDetailActivity.this);
+                rvBody.setLayoutManager(linearLayoutManagerBody);
+                rvBody.setItemAnimator(new DefaultItemAnimator());
+                rvBody.setNestedScrollingEnabled(false);
+                VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getVehicleBodyResponseList());
+                rvBody.setAdapter(vehicleDetailDataAdapter);
+                vehicleDetailDataAdapter.notifyDataSetChanged();
+            }
+
+            if (dataVehicleDetailResponse.getVehicleInteriorResponseList() == null || dataVehicleDetailResponse.getVehicleInteriorResponseList().isEmpty()) {
+                rvInterior.setVisibility(View.GONE);
+                tvInterior.setVisibility(View.GONE);
+            } else {
+                LinearLayoutManager linearLayoutManagerInterior = new LinearLayoutManager(VehicleDetailActivity.this);
+                rvInterior.setLayoutManager(linearLayoutManagerInterior);
+                rvInterior.setItemAnimator(new DefaultItemAnimator());
+                rvInterior.setNestedScrollingEnabled(false);
+                VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getVehicleInteriorResponseList());
+                rvInterior.setAdapter(vehicleDetailDataAdapter);
+                vehicleDetailDataAdapter.notifyDataSetChanged();
+            }
+
+            if (dataVehicleDetailResponse.getVehicleMesinResponseList() == null || dataVehicleDetailResponse.getVehicleMesinResponseList().isEmpty()) {
+                rvEngine.setVisibility(View.GONE);
+                tvEngine.setVisibility(View.GONE);
+            } else {
+                LinearLayoutManager linearLayoutManagerEngine = new LinearLayoutManager(VehicleDetailActivity.this);
+                rvEngine.setLayoutManager(linearLayoutManagerEngine);
+                rvEngine.setItemAnimator(new DefaultItemAnimator());
+                rvEngine.setNestedScrollingEnabled(false);
+                VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getVehicleMesinResponseList());
+                rvEngine.setAdapter(vehicleDetailDataAdapter);
+                vehicleDetailDataAdapter.notifyDataSetChanged();
+            }
+
+            if (dataVehicleDetailResponse.getVehicleOtherResponseList() == null || dataVehicleDetailResponse.getVehicleOtherResponseList().isEmpty()) {
+                rvOther.setVisibility(View.GONE);
+                tvOther.setVisibility(View.GONE);
+            } else {
+                LinearLayoutManager linearLayoutManagerOther = new LinearLayoutManager(VehicleDetailActivity.this);
+                rvOther.setLayoutManager(linearLayoutManagerOther);
+                rvOther.setItemAnimator(new DefaultItemAnimator());
+                rvOther.setNestedScrollingEnabled(false);
+                VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getVehicleOtherResponseList());
+                rvOther.setAdapter(vehicleDetailDataAdapter);
+                vehicleDetailDataAdapter.notifyDataSetChanged();
+            }
+
+            if (flag) {
+                if (dataVehicleDetailResponse.getImageBrokenResponseList() == null || dataVehicleDetailResponse.getImageBrokenResponseList().isEmpty()) {
+                    rvBrokenImage.setVisibility(View.GONE);
+                    tvBrokenImage.setVisibility(View.GONE);
+                } else {
+                    GridLayoutManager gridLayoutManagerBrokenImage = new GridLayoutManager(VehicleDetailActivity.this, 2);
+                    rvBrokenImage.setLayoutManager(gridLayoutManagerBrokenImage);
+                    rvBrokenImage.setItemAnimator(new DefaultItemAnimator());
+                    rvBrokenImage.setNestedScrollingEnabled(false);
+                    BrokenImageAdapter brokenImageAdapter = new BrokenImageAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getImageBrokenResponseList());
+                    rvBrokenImage.setAdapter(brokenImageAdapter);
+                    brokenImageAdapter.notifyDataSetChanged();
+                }
+            }
+
+            btnBuyNowDialog.setText("Buy Now Rp " + setCurrencyFormat(dataVehicleDetailResponse.getOpenPrice()));
+            if (flag) {
+                negoPrice = Long.parseLong(dataVehicleDetailResponse.getBottomPrice());
+                negoPriceTemp = negoPrice;
+            }
+            lastPriceFirst = dataVehicleDetailResponse.getBottomPrice();
+            negoPriceFirst = dataVehicleDetailResponse.getBottomPrice();
+            buyNow = Long.parseLong(dataVehicleDetailResponse.getOpenPrice());
+            lastPrice = Long.parseLong(dataVehicleDetailResponse.getBottomPrice());
+//            if(flag){
+//                tvInputPriceNego.setText("Rp "+setCurrencyFormat(dataVehicleDetailResponse.getBottomPrice()));
+//            }
+//            linearPenawaran.setVisibility(View.VISIBLE);
+            if (dataVehicleDetailResponse.getUserBidResponseList() == null || dataVehicleDetailResponse.getUserBidResponseList().isEmpty()) {
+                linearPenawaran.setVisibility(View.GONE);
+            } else {
+                UserBidAdapter userBidAdapter = new UserBidAdapter(dataVehicleDetailResponse.getUserBidResponseList());
+                rvBid.setAdapter(userBidAdapter);
+                userBidAdapter.notifyDataSetChanged();
+            }
+
+            if (negoPrice == Long.parseLong(dataVehicleDetailResponse.getBottomPrice())) {
+                updateBid = false;
+            } else {
+                updateBid = true;
+                if (!plusmin) {
+                    negoPrice = Long.parseLong(dataVehicleDetailResponse.getBottomPrice());
+                    negoPriceTemp = Long.parseLong(dataVehicleDetailResponse.getBottomPrice());
+                }
+//                System.out.println("OKE DATA BERUBAH : " + negoPrice);
+
+            }
+
+            if (negoPrice == negoPriceTemp) {
+                tvInputPriceNego.setText("Rp " + setCurrencyFormat(String.valueOf(negoPrice)));
+            } else {
+                negoPrice = negoPriceTemp;
+                tvInputPriceNego.setText("Rp " + setCurrencyFormat(String.valueOf(negoPriceTemp)));
+            }
+//            tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
+
+//        System.out.println("DSDADA NEGO : "+ negoPrice);
+//        System.out.println("DSDADA TEMP : "+ negoPriceTemp);
+//        System.out.println("DSDADA BOTTOM PRICE : "+ dataVehicleDetailResponse.getBottomPrice());
+            checkauto = true;
         }
-        tvInitialName.setText(dataVehicleDetailResponse.getGrade());
-        tvHargaAwal.setText("Rp "+setCurrencyFormat(dataVehicleDetailResponse.getHargaAwal()));
-        tvHargaSekarang.setText("Rp "+setCurrencyFormat(dataVehicleDetailResponse.getBottomPrice()));
-
-        if(dataVehicleDetailResponse.getIsFavorite()==null){
-            favorite = false;
-        }else if(dataVehicleDetailResponse.getIsFavorite().equals("1")){
-            favorite = true;
-        }else {
-            favorite = false;
+        catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
         }
-
-
-        if(favorite){
-            ivFavorite.setImageResource(R.drawable.ic_favorite);
-        }else {
-            ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
-        }
-        tvPlatNumber.setText(dataVehicleDetailResponse.getKik().substring(0, 10) + " - ");
-        tvCity.setText(dataVehicleDetailResponse.getWarehouse().replace("WAREHOUSE ", ""));
-        if(dataVehicleDetailResponse.getVehicleSummary()==null||dataVehicleDetailResponse.getVehicleSummary().equals("")){
-            tvDescription.setText("-");
-        }else {
-            String description = dataVehicleDetailResponse.getVehicleSummary();
-            String newDescription = description.replace(",","\n-");
-            tvDescription.setText("-"+newDescription);
-        }
-
-        LinearLayoutManager layoutManagerImageCar = new LinearLayoutManager(VehicleDetailActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        rvImageCar.setLayoutManager(layoutManagerImageCar);
-        rvImageCar.setItemAnimator(new DefaultItemAnimator());
-        rvImageCar.setNestedScrollingEnabled(false);
-        PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
-        pagerSnapHelper.attachToRecyclerView(rvImageCar);
-        System.out.println("DATA GAMBAR : "+ dataVehicleDetailResponse.getImageResponseList().size());
-        if(dataVehicleDetailResponse.getImageResponseList()==null||dataVehicleDetailResponse.getImageResponseList().isEmpty()){
-            rvImageCar.setVisibility(View.GONE);
-        }else {
-            rvImageCar.setVisibility(View.VISIBLE);
-            ImageVehicleDetailAdapter imageVehicleDetailAdapter = new ImageVehicleDetailAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getImageResponseList());
-            rvImageCar.setAdapter(imageVehicleDetailAdapter);
-            imageVehicleDetailAdapter.notifyDataSetChanged();
-        }
-
-        if(dataVehicleDetailResponse.getVehicleDataResponse()==null){
-            linearCarData.setVisibility(View.GONE);
-            tvCarData.setVisibility(View.GONE);
-        }else {
-            tvIdNumber.setText(dataVehicleDetailResponse.getVehicleDataResponse().getIdNomor());
-            tvScore.setText(dataVehicleDetailResponse.getVehicleDataResponse().getGrade());
-            tvPlatNumberCarData.setText(dataVehicleDetailResponse.getVehicleDataResponse().getNomorPolisi());
-            tvYear.setText(String.valueOf(dataVehicleDetailResponse.getVehicleDataResponse().getTahun()));
-            tvTransmition.setText(dataVehicleDetailResponse.getVehicleDataResponse().getTransmisi());
-            tvColor.setText(dataVehicleDetailResponse.getVehicleDataResponse().getColor());
-            tvKm.setText(String.valueOf(dataVehicleDetailResponse.getVehicleDataResponse().getKm()));
-            tvKepemilikan.setText(dataVehicleDetailResponse.getVehicleDataResponse().getKepemilikan());
-            tvLocation.setText(dataVehicleDetailResponse.getVehicleDataResponse().getLokasi());
-            tvStnk.setText(dataVehicleDetailResponse.getVehicleDataResponse().getStnk());
-            tvMasaBerlakuPajak.setText(dataVehicleDetailResponse.getVehicleDataResponse().getMasaBerlakuPajak());
-            tvMasaBerlakuStnk.setText(dataVehicleDetailResponse.getVehicleDataResponse().getMasaBerlakuSTNK());
-        }
-
-        if(dataVehicleDetailResponse.getVehicleBodyResponseList()==null||dataVehicleDetailResponse.getVehicleBodyResponseList().isEmpty()){
-            rvBody.setVisibility(View.GONE);
-            tvBody.setVisibility(View.GONE);
-        }else {
-            LinearLayoutManager linearLayoutManagerBody = new LinearLayoutManager(VehicleDetailActivity.this);
-            rvBody.setLayoutManager(linearLayoutManagerBody);
-            rvBody.setItemAnimator(new DefaultItemAnimator());
-            rvBody.setNestedScrollingEnabled(false);
-            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getVehicleBodyResponseList());
-            rvBody.setAdapter(vehicleDetailDataAdapter);
-            vehicleDetailDataAdapter.notifyDataSetChanged();
-        }
-
-        if(dataVehicleDetailResponse.getVehicleInteriorResponseList()==null||dataVehicleDetailResponse.getVehicleInteriorResponseList().isEmpty()){
-            rvInterior.setVisibility(View.GONE);
-            tvInterior.setVisibility(View.GONE);
-        }else {
-            LinearLayoutManager linearLayoutManagerInterior = new LinearLayoutManager(VehicleDetailActivity.this);
-            rvInterior.setLayoutManager(linearLayoutManagerInterior);
-            rvInterior.setItemAnimator(new DefaultItemAnimator());
-            rvInterior.setNestedScrollingEnabled(false);
-            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getVehicleInteriorResponseList());
-            rvInterior.setAdapter(vehicleDetailDataAdapter);
-            vehicleDetailDataAdapter.notifyDataSetChanged();
-        }
-
-        if(dataVehicleDetailResponse.getVehicleMesinResponseList()==null||dataVehicleDetailResponse.getVehicleMesinResponseList().isEmpty()){
-            rvEngine.setVisibility(View.GONE);
-            tvEngine.setVisibility(View.GONE);
-        }else {
-            LinearLayoutManager linearLayoutManagerEngine = new LinearLayoutManager(VehicleDetailActivity.this);
-            rvEngine.setLayoutManager(linearLayoutManagerEngine);
-            rvEngine.setItemAnimator(new DefaultItemAnimator());
-            rvEngine.setNestedScrollingEnabled(false);
-            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getVehicleMesinResponseList());
-            rvEngine.setAdapter(vehicleDetailDataAdapter);
-            vehicleDetailDataAdapter.notifyDataSetChanged();
-        }
-
-        if(dataVehicleDetailResponse.getVehicleOtherResponseList()==null||dataVehicleDetailResponse.getVehicleOtherResponseList().isEmpty()){
-            rvOther.setVisibility(View.GONE);
-            tvOther.setVisibility(View.GONE);
-        }else {
-            LinearLayoutManager linearLayoutManagerOther = new LinearLayoutManager(VehicleDetailActivity.this);
-            rvOther.setLayoutManager(linearLayoutManagerOther);
-            rvOther.setItemAnimator(new DefaultItemAnimator());
-            rvOther.setNestedScrollingEnabled(false);
-            VehicleDetailDataAdapter vehicleDetailDataAdapter = new VehicleDetailDataAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getVehicleOtherResponseList());
-            rvOther.setAdapter(vehicleDetailDataAdapter);
-            vehicleDetailDataAdapter.notifyDataSetChanged();
-        }
-
-        if(dataVehicleDetailResponse.getImageBrokenResponseList()==null||dataVehicleDetailResponse.getImageBrokenResponseList().isEmpty()){
-            rvBrokenImage.setVisibility(View.GONE);
-            tvBrokenImage.setVisibility(View.GONE);
-        }else {
-            GridLayoutManager gridLayoutManagerBrokenImage = new GridLayoutManager(VehicleDetailActivity.this, 2);
-            rvBrokenImage.setLayoutManager(gridLayoutManagerBrokenImage);
-            rvBrokenImage.setItemAnimator(new DefaultItemAnimator());
-            rvBrokenImage.setNestedScrollingEnabled(false);
-            BrokenImageAdapter brokenImageAdapter = new BrokenImageAdapter(VehicleDetailActivity.this, dataVehicleDetailResponse.getImageBrokenResponseList());
-            rvBrokenImage.setAdapter(brokenImageAdapter);
-            brokenImageAdapter.notifyDataSetChanged();
-        }
-        btnBuyNowDialog.setText("Buy Now Rp "+setCurrencyFormat(dataVehicleDetailResponse.getOpenPrice()));
-        lastPriceFirst  = dataVehicleDetailResponse.getBottomPrice();
-        negoPriceFirst  = dataVehicleDetailResponse.getBottomPrice();
-        buyNow          = Long.parseLong(dataVehicleDetailResponse.getOpenPrice());
-        lastPrice       = Long.parseLong(dataVehicleDetailResponse.getBottomPrice());
-        negoPrice       = Long.parseLong(dataVehicleDetailResponse.getBottomPrice());
-
-        tvInputPriceNego.setText("Rp "+setCurrencyFormat(dataVehicleDetailResponse.getBottomPrice()));
-
-        if(dataVehicleDetailResponse.getUserBidResponseList()==null||dataVehicleDetailResponse.getUserBidResponseList().isEmpty()){
-            linearPenawaran.setVisibility(View.GONE);
-        }else {
-            linearPenawaran.setVisibility(View.VISIBLE);
-            LinearLayoutManager layoutManagerBid = new LinearLayoutManager(this);
-            rvBid.setLayoutManager(layoutManagerBid);
-            rvBid.setNestedScrollingEnabled(false);
-            UserBidAdapter userBidAdapter = new UserBidAdapter(dataVehicleDetailResponse.getUserBidResponseList());
-            rvBid.setAdapter(userBidAdapter);
-            userBidAdapter.notifyDataSetChanged();
-        }
-
     }
 
     @Override
-    public void vehicleDetailNegoAndBuyNow(String type, GeneralResponse generalResponse) {
+    public void vehicleDetailNegoAndBuyNow(String type, GeneralNegoAndBuyNowResponse generalResponse) {
         if(type.equals("Nego")){
+            flag=false;
             linearDialogSuccessNegoClick();
         }else {
+            flag=false;
             linearDialogSuccessBuyNowClick();
         }
     }

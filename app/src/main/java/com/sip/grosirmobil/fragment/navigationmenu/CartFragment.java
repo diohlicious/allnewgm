@@ -31,9 +31,9 @@ import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilFragment;
 import com.sip.grosirmobil.cloud.config.request.negonbuynow.NegoAndBuyNowRequest;
-import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 import com.sip.grosirmobil.cloud.config.response.cart.CartResponse;
 import com.sip.grosirmobil.cloud.config.response.cart.DataCartResponse;
+import com.sip.grosirmobil.cloud.config.response.nego.GeneralNegoAndBuyNowResponse;
 import com.sip.grosirmobil.cloud.config.response.timeserver.TimeServerResponse;
 
 import java.io.IOException;
@@ -266,7 +266,8 @@ public class CartFragment extends GrosirMobilFragment {
                                                 response.body().getDataCartResponseList().get(i).getOpenPrice(), response.body().getDataCartResponseList().get(i).getGrade(),
                                                 response.body().getDataCartResponseList().get(i).getIsLive(), response.body().getDataCartResponseList().get(i).getCategoryName(),
                                                 response.body().getDataCartResponseList().get(i).getIsBlock(), response.body().getDataCartResponseList().get(i).getFoto(),
-                                                response.body().getDataCartResponseList().get(i).getStatus());
+                                                response.body().getDataCartResponseList().get(i).getStatus(),
+                                                response.body().getDataCartResponseList().get(i).getDataOtoJsonResponse());
                                         dataCartLiveResponseList.add(dataCartResponse);
                                     }
                                     if(response.body().getDataCartResponseList().get(i).getIsWinner()==1 &&
@@ -464,11 +465,11 @@ public class CartFragment extends GrosirMobilFragment {
         progressDialog.setCancelable(false);
         progressDialog.setMessage(getString(R.string.base_tv_please_wait));
         progressDialog.show();
-        final Call<GeneralResponse> vehicleDetailApi = getApiGrosirMobil().liveBuyNowApi(BEARER+" "+grosirMobilPreference.getToken(),negoAndBuyNowRequest);
-        vehicleDetailApi.enqueue(new Callback<GeneralResponse>() {
+        final Call<GeneralNegoAndBuyNowResponse> vehicleDetailApi = getApiGrosirMobil().liveBuyNowApi(BEARER+" "+grosirMobilPreference.getToken(),negoAndBuyNowRequest);
+        vehicleDetailApi.enqueue(new Callback<GeneralNegoAndBuyNowResponse>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
+            public void onResponse(Call<GeneralNegoAndBuyNowResponse> call, Response<GeneralNegoAndBuyNowResponse> response) {
                 progressDialog.dismiss();
                 if (response.isSuccessful()) {
                     try {
@@ -494,7 +495,7 @@ public class CartFragment extends GrosirMobilFragment {
             }
 
             @Override
-            public void onFailure(Call<GeneralResponse> call, Throwable t) {
+            public void onFailure(Call<GeneralNegoAndBuyNowResponse> call, Throwable t) {
                 progressDialog.dismiss();
                 grosirMobilFunction.showMessage(getActivity(), "POST Live Buy Now", getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);

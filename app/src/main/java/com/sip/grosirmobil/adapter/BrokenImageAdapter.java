@@ -17,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.PreviewImageActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderBrokenImage;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.cloud.config.response.vehicledetail.ImageBrokenResponse;
 
 import java.util.List;
@@ -45,32 +46,36 @@ public class BrokenImageAdapter extends RecyclerView.Adapter<ViewHolderBrokenIma
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderBrokenImage holder, int position) {
-        ImageBrokenResponse imageBrokenResponse = imageBrokenResponseList.get(position);
-        holder.tvDescription.setText(imageBrokenResponse.getDescription());
+        try {
+            ImageBrokenResponse imageBrokenResponse = imageBrokenResponseList.get(position);
+            holder.tvDescription.setText(imageBrokenResponse.getDescription());
 
-        CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
-        circularProgressDrawable.setStrokeWidth(5f);
-        circularProgressDrawable.setCenterRadius(30f);
-        circularProgressDrawable.start();
-        Glide.with(contexts)
-                .load(imageBrokenResponse.getUrlImage())
-                .apply(new RequestOptions()
-                        .placeholder(circularProgressDrawable)
+            CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
+            circularProgressDrawable.setStrokeWidth(5f);
+            circularProgressDrawable.setCenterRadius(30f);
+            circularProgressDrawable.start();
+            Glide.with(contexts)
+                    .load(imageBrokenResponse.getUrlImage())
+                    .apply(new RequestOptions()
+                            .placeholder(circularProgressDrawable)
 //                          .error(R.drawable.ic_image_empty)
-                        .dontAnimate()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true))
-                .into(holder.ivImage);
+                            .dontAnimate()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true))
+                    .into(holder.ivImage);
 
-        holder.tvImageNumber.setText(String.valueOf(position+1));
+            holder.tvImageNumber.setText(String.valueOf(position+1));
 
-        holder.cardView.setOnClickListener(view -> {
-            Intent intent = new Intent(contexts, PreviewImageActivity.class);
-            intent.putExtra(FROM_PAGE, "brokenImage");
+            holder.cardView.setOnClickListener(view -> {
+                Intent intent = new Intent(contexts, PreviewImageActivity.class);
+                intent.putExtra(FROM_PAGE, "brokenImage");
 //            intent.putExtra(URL_IMAGE, imageBrokenResponse.getUrlImage());
 //            intent.putExtra(DESCRIPTION, imageBrokenResponse.getDescription());
-            contexts.startActivity(intent);
-        });
+                contexts.startActivity(intent);
+            });
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
+        }
     }
 
     @Override

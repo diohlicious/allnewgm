@@ -130,15 +130,15 @@ public class HomePresenterImp implements HomePresenter {
                             grosirMobilPreference.saveDataHomeLive(response.body().getDataPageHomeLiveResponse());
                             getTimeServerApi("Live");
                         }else {
-                            grosirMobilFunction.showMessage(context, "GET Home Live", response.body().getMessage());
+//                            grosirMobilFunction.showMessage(context, "GET Home Live", response.body().getMessage());
                         }
                     }catch (Exception e){
                         GrosirMobilLog.printStackTrace(e);
                     }
                 }else {
                     try {
-                        grosirMobilFunction.showMessage(context, context.getString(R.string.base_null_error_title), response.errorBody().string());
-                    } catch (IOException e) {
+//                        grosirMobilFunction.showMessage(context, context.getString(R.string.base_null_error_title), response.errorBody().string());
+                    } catch (Exception e) {
                         GrosirMobilLog.printStackTrace(e);
                     }
                 }
@@ -289,38 +289,50 @@ public class HomePresenterImp implements HomePresenter {
 
     @Override
     public void getTimeServerApi(String type) {
-        homeView.showDialogLoading();
+        if(!type.equals("")){
+            homeView.showDialogLoading();
+        }
         final Call<TimeServerResponse> timeServerApi = getApiGrosirMobil().timeServerApi();
         timeServerApi.enqueue(new Callback<TimeServerResponse>() {
             @Override
             public void onResponse(Call<TimeServerResponse> call, Response<TimeServerResponse> response) {
-                homeView.hideDialogLoading();
+                if(!type.equals("")){
+                    homeView.hideDialogLoading();
+                }
                 if (response.isSuccessful()) {
                     try {
                         if(response.body().getMessage().equals("success")){
                             grosirMobilPreference.saveTimeServer(response.body().getData().getTimeServer());
+                            homeView.timeServerSuccess(true);
                             if(type.equals("Live")){
                                 homeView.homeLiveSuccess(grosirMobilPreference.getDataHomeLive(), response.body().getData().getTimeServer());
                             }else if(type.equals("Coming Soon")){
                                 homeView.homeComingSoonSuccess(grosirMobilPreference.getDataComingSoon(), response.body().getData().getTimeServer());
                             }
                         }else {
+                            homeView.timeServerSuccess(false);
                             grosirMobilFunction.showMessage(context, "GET Time Server", response.body().getMessage());
                         }
                     }catch (Exception e){
                         GrosirMobilLog.printStackTrace(e);
+                        homeView.timeServerSuccess(false);
                     }
                 }else {
                     try {
+                        homeView.timeServerSuccess(false);
                         grosirMobilFunction.showMessage(context, context.getString(R.string.base_null_error_title), response.errorBody().string());
                     } catch (IOException e) {
+                        homeView.timeServerSuccess(false);
                         GrosirMobilLog.printStackTrace(e);
                     }
                 }
             }
             @Override
             public void onFailure(Call<TimeServerResponse> call, Throwable t) {
-                homeView.hideDialogLoading();
+                if(!type.equals("")){
+                    homeView.hideDialogLoading();
+                }
+                homeView.timeServerSuccess(false);
                 grosirMobilFunction.showMessage(context, "GET Time Server", context.getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);
             }

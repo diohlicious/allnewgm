@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderSelected;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.cloud.config.response.filter.DataGradeResponse;
 
 import java.util.List;
@@ -40,8 +41,12 @@ public class GradeAdapter extends RecyclerView.Adapter<ViewHolderSelected> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderSelected holder, int position) {
-        DataGradeResponse dataMerekResponse = dataGradeResponseList.get(position);
-        holder.bind(dataMerekResponse, onItemClickListener);
+        try {
+            DataGradeResponse dataMerekResponse = dataGradeResponseList.get(position);
+            holder.bind(dataMerekResponse, onItemClickListener);
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
+        }
     }
 
     @Override

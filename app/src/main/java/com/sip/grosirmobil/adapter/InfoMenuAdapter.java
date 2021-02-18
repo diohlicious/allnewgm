@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderMenuInfo;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.cloud.config.response.infomenu.DataInfoMenuResponse;
 
 import java.util.List;
@@ -42,21 +43,25 @@ public class InfoMenuAdapter extends RecyclerView.Adapter<ViewHolderMenuInfo> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderMenuInfo holder, int position) {
-        DataInfoMenuResponse dataInfoMenuResponse = dataInfoMenuResponseList.get(position);
-        holder.tvDate.setText(convertDate(dataInfoMenuResponse.getTanggal(),"yyyy-MM-dd hh:mm:ss","dd-MM-yyyy"));
-        holder.tvPromo.setText(dataInfoMenuResponse.getNews());
-        CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(context);
-        circularProgressDrawable.setStrokeWidth(5f);
-        circularProgressDrawable.setCenterRadius(30f);
-        circularProgressDrawable.start();
-        Glide.with(context)
-                .load(dataInfoMenuResponse.getGambar())
-                .apply(new RequestOptions()
-                        .placeholder(circularProgressDrawable)
-                        .dontAnimate()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true))
-                .into(holder.ivImage);
+        try {
+            DataInfoMenuResponse dataInfoMenuResponse = dataInfoMenuResponseList.get(position);
+            holder.tvDate.setText(convertDate(dataInfoMenuResponse.getTanggal(),"yyyy-MM-dd hh:mm:ss","dd-MM-yyyy"));
+            holder.tvPromo.setText(dataInfoMenuResponse.getNews());
+            CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(context);
+            circularProgressDrawable.setStrokeWidth(5f);
+            circularProgressDrawable.setCenterRadius(30f);
+            circularProgressDrawable.start();
+            Glide.with(context)
+                    .load(dataInfoMenuResponse.getGambar())
+                    .apply(new RequestOptions()
+                            .placeholder(circularProgressDrawable)
+                            .dontAnimate()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true))
+                    .into(holder.ivImage);
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
+        }
     }
 
     @Override

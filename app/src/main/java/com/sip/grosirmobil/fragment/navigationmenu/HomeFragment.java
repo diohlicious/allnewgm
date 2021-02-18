@@ -173,6 +173,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     private int pageComingSoon = 1;
     private int pageRecord = 1;
     private int max = 20;
+    private boolean success = false;
     private String lokasi = "";
     private int tahunStart = 1995;
     private int tahunEnd = 2021;
@@ -248,12 +249,16 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     public void onResume() {
         handler.postDelayed(runnable = () -> {
             handler.postDelayed(runnable, delay);
+            if(success){
+                homePresenter.getTimeServerApi("");
+            }
 //            homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
         }, delay);
         super.onResume();
     }
 
     private void setUiReset(){
+//        grosirMobilPreference.clearSharePreferenceTimeServer();
         pageComingSoon = 1;
         pageRecord = 1;
         page = 1;
@@ -286,13 +291,12 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         rvLive.setNestedScrollingEnabled(false);
         rvLive.setHasFixedSize(true);
 
-        if(grosirMobilPreference.getTimeServer()==null){
+        if(grosirMobilPreference.getTimeServer()==null||grosirMobilPreference.getTimeServer().equals("")){
             homePresenter.getTimeServerApi("");
         }else {
             liveAdapter = new LiveAdapter(new ArrayList<>(), getActivity(),convertDateServer(grosirMobilPreference.getTimeServer()));
             rvLive.setAdapter(liveAdapter);
         }
-//        liveAdapter.notifyDataSetChanged();
 
         homePresenter.getHomeLiveApi(page,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
 
@@ -300,27 +304,27 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             nestedView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
                 String TAG = "nested_sync";
                 if (scrollY > oldScrollY) {
-                    GrosirMobilLog.i(TAG, "Scroll DOWN");
+//                    GrosirMobilLog.i(TAG, "Scroll DOWN");
                 }
                 if (scrollY < oldScrollY) {
-                    GrosirMobilLog.i(TAG, "Scroll UP");
+//                    GrosirMobilLog.i(TAG, "Scroll UP");
                 }
                 if (scrollY == 0) {
-                    GrosirMobilLog.i(TAG, "TOP SCROLL");
+//                    GrosirMobilLog.i(TAG, "TOP SCROLL");
                 }
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                     try {
-                         GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
+//                         GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
                          if(dataPageHomeLiveResponseVariable==null){
 
                          }else {
                              if (dataPageHomeLiveResponseVariable.getCurrentPage() == dataPageHomeLiveResponseVariable.getMaxPage()) {
-                                 System.out.println("NESTED Current END Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
-                                 System.out.println("NESTED Last : END Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
+//                                 System.out.println("NESTED Current END Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
+//                                 System.out.println("NESTED Last : END Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
                              }
                              else if (dataPageHomeLiveResponseVariable.getCurrentPage() < dataPageHomeLiveResponseVariable.getMaxPage()) {
-                                 System.out.println("NESTED Current Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
-                                 System.out.println("NESTED Last : Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
+//                                 System.out.println("NESTED Current Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
+//                                 System.out.println("NESTED Last : Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
                                  page++;
                                  homePresenter.getHomeLiveApi(page,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
                              }
@@ -590,9 +594,19 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         rvLive.setNestedScrollingEnabled(false);
         rvLive.setHasFixedSize(true);
 
-        liveAdapter = new LiveAdapter(new ArrayList<>(), getActivity(),convertDateServer(grosirMobilPreference.getTimeServer()));
-        rvLive.setAdapter(liveAdapter);
-//        liveAdapter.notifyDataSetChanged();
+//        grosirMobilPreference.clearSharePreferenceTimeServer();
+
+//        liveAdapter = new LiveAdapter(new ArrayList<>(), getActivity(),convertDateServer(grosirMobilPreference.getTimeServer()));
+//        rvLive.setAdapter(liveAdapter);
+
+//        homePresenter.getHomeLiveApi(page,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+
+        if(grosirMobilPreference.getTimeServer()==null||grosirMobilPreference.getTimeServer().equals("")){
+            homePresenter.getTimeServerApi("");
+        }else {
+            liveAdapter = new LiveAdapter(new ArrayList<>(), getActivity(),convertDateServer(grosirMobilPreference.getTimeServer()));
+            rvLive.setAdapter(liveAdapter);
+        }
 
         homePresenter.getHomeLiveApi(page,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
 
@@ -600,24 +614,24 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             nestedView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
                 String TAG = "nested_sync";
                 if (scrollY > oldScrollY) {
-                    GrosirMobilLog.i(TAG, "Scroll DOWN");
+//                    GrosirMobilLog.i(TAG, "Scroll DOWN");
                 }
                 if (scrollY < oldScrollY) {
-                    GrosirMobilLog.i(TAG, "Scroll UP");
+//                    GrosirMobilLog.i(TAG, "Scroll UP");
                 }
                 if (scrollY == 0) {
-                    GrosirMobilLog.i(TAG, "TOP SCROLL");
+//                    GrosirMobilLog.i(TAG, "TOP SCROLL");
                 }
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                     try {
-                         GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
+//                         GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
                         if (dataPageHomeLiveResponseVariable.getCurrentPage() == dataPageHomeLiveResponseVariable.getMaxPage()) {
-                            System.out.println("NESTED Current END Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
-                            System.out.println("NESTED Last : END Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
+//                            System.out.println("NESTED Current END Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
+//                            System.out.println("NESTED Last : END Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
                         }
                         else if (dataPageHomeLiveResponseVariable.getCurrentPage() < dataPageHomeLiveResponseVariable.getMaxPage()) {
-                            System.out.println("NESTED Current Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
-                            System.out.println("NESTED Last : Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
+//                            System.out.println("NESTED Current Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
+//                            System.out.println("NESTED Last : Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
                             page++;
                             homePresenter.getHomeLiveApi(page,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
                         }
@@ -672,24 +686,24 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             nestedView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
                 String TAG = "nested_sync";
                 if (scrollY > oldScrollY) {
-                    GrosirMobilLog.i(TAG, "Scroll DOWN");
+//                    GrosirMobilLog.i(TAG, "Scroll DOWN");
                 }
                 if (scrollY < oldScrollY) {
-                    GrosirMobilLog.i(TAG, "Scroll UP");
+//                    GrosirMobilLog.i(TAG, "Scroll UP");
                 }
                 if (scrollY == 0) {
-                    GrosirMobilLog.i(TAG, "TOP SCROLL");
+//                    GrosirMobilLog.i(TAG, "TOP SCROLL");
                 }
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                     try {
-                        GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
+//                        GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
                         if (dataPageHomeComingSoonResponse.getCurrentPage() == dataPageHomeComingSoonResponse.getMaxPage()) {
-                            System.out.println("NESTED Current END Page : "+dataPageHomeComingSoonResponse.getCurrentPage());
-                            System.out.println("NESTED Last : END Page : "+dataPageHomeComingSoonResponse.getMaxPage());
+//                            System.out.println("NESTED Current END Page : "+dataPageHomeComingSoonResponse.getCurrentPage());
+//                            System.out.println("NESTED Last : END Page : "+dataPageHomeComingSoonResponse.getMaxPage());
                         }
                         else if (dataPageHomeComingSoonResponse.getCurrentPage() < dataPageHomeComingSoonResponse.getMaxPage()) {
-                            System.out.println("NESTED Current Page : "+dataPageHomeComingSoonResponse.getCurrentPage());
-                            System.out.println("NESTED Last : Page : "+dataPageHomeComingSoonResponse.getMaxPage());
+//                            System.out.println("NESTED Current Page : "+dataPageHomeComingSoonResponse.getCurrentPage());
+//                            System.out.println("NESTED Last : Page : "+dataPageHomeComingSoonResponse.getMaxPage());
                             pageComingSoon++;
                             homePresenter.getHomeComingSoonApi(pageComingSoon,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
                         }
@@ -740,24 +754,24 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             nestedView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
                 String TAG = "nested_sync";
                 if (scrollY > oldScrollY) {
-                    GrosirMobilLog.i(TAG, "Scroll DOWN");
+//                    GrosirMobilLog.i(TAG, "Scroll DOWN");
                 }
                 if (scrollY < oldScrollY) {
-                    GrosirMobilLog.i(TAG, "Scroll UP");
+//                    GrosirMobilLog.i(TAG, "Scroll UP");
                 }
                 if (scrollY == 0) {
-                    GrosirMobilLog.i(TAG, "TOP SCROLL");
+//                    GrosirMobilLog.i(TAG, "TOP SCROLL");
                 }
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
                     try {
-                         GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
+//                         GrosirMobilLog.i(TAG, "BOTTOM SCROLL");
                         if (dataPageHomeHistoryResponse.getCurrentPage() == dataPageHomeHistoryResponse.getMaxPage()) {
-                            System.out.println("NESTED Current END Page : "+dataPageHomeHistoryResponse.getCurrentPage());
-                            System.out.println("NESTED Last : END Page : "+dataPageHomeHistoryResponse.getMaxPage());
+//                            System.out.println("NESTED Current END Page : "+dataPageHomeHistoryResponse.getCurrentPage());
+//                            System.out.println("NESTED Last : END Page : "+dataPageHomeHistoryResponse.getMaxPage());
                         }
                         else if (dataPageHomeHistoryResponse.getCurrentPage() < dataPageHomeHistoryResponse.getMaxPage()) {
-                            System.out.println("NESTED Current Page : "+dataPageHomeHistoryResponse.getCurrentPage());
-                            System.out.println("NESTED Last : Page : "+dataPageHomeHistoryResponse.getMaxPage());
+//                            System.out.println("NESTED Current Page : "+dataPageHomeHistoryResponse.getCurrentPage());
+//                            System.out.println("NESTED Last : Page : "+dataPageHomeHistoryResponse.getMaxPage());
                             pageRecord++;
                             homePresenter.getHomeHistoryApi(pageRecord,max,"");
                         }
@@ -822,7 +836,11 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
 
             if(page==1){
                 if(!dataPageHomeLiveResponse.getDataHomeLiveResponseList().isEmpty()){
-                    liveAdapter.clear();
+                    if(liveAdapter ==null){
+                        tvLiveClick();
+                    }else {
+                        liveAdapter.clear();
+                    }
                 }
             }
             dataPageHomeLiveResponseVariable = dataPageHomeLiveResponse;
@@ -830,6 +848,11 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                 liveAdapter.addItems(dataPageHomeLiveResponse.getDataHomeLiveResponseList());
             }
         }
+    }
+
+    @Override
+    public void timeServerSuccess(boolean success) {
+        this.success = success;
     }
 
     @SuppressLint("SetTextI18n")

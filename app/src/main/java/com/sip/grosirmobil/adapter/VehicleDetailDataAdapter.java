@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderVehicleDetailData;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.cloud.config.response.vehicledetail.VehicleDetailDataResponse;
 
 import java.util.List;
@@ -37,13 +38,17 @@ public class VehicleDetailDataAdapter extends RecyclerView.Adapter<ViewHolderVeh
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderVehicleDetailData holder, int position) {
-        VehicleDetailDataResponse vehicleDetailDataResponse = vehicleDetailDataResponseList.get(position);
-        holder.tvName.setText(vehicleDetailDataResponse.getItem());
-        holder.tvDescription.setText(vehicleDetailDataResponse.getDescription());
-        if(vehicleDetailDataResponse.getStatus().equals("1")){
-            holder.ivStatus.setImageResource(R.drawable.ic_check_list_true);
-        }else {
-            holder.ivStatus.setImageResource(R.drawable.ic_check_list_false);
+        try {
+            VehicleDetailDataResponse vehicleDetailDataResponse = vehicleDetailDataResponseList.get(position);
+            holder.tvName.setText(vehicleDetailDataResponse.getItem());
+            holder.tvDescription.setText(vehicleDetailDataResponse.getDescription());
+            if(vehicleDetailDataResponse.getStatus().equals("1")){
+                holder.ivStatus.setImageResource(R.drawable.ic_check_list_true);
+            }else {
+                holder.ivStatus.setImageResource(R.drawable.ic_check_list_false);
+            }
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
         }
     }
 

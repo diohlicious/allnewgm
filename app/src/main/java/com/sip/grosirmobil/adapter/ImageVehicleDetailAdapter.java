@@ -17,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.PreviewImageActivity;
 import com.sip.grosirmobil.adapter.viewholder.ViewHolderImageVehicleDetail;
+import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.cloud.config.response.vehicledetail.ImageResponse;
 
 import java.util.List;
@@ -45,24 +46,28 @@ public class ImageVehicleDetailAdapter extends RecyclerView.Adapter<ViewHolderIm
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolderImageVehicleDetail holder, int position) {
-        ImageResponse imageResponse = imageResponseList.get(position);
-        CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
-        circularProgressDrawable.setStrokeWidth(5f);
-        circularProgressDrawable.setCenterRadius(30f);
-        circularProgressDrawable.start();
-        Glide.with(contexts)
-                .load(imageResponse.getUrlImage())
-                .apply(new RequestOptions()
-                        .placeholder(circularProgressDrawable)
-                        .dontAnimate()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true))
-                .into(holder.ivImage);
-        holder.cardView.setOnClickListener(view -> {
-            Intent intent = new Intent(contexts, PreviewImageActivity.class);
-            intent.putExtra(FROM_PAGE, "bannerVehicleDetail");
-            contexts.startActivity(intent);
-        });
+        try {
+            ImageResponse imageResponse = imageResponseList.get(position);
+            CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(contexts);
+            circularProgressDrawable.setStrokeWidth(5f);
+            circularProgressDrawable.setCenterRadius(30f);
+            circularProgressDrawable.start();
+            Glide.with(contexts)
+                    .load(imageResponse.getUrlImage())
+                    .apply(new RequestOptions()
+                            .placeholder(circularProgressDrawable)
+                            .dontAnimate()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true))
+                    .into(holder.ivImage);
+            holder.cardView.setOnClickListener(view -> {
+                Intent intent = new Intent(contexts, PreviewImageActivity.class);
+                intent.putExtra(FROM_PAGE, "bannerVehicleDetail");
+                contexts.startActivity(intent);
+            });
+        }catch (Exception e){
+            GrosirMobilLog.printStackTrace(e);
+        }
     }
 
     @Override

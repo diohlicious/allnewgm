@@ -522,15 +522,16 @@ public class GrosirMobilPreference {
         return (ArrayList<DataWareHouseResponse>) dataWareHouseResponseList;
     }
 
-    public void clearSharePreferenceBidPrice(String position) {
+    public void clearSharePreferenceTimeServer() {
         SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.remove(BID_PRICE+position);
+        editor.remove(TIME_SERVER);
         editor.apply();
     }
 
     public void clearSharePreference() {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.remove(TOKEN);
+        editor.remove(TIME_SERVER);
         editor.remove(BID_PRICE);
         editor.remove(PHONE_NUMBER);
         editor.remove(PASSWORD);
