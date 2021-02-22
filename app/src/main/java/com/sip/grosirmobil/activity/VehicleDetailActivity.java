@@ -923,10 +923,10 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
 //            if(flag){
 //                tvInputPriceNego.setText("Rp "+setCurrencyFormat(dataVehicleDetailResponse.getBottomPrice()));
 //            }
-//            linearPenawaran.setVisibility(View.VISIBLE);
             if (dataVehicleDetailResponse.getUserBidResponseList() == null || dataVehicleDetailResponse.getUserBidResponseList().isEmpty()) {
                 linearPenawaran.setVisibility(View.GONE);
             } else {
+                linearPenawaran.setVisibility(View.VISIBLE);
                 UserBidAdapter userBidAdapter = new UserBidAdapter(dataVehicleDetailResponse.getUserBidResponseList());
                 rvBid.setAdapter(userBidAdapter);
                 userBidAdapter.notifyDataSetChanged();
