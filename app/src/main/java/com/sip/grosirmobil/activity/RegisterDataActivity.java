@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
+import com.sip.grosirmobil.fragment.OnBackListener;
 import com.sip.grosirmobil.fragment.register.DataDiriFragment;
 
 import java.util.Objects;
@@ -28,6 +29,8 @@ public class RegisterDataActivity extends GrosirMobilActivity {
         ButterKnife.bind(this);
         replaceFragment(new DataDiriFragment());
     }
+
+
 
 
     public void setFragment() {
@@ -49,6 +52,9 @@ public class RegisterDataActivity extends GrosirMobilActivity {
         try {
             System.out.println("Count Fragment : "+ getSupportFragmentManager().getBackStackEntryCount());
             if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+                if (getSupportFragmentManager() instanceof OnBackListener){
+                    ((OnBackListener)getSupportFragmentManager()).onBack();
+                }
                 getSupportFragmentManager().popBackStack();
             } else {
                 finish();
@@ -58,6 +64,7 @@ public class RegisterDataActivity extends GrosirMobilActivity {
             finish();
         }
     }
+
 
     public void replaceFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.page_fragment, fragment).addToBackStack("my_fragment").commit();

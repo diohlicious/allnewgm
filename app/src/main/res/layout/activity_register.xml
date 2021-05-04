@@ -6,277 +6,309 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryWhite"
     tools:context=".activity.RegisterActivity">
+
     <LinearLayout
-        android:layout_marginTop="@dimen/_20sdp"
-        android:paddingLeft="@dimen/_30sdp"
-        android:paddingRight="@dimen/_30sdp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/_30sdp"
+        android:paddingRight="@dimen/_30sdp"
         tools:ignore="UselessLeaf">
+
         <ImageView
             android:id="@+id/iv_logo"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_logo_grosir_mobil"
             android:layout_width="@dimen/_152sdp"
             android:layout_height="@dimen/_30sdp"
-            tools:ignore="ContentDescription" />
-        <TextView
-            android:layout_marginTop="@dimen/_50sdp"
             android:layout_gravity="center"
-            android:textColor="@color/colorPrimaryFont"
-            android:textSize="@dimen/text_24"
+            android:src="@drawable/ic_logo_grosir_mobil"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_50sdp"
             android:fontFamily="@font/nunito_bold"
             android:text="@string/tv_daftar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_gravity="center"
-            android:alpha="0.6"
-            android:layout_marginTop="@dimen/_8sdp"
             android:textColor="@color/colorPrimaryFont"
-            android:textSize="@dimen/text_14"
+            android:textSize="@dimen/text_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:alpha="0.6"
             android:fontFamily="@font/nunito_semi_bold"
             android:text="@string/tv_registrasikan_diri_anda_sekarang"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/colorPrimaryFont"
+            android:textSize="@dimen/text_14" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tv_full_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:hint="@string/tv_full_name"
-            android:theme="@style/myTextInputLabelTheme"
-            android:textColorHint="@color/colorPrimaryHintFont"
             android:backgroundTint="@color/colorPrimaryTheme"
             android:fontFamily="@font/nunito_semi_bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:hint="@string/tv_full_name"
+            android:textColorHint="@color/colorPrimaryHintFont"
+            android:theme="@style/myTextInputLabelTheme">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_full_name"
-                android:textColor="@color/colorPrimaryFont"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
                 android:backgroundTint="@color/colorPrimaryFont"
-                android:textSize="@dimen/text_16"
                 android:drawableStart="@drawable/ic_email_user"
                 android:drawablePadding="@dimen/_10sdp"
                 android:fontFamily="@font/nunito_semi_bold"
+                android:maxLength="40"
                 android:gravity="center|left"
+                android:inputType="textPersonName"
                 android:textAllCaps="true"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry"
-                android:inputType="textPersonName" />
+                android:textColor="@color/colorPrimaryFont"
+                android:textSize="@dimen/text_16"
+                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tv_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:hint="@string/tv_phone_number"
-            android:theme="@style/myTextInputLabelTheme"
-            android:textColorHint="@color/colorPrimaryHintFont"
             android:backgroundTint="@color/colorPrimaryTheme"
             android:fontFamily="@font/nunito_semi_bold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:hint="@string/tv_phone_number"
+            android:textColorHint="@color/colorPrimaryHintFont"
+            android:theme="@style/myTextInputLabelTheme">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_phone_number"
-                android:textColor="@color/colorPrimaryFont"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
                 android:backgroundTint="@color/colorPrimaryFont"
-                android:textSize="@dimen/text_16"
                 android:drawableStart="@drawable/ic_phone_number"
                 android:drawablePadding="@dimen/_10sdp"
                 android:fontFamily="@font/nunito_semi_bold"
                 android:gravity="center|left"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:maxLength="15"
+                android:textColor="@color/colorPrimaryFont"
+                android:textSize="@dimen/text_16"
+                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tv_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:hint="@string/tv_password"
-            android:visibility="gone"
-            android:theme="@style/myTextInputLabelTheme"
-            android:textColorHint="@color/colorPrimaryHintFont"
             android:backgroundTint="@color/colorPrimaryTheme"
             android:fontFamily="@font/nunito_semi_bold"
-            app:passwordToggleEnabled="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:hint="@string/tv_password"
+            android:textColorHint="@color/colorPrimaryHintFont"
+            android:theme="@style/myTextInputLabelTheme"
+            android:visibility="gone"
+            app:passwordToggleEnabled="true">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_password"
-                android:textColor="@color/colorPrimaryFont"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
                 android:backgroundTint="@color/colorPrimaryFont"
-                android:textSize="@dimen/text_16"
                 android:drawableStart="@drawable/ic_password"
                 android:drawablePadding="@dimen/_10sdp"
                 android:fontFamily="@font/nunito_semi_bold"
                 android:gravity="center|left"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
-                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textColor="@color/colorPrimaryFont"
+                android:textSize="@dimen/text_16"
+                tools:ignore="Autofill,LabelFor,RtlHardcoded,RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <LinearLayout
-            android:layout_marginTop="@dimen/_20sdp"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:orientation="horizontal">
+
             <CheckBox
                 android:id="@+id/cb_term_and_condition"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+
             <LinearLayout
-                android:layout_marginStart="@dimen/_10sdp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:orientation="vertical">
+
                 <TextView
-                    android:textColor="@color/colorPrimaryFont"
-                    android:textSize="@dimen/text_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_regular"
                     android:text="@string/tv_dengan_membuat_akun_anda_menyetujui"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="@color/colorPrimaryFont"
+                    android:textSize="@dimen/text_12" />
+
                 <TextView
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:textSize="@dimen/text_12"
-                    android:fontFamily="@font/nunito_semi_bold"
-                    android:textColor="@color/colorPrimaryTheme"
-                    android:text="@string/tv_syarat_amp_ketentuan"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/nunito_semi_bold"
+                    android:text="@string/tv_syarat_amp_ketentuan"
+                    android:textColor="@color/colorPrimaryTheme"
+                    android:textSize="@dimen/text_12" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
     <RelativeLayout
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
         <Button
             android:id="@+id/btn_register"
-            android:fontFamily="@font/nunito_semi_bold"
-            android:textSize="@dimen/text_18"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginLeft="@dimen/_16sdp"
             android:layout_marginRight="@dimen/_16sdp"
-            android:textColor="@color/colorPrimaryWhite"
-            android:textAllCaps="false"
-            android:text="@string/btn_register"
             android:background="@drawable/btn_design"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp" />
+            android:fontFamily="@font/nunito_semi_bold"
+            android:text="@string/btn_register"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimaryWhite"
+            android:textSize="@dimen/text_18" />
+
         <LinearLayout
             android:id="@+id/linear_login"
-            android:layout_below="@id/btn_register"
-            android:layout_marginBottom="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_13sdp"
-            android:gravity="center"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_register"
+            android:layout_marginTop="@dimen/_13sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <TextView
-                android:textColor="#979797"
-                android:textSize="@dimen/text_14"
-                android:fontFamily="@font/nunito_regular"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:text="@string/tv_sudah_punya_akun"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:fontFamily="@font/nunito_regular"
+                android:text="@string/tv_sudah_punya_akun"
+                android:textColor="#979797"
+                android:textSize="@dimen/text_14" />
+
             <TextView
                 android:id="@+id/tv_login"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/text_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_semi_bold"
                 android:text="@string/tv_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_14" />
         </LinearLayout>
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/relative_dialog"
-        android:visibility="gone"
-        android:background="@color/colorPrimaryBackgroundDialog"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryBackgroundDialog"
+        android:visibility="gone">
+
         <RelativeLayout
-            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_40sdp"
-            android:layout_marginBottom="@dimen/_40sdp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_40sdp">
+
             <androidx.cardview.widget.CardView
-                app:cardCornerRadius="@dimen/_10sdp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                app:cardCornerRadius="@dimen/_10sdp">
+
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:orientation="vertical"
                     tools:ignore="UselessLeaf">
+
                     <TextView
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:textColor="@color/colorPrimaryFont"
-                        android:fontFamily="@font/nunito_regular"
-                        android:textSize="@dimen/text_14"
-                        android:layout_marginTop="@dimen/_25sdp"
-                        android:text="@string/tv_syarat_dan_ketentuan_grosir_mobil"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:fontFamily="@font/nunito_regular"
+                        android:gravity="center"
+                        android:text="@string/tv_syarat_dan_ketentuan_grosir_mobil"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_14" />
+
                     <androidx.core.widget.NestedScrollView
-                        android:background="@drawable/design_line_radius_2sdp"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_marginRight="@dimen/_10sdp"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:layout_marginBottom="@dimen/_15sdp"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:background="@drawable/design_line_radius_2sdp">
+
                         <LinearLayout
-                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-<!--                            <TextView-->
-<!--                                android:fontFamily="@font/nunito_regular"-->
-<!--                                android:textSize="@dimen/text_14"-->
-<!--                                android:textColor="@color/colorPrimaryFont"-->
-<!--                                android:textAlignment="viewStart"-->
-<!--                                android:padding="@dimen/_5sdp"-->
-<!--                                android:text="@string/tv_term_and_condition_html"-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"/>-->
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <!--                            <TextView-->
+                            <!--                                android:fontFamily="@font/nunito_regular"-->
+                            <!--                                android:textSize="@dimen/text_14"-->
+                            <!--                                android:textColor="@color/colorPrimaryFont"-->
+                            <!--                                android:textAlignment="viewStart"-->
+                            <!--                                android:padding="@dimen/_5sdp"-->
+                            <!--                                android:text="@string/tv_term_and_condition_html"-->
+                            <!--                                android:layout_width="match_parent"-->
+                            <!--                                android:layout_height="wrap_content"/>-->
                             <WebView
                                 android:id="@+id/web_view_term"
-                                android:padding="@dimen/_5sdp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:padding="@dimen/_5sdp"
                                 tools:ignore="WebViewLayout" />
+
                             <LinearLayout
-                                android:layout_marginTop="@dimen/_30sdp"
-                                android:orientation="horizontal"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_30sdp"
+                                android:orientation="horizontal">
+
                                 <Button
                                     android:id="@+id/btn_tidak_setuju"
-                                    android:fontFamily="@font/nunito_semi_bold"
-                                    android:textSize="@dimen/text_18"
-                                    android:textColor="@color/colorPrimaryFont"
-                                    android:textAllCaps="false"
-                                    android:text="@string/btn_tidak_setuju"
-                                    android:background="@drawable/btn_design_rectangle_second"
                                     android:layout_width="0dp"
-                                    android:layout_weight="1"
                                     android:layout_height="@dimen/_40sdp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/btn_design_rectangle_second"
+                                    android:fontFamily="@font/nunito_semi_bold"
+                                    android:text="@string/btn_tidak_setuju"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/colorPrimaryFont"
+                                    android:textSize="@dimen/text_18"
                                     tools:ignore="ButtonStyle" />
+
                                 <Button
                                     android:id="@+id/btn_setuju"
-                                    android:fontFamily="@font/nunito_semi_bold"
-                                    android:textSize="@dimen/text_18"
-                                    android:textColor="@color/colorPrimaryWhite"
-                                    android:textAllCaps="false"
-                                    android:text="@string/btn_setuju"
-                                    android:background="@drawable/btn_design_rectangle"
                                     android:layout_width="0dp"
-                                    android:layout_weight="1"
                                     android:layout_height="@dimen/_40sdp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/btn_design_rectangle"
+                                    android:fontFamily="@font/nunito_semi_bold"
+                                    android:text="@string/btn_setuju"
+                                    android:textAllCaps="false"
+                                    android:textColor="@color/colorPrimaryWhite"
+                                    android:textSize="@dimen/text_18"
                                     tools:ignore="ButtonStyle" />
                             </LinearLayout>
                         </LinearLayout>
@@ -284,15 +316,16 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
+
         <ImageView
             android:id="@+id/iv_close"
-            android:src="@drawable/ic_close_dialog"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:padding="@dimen/_3sdp"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:padding="@dimen/_3sdp"
+            android:src="@drawable/ic_close_dialog"
             tools:ignore="ContentDescription" />
     </RelativeLayout>
 </RelativeLayout>

@@ -57,6 +57,10 @@ public class DataHomeComingSoonResponse {
     @Expose
     private String bottomPrice;
 
+    @SerializedName("adminfee")
+    @Expose
+    private int adminFee;
+
     @SerializedName("grade")
     @Expose
     private String grade;
@@ -123,6 +127,10 @@ public class DataHomeComingSoonResponse {
 
     public String getBottomPrice() {
         return bottomPrice;
+    }
+
+    public int getAdminfee() {
+        return adminFee;
     }
 
     public String getGrade() {

@@ -10,18 +10,17 @@ buildscript {
 
     dependencies {
         //noinspection GradleDependency
-        classpath 'com.android.tools.build:gradle:3.5.3'
-//        classpath 'com.google.gms:google-services:4.3.3'
+        classpath 'com.android.tools.build:gradle:4.1.1'
+//        classpath 'com.google.gms:google-services:4.3.3's
         classpath "io.realm:realm-gradle-plugin:6.0.2"
-
     }
 
     ext.versions = [
             'compileSdk'            : 30,
             'minSdk'                : 21,
             'targetSdk'             : 30,
-            'versionCodeApp'        : 4,
-            'versionNameApp'        : "1.0.1",
+            'versionCodeApp'        : 5,
+            'versionNameApp'        : "1.0.2",
             'versionCodeMessage'    : 1,
             'versionNameMessage'    : "1.0",
             'rootDevice'            : "0.0.8",

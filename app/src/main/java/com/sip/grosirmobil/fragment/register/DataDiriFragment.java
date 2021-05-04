@@ -11,11 +11,14 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.naa.data.Nson;
+import com.naa.data.UtilityAndroid;
 import com.shuhart.stepview.StepView;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.RegisterDataActivity;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
+import com.sip.grosirmobil.fragment.OnBackListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +27,7 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DataDiriFragment extends Fragment {
+public class DataDiriFragment extends Fragment implements OnBackListener {
 
     public static DataDiriFragment newInstance(int page, String title) {
         DataDiriFragment fragmentFirst = new DataDiriFragment();
@@ -70,12 +73,21 @@ public class DataDiriFragment extends Fragment {
 
         stepView.go(0, true);
 
+        Nson nson = Nson.readJson(UtilityAndroid.getSetting("daftar") ) ;
+        etNik.setText(nson.get("datadiri-nik").asString());
+        etFullName.setText(nson.get("datadiri-fullname").asString());
+
+
         return view;
     }
+
+
+
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.iv_back)
     void ivBackClick(){
+        onBack();
         getActivity().finish();
     }
 
@@ -84,14 +96,18 @@ public class DataDiriFragment extends Fragment {
     void btnNextDataDiriClick(){
         if(etNik.getText().toString().isEmpty()){
             Toast.makeText(getActivity(), "Mohon Isi NIK (KTP/SIM)", Toast.LENGTH_SHORT).show();
+        }else if(etNik.getText().toString().length()<15){
+            Toast.makeText(getActivity(), "NIK (KTP/SIM) Minimal 16 Angka", Toast.LENGTH_SHORT).show();
         }else if(etFullName.getText().toString().isEmpty()){
             Toast.makeText(getActivity(), "Mohon Isi Nama Lengkap", Toast.LENGTH_SHORT).show();
         }else if(etEmail.getText().toString().isEmpty()){
             Toast.makeText(getActivity(), "Mohon Isi Email", Toast.LENGTH_SHORT).show();
+        }else if(!etEmail.getText().toString().contains("@")){
+            Toast.makeText(getActivity(), "Mohon Isi Valid Email", Toast.LENGTH_SHORT).show();
         }else if(etPhoneNumber.getText().toString().isEmpty()){
             Toast.makeText(getActivity(), "Mohon Isi Nomor Telepon", Toast.LENGTH_SHORT).show();
-        }else if(etPassword.getText().toString().isEmpty()){
-            Toast.makeText(getActivity(), "Mohon Isi Password", Toast.LENGTH_SHORT).show();
+        }else if(etPassword.getText().toString().length()<8){
+            Toast.makeText(getActivity(), "Mohon Isi Password Minimal 8 Karakter", Toast.LENGTH_SHORT).show();
         }else if(etConfirmPassword.getText().toString().isEmpty()){
             Toast.makeText(getActivity(), "Mohon Isi Confirm Password", Toast.LENGTH_SHORT).show();
         }else {
@@ -101,6 +117,8 @@ public class DataDiriFragment extends Fragment {
                 grosirMobilPreference.saveEmail(etEmail.getText().toString());
                 grosirMobilPreference.savePhoneNumber(etPhoneNumber.getText().toString());
                 grosirMobilPreference.savePassword(etPassword.getText().toString());
+
+                onBack();
                 ((RegisterDataActivity)getActivity()).replaceFragment(new ProfileUsahaFragment());
             }else {
                 Toast.makeText(getActivity(), "Password Tidak Sama", Toast.LENGTH_SHORT).show();
@@ -108,4 +126,12 @@ public class DataDiriFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onBack() {
+        Nson nson = Nson.readJson(UtilityAndroid.getSetting("daftar") ) ;
+        nson.set("datadiri-nik", etNik.getText().toString());
+        nson.set("datadiri-fullname", etFullName.getText().toString());
+
+        UtilityAndroid.setSetting("daftar", nson.toJson());
+    }
 }

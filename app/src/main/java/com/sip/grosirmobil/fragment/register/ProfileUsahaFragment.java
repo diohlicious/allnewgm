@@ -22,6 +22,7 @@ import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.cloud.config.response.tipeusaha.TipeUsahaResponse;
+import com.sip.grosirmobil.fragment.OnBackListener;
 
 import java.io.IOException;
 
@@ -37,7 +38,7 @@ import static com.sip.grosirmobil.base.GrosirMobilApp.getApiGrosirMobil;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileUsahaFragment extends Fragment {
+public class ProfileUsahaFragment extends Fragment implements OnBackListener {
 
     public static ProfileUsahaFragment newInstance(int page, String title) {
         ProfileUsahaFragment fragmentFirst = new ProfileUsahaFragment();
@@ -82,6 +83,7 @@ public class ProfileUsahaFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.iv_back)
     void ivBackClick(){
+        onBack();
         ((RegisterDataActivity)getActivity()).setFragment();
     }
 
@@ -198,7 +200,16 @@ public class ProfileUsahaFragment extends Fragment {
             grosirMobilPreference.saveTypeUsahaCode(etTypeUsaha.getTag().toString());
             grosirMobilPreference.saveDealerName(etDealerName.getText().toString());
             grosirMobilPreference.saveDealerPhoneNumber(noHp);
+
+            onBack();
             ((RegisterDataActivity)getActivity()).replaceFragment(new DocumentFragment());
         }
+    }
+
+
+
+    @Override
+    public void onBack() {
+
     }
 }

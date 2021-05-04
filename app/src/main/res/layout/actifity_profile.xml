@@ -426,7 +426,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_27sdp"
                                 android:layout_marginTop="@dimen/_18sdp"
-                                android:text="Penawaran \ndimenagkan"
+                                android:text="Penawaran \ndimenangkan"
                                 android:fontFamily="@font/nunito_bold"
                                 android:textColor="@color/colorPrimaryWhite"
                                 android:textSize="@dimen/text_18"

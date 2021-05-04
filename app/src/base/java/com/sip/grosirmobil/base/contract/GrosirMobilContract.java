@@ -43,6 +43,8 @@ public class GrosirMobilContract {
     public static final String ID_PRODUCT = "id_product";
     public static final String TITLE = "title";
     public static final String PRICE = "price";
+    public static final String ADMIN = "adminfee";
+    public static final String TOTAL = "totalbayar";
     public static final String NAME_BUYER = "name_buyer";
     public static final String STATUS_BUY = "status_buy";
     public static final String PRODUCT = "product";

@@ -2,7 +2,11 @@ package com.sip.grosirmobil.base;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.naa.data.Utility;
 import com.sip.grosirmobil.BuildConfig;
 import com.sip.grosirmobil.base.contract.GrosirMobilContract;
 import com.sip.grosirmobil.base.util.UnsafeOkHttpClient;
@@ -22,11 +26,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @SuppressLint("Registered")
 public class GrosirMobilApp extends Application {
+    private static GrosirMobilApp appSystem;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        appSystem = this;
+
+        Thread.currentThread().setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            public void uncaughtException(@NonNull Thread thread, @NonNull Throwable throwable) {
+
+            }
+        });
+
 //        Fabric.with(this, new Crashlytics());
+    }
+    public static GrosirMobilApp getInstance(){
+        return appSystem;
     }
 
     public static GrosirMobilApi getApiGrosirMobil() {
@@ -35,7 +51,7 @@ public class GrosirMobilApp extends Application {
 //                .client(getClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build();
-
+                 //Log.i("HIT-C", Utility.Now());
         return retrofit.create(GrosirMobilApi.class);
     }
 
@@ -48,8 +64,6 @@ public class GrosirMobilApp extends Application {
                 .addInterceptor(getLoggingInterceptor())
                 .build();
     }
-
-
 
     public static HttpLoggingInterceptor.Level getInterceptorLevel() {
         if (BuildConfig.DEBUG) return HttpLoggingInterceptor.Level.BODY;

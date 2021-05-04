@@ -23,10 +23,12 @@ import com.sip.grosirmobil.cloud.config.response.cart.DataCartResponse;
 
 import java.util.List;
 
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ADMIN;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.FROM_PAGE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.PRICE;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.TOTAL;
 import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setCurrencyFormat;
 
 public class SuccessGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicleSuccessGarage> {
@@ -68,6 +70,8 @@ public class SuccessGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVeh
 
 //        holder.tvCity.setText(dataCartResponse.getWareHouse().replace("WAREHOUSE ", ""));
             holder.tvPrice.setText("Rp "+setCurrencyFormat(dataCartResponse.getUserTertinggi()));
+            holder.adminPrice.setText("Rp "+setCurrencyFormat(String.valueOf(dataCartResponse.getAdminfee())));
+            holder.totalPrice.setText("Rp "+setCurrencyFormat(String.valueOf(dataCartResponse.getTotalbayar())));
             holder.tvInitialName.setText(dataCartResponse.getGrade());
             holder.cardVehicle.setOnClickListener(view -> {
                 Intent intent = new Intent(contexts, VehicleDetailActivity.class);
@@ -97,6 +101,8 @@ public class SuccessGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVeh
                 intent.putExtra(ID_VEHICLE, String.valueOf(dataCartResponse.getOhid()));
                 intent.putExtra(KIK, dataCartResponse.getKik());
                 intent.putExtra(PRICE, dataCartResponse.getUserTertinggi());
+                intent.putExtra(ADMIN, String.valueOf(dataCartResponse.getAdminfee()));
+                intent.putExtra(TOTAL, String.valueOf(dataCartResponse.getTotalbayar()));
                 contexts.startActivity(intent);
             });
         }catch (Exception e){

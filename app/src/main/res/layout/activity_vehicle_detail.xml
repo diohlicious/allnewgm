@@ -92,13 +92,13 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/tv_plat_number"
+                        android:layout_width="197dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/_2sdp"
                         android:fontFamily="@font/nunito_regular"
-                        android:textColor="@color/colorPrimaryHintFont"
                         android:text="B1433NYM - "
-                        android:textSize="@dimen/text_16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:textColor="@color/colorPrimaryHintFont"
+                        android:textSize="@dimen/text_16" />
                     <TextView
                         android:id="@+id/tv_city"
                         android:fontFamily="@font/nunito_regular"

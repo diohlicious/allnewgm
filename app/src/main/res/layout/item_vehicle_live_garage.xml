@@ -11,20 +11,24 @@
         android:layout_margin="@dimen/_5sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_255sdp">
+            android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 tools:ignore="UselessLeaf">
+
                 <ImageView
                     android:id="@+id/iv_image"
                     android:layout_width="@dimen/_90sdp"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     tools:ignore="ContentDescription" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -33,19 +37,22 @@
                     android:gravity="center|start"
                     android:orientation="vertical"
                     tools:ignore="RtlHardcoded">
+
                     <TextView
                         android:id="@+id/tv_vehicle_name"
-                        android:layout_marginTop="@dimen/_5sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:fontFamily="@font/nunito_semi_bold"
                         android:maxLines="2"
                         android:textColor="@color/colorPrimaryFont"
                         android:textSize="@dimen/text_16" />
+
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
                         <TextView
                             android:id="@+id/tv_plat_number"
                             android:layout_width="wrap_content"
@@ -54,6 +61,7 @@
                             android:fontFamily="@font/nunito_regular"
                             android:textColor="@color/colorPrimaryHintFont"
                             android:textSize="@dimen/text_11" />
+
                         <TextView
                             android:id="@+id/tv_city"
                             android:layout_width="wrap_content"
@@ -62,206 +70,248 @@
                             android:textColor="@color/colorRed"
                             android:textSize="@dimen/text_11" />
                     </LinearLayout>
+
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
                         tools:ignore="DisableBaselineAlignment">
+
                         <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
                             <TextView
                                 android:id="@+id/tv_penawaran_anda_ket"
-                                android:textSize="@dimen/text_12"
-                                android:textColor="@color/colorPrimaryFont"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:fontFamily="@font/nunito_regular"
                                 android:text="@string/tv_penawaran_anda"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
+                                android:textColor="@color/colorPrimaryFont"
+                                android:textSize="@dimen/text_12" />
+
                             <TextView
                                 android:id="@+id/tv_penawaran_anda"
-                                android:textSize="@dimen/text_14"
-                                android:textColor="@color/colorPrimaryFont"
-                                android:fontFamily="@font/nunito_bold"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_bold"
+                                android:textColor="@color/colorPrimaryFont"
+                                android:textSize="@dimen/text_14" />
                         </LinearLayout>
+
                         <RelativeLayout
-                            android:layout_marginEnd="@dimen/_8sdp"
                             android:layout_width="@dimen/_35sdp"
-                            android:layout_height="@dimen/_35sdp">
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_marginEnd="@dimen/_8sdp">
+
                             <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/circle_image_view_item"
-                                android:background="@drawable/ic_circle_red"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"/>
+                                android:layout_height="match_parent"
+                                android:background="@drawable/ic_circle_red" />
+
                             <TextView
                                 android:id="@+id/tv_initial_name"
-                                android:textColor="@color/colorPrimaryWhite"
-                                android:textSize="@dimen/text_24"
-                                android:fontFamily="@font/nunito_semi_bold"
-                                android:layout_centerInParent="true"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="@font/nunito_semi_bold"
+                                android:textColor="@color/colorPrimaryWhite"
+                                android:textSize="@dimen/text_24" />
                         </RelativeLayout>
                     </LinearLayout>
+
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
                         <TextView
-                            android:textSize="@dimen/text_12"
-                            android:textColor="@color/colorPrimaryFont"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito_regular"
                             android:text="@string/tv_penawaran_tertinggi"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:textColor="@color/colorPrimaryFont"
+                            android:textSize="@dimen/text_12" />
+
                         <TextView
                             android:id="@+id/tv_penawaran_terakhir"
-                            android:textSize="@dimen/text_14"
-                            android:textColor="@color/colorPrimaryFont"
-                            android:fontFamily="@font/nunito_bold"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_bold"
+                            android:textColor="@color/colorPrimaryFont"
+                            android:textSize="@dimen/text_14" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_regular"
+                            android:text="@string/tv_admin_fee"
+                            android:textColor="@color/colorPrimaryFont"
+                            android:textSize="@dimen/text_12" />
+
+                        <TextView
+                            android:id="@+id/tv_biaya_admin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_bold"
+                            android:textColor="@color/colorPrimaryFont"
+                            android:textSize="@dimen/text_14" />
+
                     </LinearLayout>
+
                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_20sdp"
                         android:background="@drawable/design_card_expired_date_live"
+                        android:gravity="center"
                         android:orientation="horizontal"
                         android:paddingLeft="@dimen/_7sdp"
-                        android:paddingRight="@dimen/_7sdp"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_20sdp">
+                        android:paddingRight="@dimen/_7sdp">
+
                         <TextView
                             android:id="@+id/tv_timer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:drawableStart="@drawable/ic_timer_white"
-                            android:textColor="@color/colorPrimaryWhite"
-                            android:textSize="@dimen/text_11"
-                            android:text=""
                             android:drawablePadding="@dimen/_5sdp"
                             android:fontFamily="@font/nunito_regular"
                             android:gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"/>
+                            android:text=""
+                            android:textColor="@color/colorPrimaryWhite"
+                            android:textSize="@dimen/text_11" />
                     </LinearLayout>
+
                     <RadioGroup
-                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:visibility="gone">
+
                         <RadioButton
                             android:id="@+id/rb_500_ribu"
-                            android:text="Rp 500"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:buttonTint="@color/colorGray"
                             android:fontFamily="@font/nunito_regular"
-                            android:textSize="@dimen/text_10"
-                            android:layout_width="0dp"
                             android:maxLines="1"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"/>
+                            android:text="Rp 500"
+                            android:textSize="@dimen/text_10" />
+
                         <RadioButton
                             android:id="@+id/rb_1_jt"
-                            android:text="Rp 1.000"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:buttonTint="@color/colorGray"
                             android:fontFamily="@font/nunito_regular"
-                            android:textSize="@dimen/text_10"
                             android:maxLines="1"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"/>
+                            android:text="Rp 1.000"
+                            android:textSize="@dimen/text_10" />
+
                         <RadioButton
                             android:id="@+id/rb_2_jt"
-                            android:text="Rp 2.000"
-                            android:buttonTint="@color/colorGray"
-                            android:maxLines="1"
-                            android:fontFamily="@font/nunito_regular"
-                            android:textSize="@dimen/text_10"
                             android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_height="wrap_content"/>
+                            android:buttonTint="@color/colorGray"
+                            android:fontFamily="@font/nunito_regular"
+                            android:maxLines="1"
+                            android:text="Rp 2.000"
+                            android:textSize="@dimen/text_10" />
                     </RadioGroup>
+
                     <LinearLayout
-                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_30sdp"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:gravity="left|center"
                         android:orientation="horizontal"
                         tools:ignore="UselessLeaf">
+
                         <ImageView
                             android:id="@+id/iv_min"
-                            android:visibility="visible"
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_minus_circle"
+                            android:visibility="visible"
                             tools:ignore="ContentDescription" />
+
                         <LinearLayout
-                            android:orientation="horizontal"
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/_5sdp"
                             android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_weight="1"
                             android:background="@drawable/design_search"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/tv_price"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:background="@drawable/design_search"
                                 android:fontFamily="@font/nunito_regular"
                                 android:gravity="left|center"
-                                android:text="Rp 0"
                                 android:maxLength="16"
                                 android:paddingStart="@dimen/_8sdp"
                                 android:paddingEnd="@dimen/_2sdp"
                                 android:scrollbarSize="@dimen/text_10"
-                                android:textColorHint="@color/colorPrimaryHintFont"
+                                android:text="Rp 0"
                                 android:textColor="@color/colorPrimaryFont"
+                                android:textColorHint="@color/colorPrimaryHintFont"
                                 android:textSize="@dimen/text_12"
                                 tools:ignore="Autofill,HardcodedText,LabelFor,NestedWeights,RelativeOverlap,RtlSymmetry" />
+
                             <ImageView
                                 android:id="@+id/iv_clear_price"
-                                android:visibility="invisible"
                                 android:layout_width="@dimen/_16sdp"
                                 android:layout_height="@dimen/_16sdp"
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_marginEnd="@dimen/_5sdp"
                                 android:src="@drawable/ic_clear_price"
+                                android:visibility="invisible"
                                 tools:ignore="ContentDescription" />
                         </LinearLayout>
+
                         <ImageView
                             android:id="@+id/iv_plus"
-                            android:visibility="visible"
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_plus_circle"
+                            android:visibility="visible"
                             tools:ignore="ContentDescription" />
                     </LinearLayout>
+
                     <Button
                         android:id="@+id/btn_nego"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_28sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:background="@drawable/btn_design_radius_5_blue"
                         android:fontFamily="@font/nunito_bold"
                         android:text="@string/btn_nego"
                         android:textAllCaps="false"
                         android:textColor="@color/colorPrimaryWhite"
                         android:textSize="@dimen/text_12" />
+
                     <Button
                         android:id="@+id/btn_buy_now"
-                        android:layout_marginBottom="@dimen/_5sdp"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_28sdp"
+                        android:layout_height="37dp"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:background="@drawable/btn_design"
                         android:fontFamily="@font/nunito_bold"
                         android:text="@string/btn_buy_now"
@@ -271,23 +321,26 @@
 
                 </LinearLayout>
             </LinearLayout>
+
             <RelativeLayout
                 android:id="@+id/relative_success_nego"
-                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
                 <View
-                    android:background="#0A84FE"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:background="#0A84FE" />
+
                 <TextView
-                    android:fontFamily="@font/nunito_regular"
-                    android:textSize="@dimen/text_18"
-                    android:textColor="@color/colorPrimaryWhite"
-                    android:layout_centerInParent="true"
-                    android:text="@string/tv_penawaran_anda_berhasil"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/nunito_regular"
+                    android:text="@string/tv_penawaran_anda_berhasil"
+                    android:textColor="@color/colorPrimaryWhite"
+                    android:textSize="@dimen/text_18" />
             </RelativeLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

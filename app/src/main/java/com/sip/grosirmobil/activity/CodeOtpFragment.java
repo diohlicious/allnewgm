@@ -3,6 +3,8 @@ package com.sip.grosirmobil.activity;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,11 @@ import com.sip.grosirmobil.cloud.config.response.GeneralResponse;
 import com.sip.grosirmobil.fragment.register.RegisterSuccessFragment;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +38,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.sip.grosirmobil.base.GrosirMobilApp.getApiGrosirMobil;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.calculateDate;
+import static com.sip.grosirmobil.base.function.GrosirMobilFunction.convertDate;
 
 public class CodeOtpFragment extends Fragment {
 
@@ -48,6 +57,8 @@ public class CodeOtpFragment extends Fragment {
     @BindView(R.id.et_new_otp_6) EditText etNewOtp6;
     @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_resend_otp) TextView tvResendOtp;
+    @SuppressLint("NonConstantResourceId")
+    @BindView(R.id.countdown) TextView tvCountdown;
 
     private GrosirMobilFunction grosirMobilFunction;
     private GrosirMobilPreference grosirMobilPreference;
@@ -71,7 +82,40 @@ public class CodeOtpFragment extends Fragment {
         grosirMobilFunction = new GrosirMobilFunction(getActivity());
         grosirMobilPreference = new GrosirMobilPreference(getActivity());
 
+        SimpleDateFormat simpleDate =  new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date timeNow = Calendar.getInstance().getTime();
+        Calendar timeEnd = Calendar.getInstance();
+        timeEnd.add(Calendar.MINUTE, 5);
+        Date timeEndDt = timeEnd.getTime();
+        String strDt = simpleDate.format(timeNow);
+        String strDtEnd = simpleDate.format(timeEndDt);
+        startTimer(tvCountdown, calculateDate(strDt, strDtEnd));
+        //cant convert curent object as date
         return view;
+    }
+
+    public void startTimer(TextView tvTimer, long noOfMinutes) {
+        new CountDownTimer(noOfMinutes,  1000) {
+            @SuppressLint({"SetTextI18n", "DefaultLocale"})
+            public void onTick(long millisUntilFinished) {
+                String format = "%1$02d";
+                long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
+                millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
+
+                long hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
+                millisUntilFinished -= TimeUnit.HOURS.toMillis(hours);
+
+                long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+                millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
+
+                long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+                tvTimer.setText(/*days + " Hari " + hours + " Jam " + */String.format(format, minutes) + " : " + String.format(format, seconds)+" ");
+            }
+            @SuppressLint("SetTextI18n")
+            public void onFinish() {
+                tvTimer.setText("OTP Expired");
+            }
+        }.start();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -96,6 +140,15 @@ public class CodeOtpFragment extends Fragment {
                             etNewOtp4.setText("");
                             etNewOtp5.setText("");
                             etNewOtp6.setText("");
+                            SimpleDateFormat simpleDate =  new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                            Date timeNow = Calendar.getInstance().getTime();
+                            Calendar timeEnd = Calendar.getInstance();
+                            timeEnd.add(Calendar.MINUTE, 5);
+                            Date timeEndDt = timeEnd.getTime();
+                            String strDt = simpleDate.format(timeNow);
+                            String strDtEnd = simpleDate.format(timeEndDt);
+                            startTimer(tvCountdown, calculateDate(strDt, strDtEnd));
+
                         }else {
                             grosirMobilFunction.showMessage(getActivity(), "GET Resend OTP", response.body().getDescription());
                         }
@@ -110,7 +163,6 @@ public class CodeOtpFragment extends Fragment {
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<GeneralResponse> call, Throwable t) {
                 grosirMobilFunction.showMessage(getActivity(), "GET Resend OTP", getString(R.string.base_null_server));

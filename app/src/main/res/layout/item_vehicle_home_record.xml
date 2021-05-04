@@ -15,61 +15,78 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="UselessLeaf">
+
         <LinearLayout
+            android:layout_width="3dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content">
+            android:gravity="center"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_35sdp">
+                android:layout_height="@dimen/_45sdp"
+                android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/tv_vehicle_name_history"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_semi_bold"
-                    android:textColor="@color/colorPrimaryFont"
-                    android:text="Masserati DSE AT 2015"
                     android:maxLines="1"
-                    android:textSize="@dimen/text_16"
+                    android:text="Masserati DSE AT 2015"
+                    android:textColor="@color/colorPrimaryFont"
+                    android:textSize="@dimen/text_16" />
+                <TextView
+                    android:id="@+id/tv_license_plate"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_semi_bold"
+                    android:maxLines="1"
+                    android:text="Masserati DSE AT 2015"
+                    android:textColor="@color/colorPrimaryFont"
+                    android:textSize="@dimen/text_10" />
+
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
                     <TextView
                         android:id="@+id/tv_event_date_history"
-                        android:text="Event 12 Nov 2020 - "
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_1sdp"
                         android:fontFamily="@font/nunito_regular"
+                        android:text="Event 12 Nov 2020 - "
                         android:textColor="@color/colorPrimaryHintFont"
                         android:textSize="@dimen/text_11" />
+
                     <TextView
                         android:id="@+id/tv_city_history"
-                        android:text="Jakarta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
+                        android:text="Jakarta"
                         android:textColor="@color/colorPrimaryTheme"
                         android:textSize="@dimen/text_12" />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
-                android:layout_marginTop="@dimen/_10sdp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="vertical">
+
                 <TextView
-                    android:textSize="@dimen/text_12"
-                    android:textColor="@color/colorPrimaryFont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_regular"
                     android:text="@string/tv_harga_awal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textColor="@color/colorPrimaryFont"
+                    android:textSize="@dimen/text_12" />
 
                 <TextView
                     android:id="@+id/tv_open_price_history"

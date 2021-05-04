@@ -95,6 +95,7 @@
             android:id="@+id/tv_forgot_password"
             android:layout_marginTop="@dimen/_50sdp"
             android:layout_gravity="center"
+            android:visibility="gone"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/text_14"
             android:fontFamily="@font/nunito_bold"

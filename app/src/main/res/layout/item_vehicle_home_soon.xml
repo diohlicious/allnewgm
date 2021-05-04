@@ -103,6 +103,21 @@
                             android:fontFamily="@font/nunito_bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
+                        <TextView
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:textSize="@dimen/text_12"
+                            android:textColor="@color/colorPrimaryFont"
+                            android:fontFamily="@font/nunito_regular"
+                            android:text="@string/tv_admin_fee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/tv_biaya_admin"
+                            android:textSize="@dimen/text_14"
+                            android:textColor="@color/colorPrimaryFont"
+                            android:fontFamily="@font/nunito_bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
                     <RelativeLayout
                         android:orientation="vertical"

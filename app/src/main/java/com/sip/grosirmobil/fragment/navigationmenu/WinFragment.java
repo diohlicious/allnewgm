@@ -222,6 +222,7 @@ public class WinFragment extends GrosirMobilFragment {
                         dataWaitingPaymentSelectedTempList.get(i).getIsKeranjang(),
                         dataWaitingPaymentSelectedTempList.get(i).getIsWinner(),
                         dataWaitingPaymentSelectedTempList.get(i).getUserWin(),
+                        dataWaitingPaymentSelectedTempList.get(i).getAdminfee(),
                         dataWaitingPaymentSelectedTempList.get(i).getBottomPrice(),
                         dataWaitingPaymentSelectedTempList.get(i).getOpenPrice(),
                         dataWaitingPaymentSelectedTempList.get(i).getGrade(),

@@ -57,6 +57,10 @@ public class DataHomeLiveResponse {
     @Expose
     private String bottomPrice;
 
+    @SerializedName("adminfee")
+    @Expose
+    private int adminFee;
+
     @SerializedName("grade")
     @Expose
     private String grade;
@@ -116,6 +120,11 @@ public class DataHomeLiveResponse {
     public String getPriceNow() {
         return priceNow;
     }
+
+    public int getAdminfee() {
+        return adminFee;
+    }
+
 
     public String getGrade() {
         return grade;

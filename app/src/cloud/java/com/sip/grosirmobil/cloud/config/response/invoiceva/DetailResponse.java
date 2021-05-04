@@ -29,6 +29,10 @@ public class DetailResponse {
     @Expose
     private String hargaUnit;
 
+    @SerializedName("adminfee")
+    @Expose
+    private String adminFee;
+
     @SerializedName("foto")
     @Expose
     private String foto;
@@ -55,6 +59,10 @@ public class DetailResponse {
 
     public String getHargaUnit() {
         return hargaUnit;
+    }
+
+    public String getAdminFee() {
+        return adminFee;
     }
 
     public String getFoto() {

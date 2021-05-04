@@ -55,50 +55,89 @@
                     android:textColor="@color/colorPrimaryTheme"
                     android:textSize="@dimen/text_11" />
             </LinearLayout>
+
             <LinearLayout
-                android:gravity="center"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_35sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center"
+                android:orientation="horizontal"
                 tools:ignore="DisableBaselineAlignment">
+
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
                     <TextView
-                        android:textSize="@dimen/text_12"
-                        android:textColor="@color/colorPrimaryFont"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
                         android:text="@string/tv_dimenangkan_seharga"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_10" />
+
                     <TextView
                         android:id="@+id/tv_price"
-                        android:textSize="@dimen/text_14"
-                        android:textColor="@color/colorPrimaryFont"
-                        android:fontFamily="@font/nunito_semi_bold"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_semi_bold"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_12" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
+                        android:text="@string/tv_admin_fee"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_10" />
+
+                    <TextView
+                        android:id="@+id/admin_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_bold"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_12" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
+                        android:text="@string/tv_total_pembayaran"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_10" />
+
+                    <TextView
+                        android:id="@+id/total_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_bold"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_12" />
                 </LinearLayout>
+
                 <RelativeLayout
-                    android:layout_marginEnd="@dimen/_8sdp"
                     android:layout_width="@dimen/_35sdp"
-                    android:layout_height="@dimen/_35sdp">
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginEnd="@dimen/_8sdp">
+
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/circle_image_view_item"
-                        android:background="@drawable/ic_circle_theme"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_circle_theme" />
+
                     <TextView
                         android:id="@+id/tv_initial_name"
-                        android:textColor="@color/colorPrimaryWhite"
-                        android:textSize="@dimen/text_24"
-                        android:fontFamily="@font/nunito_semi_bold"
-                        android:layout_centerInParent="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/nunito_semi_bold"
+                        android:textColor="@color/colorPrimaryWhite"
+                        android:textSize="@dimen/text_24" />
                 </RelativeLayout>
             </LinearLayout>
             <Button

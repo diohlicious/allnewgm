@@ -22,6 +22,7 @@ public class DataWinNotPaymentModel implements Parcelable {
     private String isKeranjang;
     private int isWinner;
     private int userWin;
+    private int adminFee;
     private String bottomPrice;
     private int openPrice;
     private String grade;
@@ -31,7 +32,7 @@ public class DataWinNotPaymentModel implements Parcelable {
     private String foto;
     private String status;
 
-    public DataWinNotPaymentModel(int userIdGrosir, int userIdWin, int ohid, String agreementNo, String start_Date, String endDate, String kik, String vehicleName, String tertinggi, String userTertinggi, String isKeranjang, int isWinner, int userWin, String bottomPrice, int openPrice, String grade, int isLive, String categoryName, int isBlock, String foto, String status) {
+    public DataWinNotPaymentModel(int userIdGrosir, int userIdWin, int ohid, String agreementNo, String start_Date, String endDate, String kik, String vehicleName, String tertinggi, String userTertinggi, String isKeranjang, int isWinner, int userWin, int adminFee, String bottomPrice, int openPrice, String grade, int isLive, String categoryName, int isBlock, String foto, String status) {
         this.userIdGrosir = userIdGrosir;
         this.userIdWin = userIdWin;
         this.ohid = ohid;
@@ -45,6 +46,7 @@ public class DataWinNotPaymentModel implements Parcelable {
         this.isKeranjang = isKeranjang;
         this.isWinner = isWinner;
         this.userWin = userWin;
+        this.adminFee = adminFee;
         this.bottomPrice = bottomPrice;
         this.openPrice = openPrice;
         this.grade = grade;
@@ -69,6 +71,7 @@ public class DataWinNotPaymentModel implements Parcelable {
         isKeranjang = in.readString();
         isWinner = in.readInt();
         userWin = in.readInt();
+        adminFee = in.readInt();
         bottomPrice = in.readString();
         openPrice = in.readInt();
         grade = in.readString();
@@ -94,6 +97,7 @@ public class DataWinNotPaymentModel implements Parcelable {
         dest.writeString(isKeranjang);
         dest.writeInt(isWinner);
         dest.writeInt(userWin);
+        dest.writeInt(adminFee);
         dest.writeString(bottomPrice);
         dest.writeInt(openPrice);
         dest.writeString(grade);
@@ -171,6 +175,10 @@ public class DataWinNotPaymentModel implements Parcelable {
 
     public int getUserWin() {
         return userWin;
+    }
+
+    public int getAdminFee() {
+        return adminFee;
     }
 
     public String getBottomPrice() {

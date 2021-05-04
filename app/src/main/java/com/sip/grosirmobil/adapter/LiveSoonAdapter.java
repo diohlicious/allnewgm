@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,6 +133,8 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @SuppressLint("NonConstantResourceId")
         @BindView(R.id.tv_bottom_price) TextView tvBottomPrice;
         @SuppressLint("NonConstantResourceId")
+        @BindView(R.id.tv_biaya_admin) TextView tvAdminFee;
+        @SuppressLint("NonConstantResourceId")
         @BindView(R.id.tv_timer) TextView tvTimer;
         @SuppressLint("NonConstantResourceId")
         @BindView(R.id.tv_initial_name) TextView tvInitialName;
@@ -163,6 +166,7 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 tvCity.setText(dataHomeComingSoonResponse.getWareHouse().replace("WAREHOUSE ", ""));
                 tvOpenPrice.setText("Rp "+setCurrencyFormat(dataHomeComingSoonResponse.getBottomPrice()));
                 tvBottomPrice.setText("Rp "+ setCurrencyFormat(dataHomeComingSoonResponse.getBottomPrice()));
+                tvAdminFee.setText("Rp " + setCurrencyFormat(String.valueOf(dataHomeComingSoonResponse.getAdminfee())));
                 tvInitialName.setText(dataHomeComingSoonResponse.getGrade());
 
                 CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(context);

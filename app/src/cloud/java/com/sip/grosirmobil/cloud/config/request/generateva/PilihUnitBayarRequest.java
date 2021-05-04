@@ -13,8 +13,13 @@ public class PilihUnitBayarRequest {
     @Expose
     private long Bayar;
 
-    public PilihUnitBayarRequest(String kik, long bayar) {
+    @SerializedName("biayaadmin")
+    @Expose
+    private long biayaAdmin;
+
+    public PilihUnitBayarRequest(String kik, long bayar, long biayaadmin) {
         this.kik = kik;
         Bayar = bayar;
+        biayaAdmin = biayaadmin;
     }
 }

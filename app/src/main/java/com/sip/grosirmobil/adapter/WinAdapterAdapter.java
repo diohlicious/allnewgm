@@ -2,6 +2,7 @@ package com.sip.grosirmobil.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,30 +65,31 @@ public class WinAdapterAdapter extends RecyclerView.Adapter<ViewHolderItemCart> 
     public void onBindViewHolder(@NonNull ViewHolderItemCart holder, int position) {
         DataCartResponse dataCartResponse = dataCartResponseList.get(position);
         try {
-            holder.tvVehicleName.setText(dataCartResponse.getVehicleName());
-            holder.tvPlatNumber.setText(dataCartResponse.getKik().substring(0, 10) + " - ");
-            holder.tvCity.setText(dataCartResponse.getDataOtoJsonResponse().getLokasi().replace("WAREHOUSE ", ""));
-            holder.tvPrice.setText("Rp "+setCurrencyFormat(dataCartResponse.getBottomPrice()));
-            CircularProgressDrawable circularProgressDrawable = new  CircularProgressDrawable(context);
+            CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(context);
             circularProgressDrawable.setStrokeWidth(5f);
             circularProgressDrawable.setCenterRadius(30f);
             circularProgressDrawable.start();
             Glide.with(context)
                     .load(dataCartResponse.getFoto())
                     .apply(new RequestOptions()
-                            .placeholder(circularProgressDrawable)
+                            .placeholder(R.drawable.ic_broken_image)
                             .error(R.drawable.ic_broken_image)
                             .dontAnimate()
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
                             .skipMemoryCache(false))
                     .into(holder.ivImage);
+            holder.tvVehicleName.setText(dataCartResponse.getVehicleName());
+            holder.tvPlatNumber.setText(dataCartResponse.getKik().substring(0, 10) + " - ");
+            holder.tvCity.setText(dataCartResponse.getDataOtoJsonResponse().getLokasi().replace("WAREHOUSE ", ""));
+            holder.tvPrice.setText("Rp " + setCurrencyFormat(dataCartResponse.getBottomPrice()));
+            holder.adminPrice.setText("Rp " + setCurrencyFormat(String.valueOf(dataCartResponse.getAdminfee())));
 
             holder.cbCart.setOnCheckedChangeListener((compoundButton, checked) -> {
-                if(checked){
-                    if(dataWaitingPaymentSelectedList.size()==3){
+                if (checked) {
+                    if (dataWaitingPaymentSelectedList.size() == 3) {
                         Toast.makeText(context, "Limit VA cuma 3 Kendaraan", Toast.LENGTH_SHORT).show();
                         holder.cbCart.setChecked(false);
-                    }else {
+                    } else {
                         dataWaitingPaymentSelectedList.add(dataCartResponse);
                     }
 //                totalPriceTemp = Long.parseLong(hardCodeDataBaruMasukModel.getPrice());
@@ -96,7 +98,7 @@ public class WinAdapterAdapter extends RecyclerView.Adapter<ViewHolderItemCart> 
 //                totalPrice = totalPrice+Long.parseLong(dataCartResponse.getBottomPrice());
 //                tvHargaKendaraan.setText("Rp "+setCurrencyFormat(String.valueOf(totalPrice)));
 //                totalPrice= totalPrice+500000;
-                }else {
+                } else {
                     dataWaitingPaymentSelectedList.remove(dataCartResponse);
 //                totalPriceTemp = Long.parseLong("0");
 //                holder.linearCart.setBackgroundResource(R.color.colorPrimaryWhite);
@@ -119,7 +121,7 @@ public class WinAdapterAdapter extends RecyclerView.Adapter<ViewHolderItemCart> 
 //            intent.putExtra(FROM_PAGE, "CART");
 //            context.startActivity(intent);
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             GrosirMobilLog.printStackTrace(e);
         }
     }

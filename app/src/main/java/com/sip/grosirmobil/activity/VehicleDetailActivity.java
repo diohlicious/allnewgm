@@ -515,10 +515,16 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.btn_nego_dialog)
     void btnNegoDialogClick(){
-        isLive = false;
-        String vehicleName = dataVehicleDetailResponseTemp.getVehicleName();
-        tvMessageNego.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(String.valueOf(negoPrice)));
-        linearDialogNegoClick();
+        if(negoPrice<buyNow){
+            isLive = false;
+            String vehicleName = dataVehicleDetailResponseTemp.getVehicleName();
+            tvMessageNego.setText(vehicleName+"\nseharga\nRp"+setCurrencyFormat(String.valueOf(negoPrice)));
+            linearDialogNegoClick();
+        } else {
+            String msg = "Maximal Nego : Rp." + setCurrencyFormat(String.valueOf(buyNow)) + " \n" + "silahkan langsung BUY NOW";
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
@@ -623,40 +629,52 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.iv_min)
     void ivMinClick(){
-        if(negoPrice==lastPrice){
-            Toast.makeText(this, "Minimum Tawar Harus Lebih Besar dari Penawaran Terakhir", Toast.LENGTH_SHORT).show();
-        }else if(negoPrice<Long.parseLong(lastPriceFirst)){
-            Toast.makeText(this, "Harga Error Kembali Ke Harga Awal", Toast.LENGTH_SHORT).show();
-            tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(lastPriceFirst)));
-        }
-        else {
-            negoPrice = negoPrice-bidNego;
-            negoPriceTemp = negoPrice;
-            plusmin=true;
-            tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
-        }
+
+            if(negoPrice==lastPrice){
+                Toast.makeText(this, "Minimum Tawar Harus Lebih Besar dari Penawaran Terakhir", Toast.LENGTH_SHORT).show();
+            }else if(negoPrice<Long.parseLong(lastPriceFirst)){
+                Toast.makeText(this, "Harga Error Kembali Ke Harga Awal", Toast.LENGTH_SHORT).show();
+                tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(lastPriceFirst)));
+            }
+            else {
+                negoPrice = negoPrice-bidNego;
+                negoPriceTemp = negoPrice;
+                plusmin=true;
+                tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
+                if(negoPrice<buyNow){
+                    btnNegoDialog.setVisibility(View.VISIBLE);
+                }
+                else{
+                    btnNegoDialog.setVisibility(View.GONE);
+                }
+            }
     }
 
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.iv_plus)
     void ivPlusClick(){
-        if(negoPrice>buyNow){
-            btnNegoDialog.setVisibility(View.GONE);
-            tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(buyNow)));
-        }else {
-            btnNegoDialog.setVisibility(View.VISIBLE);
-            negoPrice = negoPrice+bidNego;
+        negoPrice = negoPrice+bidNego;
+        if(negoPrice<buyNow){
             negoPriceTemp = negoPrice;
+            btnNegoDialog.setVisibility(View.VISIBLE);
             plusmin=true;
             tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(negoPrice)));
+        } else {
+            negoPriceTemp=buyNow;
+            String msg = "Maximal Nego : Rp." + setCurrencyFormat(String.valueOf(buyNow)) + " \n" + "silahkan langsung BUY NOW";
+            btnNegoDialog.setVisibility(View.GONE);
+            tvInputPriceNego.setText("Rp "+setCurrencyFormat(String.valueOf(buyNow)));
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @OnClick(R.id.iv_clear_price)
     void ivClearPriceClick(){
+        btnNegoDialog.setVisibility(View.VISIBLE);
         lastPrice = Long.parseLong(lastPriceFirst);
         negoPrice = Long.parseLong(negoPriceFirst);
+        negoPriceTemp = lastPrice;
         tvInputPriceNego.setText("Rp "+setCurrencyFormat(lastPriceFirst));
     }
 
@@ -798,7 +816,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
             } else {
                 ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
             }
-            tvPlatNumber.setText(dataVehicleDetailResponse.getKik().substring(0, 10) + " - ");
+            tvPlatNumber.setText(dataVehicleDetailResponse.getKik()/*.substring(0, 10)*/ + " - ");
             tvCity.setText(dataVehicleDetailResponse.getWarehouse().replace("WAREHOUSE ", ""));
             if (dataVehicleDetailResponse.getVehicleSummary() == null || dataVehicleDetailResponse.getVehicleSummary().equals("")) {
                 tvDescription.setText("-");
@@ -927,6 +945,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
                 linearPenawaran.setVisibility(View.GONE);
             } else {
                 linearPenawaran.setVisibility(View.VISIBLE);
+                //error disini
                 UserBidAdapter userBidAdapter = new UserBidAdapter(dataVehicleDetailResponse.getUserBidResponseList());
                 rvBid.setAdapter(userBidAdapter);
                 userBidAdapter.notifyDataSetChanged();
@@ -943,7 +962,6 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
 //                System.out.println("OKE DATA BERUBAH : " + negoPrice);
 
             }
-
             if (negoPrice == negoPriceTemp) {
                 tvInputPriceNego.setText("Rp " + setCurrencyFormat(String.valueOf(negoPrice)));
             } else {

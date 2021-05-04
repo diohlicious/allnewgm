@@ -23,10 +23,15 @@ import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
+import com.sip.grosirmobil.cloud.config.request.generateva.PilihUnitBayarRequest;
 import com.sip.grosirmobil.cloud.config.request.invoice.InvoiceVaRequest;
+import com.sip.grosirmobil.cloud.config.response.invoiceva.DetailResponse;
 import com.sip.grosirmobil.cloud.config.response.invoiceva.InvoiceVaResponse;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -47,7 +52,7 @@ import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBar
 
 public class PayDetailActivity extends GrosirMobilActivity {
 
-//    @SuppressLint("NonConstantResourceId")
+    //    @SuppressLint("NonConstantResourceId")
 //    @BindView(R.id.tv_day_first) TextView tvDayFirst;
 //    @SuppressLint("NonConstantResourceId")
 //    @BindView(R.id.tv_day_second) TextView tvDaySecond;
@@ -64,35 +69,46 @@ public class PayDetailActivity extends GrosirMobilActivity {
 //    @SuppressLint("NonConstantResourceId")
 //    @BindView(R.id.tv_second_second) TextView tvSecondSecond;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_timer) TextView tvTimer;
+    @BindView(R.id.tv_timer)
+    TextView tvTimer;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_pembayaran_dash) TextView tvPembayaranDash;
+    @BindView(R.id.tv_pembayaran_dash)
+    TextView tvPembayaranDash;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_pay_expired) TextView tvPayExpired;
+    @BindView(R.id.tv_pay_expired)
+    TextView tvPayExpired;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.rv_unit_to_buy) RecyclerView rvUnitToBuy;
+    @BindView(R.id.rv_unit_to_buy)
+    RecyclerView rvUnitToBuy;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_total_pembayaran) TextView tvTotalPembayaran;
-    
+    @BindView(R.id.tv_total_pembayaran)
+    TextView tvTotalPembayaran;
+
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.linear_list_atm_bca) LinearLayout linearAtmBcaList;
+    @BindView(R.id.linear_list_atm_bca)
+    LinearLayout linearAtmBcaList;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.linear_list_bca_mobile) LinearLayout linearAtmBcaMobile;
+    @BindView(R.id.linear_list_bca_mobile)
+    LinearLayout linearAtmBcaMobile;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.linear_list_inet_bca) LinearLayout linearInetBCA;    
+    @BindView(R.id.linear_list_inet_bca)
+    LinearLayout linearInetBCA;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.linear_list_officer_bca)LinearLayout linearOfficerBCA;
-    
-    
+    @BindView(R.id.linear_list_officer_bca)
+    LinearLayout linearOfficerBCA;
+
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_atm_bca) TextView tvAtmBCA;
+    @BindView(R.id.tv_atm_bca)
+    TextView tvAtmBCA;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_bca_mobile) TextView tvBCAMobile;  
+    @BindView(R.id.tv_bca_mobile)
+    TextView tvBCAMobile;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_inet_bca) TextView tvInetBCA; 
+    @BindView(R.id.tv_inet_bca)
+    TextView tvInetBCA;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.tv_bca_officer) TextView tvBCAOfficer;
-    
+    @BindView(R.id.tv_bca_officer)
+    TextView tvBCAOfficer;
 
     private GrosirMobilFunction grosirMobilFunction;
     private GrosirMobilPreference grosirMobilPreference;
@@ -101,8 +117,8 @@ public class PayDetailActivity extends GrosirMobilActivity {
     private boolean BCAMobile = false;
     private boolean InetBCA = false;
     private boolean BCAOfficer = false;
-    
-    
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +129,7 @@ public class PayDetailActivity extends GrosirMobilActivity {
         context = this.getApplicationContext();
         grosirMobilFunction = new GrosirMobilFunction(this);
         grosirMobilPreference = new GrosirMobilPreference(this);
-        
+
         getInvoiceDetail(getIntent().getStringExtra(REF_NUMBER));
         registerForContextMenu(tvPembayaranDash);
 
@@ -121,13 +137,13 @@ public class PayDetailActivity extends GrosirMobilActivity {
 
     }
 
-    private void getInvoiceDetail(String orderNo){
+    private void getInvoiceDetail(String orderNo) {
         InvoiceVaRequest invoiceVaRequest = new InvoiceVaRequest(orderNo);
         ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage(getString(R.string.base_tv_please_wait));
         progressDialog.show();
-        final Call<InvoiceVaResponse> invoiceVaApi = getApiGrosirMobil().invoiceVaApi(BEARER+" "+grosirMobilPreference.getToken(), invoiceVaRequest);
+        final Call<InvoiceVaResponse> invoiceVaApi = getApiGrosirMobil().invoiceVaApi(BEARER + " " + grosirMobilPreference.getToken(), invoiceVaRequest);
         invoiceVaApi.enqueue(new Callback<InvoiceVaResponse>() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -136,26 +152,37 @@ public class PayDetailActivity extends GrosirMobilActivity {
                 if (response.isSuccessful()) {
                     try {
                         if (response.body().getMessage().equals("success")) {
-                            String startDate = convertDate(response.body().getDataInvoiceResponse().getDataVaResponse().getStartDateVa(),"yyyy-MM-dd hh:mm:ss","dd-MM-yyyy HH:mm:ss");
-                            String endDate = convertDate(response.body().getDataInvoiceResponse().getDataVaResponse().getEndDateVa(),"yyyy-MM-dd hh:mm:ss","dd-MM-yyyy HH:mm:ss");
-                            startTimer(tvTimer, calculateDate(startDate,endDate));
+                            int totalAdm=0;
+                            //String startDate = convertDate(response.body().getDataInvoiceResponse().getDataVaResponse().getStartDateVa(), "yyyy-MM-dd hh:mm:ss", "dd-MM-yyyy HH:mm:ss");
+                            SimpleDateFormat simpleDate =  new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                            Date timeNow = Calendar.getInstance().getTime();
+                            String startDate = simpleDate.format(timeNow);
+                            String endDate = convertDate(response.body().getDataInvoiceResponse().getDataVaResponse().getEndDateVa(), "yyyy-MM-dd hh:mm:ss", "dd-MM-yyyy HH:mm:ss");
+                            startTimer(tvTimer, calculateDate(startDate, endDate));
                             LinearLayoutManager linearLayoutManagerBody = new LinearLayoutManager(PayDetailActivity.this);
                             rvUnitToBuy.setLayoutManager(linearLayoutManagerBody);
                             rvUnitToBuy.setItemAnimator(new DefaultItemAnimator());
                             rvUnitToBuy.setNestedScrollingEnabled(false);
                             VehicleToBuyAdapter vehicleToBuyAdapter = new VehicleToBuyAdapter(response.body().getDataInvoiceResponse().getDetailResponseList());
                             rvUnitToBuy.setAdapter(vehicleToBuyAdapter);
+                            //marked
                             vehicleToBuyAdapter.notifyDataSetChanged();
+                            //getAdminFee
+                            for (int i = 0; i < response.body().getDataInvoiceResponse().getDetailResponseList().size(); i++) {
+                                DetailResponse detailResponse = response.body().getDataInvoiceResponse().getDetailResponseList().get(i);
+                                totalAdm += Integer.parseInt(detailResponse.getAdminFee()) ;
+                            }
+                            int total=Integer.parseInt(response.body().getDataInvoiceResponse().getDataVaResponse().getTotalAmount())+totalAdm;
                             tvPembayaranDash.setText(response.body().getDataInvoiceResponse().getDataVaResponse().getVaNumber());
-                            tvPayExpired.setText("Sebelum "+convertDate(response.body().getDataInvoiceResponse().getDataVaResponse().getEndDateVa(),"yyyy-MM-dd hh:mm:ss","EEE, dd MMMM yyyy"));
-                            tvTotalPembayaran.setText("Rp "+setCurrencyFormat(response.body().getDataInvoiceResponse().getDataVaResponse().getTotalAmount()));
-                        }else {
+                            tvPayExpired.setText("Sebelum " + convertDate(response.body().getDataInvoiceResponse().getDataVaResponse().getEndDateVa(), "yyyy-MM-dd hh:mm:ss", "EEE, dd MMMM yyyy"));
+                            tvTotalPembayaran.setText("Rp " + setCurrencyFormat(String.valueOf(total)));
+                        } else {
                             grosirMobilFunction.showMessage(PayDetailActivity.this, "GET Invoice VA", response.body().getMessage());
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         GrosirMobilLog.printStackTrace(e);
                     }
-                }else {
+                } else {
                     try {
                         grosirMobilFunction.showMessage(PayDetailActivity.this, getString(R.string.base_null_error_title), response.errorBody().string());
                     } catch (IOException e) {
@@ -177,53 +204,53 @@ public class PayDetailActivity extends GrosirMobilActivity {
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_pembayaran_dash)
-    void tvPembayaranDashClick(){
-        ClipboardManager cm = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+    void tvPembayaranDashClick() {
+        ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         cm.setText(tvPembayaranDash.getText());
         Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show();
     }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_atm_bca)
-    void setTvAtmBCAClick(){
-        if(atmBCA){
+    void setTvAtmBCAClick() {
+        if (atmBCA) {
             atmBCA = false;
-            tvAtmBCA.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_down), null);
+            tvAtmBCA.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context, R.drawable.ic_chevron_down), null);
             linearAtmBcaList.setVisibility(View.GONE);
-        }else {
+        } else {
             atmBCA = true;
-            tvAtmBCA.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_up), null);
+            tvAtmBCA.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context, R.drawable.ic_chevron_up), null);
             linearAtmBcaList.setVisibility(View.VISIBLE);
         }
     }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_bca_mobile)
-    void setTvBCAMobileClick(){
-        if(BCAMobile){
+    void setTvBCAMobileClick() {
+        if (BCAMobile) {
             BCAMobile = false;
-            tvBCAMobile.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_down), null);
+            tvBCAMobile.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context, R.drawable.ic_chevron_down), null);
             linearAtmBcaMobile.setVisibility(View.GONE);
-        }else {
+        } else {
             BCAMobile = true;
-            tvBCAMobile.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_up), null);
+            tvBCAMobile.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context, R.drawable.ic_chevron_up), null);
             linearAtmBcaMobile.setVisibility(View.VISIBLE);
         }
     }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.tv_inet_bca)
-    void setTvINetBCA(){
-        if(InetBCA){
+    void setTvINetBCA() {
+        if (InetBCA) {
             InetBCA = false;
-            tvInetBCA.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_down), null);
+            tvInetBCA.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context, R.drawable.ic_chevron_down), null);
             linearInetBCA.setVisibility(View.GONE);
-        }else {
+        } else {
             InetBCA = true;
-            tvInetBCA.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context,R.drawable.ic_chevron_up), null);
+            tvInetBCA.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(context, R.drawable.ic_chevron_up), null);
             linearInetBCA.setVisibility(View.VISIBLE);
         }
-        
+
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -239,6 +266,7 @@ public class PayDetailActivity extends GrosirMobilActivity {
             linearOfficerBCA.setVisibility(View.VISIBLE);
         }
     }
+
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.iv_back)
     void ivBackClick() {
@@ -247,10 +275,10 @@ public class PayDetailActivity extends GrosirMobilActivity {
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_check_status)
-    void btnCheckStatusClick(){
+    void btnCheckStatusClick() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(REQUEST_MAIN, "win");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }
@@ -292,7 +320,7 @@ public class PayDetailActivity extends GrosirMobilActivity {
 //    }
 
     public void startTimer(TextView tvTimer, long noOfMinutes) {
-        new CountDownTimer(noOfMinutes,  1000) {
+        new CountDownTimer(noOfMinutes, 1000) {
             @SuppressLint({"SetTextI18n", "DefaultLocale"})
             public void onTick(long millisUntilFinished) {
                 long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
@@ -305,8 +333,9 @@ public class PayDetailActivity extends GrosirMobilActivity {
                 millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
 
                 long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
-                tvTimer.setText(days + " Hari " + hours + " Jam " + minutes + " Menit " + seconds+" Detik");
+                tvTimer.setText(days + " Hari " + hours + " Jam " + minutes + " Menit " + seconds + " Detik");
             }
+
             @SuppressLint("SetTextI18n")
             public void onFinish() {
                 tvTimer.setText("Waktu Pembayaran Habis");

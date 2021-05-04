@@ -62,10 +62,22 @@ public class DataCartResponse {
     @SerializedName("bottom_price")
     @Expose
     private String bottomPrice;
+
+    @SerializedName("adminfee")
+    @Expose
+    private int adminfee;
+
+    @SerializedName("totalbayar")
+    @Expose
+    private int totalbayar;
     
     @SerializedName("open_price")
     @Expose
     private int openPrice;
+    //PriceNow
+    @SerializedName("PriceNow")
+    @Expose
+    private int priceNow;
     
     @SerializedName("grade")
     @Expose
@@ -151,8 +163,20 @@ public class DataCartResponse {
         return bottomPrice;
     }
 
+    public int getAdminfee() {
+        return adminfee;
+    }
+
+    public int getTotalbayar() {
+        return totalbayar;
+    }
+
     public int getOpenPrice() {
         return openPrice;
+    }
+
+    public int getPriceNow() {
+        return priceNow;
     }
 
     public String getGrade() {
@@ -247,8 +271,20 @@ public class DataCartResponse {
         this.bottomPrice = bottomPrice;
     }
 
+    public void setAdminfee(int adminfee) {
+        this.adminfee = adminfee;
+    }
+
+    public void setTotalbayar(int totalbayar) {
+        this.totalbayar = totalbayar;
+    }
+
     public void setOpenPrice(int openPrice) {
         this.openPrice = openPrice;
+    }
+
+    public void setPriceNow(int priceNow) {
+        this.priceNow = priceNow;
     }
 
     public void setGrade(String grade) {
@@ -308,7 +344,7 @@ public class DataCartResponse {
 //        this.status = status;
 //    }
 
-    public DataCartResponse(int userIdGrosir, int userIdWin, int ohid, String agreementNo, String start_Date, String endDate, String kik, String vehicleName, String nego, String tertinggi, String userTertinggi, String isKeranjang, int isWinner, int userWin, String bottomPrice, int openPrice, String grade, int isLive, String categoryName, int isBlock, String foto, String status, DataOtoJsonResponse dataOtoJsonResponse) {
+    public DataCartResponse(int userIdGrosir, int userIdWin, int ohid, String agreementNo, String start_Date, String endDate, String kik, String vehicleName, String nego, String tertinggi, String userTertinggi, String isKeranjang, int isWinner, int userWin, String bottomPrice, int adminfee, int totalbayar, int openPrice, int priceNow, String grade, int isLive, String categoryName, int isBlock, String foto, String status, DataOtoJsonResponse dataOtoJsonResponse) {
         this.userIdGrosir = userIdGrosir;
         this.userIdWin = userIdWin;
         this.ohid = ohid;
@@ -324,7 +360,10 @@ public class DataCartResponse {
         this.isWinner = isWinner;
         this.userWin = userWin;
         this.bottomPrice = bottomPrice;
+        this.adminfee = adminfee;
+        this.totalbayar = totalbayar;
         this.openPrice = openPrice;
+        this.priceNow = priceNow;
         this.grade = grade;
         this.isLive = isLive;
         this.categoryName = categoryName;

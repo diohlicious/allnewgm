@@ -59,8 +59,8 @@ public class LoginActivity extends GrosirMobilActivity implements LoginView {
         templateFunction = new GrosirMobilFunction(getApplicationContext());
 
         if(BuildConfig.ENVIRONTMENT.equals("STAGING")){
-            etEmail.setText("syahrulhajji@gmail.com");
-            etPassword.setText("123456");
+            etEmail.setText("eko@studioh.id");
+            etPassword.setText("1234567");
         }
 
         loginPresenter = new LoginPresenterImp(this, this);

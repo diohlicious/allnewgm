@@ -92,6 +92,7 @@
                     android:id="@+id/et_nik"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
+                    android:minEms="16"
                     android:backgroundTint="@color/colorPrimaryFont"
                     android:drawableStart="@drawable/ic_nik"
                     android:drawablePadding="@dimen/_10sdp"

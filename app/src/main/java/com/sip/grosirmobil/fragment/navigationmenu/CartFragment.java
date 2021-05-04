@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.naa.data.Utility;
+import com.naa.data.UtilityAndroid;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.activity.MainActivity;
+import com.sip.grosirmobil.activity.VehicleDetailActivity;
 import com.sip.grosirmobil.adapter.LiveGarageAdapter;
 import com.sip.grosirmobil.adapter.LostGarageAdapter;
 import com.sip.grosirmobil.adapter.SuccessGarageAdapter;
+import com.sip.grosirmobil.base.contract.GrosirMobilContract;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.function.GrosirMobilFunction;
 import com.sip.grosirmobil.base.log.GrosirMobilLog;
@@ -133,6 +138,7 @@ public class CartFragment extends GrosirMobilFragment {
         grosirMobilFunction = new GrosirMobilFunction(getActivity());
         grosirMobilPreference = new GrosirMobilPreference(getActivity());
 
+        UtilityAndroid.setSetting("keranjangfilter", "");
         getTimeServerApi("1");
 
         LinearLayoutManager layoutManagerLive = new LinearLayoutManager(getActivity());
@@ -146,7 +152,6 @@ public class CartFragment extends GrosirMobilFragment {
             linearSuccessGarage.setVisibility(View.VISIBLE);
             linearLostGarage.setVisibility(View.VISIBLE);
         });
-
         return view;
     }
 
@@ -176,6 +181,7 @@ public class CartFragment extends GrosirMobilFragment {
     }
 
     public void getTimeServerApi(String loadingShow) {
+        //Log.i("HIT", Utility.Now());
         final Call<TimeServerResponse> timeServerApi = getApiGrosirMobil().timeServerApi();
         timeServerApi.enqueue(new Callback<TimeServerResponse>() {
             @Override
@@ -186,7 +192,7 @@ public class CartFragment extends GrosirMobilFragment {
                             grosirMobilPreference.saveTimeServer(response.body().getData().getTimeServer());
                             getDataCartApi(response.body().getData().getTimeServer(), loadingShow);
                         }else {
-                            grosirMobilFunction.showMessage(getActivity(), "GET Time Server", response.body().getMessage());
+                            //grosirMobilFunction.showMessage(getActivity(), "GET Time Server", response.body().getMessage());
                         }
                     }catch (Exception e){
                         GrosirMobilLog.printStackTrace(e);
@@ -201,7 +207,7 @@ public class CartFragment extends GrosirMobilFragment {
             }
             @Override
             public void onFailure(Call<TimeServerResponse> call, Throwable t) {
-                grosirMobilFunction.showMessage(getActivity(), "GET Time Server", getString(R.string.base_null_server));
+                //grosirMobilFunction.showMessage(getActivity(), "GET Time Server", getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);
             }
         });
@@ -223,8 +229,7 @@ public class CartFragment extends GrosirMobilFragment {
                             if(response.body().getDataCartResponseList()==null||response.body().getDataCartResponseList().isEmpty()){
                                 linearCartNotEmpty.setVisibility(View.GONE);
                                 linearCartEmpty.setVisibility(View.VISIBLE);
-                            }
-                            else {
+                            }else {
                                 linearCartNotEmpty.setVisibility(View.VISIBLE);
                                 linearCartEmpty.setVisibility(View.GONE);
                                 dataCartLiveResponseList.clear();
@@ -263,7 +268,9 @@ public class CartFragment extends GrosirMobilFragment {
                                                 response.body().getDataCartResponseList().get(i).getTertinggi(), response.body().getDataCartResponseList().get(i).getUserTertinggi(),
                                                 response.body().getDataCartResponseList().get(i).getIsKeranjang(), response.body().getDataCartResponseList().get(i).getIsWinner(),
                                                 response.body().getDataCartResponseList().get(i).getUserWin(), response.body().getDataCartResponseList().get(i).getBottomPrice(),
-                                                response.body().getDataCartResponseList().get(i).getOpenPrice(), response.body().getDataCartResponseList().get(i).getGrade(),
+                                                response.body().getDataCartResponseList().get(i).getAdminfee(),response.body().getDataCartResponseList().get(i).getTotalbayar(),
+                                                response.body().getDataCartResponseList().get(i).getOpenPrice(), response.body().getDataCartResponseList().get(i).getPriceNow(),
+                                                response.body().getDataCartResponseList().get(i).getGrade(),
                                                 response.body().getDataCartResponseList().get(i).getIsLive(), response.body().getDataCartResponseList().get(i).getCategoryName(),
                                                 response.body().getDataCartResponseList().get(i).getIsBlock(), response.body().getDataCartResponseList().get(i).getFoto(),
                                                 response.body().getDataCartResponseList().get(i).getStatus(),
@@ -278,7 +285,22 @@ public class CartFragment extends GrosirMobilFragment {
                                        response.body().getDataCartResponseList().get(i).getUserWin()==1 ){
                                         dataCartLostResponseList.add(response.body().getDataCartResponseList().get(i));
                                     }
+                                }//end for
+                                if (UtilityAndroid.getSetting("keranjangfilter").equalsIgnoreCase("berlangsung")){
+                                    //dataCartLiveResponseList.clear();
+                                    dataCartSuccessResponseList.clear();
+                                    dataCartLostResponseList.clear();
+                                }else if (UtilityAndroid.getSetting("keranjangfilter").equalsIgnoreCase("diterima")){
+                                    dataCartLiveResponseList.clear();
+                                    //dataCartSuccessResponseList.clear();
+                                    dataCartLostResponseList.clear();
+                                }else if (UtilityAndroid.getSetting("keranjangfilter").equalsIgnoreCase("ditolak")){
+                                    dataCartLiveResponseList.clear();
+                                    dataCartSuccessResponseList.clear();
+                                    //dataCartLostResponseList.clear();
                                 }
+
+
                                 if(dataCartLiveResponseList.isEmpty()||dataCartLiveResponseList==null){
                                     linearLiveGarage.setVisibility(View.GONE);
                                 }else {
@@ -289,6 +311,12 @@ public class CartFragment extends GrosirMobilFragment {
                                         relativeBackgroundDialogConfirmBuyNow.setVisibility(View.VISIBLE);
                                         negoAndBuyNowRequest = new NegoAndBuyNowRequest(String.valueOf(dataCartResponse.getOhid()), dataCartResponse.getKik(), dataCartResponse.getAgreementNo().trim(), String.valueOf(dataCartResponse.getOpenPrice()));
 //                                        liveBuyNowApi(negoAndBuyNowRequest);
+                                    }, dataCartResponse -> {
+                                        Intent intent = new Intent(getActivity(), VehicleDetailActivity.class);
+                                        intent.putExtra(GrosirMobilContract.ID_VEHICLE, String.valueOf(dataCartResponse.getOhid()));
+                                        intent.putExtra(GrosirMobilContract.KIK, dataCartResponse.getKik());
+                                        intent.putExtra(GrosirMobilContract.FROM_PAGE, "LIVE");
+                                        getActivity().startActivity(intent);
                                     });
 
                                     rvLiveGarage.setAdapter(liveGarageAdapter);
@@ -320,6 +348,10 @@ public class CartFragment extends GrosirMobilFragment {
                                 System.out.println("Data Live : " + dataCartLiveResponseList.size());
                                 System.out.println("Data Success : " + dataCartSuccessResponseList.size());
                                 System.out.println("Data Lost : " + dataCartLostResponseList.size());
+
+
+
+
 
                                 if(dataCartSuccessResponseList.isEmpty()&&
                                    dataCartLiveResponseList.isEmpty()&&
@@ -393,10 +425,12 @@ public class CartFragment extends GrosirMobilFragment {
         tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
         tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        UtilityAndroid.setSetting("keranjangfilter", "");
         relativeBackgroundDialogFilterClick();
         linearLiveGarage.setVisibility(View.VISIBLE);
         linearSuccessGarage.setVisibility(View.VISIBLE);
         linearLostGarage.setVisibility(View.VISIBLE);
+        getTimeServerApi("1");
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -410,10 +444,12 @@ public class CartFragment extends GrosirMobilFragment {
         tvPenawaranDiterima.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
         tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        UtilityAndroid.setSetting("keranjangfilter", "berlangsung");
         relativeBackgroundDialogFilterClick();
         linearLiveGarage.setVisibility(View.VISIBLE);
         linearSuccessGarage.setVisibility(View.GONE);
         linearLostGarage.setVisibility(View.GONE);
+        getTimeServerApi("1");
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -427,10 +463,12 @@ public class CartFragment extends GrosirMobilFragment {
         tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
         tvPenawaranDitolak.setBackgroundResource(R.color.colorPrimaryWhite);
         tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        UtilityAndroid.setSetting("keranjangfilter", "diterima");
         relativeBackgroundDialogFilterClick();
         linearLiveGarage.setVisibility(View.GONE);
         linearSuccessGarage.setVisibility(View.VISIBLE);
         linearLostGarage.setVisibility(View.GONE);
+        getTimeServerApi("1");
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -444,10 +482,12 @@ public class CartFragment extends GrosirMobilFragment {
         tvPenawaranDitolak.setTextColor(getResources().getColor(R.color.colorPrimaryWhite));
         tvPenawaranSedangBerlangsung.setBackgroundResource(R.color.colorPrimaryWhite);
         tvPenawaranSedangBerlangsung.setTextColor(getResources().getColor(R.color.colorPrimaryFont));
+        UtilityAndroid.setSetting("keranjangfilter", "ditolak");
         relativeBackgroundDialogFilterClick();
         linearLiveGarage.setVisibility(View.GONE);
         linearSuccessGarage.setVisibility(View.GONE);
         linearLostGarage.setVisibility(View.VISIBLE);
+        getTimeServerApi("1");
     }
 
     @SuppressLint("NonConstantResourceId")

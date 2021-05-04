@@ -35,18 +35,22 @@ import static com.sip.grosirmobil.base.function.GrosirMobilFunction.setStatusBar
 
 public class ChangePasswordActivity extends GrosirMobilActivity {
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.et_old_password) EditText etOldPassword;
+    @BindView(R.id.et_old_password)
+    EditText etOldPassword;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.et_new_password) EditText etNewPassword;
+    @BindView(R.id.et_new_password)
+    EditText etNewPassword;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.et_confirm_password) EditText etConfirmPassword;
+    @BindView(R.id.et_confirm_password)
+    EditText etConfirmPassword;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.btn_change_password) Button btnChangePassword;
+    @BindView(R.id.btn_change_password)
+    Button btnChangePassword;
     ProgressDialog progressDialog;
     private GrosirMobilPreference grosirMobilPreference;
     private GrosirMobilFunction grosirMobilFunction;
     private String password = "";
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,64 +60,59 @@ public class ChangePasswordActivity extends GrosirMobilActivity {
         adjustFontScale(this, getResources().getConfiguration());
         ButterKnife.bind(this);
     }
+
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.iv_back)
     void ivBackClick() {
         finish();
     }
+
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.btn_change_password)
     void btnChangePasswordClick() {
         String oldPassword = etOldPassword.getText().toString();
         String newPassword = etNewPassword.getText().toString();
         String confirmPassword = etConfirmPassword.getText().toString();
-        if(oldPassword.isEmpty()){
+        if (oldPassword.isEmpty()) {
             Toast.makeText(this, "Mohon Isi Password yang Lama", Toast.LENGTH_SHORT).show();
-        }else if(newPassword.isEmpty()){
+        } else if (newPassword.isEmpty()) {
             Toast.makeText(this, "Mohon Isi Password baru", Toast.LENGTH_SHORT).show();
-        }
-        else if(confirmPassword.isEmpty()){
+        } else if (confirmPassword.isEmpty()) {
             Toast.makeText(this, "Mohon Isi Konfirmasi Password", Toast.LENGTH_SHORT).show();
-        }
-        else if(!newPassword.trim().equals(confirmPassword.trim())){
-                Toast.makeText(this, "Password tidak matching", Toast.LENGTH_SHORT).show();
-            }
-        else if(!oldPassword.equals(grosirMobilPreference.getPassword())){
+        } else if (!newPassword.trim().equals(confirmPassword.trim())) {
+            Toast.makeText(this, "Password tidak matching", Toast.LENGTH_SHORT).show();
+        } else if (!oldPassword.equals(grosirMobilPreference.getPassword())) {
             Toast.makeText(this, "Password lama tidak sesuai", Toast.LENGTH_SHORT).show();
-        }
-        else if(newPassword.length() < 6 && confirmPassword.length() < 6 ){
-            Toast.makeText(this, "Password minimal 6 karakter acak", Toast.LENGTH_SHORT).show();
-        }
-            else{
-                ProgressDialog progressDialog = new ProgressDialog(ChangePasswordActivity.this);
-                progressDialog.setCancelable(true);
-                progressDialog.setMessage(getString(R.string.base_tv_please_wait));
-                progressDialog.show();
+        } else if (newPassword.length() < 8 && confirmPassword.length() < 8) {
+            Toast.makeText(this, "Password minimal 8 karakter acak", Toast.LENGTH_SHORT).show();
+        } else {
+            ProgressDialog progressDialog = new ProgressDialog(ChangePasswordActivity.this);
+            progressDialog.setCancelable(true);
+            progressDialog.setMessage(getString(R.string.base_tv_please_wait));
+            progressDialog.show();
 
-            ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getUserResponse().getEmail(),newPassword+"");
+            ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(grosirMobilPreference.getDataCheckActiveToken().getLoggedInUserResponse().getUserResponse().getEmail(), newPassword + "");
             final Call<GeneralResponse> changePasswordApi = getApiGrosirMobil().changePasswordApi(changePasswordRequest);
             changePasswordApi.enqueue(new Callback<GeneralResponse>() {
                 @Override
                 public void onResponse(Call<GeneralResponse> call, Response<GeneralResponse> response) {
                     progressDialog.dismiss();
-                    if(response.isSuccessful()) {
+                    if (response.isSuccessful()) {
                         try {
-                            if(response.body().getMessage().equals("success")){
+                            if (response.body().getMessage().equals("success")) {
                                 Toast.makeText(ChangePasswordActivity.this, response.body().getDescription(), Toast.LENGTH_SHORT).show();
                                 grosirMobilPreference.clearSharePreference();
                                 Intent intent = new Intent(ChangePasswordActivity.this, LoginActivity.class);
                                 startActivity(intent);
                                 finish();
-                            }
-                            else{
+                            } else {
                                 try {
                                     grosirMobilFunction.showMessage(ChangePasswordActivity.this, getString(R.string.base_null_error_title), response.errorBody().string());
                                 } catch (IOException e) {
                                     GrosirMobilLog.printStackTrace(e);
                                 }
                             }
-                        }
-                        catch (Exception e){
+                        } catch (Exception e) {
                             GrosirMobilLog.printStackTrace(e);
                         }
                     }
@@ -125,16 +124,16 @@ public class ChangePasswordActivity extends GrosirMobilActivity {
                     GrosirMobilLog.printStackTrace(t);
                 }
             });
-            
-                
-            }
+
+
         }
+    }
 
     @Override
     public void onBackPressed() {
         finish();
     }
-    
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         View view = getCurrentFocus();

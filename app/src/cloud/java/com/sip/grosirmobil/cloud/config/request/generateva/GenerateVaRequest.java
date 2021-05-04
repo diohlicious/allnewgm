@@ -19,6 +19,7 @@ public class GenerateVaRequest {
     @Expose
     private long totalAmount;
 
+
     public GenerateVaRequest(List<PilihUnitBayarRequest> pilihUnitBayarRequestList, String chooseBank, long totalAmount) {
         this.pilihUnitBayarRequestList = pilihUnitBayarRequestList;
         this.chooseBank = chooseBank;

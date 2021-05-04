@@ -29,6 +29,10 @@ public class DataHomeHistoryResponse {
     @Expose
     private String vehicleName;
 
+    @SerializedName("license_plate")
+    @Expose
+    private String licensePlate;
+
     @SerializedName("sold_price")
     @Expose
     private String soldPrice;
@@ -68,6 +72,8 @@ public class DataHomeHistoryResponse {
     public String getEventDate() { return eventDate; }
 
     public String getVehicleName() { return vehicleName; }
+
+    public String getLicensePlate() { return licensePlate; }
 
     public String getSoldPrice() { return soldPrice; }
 

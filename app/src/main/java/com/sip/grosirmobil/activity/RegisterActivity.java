@@ -19,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.naa.data.Nson;
+import com.naa.data.Utility;
+import com.naa.data.UtilityAndroid;
 import com.sip.grosirmobil.R;
 import com.sip.grosirmobil.base.data.GrosirMobilPreference;
 import com.sip.grosirmobil.base.util.GrosirMobilActivity;
@@ -116,6 +119,9 @@ public class RegisterActivity extends GrosirMobilActivity {
                 }
                 grosirMobilPreference.saveFullName(etFullName.getText().toString());
                 grosirMobilPreference.savePhoneNumber(noHp);
+
+                //reset
+                UtilityAndroid.setSetting("daftar", Nson.newObject().toString());
                 Intent intent = new Intent(this, RegisterDataActivity.class);
                 startActivity(intent);
             }else {

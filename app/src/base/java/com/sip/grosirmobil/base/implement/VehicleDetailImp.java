@@ -100,7 +100,7 @@ public class VehicleDetailImp implements VehicleDetailPresenter {
                         if(response.body().getMessage().equals("success")){
                             vehicleDetailView.vehicleDetailNegoAndBuyNow("Nego",response.body());
                         }else {
-                            grosirMobilFunction.showMessage(context, "POST Live Nego", response.body().getDescription());
+                            grosirMobilFunction.showMessage(context, "Message", response.body().getDescription());
                         }
                     }catch (Exception e){
                         GrosirMobilLog.printStackTrace(e);
@@ -117,7 +117,7 @@ public class VehicleDetailImp implements VehicleDetailPresenter {
             @Override
             public void onFailure(Call<GeneralNegoAndBuyNowResponse> call, Throwable t) {
                 vehicleDetailView.hideDialogLoading();
-                grosirMobilFunction.showMessage(context, "POST Live Nego", context.getString(R.string.base_null_server));
+                grosirMobilFunction.showMessage(context, "Message", context.getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);
             }
         });
@@ -178,7 +178,7 @@ public class VehicleDetailImp implements VehicleDetailPresenter {
                             grosirMobilPreference.saveTimeServer(response.body().getData().getTimeServer());
                             vehicleDetailView.vehicleDetailSuccess(flag, dataVehicleDetailResponse, grosirMobilPreference.getTimeServer());
                         }else {
-                            grosirMobilFunction.showMessage(context, "GET Time Server", response.body().getMessage());
+                            //grosirMobilFunction.showMessage(context, "GET Time Server", response.body().getMessage());
                         }
                     }catch (Exception e){
                         GrosirMobilLog.printStackTrace(e);
@@ -196,7 +196,7 @@ public class VehicleDetailImp implements VehicleDetailPresenter {
                 if(flag){
                     vehicleDetailView.hideDialogLoading();
                 }
-                grosirMobilFunction.showMessage(context, "GET Time Server", context.getString(R.string.base_null_server));
+                //grosirMobilFunction.showMessage(context, "GET Time Server", context.getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);
             }
         });

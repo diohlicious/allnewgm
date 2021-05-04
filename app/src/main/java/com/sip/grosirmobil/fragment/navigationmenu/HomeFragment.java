@@ -67,6 +67,7 @@ import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ID_VEHICLE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.KIK;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.LOCATION;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.MEREK;
+import static com.sip.grosirmobil.base.contract.GrosirMobilContract.ADMIN;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.SEARCH_REQUEST;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.START_PRICE;
 import static com.sip.grosirmobil.base.contract.GrosirMobilContract.START_YEAR;
@@ -172,7 +173,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     private int page = 1;
     private int pageComingSoon = 1;
     private int pageRecord = 1;
-    private int max = 20;
+    private int max = 150;
     private boolean success = false;
     private String lokasi = "";
     private int tahunStart = 1995;
@@ -192,6 +193,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
     Handler handler = new Handler();
     Runnable runnable;
     int delay = 1000;
+    boolean bReady = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -325,8 +327,8 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                              else if (dataPageHomeLiveResponseVariable.getCurrentPage() < dataPageHomeLiveResponseVariable.getMaxPage()) {
 //                                 System.out.println("NESTED Current Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
 //                                 System.out.println("NESTED Last : Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
-                                 page++;
-                                 homePresenter.getHomeLiveApi(page,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+                                /// page++;
+                                 //homePresenter.getHomeLiveApi(page,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
                              }
                          }
                     }catch (Exception e){
@@ -500,6 +502,12 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             }
         }else if(requestCode == FILTER_REQUEST){
             if(resultCode==RESULT_OK){
+
+                page = 1;
+                if(liveAdapter !=null){
+                     liveAdapter.clear();
+                }
+
                 search = true;
                 if(search){
 //                    cardSearchResult.setVisibility(View.VISIBLE);
@@ -550,7 +558,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                 linearTitleContent.setVisibility(View.GONE);
                 relativeResultSearch.setVisibility(View.VISIBLE);
                 page = 1;
-                max = 20;
+                max = 150;
                 homePresenter.getHomeLiveApi(page,max,grade,lokasi,tahunStart,tahunEnd,hargaStart,hargaEnd,merek);
             }
         }
@@ -632,8 +640,10 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                         else if (dataPageHomeLiveResponseVariable.getCurrentPage() < dataPageHomeLiveResponseVariable.getMaxPage()) {
 //                            System.out.println("NESTED Current Page : "+dataPageHomeLiveResponseVariable.getCurrentPage());
 //                            System.out.println("NESTED Last : Page : "+dataPageHomeLiveResponseVariable.getMaxPage());
-                            page++;
-                            homePresenter.getHomeLiveApi(page,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+                            if (bReady){
+                                //page++;
+                                //homePresenter.getHomeLiveApi(page,max,grade,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+                            }
                         }
                     }catch (Exception e){
                         GrosirMobilLog.printStackTrace(e);
@@ -796,6 +806,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
 
     @Override
     public void showDialogLoading() {
+        bReady = false;
         progressBarData.setVisibility(View.VISIBLE);
     }
 
@@ -806,6 +817,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
 
     @Override
     public void showDialogLoadMoreLoading() {
+        bReady = false;
         progressBarLoadMore.setVisibility(View.VISIBLE);
     }
 
@@ -845,8 +857,12 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             }
             dataPageHomeLiveResponseVariable = dataPageHomeLiveResponse;
             if(!dataPageHomeLiveResponse.getDataHomeLiveResponseList().isEmpty()){
+                liveAdapter.clear();
                 liveAdapter.addItems(dataPageHomeLiveResponse.getDataHomeLiveResponseList());
             }
+            liveAdapter.notifyDataSetChanged();
+            bReady = true ;
+
         }
     }
 

@@ -101,6 +101,8 @@ public class LiveHistoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         @SuppressLint("NonConstantResourceId")
         @BindView(R.id.tv_vehicle_name_history) TextView tvVehicleNameHistory;
         @SuppressLint("NonConstantResourceId")
+        @BindView(R.id.tv_license_plate) TextView tvLicenseHistory;
+        @SuppressLint("NonConstantResourceId")
         @BindView(R.id.tv_event_date_history) TextView tvEventDate;
         @SuppressLint("NonConstantResourceId")
         @BindView(R.id.tv_city_history) TextView tvCityHistory;
@@ -127,6 +129,7 @@ public class LiveHistoryAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             try {
                 DataHomeHistoryResponse dataHomeHistoryResponse = dataHomeHistoryResponseList.get(position);
                 tvVehicleNameHistory.setText(dataHomeHistoryResponse.getVehicleName());
+                tvLicenseHistory.setText(dataHomeHistoryResponse.getLicensePlate());
                 tvCityHistory.setText(dataHomeHistoryResponse.getWareHouse().replace("WAREHOUSE ",""));
                 tvOpenPriceHistory.setText("Rp "+setCurrencyFormat(dataHomeHistoryResponse.getHargaPembukaan()));
                 tvInitialNameHistory.setText(dataHomeHistoryResponse.getVehicleName().substring(0,1));

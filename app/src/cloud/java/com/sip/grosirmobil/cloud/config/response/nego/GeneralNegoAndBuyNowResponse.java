@@ -9,7 +9,7 @@ public class GeneralNegoAndBuyNowResponse {
     @Expose
     private String message;
 
-    @SerializedName("pesan")
+    @SerializedName("description")
     @Expose
     private String description = null;
 

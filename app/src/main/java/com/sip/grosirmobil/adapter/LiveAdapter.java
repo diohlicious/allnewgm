@@ -3,6 +3,7 @@ package com.sip.grosirmobil.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -133,6 +134,8 @@ public class LiveAdapter
         @SuppressLint("NonConstantResourceId")
         @BindView(R.id.tv_bottom_price) TextView tvBottomPrice;
         @SuppressLint("NonConstantResourceId")
+        @BindView(R.id.tv_biaya_admin) TextView tvAdminFee;
+        @SuppressLint("NonConstantResourceId")
         @BindView(R.id.tv_timer) TextView tvTimer;
         @SuppressLint("NonConstantResourceId")
         @BindView(R.id.tv_initial_name) TextView tvInitialName;
@@ -164,6 +167,11 @@ public class LiveAdapter
                 tvCity.setText(dataHomeLiveResponse.getWareHouse().replace("WAREHOUSE ", ""));
                 tvOpenPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getBottomPrice()));
                 tvBottomPrice.setText("Rp " + setCurrencyFormat(dataHomeLiveResponse.getPriceNow()));
+
+                if(!dataHomeLiveResponse.getBottomPrice().equalsIgnoreCase(dataHomeLiveResponse.getPriceNow()) ){
+                    tvBottomPrice.setTextColor(Color.parseColor("#0000FF"));
+                }
+                tvAdminFee.setText("Rp " + setCurrencyFormat(String.valueOf(dataHomeLiveResponse.getAdminfee())));
                 tvInitialName.setText(dataHomeLiveResponse.getGrade());
 
                 AtomicBoolean favorite = new AtomicBoolean(false);

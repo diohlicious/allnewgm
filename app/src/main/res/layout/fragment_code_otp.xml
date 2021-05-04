@@ -48,6 +48,18 @@
                 android:layout_width="@dimen/_200sdp"
                 android:layout_height="wrap_content"
                 tools:ignore="HardcodedText" />
+            <TextView
+                android:alpha="0.6"
+                android:id="@+id/countdown"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:textColor="@color/colorPrimaryFont"
+                android:textSize="@dimen/text_14"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:fontFamily="@font/nunito_regular"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="wrap_content"
+                tools:ignore="HardcodedText" />
             <LinearLayout
                 android:layout_marginTop="@dimen/_20sdp"
                 android:gravity="center"

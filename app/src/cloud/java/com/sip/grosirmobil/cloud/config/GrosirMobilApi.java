@@ -83,10 +83,10 @@ public interface GrosirMobilApi {
     String wareHousePath = "/api/lokasi/warehouseMobile";
     String homeLivePath = "/api/Live/HomeMobile";
     String homeComingSoonPath = "/api/comingsoon/listeventMobile";
-    String homeHistoryPath = "/api/Live/Riwayat";
+    String homeHistoryPath = "/api/Live/RiwayatMobile";
     String liveVehicleDetailPath = "/api/Live/detailMobile";
     String timeServerPath = "/api/jamserverMobile";
-    String liveNegoPath = "/api/Live/LiveNego";
+    String liveNegoPath = "/api/Live/LiveNegoMobile";
     String liveBuyNowPath = "/api/Live/LiveBuyNow";
     String listCartPath = "/api/Live/datakeranjang";
     String setAndUnsetFavoritePath = "/api/favorite/setAndUnsetFavorite";
@@ -99,7 +99,10 @@ public interface GrosirMobilApi {
     String gradePath = "/api/filter/grade";
     String infoMenuPath = "/api/info/getInfo";
 
-    @Headers("X-Requested-With:XMLHttpRequest")
+
+    //@Headers("X-Requested-With:XMLHttpRequest")
+
+    @Headers("Content-Type: application/json")
     @POST(loginPath)
     Single<LoginResponse> loginApi(@Body LoginRequest loginRequest);
 
@@ -262,7 +265,5 @@ public interface GrosirMobilApi {
     @POST(checkStatusHistoryTransactionPath)
     Call<CheckStatusHistoryTransactionResponse> checkStatusHistoryTransactionApi(@Header("Authorization") String authToken,
                                                                                  @Body CheckStatusHistoryRequest historyTransactionRequest);
-
-
 
 }

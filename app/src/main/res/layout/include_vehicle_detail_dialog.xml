@@ -257,7 +257,7 @@
                 android:id="@+id/rv_bid"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_100sdp"/>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

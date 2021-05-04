@@ -151,7 +151,7 @@ public class HomePresenterImp implements HomePresenter {
                     homeView.hideDialogLoadMoreLoading();
                 }
                 rvLive.setVisibility(View.VISIBLE);
-                grosirMobilFunction.showMessage(context, "GET Home Live", context.getString(R.string.base_null_server));
+                grosirMobilFunction.showMessage(context, "Message", context.getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);
             }
         });
@@ -311,7 +311,7 @@ public class HomePresenterImp implements HomePresenter {
                             }
                         }else {
                             homeView.timeServerSuccess(false);
-                            grosirMobilFunction.showMessage(context, "GET Time Server", response.body().getMessage());
+                            //grosirMobilFunction.showMessage(context, "GET Time Server", response.body().getMessage());
                         }
                     }catch (Exception e){
                         GrosirMobilLog.printStackTrace(e);
@@ -333,7 +333,7 @@ public class HomePresenterImp implements HomePresenter {
                     homeView.hideDialogLoading();
                 }
                 homeView.timeServerSuccess(false);
-                grosirMobilFunction.showMessage(context, "GET Time Server", context.getString(R.string.base_null_server));
+                //grosirMobilFunction.showMessage(context, "GET Time Server", context.getString(R.string.base_null_server));
                 GrosirMobilLog.printStackTrace(t);
             }
         });

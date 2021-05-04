@@ -13,7 +13,7 @@ import com.sip.grosirmobil.R;
 
 public class ViewHolderItemCart extends RecyclerView.ViewHolder {
 
-    public TextView tvVehicleName, tvPlatNumber,tvPrice, tvCity;
+    public TextView tvVehicleName, tvPlatNumber,tvPrice, adminPrice, totalPrice, tvCity;
     public CardView cardVehicle;
     public ImageView ivImage;
     public CheckBox cbCart;
@@ -26,6 +26,8 @@ public class ViewHolderItemCart extends RecyclerView.ViewHolder {
         tvVehicleName       = view.findViewById(R.id.tv_vehicle_name);
         tvPlatNumber        = view.findViewById(R.id.tv_plat_number);
         tvPrice             = view.findViewById(R.id.tv_price);
+        adminPrice          = view.findViewById(R.id.admin_price);
+        totalPrice          = view.findViewById(R.id.total_price);
         tvCity              = view.findViewById(R.id.tv_city);
         cbCart              = view.findViewById(R.id.cb_cart);
         linearCart          = view.findViewById(R.id.linear_cart);
