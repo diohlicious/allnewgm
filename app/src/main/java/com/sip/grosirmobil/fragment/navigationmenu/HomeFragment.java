@@ -210,7 +210,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
                 tvTitleContent,tvLive,tvLiveSoon,tvRecord, tvKetEmptyDataHome, page,max,lokasi,tahunStart,
                 tahunEnd,hargaStart,hargaEnd,merek,grade);
 
-//        grosirMobilPreference.clearSharePreferenceBidPrice("0");
+//grosirMobilPreference.clearSharePreferenceBidPrice("0");
         setUiReset();
 
         homePresenter.setDataBannerHome(viewPagerHome, circleIndicator);
@@ -254,13 +254,13 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
             if(success){
                 homePresenter.getTimeServerApi("");
             }
-//            homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
+//homePresenter.getHomeLiveApi(page,max,lokasi,tahunStart,tahunEnd, hargaStart,hargaEnd,merek);
         }, delay);
         super.onResume();
     }
 
     private void setUiReset(){
-//        grosirMobilPreference.clearSharePreferenceTimeServer();
+//grosirMobilPreference.clearSharePreferenceTimeServer();
         pageComingSoon = 1;
         pageRecord = 1;
         page = 1;
