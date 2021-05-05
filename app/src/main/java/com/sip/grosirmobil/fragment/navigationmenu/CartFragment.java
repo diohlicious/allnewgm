@@ -114,7 +114,7 @@ public class CartFragment extends GrosirMobilFragment {
 
     Handler handler = new Handler();
     Runnable runnable;
-    int delay = 1000;
+    int delay = 3000;
     private boolean checkAuto = false;
     private boolean first = true;
     private LiveGarageAdapter liveGarageAdapter;
@@ -348,9 +348,6 @@ public class CartFragment extends GrosirMobilFragment {
                                 System.out.println("Data Live : " + dataCartLiveResponseList.size());
                                 System.out.println("Data Success : " + dataCartSuccessResponseList.size());
                                 System.out.println("Data Lost : " + dataCartLostResponseList.size());
-
-
-
 
 
                                 if(dataCartSuccessResponseList.isEmpty()&&
