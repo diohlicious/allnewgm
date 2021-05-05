@@ -57,6 +57,7 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
     private final GrosirMobilPreference grosirMobilPreference;
     private final OnItemClickListener onItemClickListener;
     private final OnItemClickListener onItemClickListenerTawar;
+    private CountDownTimer countDownTimer = null;
 
     public interface OnItemClickListener {
         void onItemClick(DataCartResponse dataCartResponse);
@@ -113,6 +114,7 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
             } else {
                 holder.tvPenawaranTerakhir.setText("Rp " + setCurrencyFormat(dataCartResponse.getTertinggi()));
             }
+
 
             String startDate = convertDate(timeServer, "yyyy-MM-dd HH:mm:ss", "dd-MM-yyyy HH:mm:ss");
             String endDate = convertDate(dataCartResponse.getEndDate(), "yyyy-MM-dd HH:mm:ss", "dd-MM-yyyy HH:mm:ss");
@@ -470,28 +472,31 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
     }
 
     public void startTimer(TextView tvTimer, long noOfMinutes) {
-        new CountDownTimer(noOfMinutes, 1000) {
-            @SuppressLint({"SetTextI18n", "DefaultLocale"})
-            public void onTick(long millisUntilFinished) {
-                long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
-                millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
+        if (countDownTimer == null) {
+            countDownTimer = new CountDownTimer(noOfMinutes, 1000) {
+                @SuppressLint({"SetTextI18n", "DefaultLocale"})
+                public void onTick(long millisUntilFinished) {
+                    String format = "%1$02d";
+                    long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
+                    millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
 
-                long hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
-                millisUntilFinished -= TimeUnit.HOURS.toMillis(hours);
+                    long hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
+                    millisUntilFinished -= TimeUnit.HOURS.toMillis(hours);
 
-                long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
-                millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
+                    long minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
+                    millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
 
-                long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
-                tvTimer.setText(days + " Hari " + hours + " Jam " + minutes + " Menit " + seconds + " Detik");
-            }
+                    long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
+                    tvTimer.setText(days + " Hari " + String.format(format,hours) + " Jam " + String.format(format,minutes) + " Menit " + String.format(format,seconds) + " Detik");
+                }
 
-            @SuppressLint("SetTextI18n")
-            public void onFinish() {
-                tvTimer.setText("Waktu Penawaran Habis");
+                @SuppressLint("SetTextI18n")
+                public void onFinish() {
+                    tvTimer.setText("Waktu Penawaran Habis");
 
-            }
-        }.start();
+                }
+            }.start();
+        }
     }
 
 }

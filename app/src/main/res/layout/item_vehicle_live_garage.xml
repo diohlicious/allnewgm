@@ -181,7 +181,7 @@
                             android:drawablePadding="@dimen/_5sdp"
                             android:fontFamily="@font/nunito_regular"
                             android:gravity="center"
-                            android:text=""
+                            android:text="0 Hari 00 Jam 00 Menit 00 Detik"
                             android:textColor="@color/colorPrimaryWhite"
                             android:textSize="@dimen/text_11" />
                     </LinearLayout>

@@ -330,6 +330,7 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         new CountDownTimer(noOfMinutes,  1000) {
             @SuppressLint({"SetTextI18n", "DefaultLocale"})
             public void onTick(long millisUntilFinished) {
+                String format = "%1$02d";
                 long days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished);
                 millisUntilFinished -= TimeUnit.DAYS.toMillis(days);
 
@@ -340,7 +341,7 @@ public class LiveSoonAdapter extends RecyclerView.Adapter<BaseViewHolder> {
                 millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes);
 
                 long seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
-                tvTimer.setText(days + " Hari " + hours + " Jam " + minutes + " Menit " + seconds+" Detik");
+                tvTimer.setText(days + " Hari " + String.format(format,hours) + " Jam " + String.format(format,minutes) + " Menit " + String.format(format,seconds)+" Detik");
             }
             @SuppressLint("SetTextI18n")
             public void onFinish() {

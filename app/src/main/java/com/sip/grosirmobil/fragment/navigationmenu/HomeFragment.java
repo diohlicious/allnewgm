@@ -192,7 +192,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
 
     Handler handler = new Handler();
     Runnable runnable;
-    int delay = 1000;
+    int delay = 3000;
     boolean bReady = false;
 
     @Override
@@ -264,7 +264,7 @@ public class HomeFragment extends GrosirMobilFragment implements HomeView {
         pageComingSoon = 1;
         pageRecord = 1;
         page = 1;
-//        tvLiveClick();
+//tvLiveClick();
         search = false;
         relativeHome.setVisibility(View.VISIBLE);
         linearSearchAndFilterShow.setVisibility(View.GONE);

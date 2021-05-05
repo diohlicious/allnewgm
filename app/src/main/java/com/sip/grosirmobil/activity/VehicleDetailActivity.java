@@ -246,10 +246,11 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
     private String lastPriceFirst="";
     private String negoPriceFirst="";
     private DataVehicleDetailResponse dataVehicleDetailResponseTemp = null;
+    private String tempBidFirst="";
 
     Handler handler = new Handler();
     Runnable runnable;
-    int delay = 1000;
+    int delay = 3000;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -271,7 +272,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
 
         LinearLayoutManager layoutManagerBid = new LinearLayoutManager(this);
         rvBid.setLayoutManager(layoutManagerBid);
-        rvBid.setNestedScrollingEnabled(false);
+        rvBid.setNestedScrollingEnabled(true);
 
         vehicleDetailPresenter.vehicleDetailApi(true, kik,openHouseId, true);
         checkauto = false;
@@ -947,8 +948,15 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
                 linearPenawaran.setVisibility(View.VISIBLE);
                 //error disini
                 UserBidAdapter userBidAdapter = new UserBidAdapter(dataVehicleDetailResponse.getUserBidResponseList());
-                rvBid.setAdapter(userBidAdapter);
-                userBidAdapter.notifyDataSetChanged();
+                if(dataVehicleDetailResponse.getUserBidResponseList().size() > 0){
+                    String priceBid = dataVehicleDetailResponse.getUserBidResponseList().get(0).getPriceBid();
+                    if(!tempBidFirst.equals(priceBid)){
+                        rvBid.setAdapter(userBidAdapter);
+                        userBidAdapter.notifyDataSetChanged();
+                    }
+                    tempBidFirst = priceBid;
+                }
+
             }
 
             if (negoPrice == Long.parseLong(dataVehicleDetailResponse.getBottomPrice())) {
