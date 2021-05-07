@@ -43,7 +43,7 @@ android {
             buildConfigField 'String', 'SOCKET_URL', '"http://"'
             buildConfigField 'String', 'ENVIRONTMENT', '"STAGING"'
             buildConfigField 'String', 'APP_TYPE', '""'
-            buildConfigField 'String', 'APP_NAME', '"GROSRI MOBIL"'
+            buildConfigField 'String', 'APP_NAME', '"GROSIR MOBIL"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.signingproject
         }
@@ -55,7 +55,7 @@ android {
             buildConfigField 'String', 'SOCKET_URL', '"https://"'
             buildConfigField 'String', 'ENVIRONTMENT', '"PRODUCTION"'
             buildConfigField 'String', 'APP_TYPE', '""'
-            buildConfigField 'String', 'APP_NAME', '"GROSRI MOBIL"'
+            buildConfigField 'String', 'APP_NAME', '"GROSIR MOBIL"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.signingproject
         }

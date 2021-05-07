@@ -371,7 +371,7 @@ public class LiveGarageAdapter extends RecyclerView.Adapter<ViewHolderItemVehicl
                 if (highPriceNego < openPrice) {
                     NegoAndBuyNowRequest negoAndBuyNowRequest = new NegoAndBuyNowRequest(String.valueOf(dataCartResponse.getOhid()), dataCartResponse.getKik(), dataCartResponse.getAgreementNo().trim(), String.valueOf(highPriceNego));
                     liveNegoApi(negoAndBuyNowRequest);
-                    Toast.makeText(contexts, "Nego Berhasil", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(contexts, "Nego "+highPriceNego, Toast.LENGTH_SHORT).show();
                 } else {
                     String msg = "Maximal Nego : Rp." + setCurrencyFormat(String.valueOf(openPrice)) + " \n" + "silahkan langsung BUY NOW";
                     Toast.makeText(contexts, msg, Toast.LENGTH_SHORT).show();

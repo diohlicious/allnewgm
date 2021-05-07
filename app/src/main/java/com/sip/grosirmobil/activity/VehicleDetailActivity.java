@@ -282,9 +282,11 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
                 linearDescription.setVisibility(View.VISIBLE);
                 break;
             case "HISTORY":
+                linearPenawaran.setVisibility(View.VISIBLE);
+                break;
             case "COMING SOON":
                 linearDescription.setVisibility(View.GONE);
-                btnNego.setVisibility(View.INVISIBLE);
+                btnNego.setVisibility(View.GONE);
                 break;
         }
 
@@ -694,14 +696,12 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
                 int tempMint = (seconds - (hours * 60 * 60));
                 int minutes = tempMint / 60;
                 seconds = tempMint - (minutes * 60);
-
                 tvHourFirst.setText(String.format("%02d", hours).substring(0,1));
                 tvHourSecond.setText(String.format("%02d", hours).substring(1,2));
                 tvMinuteFirst.setText(String.format("%02d", minutes).substring(0,1));
                 tvMinuteSecond.setText(String.format("%02d", minutes).substring(1,2));
                 tvSecondFirst.setText(String.format("%02d", seconds).substring(0,1));
                 tvSecondSecond.setText(String.format("%02d", seconds).substring(1,2));
-
             }
             @SuppressLint("SetTextI18n")
             public void onFinish() {
@@ -818,6 +818,7 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
                 ivFavorite.setImageResource(R.drawable.ic_favorite_empty);
             }
             tvPlatNumber.setText(dataVehicleDetailResponse.getKik()/*.substring(0, 10)*/ + " - ");
+            //masuk sini;
             tvCity.setText(dataVehicleDetailResponse.getWarehouse().replace("WAREHOUSE ", ""));
             if (dataVehicleDetailResponse.getVehicleSummary() == null || dataVehicleDetailResponse.getVehicleSummary().equals("")) {
                 tvDescription.setText("-");
@@ -942,11 +943,10 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
 //            if(flag){
 //                tvInputPriceNego.setText("Rp "+setCurrencyFormat(dataVehicleDetailResponse.getBottomPrice()));
 //            }
-            if (dataVehicleDetailResponse.getUserBidResponseList() == null || dataVehicleDetailResponse.getUserBidResponseList().isEmpty()) {
+            if (dataVehicleDetailResponse.getUserBidResponseList() == null || dataVehicleDetailResponse.getUserBidResponseList().isEmpty() || getIntent().getStringExtra(FROM_PAGE).equals("LIVE")) {
                 linearPenawaran.setVisibility(View.GONE);
             } else {
                 linearPenawaran.setVisibility(View.VISIBLE);
-                //error disini
                 UserBidAdapter userBidAdapter = new UserBidAdapter(dataVehicleDetailResponse.getUserBidResponseList());
                 if(dataVehicleDetailResponse.getUserBidResponseList().size() > 0){
                     String priceBid = dataVehicleDetailResponse.getUserBidResponseList().get(0).getPriceBid();
@@ -956,7 +956,6 @@ public class VehicleDetailActivity extends GrosirMobilActivity implements Vehicl
                     }
                     tempBidFirst = priceBid;
                 }
-
             }
 
             if (negoPrice == Long.parseLong(dataVehicleDetailResponse.getBottomPrice())) {

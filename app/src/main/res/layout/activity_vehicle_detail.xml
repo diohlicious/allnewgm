@@ -190,50 +190,55 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:ignore="RtlSymmetry" />
+
                 <LinearLayout
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:paddingLeft="@dimen/_20sdp"
-                    android:paddingRight="@dimen/_20sdp"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/_20sdp"
+                    android:paddingRight="@dimen/_20sdp">
+
                     <TextView
-                        android:text="@string/tv_deskripsi_kendaraan"
-                        android:fontFamily="@font/nunito_regular"
-                        android:textColor="@color/colorPrimaryFont"
-                        android:textSize="@dimen/text_16"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
+                        android:text="@string/tv_deskripsi_kendaraan"
+                        android:textColor="@color/colorPrimaryFont"
+                        android:textSize="@dimen/text_16" />
+
                     <TextView
                         android:id="@+id/tv_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_30sdp"
                         android:fontFamily="@font/nunito_regular"
                         android:textColor="@color/colorPrimaryFont"
-                        android:textSize="@dimen/text_16"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_30sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:textSize="@dimen/text_16" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_description"
-                        android:visibility="gone"
-                        android:nestedScrollingEnabled="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_30sdp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:nestedScrollingEnabled="false"
+                        android:visibility="gone" />
+
                     <TextView
                         android:id="@+id/tv_car_data"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@drawable/design_line_rectangle"
+                        android:drawableEnd="@drawable/ic_chevron_down"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="center|left"
                         android:paddingLeft="@dimen/_15sdp"
                         android:paddingRight="@dimen/_15sdp"
-                        android:drawableEnd="@drawable/ic_chevron_down"
-                        android:fontFamily="@font/nunito_regular"
+                        android:text="@string/tv_data_mobil"
                         android:textColor="@color/colorPrimaryFont"
                         android:textSize="@dimen/text_14"
-                        android:text="@string/tv_data_mobil"
-                        android:background="@drawable/design_line_rectangle"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
                         tools:ignore="RtlHardcoded" />
                     <!--                <androidx.recyclerview.widget.RecyclerView-->
                     <!--                    android:id="@+id/rv_car_data"-->
@@ -241,127 +246,157 @@
                     <!--                    android:background="@drawable/design_line_rectangle"-->
                     <!--                    android:layout_width="match_parent"-->
                     <!--                    android:layout_height="wrap_content"/>-->
-                    <include layout="@layout/include_vehicle_detail_car_data"/>
+                    <include layout="@layout/include_vehicle_detail_car_data" />
+
                     <TextView
                         android:id="@+id/tv_body"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@drawable/design_line_rectangle"
+                        android:drawableEnd="@drawable/ic_chevron_down"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="center|left"
                         android:paddingLeft="@dimen/_15sdp"
                         android:paddingRight="@dimen/_15sdp"
-                        android:drawableEnd="@drawable/ic_chevron_down"
-                        android:fontFamily="@font/nunito_regular"
+                        android:text="@string/tv_body"
                         android:textColor="@color/colorPrimaryFont"
                         android:textSize="@dimen/text_14"
-                        android:text="@string/tv_body"
-                        android:background="@drawable/design_line_rectangle"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
                         tools:ignore="RtlHardcoded" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_body"
-                        android:visibility="gone"
-                        android:background="@drawable/design_line_rectangle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/design_line_rectangle"
+                        android:visibility="gone" />
                     <!--                <include layout="@layout/include_vehicle_detail_body"/>-->
                     <TextView
                         android:id="@+id/tv_interior"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@drawable/design_line_rectangle"
+                        android:drawableEnd="@drawable/ic_chevron_down"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="center|left"
                         android:paddingLeft="@dimen/_15sdp"
                         android:paddingRight="@dimen/_15sdp"
-                        android:drawableEnd="@drawable/ic_chevron_down"
-                        android:fontFamily="@font/nunito_regular"
+                        android:text="@string/tv_interior"
                         android:textColor="@color/colorPrimaryFont"
                         android:textSize="@dimen/text_14"
-                        android:text="@string/tv_interior"
-                        android:background="@drawable/design_line_rectangle"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
                         tools:ignore="RtlHardcoded" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_interior"
-                        android:visibility="gone"
-                        android:background="@drawable/design_line_rectangle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/design_line_rectangle"
+                        android:visibility="gone" />
                     <!--                <include layout="@layout/include_vehicle_detail_interior"/>-->
                     <TextView
                         android:id="@+id/tv_engine"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@drawable/design_line_rectangle"
+                        android:drawableEnd="@drawable/ic_chevron_down"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="center|left"
                         android:paddingLeft="@dimen/_15sdp"
                         android:paddingRight="@dimen/_15sdp"
-                        android:drawableEnd="@drawable/ic_chevron_down"
-                        android:fontFamily="@font/nunito_regular"
+                        android:text="@string/tv_engine"
                         android:textColor="@color/colorPrimaryFont"
                         android:textSize="@dimen/text_14"
-                        android:text="@string/tv_engine"
-                        android:background="@drawable/design_line_rectangle"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
                         tools:ignore="RtlHardcoded" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_engine"
-                        android:visibility="gone"
-                        android:background="@drawable/design_line_rectangle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/design_line_rectangle"
+                        android:visibility="gone" />
                     <!--                <include layout="@layout/include_vehicle_detail_engine"/>-->
                     <TextView
                         android:id="@+id/tv_other"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@drawable/design_line_rectangle"
+                        android:drawableEnd="@drawable/ic_chevron_down"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="center|left"
                         android:paddingLeft="@dimen/_15sdp"
                         android:paddingRight="@dimen/_15sdp"
-                        android:drawableEnd="@drawable/ic_chevron_down"
-                        android:fontFamily="@font/nunito_regular"
+                        android:text="@string/tv_other"
                         android:textColor="@color/colorPrimaryFont"
                         android:textSize="@dimen/text_14"
-                        android:text="@string/tv_other"
-                        android:background="@drawable/design_line_rectangle"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
                         tools:ignore="RtlHardcoded" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_other"
-                        android:visibility="gone"
-                        android:background="@drawable/design_line_rectangle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/design_line_rectangle"
+                        android:visibility="gone" />
                     <!--                <include layout="@layout/include_vehicle_detail_other"/>-->
                     <TextView
                         android:id="@+id/tv_broken_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:background="@drawable/design_line_rectangle"
+                        android:drawableEnd="@drawable/ic_chevron_down"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="center|left"
                         android:paddingLeft="@dimen/_15sdp"
                         android:paddingRight="@dimen/_15sdp"
-                        android:drawableEnd="@drawable/ic_chevron_down"
-                        android:fontFamily="@font/nunito_regular"
+                        android:text="@string/tv_broken_image"
                         android:textColor="@color/colorPrimaryFont"
                         android:textSize="@dimen/text_14"
-                        android:text="@string/tv_broken_image"
-                        android:background="@drawable/design_line_rectangle"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_35sdp"
                         tools:ignore="RtlHardcoded" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_broken_image"
-                        android:visibility="gone"
-                        android:background="@drawable/design_line_rectangle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/design_line_rectangle"
+                        android:visibility="gone" />
                     <!--                <include layout="@layout/include_vehicle_detail_broken_image"/>-->
                     <Button
                         android:id="@+id/btn_nego"
-                        android:text="@string/btn_nego"
-                        android:visibility="invisible"
-                        android:textAllCaps="false"
-                        android:textSize="@dimen/text_16"
-                        android:fontFamily="@font/nunito_bold"
-                        android:textColor="@color/colorPrimaryWhite"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:background="@drawable/btn_design"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:layout_marginBottom="@dimen/_10sdp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:background="@drawable/btn_design"
+                        android:fontFamily="@font/nunito_bold"
+                        android:text="@string/btn_nego"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorPrimaryWhite"
+                        android:textSize="@dimen/text_16"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/linear_penawaran"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_100sdp"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="@dimen/_50sdp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/nunito_regular"
+                            android:text="@string/tv_riwayat_penawaran"
+                            android:textColor="@color/colorPrimaryFont"
+                            android:textSize="@dimen/text_16" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_bid"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

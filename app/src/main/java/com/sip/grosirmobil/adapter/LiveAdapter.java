@@ -359,7 +359,6 @@ public class LiveAdapter
             @SuppressLint("SetTextI18n")
             public void onFinish() {
                 tvTimer.setText("Waktu Penawaran Habis");
-
             }
         }.start();
     }
